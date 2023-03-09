@@ -11,7 +11,7 @@ class MyDocument extends Document {
     return(
       <Html lang='ru'>
           <Head>
-            <meta></meta>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css'></link>
           </Head>
           <body>
             <Main/>
