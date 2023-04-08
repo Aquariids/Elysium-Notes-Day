@@ -9,7 +9,7 @@ const TextEditor: React.FunctionComponent<ITextEditorProps> = (props) => {
     <div className={s.container}>
         <div className={s.options}>
             <button id={s.bold} className={ className }>
-            <i className="fa-solid fa-bold"></i>
+            <i className="fa-solid fa-bold">Привет привет, как дела ты тут, да?</i>
             </button>
         </div>
     </div>
