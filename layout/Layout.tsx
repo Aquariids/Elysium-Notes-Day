@@ -3,6 +3,7 @@ import Header from "./Header/Header";
 import { LayoutProps } from "./Layout.props";
 import Sidebar from "./Sidebar/Sidebar";
 import s from './Layout.module.scss';
+import { FunctionComponent } from "react";
 const Layout = ({children}:LayoutProps) => {
     return(
         <div className={s.wrapper}>
@@ -14,4 +15,15 @@ const Layout = ({children}:LayoutProps) => {
     )
 }
 
-export default Layout;
+
+export const withLayout = <T extends Record<string, unknown> >(Component: FunctionComponent<T>) => {
+
+    return function withLayoutComponent(props: T): JSX.Element {
+
+        return (
+                <Layout>
+                    <Component {...props} />
+                </Layout>
+        );
+    };
+};

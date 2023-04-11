@@ -1,4 +1,5 @@
 import { signIn, signOut, useSession } from "next-auth/react";
+import MainPage from "../../../pages/mainPage/mainPage";
 import s from './Entrance.module.scss';
 
 const Entrance:  React.FunctionComponent = (): JSX.Element=> {
@@ -19,7 +20,7 @@ const Entrance:  React.FunctionComponent = (): JSX.Element=> {
             {session && (
                 <>
                     Signed in as {session.user.email} <br />
-                    <p>Диман ты в супер секретикс странице, отвечаю реально</p>
+                    <MainPage/>
                     <button onClick={() => signOut()}> sign Out</button>
                 </>
             )}

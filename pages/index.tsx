@@ -4,8 +4,9 @@ import TextEditor from '@/TextEditor/TextEditor'
 import React from 'react';
 import Link from 'next/link';
 import Entrance from '../src/Components/Entrance/Entrance';
+import { withLayout } from '../layout/Layout';
 
-export default function Home() {
+function Home() {
   return (
     <>
       <Head>
@@ -20,3 +21,6 @@ export default function Home() {
     </>
   )
 }
+
+
+export default Home;

@@ -6,7 +6,7 @@ import GithubProvider  from "next-auth/providers/github";
         GithubProvider({
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET,
-        })
+        }),
                 // Providers.Email({
                 //     server: {
                 //         host: "",
@@ -23,4 +23,5 @@ import GithubProvider  from "next-auth/providers/github";
 
     
 }
-export default (req,res) => NextAuth(req,res,authOptions)
+
+export default NextAuth(authOptions)
