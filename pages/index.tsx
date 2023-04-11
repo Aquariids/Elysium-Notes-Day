@@ -3,10 +3,9 @@ import styles from '@/styles/Home.module.css'
 import TextEditor from '@/TextEditor/TextEditor'
 import React from 'react';
 import Link from 'next/link';
-import { signIn, signOut, useSession } from "next-auth/react";
+import Entrance from '../src/Components/Entrance/Entrance';
 
 export default function Home() {
-  const { data: session, status: loading } = useSession();
   return (
     <>
       <Head>
@@ -16,24 +15,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
 
       </Head>
-      <main className={styles.main}>
-        {/* <TextEditor/> */}
-
-        {!session && (
-          <>
-            <p>Not signed in</p>
-            <button onClick={() => signIn()}> sign In</button>
-          </>
-        )}
-
-        {session && (
-          <>
-            Signed in as {session.user.email} <br />
-            <p>Диман ты в супер секретикс странице, отвечаю реально</p>
-            <button onClick={() => signOut()}> sign Out</button>
-          </>
-        )} 
-      </main>
+      
+      <Entrance/>
     </>
   )
 }

@@ -1,0 +1,31 @@
+.wrapper {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "sidebar body body"
+        "footer footer footer";
+        grid-template-columns: var(--grid_columns_wrapper);
+        gap: 10px;
+}
+
+
+.header {
+    background-color: green;
+    grid-area: header;
+
+}
+
+.sidebar {
+    background-color: aqua;
+    grid-area: sidebar;
+}
+
+.footer {
+    background-color: blue;
+    grid-area: footer;
+}
+
+.body {
+    background-color: gray;
+    grid-area: body;
+}
