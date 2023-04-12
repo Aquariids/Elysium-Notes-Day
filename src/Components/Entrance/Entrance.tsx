@@ -31,23 +31,3 @@ const Entrance:  React.FunctionComponent = (): JSX.Element=> {
 
 
 export default Entrance;
-
-
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions)
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
-
-  return {
-    props: {
-      session,
-    },
-  }
-}
