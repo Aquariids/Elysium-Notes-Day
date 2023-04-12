@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next-auth/mongodb-adapter": "^1.1.1",
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "classnames": "^2.3.2",
+    "mongodb": "^4.15.0",
     "next": "13.2.3",
-    "next-auth": "^4.20.1",
+    "next-auth": "^4.22.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sqlite3": "^5.1.6",

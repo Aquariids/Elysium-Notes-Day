@@ -4,7 +4,7 @@ import s from './Entrance.module.scss';
 
 const Entrance:  React.FunctionComponent = (): JSX.Element=> {
     const { data: session, status: loading } = useSession();
-
+    console.log("(👍≖‿‿≖)👍 ✿ file: Entrance.tsx:7 ✿ data:", useSession())    
     return (
         <>
         <main className={s.main}>
@@ -33,3 +33,21 @@ const Entrance:  React.FunctionComponent = (): JSX.Element=> {
 export default Entrance;
 
 
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      session,
+    },
+  }
+}

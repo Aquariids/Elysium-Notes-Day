@@ -1,27 +1,19 @@
-import NextAuth from "next-auth";
-import GithubProvider  from "next-auth/providers/github";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
+import clientPromise from "./lib/mongodb";
+import NextAuth from 'next-auth'
+import GitHub from 'next-auth/providers/github'
+import Google from 'next-auth/providers/google'
 
-    const authOptions = {
-    providers: [
-        GithubProvider({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET,
-        }),
-                // Providers.Email({
-                //     server: {
-                //         host: "",
-                //         port: "",
-                //         auth: {
-                //             user: "",
-                //             pass: ""
-                //         }
-
-                //     },
-                //     from: "",
-                // })
-    ],
-
-    
-}
-
-export default NextAuth(authOptions)
+export default NextAuth({
+adapter: MongoDBAdapter(clientPromise),
+  providers: [
+    GitHub({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET
+    }),
+    Google({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET
+    })
+  ]
+})
