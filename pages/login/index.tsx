@@ -1,10 +1,11 @@
-import { signIn, signOut, useSession } from "next-auth/react";
-import MainPage from "../../../pages/mainPage/mainPage";
-import s from './Entrance.module.scss';
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import MainPage from "../mainPage";
+import s from './login.module.scss';
 
-const Entrance:  React.FunctionComponent = (): JSX.Element=> {
+
+const Login:  React.FunctionComponent = (): JSX.Element=> {
     const { data: session, status: loading } = useSession();
-    console.log("(👍≖‿‿≖)👍 ✿ file: Entrance.tsx:7 ✿ data:", useSession())    
+    
     return (
         <>
         <main className={s.main}>
@@ -20,7 +21,6 @@ const Entrance:  React.FunctionComponent = (): JSX.Element=> {
             {session && (
                 <>
                     Signed in as {session.user.email} <br />
-                    <MainPage/>
                     <button onClick={() => signOut()}> sign Out</button>
                 </>
             )}
@@ -30,4 +30,21 @@ const Entrance:  React.FunctionComponent = (): JSX.Element=> {
 }
 
 
-export default Entrance;
+export default Login;
+
+
+
+export async function getServerSideProps(context:any) {
+    const session = await getSession(context)
+    if (session) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
+    }
+    return {
+      props: {},
+    }
+  }
