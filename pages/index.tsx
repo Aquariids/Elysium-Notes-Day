@@ -1,13 +1,6 @@
 import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
-import TextEditor from '@/TextEditor/TextEditor'
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { withLayout } from '../layout/Layout';
-import clientPromise from './api/auth/lib/mongodb';
-import MainPage from './mainPage';
-import { getSession } from 'next-auth/react'
-import Login from './login';
+import { getSession,useSession } from 'next-auth/react'
 
 
 function Home({ user }: any) {
@@ -30,7 +23,8 @@ function Home({ user }: any) {
 export default Home;
 
 export async function getServerSideProps(context:any) {
-  const session = await getSession(context)
+  const session = await getSession(context);
+  
   if (!session) {
     return {
       redirect: {
