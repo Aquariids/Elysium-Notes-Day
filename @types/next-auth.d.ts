@@ -11,6 +11,7 @@ declare module "next-auth" {
       address: string
       name: string
       id:number
+      userId:string
     }
   }
 }

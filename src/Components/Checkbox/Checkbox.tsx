@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
-
 import { useSession } from 'next-auth/react';
-import { updateDataInDatabase } from '../../../pages/api/auth/lib/DataFromDatabase';
-
+import { useRef } from 'react';
 const Checkbox = () => {
     const [data, setData] = useState<any>();
-    const { data: session, status } = useSession();
+    const { data: session, status } = useSession(); 
+    const [value, setValue] = useState<string>('');
 
-
+    
     async function updateData() {
+        const email =  session?.user.email;
         const data = {
-            _id: session?.user.email,
-            email: "привет всем"
+            _id:session?.user.email,
+            email: session?.user.email,
+            body: value
         };
+
+        
         const response = await fetch('/api/updateChek', {
             method: 'POST',
             headers: {
@@ -21,12 +24,15 @@ const Checkbox = () => {
             body: JSON.stringify(data)
         });
         const result = await response.text();
-        const newData = await fetch('/api/chek').then(response => response.json());
-
-        // Update the state with the new data
+        const newData = await fetch(`/api/chek?email=${email}`).then(response => response.json());
         setData(newData);
     }
-
+    useEffect(() => {
+        const email =  session?.user.email;
+        fetch(`/api/chek?email=${email}`)
+            .then(response => response.json())
+            .then(data => setData(data))
+    },[session])
 
     return (
         <div>
@@ -35,11 +41,12 @@ const Checkbox = () => {
                 <div>
                     <input type="checkbox" id="scales" name="scales" />
                     <label htmlFor="scales">Scales</label>
+                    <textarea value={value} onChange={event => setValue(event.target.value)}></textarea>
                     <button onClick={updateData}>osdfijsdjosijf</button>
                 </div>
 
                 {data && data.map((item: any, i: number) => (
-                    <div key={i}>{item.email}</div>
+                    <div key={i}>{item.body}</div>
                 ))}
 
 
