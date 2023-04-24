@@ -3,18 +3,20 @@ import clientPromise from '../api/auth/lib/mongodb';
 import React, { useState } from 'react';
 import { withLayout } from '../../layout/Layout';
 import Checkbox from '@/Components/Checkbox/Checkbox';
-const MainPage = (chek: any) => {
+import TextEditor from '@/TextEditor/TextEditor';
+const MainPage = ({data}: any) => {
+console.log("(👍≖‿‿≖)👍 ✿ file: index.tsx:7 ✿ MainPage ✿ data:", data)
 
     return (
-       <><Checkbox/></>
+        <><Checkbox  /></>
+        // <TextEditor/>
     );
 };
 
-export default withLayout(MainPage);
 
 
 export async function getServerSideProps(context: any) {
-    const session = await getSession(context)
+    const session = await getSession(context);
     if (!session) {
         return {
             redirect: {
@@ -22,8 +24,19 @@ export async function getServerSideProps(context: any) {
                 permanent: false,
             },
         }
-    }
-    return {
-        props: {},
-    }
+    
 }
+
+
+return {
+    props: {}
+}
+
+        
+    
+
+}
+
+
+export default withLayout(MainPage);
+

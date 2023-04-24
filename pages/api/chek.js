@@ -1,7 +1,7 @@
 import { getDataFromDatabase } from './auth/lib/dataFromDatabase';
 
 export default async function handler(req, res) {
-    const email = req.query.email;
-    const data = await getDataFromDatabase(email);
+    const userId = req.query.userId;
+    const data = await getDataFromDatabase(userId);
     res.status(200).json(data);
 }

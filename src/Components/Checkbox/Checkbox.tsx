@@ -1,21 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRef } from 'react';
 const Checkbox = () => {
     const [data, setData] = useState<any>();
-    const { data: session, status } = useSession(); 
+    console.log("(👍≖‿‿≖)👍 ✿ file: Checkbox.tsx:5 ✿ Checkbox ✿ data:", data)
+    const { data: session, status } = useSession();
     const [value, setValue] = useState<string>('');
-
-    
     async function updateData() {
-        const email =  session?.user.email;
+        const userId = session?.user.userId;
         const data = {
-            _id:session?.user.email,
             email: session?.user.email,
+            userId: userId,
             body: value
         };
 
-        
+
         const response = await fetch('/api/updateChek', {
             method: 'POST',
             headers: {
@@ -24,15 +22,19 @@ const Checkbox = () => {
             body: JSON.stringify(data)
         });
         const result = await response.text();
-        const newData = await fetch(`/api/chek?email=${email}`).then(response => response.json());
+        const newData = await fetch(`/api/chek?userId=${userId}`).then(response => response.json());
         setData(newData);
     }
+
+
     useEffect(() => {
-        const email =  session?.user.email;
-        fetch(`/api/chek?email=${email}`)
-            .then(response => response.json())
-            .then(data => setData(data))
-    },[session])
+        
+    const userId = session?.user.userId;
+    fetch(`/api/chek?userId=${userId}`)
+        .then(response => response.json())
+        .then(data => setData(data))
+},[session])
+
 
     return (
         <div>
