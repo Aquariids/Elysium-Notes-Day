@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 const Checkbox = () => {
     const [data, setData] = useState<any>();
-    console.log("(👍≖‿‿≖)👍 ✿ file: Checkbox.tsx:5 ✿ Checkbox ✿ data:", data)
     const { data: session, status } = useSession();
     const [value, setValue] = useState<string>('');
     async function updateData() {
@@ -28,7 +27,6 @@ const Checkbox = () => {
 
 
     useEffect(() => {
-        
     const userId = session?.user.userId;
     fetch(`/api/chek?userId=${userId}`)
         .then(response => response.json())

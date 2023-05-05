@@ -11,6 +11,7 @@ class MyDocument extends Document {
     return(
       <Html lang='ru'>
           <Head>
+          <meta charSet="utf-8" />
           </Head>
           <body>
             <Main/>

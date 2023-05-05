@@ -1,6 +1,8 @@
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from "next-auth/react";
+import { TextEditorProvider } from '@/Components/TextEditor/context';
+
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
@@ -8,8 +10,11 @@ export default function App({
 
   return (
     <SessionProvider session={session}>
+      <TextEditorProvider>
         <Component {...pageProps} />
+      </TextEditorProvider>
     </SessionProvider>
+
   )
 
 }
