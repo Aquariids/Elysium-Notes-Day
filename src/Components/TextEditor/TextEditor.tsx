@@ -23,17 +23,19 @@ const emptyContentState = convertFromRaw({
 const TextEditor: React.FC<ITextEditorProps> = ({ className }) => {
   const { data: session, status } = useSession();
   const userId = session?.user.userId;
-  const { state, onChange, currentBlockType } = useEditorApi(); // получаем состояние редактора через кастомный хук
   const [newData, setNewData] = useState<any>();
 
   // const [text, setText] = useState<any>();
   // onChange(newEditorState)
   // const [state1, setState] = React.useState(() => EditorState.createEmpty());
 
-
+  const [state, setState] = React.useState({editorState:EditorState.createWithContent(emptyContentState)});
+  const onChange = (editorState) => {
+    const contentState =  editorState
+  }
   async function updateData() {
     // получаем состояние редактора(contentState) с помощью getCurrentContent()
-    const contentState = state.getCurrentContent();
+    const contentState = state.editorState.getCurrentContent();
     // преобразуем в сырой объект тдля отпарки в базу данных
     const dataRaw = convertToRaw(contentState);
     
@@ -92,6 +94,7 @@ fetch(`/api/chek?userId=${userId}`).then(response => response.json())
   return (
     <div className={cn("text-editor", className)}>
       <Editor
+        handleKeyCommand={handleKeyCommand}
         editorKey="editor"
         editorState={state}
         onChange={onChange}

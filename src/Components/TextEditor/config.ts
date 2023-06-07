@@ -1,6 +1,6 @@
 
 import Immutable from 'immutable';
-import { DefaultDraftBlockRenderMap } from 'draft-js';
+import { DefaultDraftBlockRenderMap, DraftEditorCommand } from 'draft-js';
 
 
 export enum BlockType {
@@ -45,6 +45,7 @@ export enum InlineStyle {
   };
 
 
+  
 
 const CUSTOM_BLOCK_RENDER_MAP = Immutable.Map({
     [BlockType.cite]: {

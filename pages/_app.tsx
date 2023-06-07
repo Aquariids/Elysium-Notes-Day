@@ -1,7 +1,7 @@
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from "next-auth/react";
-import { TextEditorProvider } from '@/Components/TextEditor/context';
+import { TextEditorProvider } from '@/Components/TextEditor2/context';
 
 export default function App({
   Component,

@@ -1,4 +1,4 @@
-import { convertFromRaw, DraftEntityMutability, EditorState, RawDraftContentState, RichUtils } from 'draft-js';
+import { convertFromRaw, DraftEditorCommand, DraftEntityMutability, EditorState, KeyBindingUtil, RawDraftContentState, RichUtils, getDefaultKeyBinding } from 'draft-js';
 import * as React from 'react';
 import { BlockType, EntityType, InlineStyle } from './config';
 import { EditorApi } from './TextEditor.props';
@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { CompositeDecorator } from 'draft-js';
 import LinkDecorator from './Link';
-
+import { HTMLtoState, stateToHTML } from './convert';
 const emptyContentState: RawDraftContentState = {
     blocks: [
         {
@@ -24,7 +24,7 @@ const emptyContentState: RawDraftContentState = {
 const decorator = new CompositeDecorator([LinkDecorator]);
 console.log("(👍≖‿‿≖)👍 ✿ file: useEditor.tsx:23 ✿ decorator:", decorator)
 
-export const useEditor = (): EditorApi => {
+export const useEditor = (html?: string): EditorApi => {
     const { data: session, status } = useSession();
     const userId = session?.user.userId;
     const [state, setState] = React.useState(() => EditorState.createWithContent(convertFromRaw(emptyContentState)));
@@ -49,6 +49,60 @@ export const useEditor = (): EditorApi => {
             return RichUtils.toggleLink(newState, newState.getSelection(), entityKey);
         })
     }, []);
+
+    const setEntityData = React.useCallback((entityKey: any, data: any) => {
+        setState((currentState) => {
+            /* Получаем текущий контент */
+            const content = currentState.getCurrentContent();
+            /* Объединяем текущие данные Entity с новыми */
+            const contentStateUpdated = content.mergeEntityData(
+                entityKey,
+                data,
+            )
+            /* Обновляем состояние редактора с указанием типа изменения */
+            return EditorState.push(currentState, contentStateUpdated, 'apply-entity');
+        })
+    }, [])
+
+
+    const toHtml = React.useCallback(() => {
+        return stateToHTML(state.getCurrentContent());
+    }, [state]);
+
+    // const [state, setState] = React.useState(() =>
+    //     html
+    //         ? EditorState.createWithContent(HTMLtoState(html), decorator)
+    //         : EditorState.createEmpty(decorator)
+    // );
+
+    const handlerKeyBinding = React.useCallback((e: React.KeyboardEvent) => {
+        /* Проверяем нажата ли клавиша q + ctrl/cmd */
+        if (e.keyCode === 81 && KeyBindingUtil.hasCommandModifier(e)) {
+            return 'accent';
+        }
+
+        return getDefaultKeyBinding(e);
+    }, []);
+
+
+    const handleKeyCommand = React.useCallback((command: DraftEditorCommand | 'accent', editorState: EditorState) => {
+        const newState = RichUtils.handleKeyCommand(editorState, command);
+
+        if (newState) {
+            setState(newState);
+            return 'handled';
+        }
+
+        if (command === "accent") {
+            toggleInlineStyle(InlineStyle.ACCENT);
+            return 'handled';
+        }
+
+        return 'not-handled';
+    }, []);
+
+
+
 
     const addLink = React.useCallback((url: any) => {
         addEntity(EntityType.link, { url }, 'MUTABLE')
@@ -90,6 +144,10 @@ export const useEditor = (): EditorApi => {
     }, [state]);
 
     return React.useMemo(() => ({
+        setEntityData,
+        toHtml,
+        handlerKeyBinding,
+        handleKeyCommand,
         addLink,
         currentBlockType,
         toggleBlockType,

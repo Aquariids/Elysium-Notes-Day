@@ -6,7 +6,7 @@ import { InlineStyle } from './config';
 const INLINE_STYLES_CODES = Object.values(InlineStyle);
 
 const ToolPanel: React.FC = () => {
-    const { toggleInlineStyle, hasInlineStyle } = useEditorApi();
+    const { toggleInlineStyle, hasInlineStyle,toHtml } = useEditorApi();
 
 
     const { addLink }: any = useEditorApi();
@@ -21,6 +21,7 @@ const ToolPanel: React.FC = () => {
     return (
 
         <div className="tool-panel">
+            <button onClick={toHtml}>Print</button>
             <button onClick={handlerAddLink}>
                 Добавить ссылку
             </button>

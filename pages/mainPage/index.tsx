@@ -3,8 +3,8 @@ import clientPromise from '../api/auth/lib/mongodb';
 import React, { useState } from 'react';
 import { withLayout } from '../../layout/Layout';
 import Checkbox from '@/Components/Checkbox/Checkbox';
-import TextEditor from '@/Components/TextEditor/TextEditor';
-import ToolPanel from '@/Components/TextEditor/ToolPanel';
+import TextEditor from '@/Components/TextEditor2/TextEditor';
+import ToolPanel from '@/Components/ToolPanel2';
 import ArticleEditor from '@/Components/TextEditor/ArticleEditor';
 import dynamic from 'next/dynamic';
 
