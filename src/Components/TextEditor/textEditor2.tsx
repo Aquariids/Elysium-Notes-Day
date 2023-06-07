@@ -22,7 +22,6 @@ const DraftEditorRawExample = () => {
     async function updateData() {
         const contentState = editorState.getCurrentContent();
         const dataRaw = convertToRaw(contentState);
-
         const data = {
             email: session?.user.email,
             userId: userId,
