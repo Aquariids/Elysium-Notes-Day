@@ -30,7 +30,7 @@ const TextEditor: React.FC<ITextEditorProps> = ({ className }) => {
   // const [state1, setState] = React.useState(() => EditorState.createEmpty());
 
   const [state, setState] = React.useState({editorState:EditorState.createWithContent(emptyContentState)});
-  const onChange = (editorState) => {
+  const onChange = (editorState: any) => {
     const contentState =  editorState
   }
   async function updateData() {

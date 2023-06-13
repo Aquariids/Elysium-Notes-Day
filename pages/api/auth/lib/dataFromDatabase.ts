@@ -9,18 +9,19 @@ export async function getDataFromDatabase(userId: any) {
   const collection = database.collection('chek');
   const query = userId ? { userId } : {};
   const data = await collection.find(query).toArray();
-  console.log("(👍≖‿‿≖)👍 ✿ file: dataFromDatabase.ts:23 ✿ getDataFromDatabase ✿  data[0].body:", data[0].body)
+  const [body] = data;
+  console.log("🚀 ~ file: dataFromDatabase.ts:22 ~ getDataFromDatabase ~ body.body:", body.body)
 
   // Преобразование сырого объекта в редактируемый контент
-  const contentState = convertFromRaw(data[0].body);
+  // const contentState = convertFromRaw(data[0].body);
   // const text = contentState.getPlainText();
   // Получение текста из редактируемого контента
   // const text = contentState.getPlainText();
 
   // const newEditorState = EditorState.createWithContent(contentState);
-
-  return data[0].body;
+  return body.body;
 }
+
 
 
 

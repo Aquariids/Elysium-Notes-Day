@@ -10,9 +10,9 @@ export default function App({
 
   return (
     <SessionProvider session={session}>
-      <TextEditorProvider>
+      {/* <TextEditorProvider> */}
         <Component {...pageProps} />
-      </TextEditorProvider>
+      {/* </TextEditorProvider> */}
     </SessionProvider>
 
   )

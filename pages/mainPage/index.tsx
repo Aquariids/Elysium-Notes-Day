@@ -7,6 +7,7 @@ import TextEditor from '@/Components/TextEditor2/TextEditor';
 import ToolPanel from '@/Components/ToolPanel2';
 import ArticleEditor from '@/Components/TextEditor/ArticleEditor';
 import dynamic from 'next/dynamic';
+import CustomEditor from '@/Components/CustomEditor/CustomEditor';
 
 const TextEditor2 = dynamic(
     () => import('@/Components/TextEditor/textEditor2'),
@@ -22,14 +23,9 @@ const MainPage = ({data}: any) => {
 
     
     return (
-        // <><Checkbox  /></>
+        
         <>
-        <ToolPanel />
-        <TextEditor className={''} />
-        {/* <TextEditor2 /> */
-                // <Text3 />
-            }
-        {/* <ArticleEditor/> */}
+       <CustomEditor/>
 
         </>
     );
