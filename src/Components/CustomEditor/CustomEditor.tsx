@@ -1,11 +1,5 @@
 import { SetStateAction, useEffect, useState } from "react";
-import {
-    ContentState,
-  convertFromRaw,
-  convertToRaw,
-  EditorState,
-  RawDraftContentState,
-} from "draft-js";
+import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import {
   Editor,
   getDefaultKeyBindingFn,
@@ -14,79 +8,63 @@ import {
 } from "contenido";
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
-import draftToHtml from 'draftjs-to-html';
-
 
 const CustomEditor = () => {
-// получаем сессию авторизованного человека
+  // получаем сессию авторизованного человека
   const { data: session, status } = useSession();
   const userId = session?.user.userId; // айди авторизованного человека
 
   async function updateData() {
     // получаем состояние редактора(contentState) с помощью getCurrentContent()
-    // const contentState = editorState.getCurrentContent();
-    // // преобразуем в сырой объект тдля отпарки в базу данных
-    // const dataRaw = convertToRaw(contentState);
-    const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+    // convertToRaw преобразуеnт в сырой объект тдля отпарки в базу данных
+    const content = JSON.stringify(
+      convertToRaw(editorState.getCurrentContent())
+    );
 
-    const data = { // отправляем в базу
+    const data = {
+      // отправляем в базу
       email: session?.user.email, // мыло пользователя
       userId: userId, // айди пользователя
-      body: content // данные редактора
+      body: content, // данные редактора
     };
 
-    const response = await fetch('/api/updateData', {
-      method: 'POST',
+    const response = await fetch("/api/updateData", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
-
+      body: JSON.stringify(data),
     });
-
-
   }
   const emptyContentState = convertFromRaw(emptyRawContentState);
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createWithContent(emptyContentState)
   );
 
-const handleEditorChange = (editorState: SetStateAction<EditorState>) => {
+  const handleEditorChange = (editorState: SetStateAction<EditorState>) => {
     setEditorState(editorState);
   };
-  const [test,setTest] = useState<any>();
 
-  // получаем состояние редактора(contentState) с помощью getCurrentContent()
-//   const data = editorState.getCurrentContent();
-  // преобразуем в сырой объект тдля отпарки в базу данных
-//   const dataRaw = convertToRaw(data);
-
-//   useEffect(() => {
-//     fetch(`/api/getData?userId=${userId}`)
-//     .then(response => response.json())
-//     .then(data => {
-//         const body = draftToHtml(data);
-//         setTest(body)
-//     })
-//   },[session])
-
-useEffect(() => {
+  useEffect(() => {
     async function fetchData() {
-        if(userId) {
-            const response = await fetch(`/api/getData?userId=${userId}`);
-            const data = await response.json();
-            const contentState = convertFromRaw(JSON.parse(data));
+      if (userId) {
+        // получаем данные
+        const data = await fetch(`/api/getData?userId=${userId}`);
+        if (data) {
+          const response = await data.json();
+          if (typeof response === "string") {
+            const contentState = await convertFromRaw(JSON.parse(response));
             setEditorState(EditorState.createWithContent(contentState));
-      
-        }
-   
+          } else {
+            setEditorState(EditorState.createEmpty());
+          }
+        } 
+      }
     }
 
     fetchData();
-  },[session]);
+  }, [session]);
 
-
-  
   return (
     <>
       <ToolbarButtons
@@ -98,12 +76,10 @@ useEffect(() => {
       <Editor
         editorKey="editor"
         editorState={editorState}
-        onChange={handleEditorChange }
+        onChange={handleEditorChange}
         handleKeyCommand={shortcutHandler(setEditorState)}
         keyBindingFn={getDefaultKeyBindingFn}
       />
-
-    
     </>
   );
 };
