@@ -13,7 +13,7 @@ const MainPage = ({ data }: any) => {
   
   return (
     <>
-    <CustomEditor /> 
+
     </>
 
 

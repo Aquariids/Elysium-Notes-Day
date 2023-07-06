@@ -8,14 +8,17 @@ import {
 } from "contenido";
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
-
+import { useRouter } from "next/router";
 
 // сразу пару моментов. - слишком много рендеринга, надо чет будет делать.
 // мне не нужно каждый раз обновлять айди и мыло пользователя - тоже чет делать будем.
 // но пока работает и норм. Оптимизация потом.
-const CustomEditor = () => {
+const CustomEditor = ({id}:any) => {
+  
+  
   // получаем сессию авторизованного человека
   const { data: session, status } = useSession();
+  const router = useRouter();
   const userId = session?.user.userId; // айди авторизованного человека
 
   async function updateData() {
@@ -26,9 +29,7 @@ const CustomEditor = () => {
     );
 
     const data = {
-      // отправляем в базу
-      email: session?.user.email, // мыло пользователя
-      userId: userId, // айди пользователя
+      _id:router.asPath.split('/')[router.asPath.split('/').length - 1],
       body: content, // данные редактора
     };
 
@@ -50,13 +51,13 @@ const CustomEditor = () => {
     setEditorState(editorState);
   };
 
-  // useEffect(()=> {
-  //  setTimeout(() => {
-  //   updateData();
-  //  },500)
-  //  console.log('пусть будет пока что так');
+  useEffect(()=> {
+   setTimeout(() => {
+    updateData();
+   },500)
+   console.log('пусть будет пока что так');
    
-  // })
+  })
 
   useEffect(() => {
     async function fetchData() {
@@ -77,13 +78,6 @@ const CustomEditor = () => {
 
     fetchData();
   }, [session]);
-
-
-useEffect(() => {
-
-
-
-})
 
   return (
     <>

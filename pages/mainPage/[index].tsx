@@ -7,10 +7,14 @@ import Link from "next/link";
 import { AppContext } from "../../context/app.context";
 
 const MainPage = ({ data }: any) => {  
+
+  const {idPage} = useContext(AppContext);
+
+  console.log(idPage);
+  
   return (
     <>
-            <CustomEditor /> 
-
+    <CustomEditor id ={idPage}/> 
     </>
 
 

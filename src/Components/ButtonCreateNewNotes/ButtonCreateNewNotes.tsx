@@ -9,7 +9,6 @@ const ButtonCreateNewNotes = () => {
   const emptyContentState = convertFromRaw(emptyRawContentState);
   const { idPage, setIdPage } = useContext(AppContext);
   const { data: session, status } = useSession();
-  const userId = session?.user.userId;  
   
   const router = useRouter()
   const create = async () => {
@@ -19,7 +18,7 @@ const ButtonCreateNewNotes = () => {
       body: emptyContentState, // данные редактора
     };
 
-     fetch("/api/createData", {
+     await fetch("/api/createData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,9 +32,7 @@ const ButtonCreateNewNotes = () => {
     })
 
     
-   
-    
-      
+
   };
 
   return <button onClick={create}>Создать новую заметку</button>;
