@@ -3,7 +3,6 @@ import clientPromise from './api/auth/lib/mongodb';
 import { getSession, signIn, useSession } from 'next-auth/react';
 
 const useres = ({ user }: any) => {
-    console.log(user);
 
     let { data: session, status } = useSession();
 

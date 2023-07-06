@@ -9,6 +9,10 @@ import {
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
 
+
+// сразу пару моментов. - слишком много рендеринга, надо чет будет делать.
+// мне не нужно каждый раз обновлять айди и мыло пользователя - тоже чет делать будем.
+// но пока работает и норм. Оптимизация потом.
 const CustomEditor = () => {
   // получаем сессию авторизованного человека
   const { data: session, status } = useSession();
@@ -36,6 +40,7 @@ const CustomEditor = () => {
       body: JSON.stringify(data),
     });
   }
+
   const emptyContentState = convertFromRaw(emptyRawContentState);
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createWithContent(emptyContentState)
@@ -44,6 +49,14 @@ const CustomEditor = () => {
   const handleEditorChange = (editorState: SetStateAction<EditorState>) => {
     setEditorState(editorState);
   };
+
+  // useEffect(()=> {
+  //  setTimeout(() => {
+  //   updateData();
+  //  },500)
+  //  console.log('пусть будет пока что так');
+   
+  // })
 
   useEffect(() => {
     async function fetchData() {
@@ -64,6 +77,13 @@ const CustomEditor = () => {
 
     fetchData();
   }, [session]);
+
+
+useEffect(() => {
+
+
+
+})
 
   return (
     <>
