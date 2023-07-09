@@ -3,6 +3,7 @@ import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { emptyRawContentState } from "contenido";
 import { convertFromRaw } from "draft-js";
 import { getSession, useSession } from "next-auth/react";
+import Link from "next/link";
 import { withLayout } from "../../layout/Layout";
 
 const MainPage = ({ data }: any) => {
@@ -14,12 +15,16 @@ const MainPage = ({ data }: any) => {
   
   return (
     <>
-    Короче надо тут получать нужные данные и потом их кидать в контекст и получать уже в нужных компонентах. Типа документы из коллекции. тела их айдишники и тп тд.
-    тут можно будет замапить все документы какие есть у пользователя.
-    при переходе по ссылке уже переходить на конкретный то есть [index]
+   {data && data.map((item:any,i:any)=> {
+    return (
+      <Link href={`MainPage/${item._id}`}> 
+        <div>
+        {item._id}
+        </div>
+      </Link>
+    )
+   })}
     </>
-
-
   );
 };
 
