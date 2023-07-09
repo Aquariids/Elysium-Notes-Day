@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { AppContext } from "../../../context/app.context";
 
-const ButtonCreateNewNotes = () => {
+const ButtonCreateNewNotes = ({userId}:any) => {
   const emptyContentState = convertFromRaw(emptyRawContentState);
   const { idPage, setIdPage } = useContext(AppContext);
   const { data: session, status } = useSession();
@@ -13,7 +13,7 @@ const ButtonCreateNewNotes = () => {
   const router = useRouter()
   const create = async () => {
     const data = {
-      userId: session?.user.userId,
+      userId: userId,
       email: session?.user.email,
       body: emptyContentState, // данные редактора
     };

@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import {
   Editor,
@@ -9,12 +9,13 @@ import {
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { AppContext } from "../../../context/app.context";
 
 // сразу пару моментов. - слишком много рендеринга, надо чет будет делать.
 // мне не нужно каждый раз обновлять айди и мыло пользователя - тоже чет делать будем.
 // но пока работает и норм. Оптимизация потом.
 const CustomEditor = ({id}:any) => {
-  
+  const { idPage } = useContext(AppContext);
   
   // получаем сессию авторизованного человека
   const { data: session, status } = useSession();
@@ -29,7 +30,9 @@ const CustomEditor = ({id}:any) => {
     );
 
     const data = {
-      _id:router.asPath.split('/')[router.asPath.split('/').length - 1],
+      email: session?.user.email,
+      userId:session?.user.userId,
+      _id:idPage,
       body: content, // данные редактора
     };
 
