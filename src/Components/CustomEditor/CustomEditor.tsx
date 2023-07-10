@@ -11,24 +11,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Session } from "next-auth";
 
-const updateData = async (editorState: EditorState, session: Session | null, _id: any) => {
-  const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-  const data = {
-    email: session?.user.email,
-    userId: session?.user.userId,
-    _id: _id,
-    body: content,
-  };
-
-  const response = await fetch(`/api/updateData`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-};
-
 const CustomEditor = ({ id }: any) => {
   const { data: session } = useSession();
   const _id = id;
@@ -62,21 +44,43 @@ const CustomEditor = ({ id }: any) => {
 
     fetchData();
   }, [_id, session]);
-
   useEffect(() => {
-    setTimeout(() => {
+    const updateData = async (editorState: EditorState, session: Session | null, _id: any) => {
+      const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+      const data = {
+        email: session?.user.email,
+        userId: session?.user.userId,
+        _id: _id,
+        body: content,
+      };
+  
+      try {
+        const response = await fetch(`/api/updateData`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+      } catch (error) {
+        console.log("🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:", error)
+        // Обработка ошибок, если необходимо
+      }
+    };
+  
+    const timer = setTimeout(() => {
       updateData(editorState, session, _id);
     }, 1000);
-    console.log("пусть будет пока что так");
-  }, [editorState]);
-
+  
+    return () => clearTimeout(timer);
+  }, [editorState, session, _id]);
+  
   return (
     <>
       <ToolbarButtons
         editorState={editorState}
         setEditorState={setEditorState}
       />
-      <button onClick={() => updateData(editorState, session, _id)}>нажми</button>
 
       <Editor
         editorKey="editor"
