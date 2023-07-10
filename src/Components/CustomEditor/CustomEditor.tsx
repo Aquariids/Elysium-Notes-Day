@@ -70,7 +70,9 @@ const CustomEditor = ({ id }: any) => {
   
     const timer = setTimeout(() => {
       updateData(editorState, session, _id);
-    }, 1000);
+      console.log('дав');
+      
+    }, 300);
   
     return () => clearTimeout(timer);
   }, [editorState, session, _id]);

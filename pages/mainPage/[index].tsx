@@ -8,6 +8,10 @@ import { useRouter } from "next/router";
 
 const MainPage = ({ data }: any) => {  
   const router = useRouter();
+
+  // брат братан, а нахуя ты столько редакторов рисуешь?
+  // не думал, менять только тело редактора от пользователя и от _id документа.
+  // а сам редактор на всех один, логично же?
   return (
     <>
     {data && data.map((item: { _id: string | string[] | undefined; }) => {
