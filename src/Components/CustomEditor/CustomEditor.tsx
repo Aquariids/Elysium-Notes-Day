@@ -27,7 +27,7 @@ const CustomEditor = ({id}:any) => {
     const content = JSON.stringify(
       convertToRaw(editorState.getCurrentContent())
     );
-    console.log("🚀 ~ file: CustomEditor.tsx:31 ~ updateData ~ content:", content)
+  
 
     const data = {
       email: session?.user.email,
