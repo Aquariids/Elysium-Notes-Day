@@ -9,7 +9,7 @@ const MainPage = ({ data }: any) => {
     <>
    {data && data.map((item:any,i:any)=> {
     return (
-      <Link href={`MainPage/${item._id}`}> 
+      <Link href={`mainpage/${item._id}`}> 
         <div>
         {item._id}
         </div>

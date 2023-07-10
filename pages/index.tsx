@@ -36,7 +36,7 @@ export async function getServerSideProps(context:any) {
   else {
     return {
       redirect: {
-        destination: '/MainPage',
+        destination: '/mainpage',
         permanent: false,
       },
     }
