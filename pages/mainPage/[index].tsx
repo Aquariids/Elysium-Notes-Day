@@ -8,15 +8,14 @@ import { useRouter } from "next/router";
 
 const MainPage = ({ data }: any) => {  
   const router = useRouter();
-
+  const selectedId = router.query.index;
+  const selectedItem = data.find((item: { _id: string }) => item._id === selectedId);
   // брат братан, а нахуя ты столько редакторов рисуешь?
   // не думал, менять только тело редактора от пользователя и от _id документа.
   // а сам редактор на всех один, логично же?
   return (
     <>
-    {data && data.map((item: { _id: string | string[] | undefined; }) => {
-      return router.query.index === item._id ? <CustomEditor key={item._id} id={item._id} />: '' 
-    })}
+      {selectedItem && <CustomEditor key={selectedItem._id} id={selectedItem._id} />}
     </>
 
 
