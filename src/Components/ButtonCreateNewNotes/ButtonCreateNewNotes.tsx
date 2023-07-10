@@ -1,5 +1,5 @@
 import { emptyRawContentState } from "contenido";
-import { convertFromRaw } from "draft-js";
+import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
@@ -7,14 +7,20 @@ import { AppContext } from "../../../context/app.context";
 
 const ButtonCreateNewNotes = ({userId}:any) => {
   const emptyContentState = convertFromRaw(emptyRawContentState);
+  const [editorState, setEditorState] = useState<EditorState>(
+    EditorState.createWithContent(emptyContentState)
+  );
   const {data: session, status} = useSession();
-  
+  const content = JSON.stringify(
+    convertToRaw(editorState.getCurrentContent())
+  );
   const router = useRouter()
   const create = async () => { 
+
     const data = {
       userId: session?.user.userId,
       email: session?.user.email,
-      body: emptyContentState, // данные редактора
+      body: content, // данные редактора
     };
 
     try {

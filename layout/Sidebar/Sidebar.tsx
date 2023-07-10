@@ -19,6 +19,8 @@ const Sidebar = ({ className, ...props }: SidebarProps) => {
       <Login />
       <br />
       <ButtonCreateNewNotes  />
+
+    
     </div>
   );
 };

@@ -15,12 +15,12 @@ import { AppContext } from "../../../context/app.context";
 // мне не нужно каждый раз обновлять айди и мыло пользователя - тоже чет делать будем.
 // но пока работает и норм. Оптимизация потом.
 const CustomEditor = ({id}:any) => {
-  const { idPage } = useContext(AppContext);
-  
+
   // получаем сессию авторизованного человека
   const { data: session, status } = useSession();
   const router = useRouter();
-  const userId = session?.user.userId; // айди авторизованного человека
+  const _id = id // айди авторизованного человека
+
 
   async function updateData() {
     // получаем состояние редактора(contentState) с помощью getCurrentContent()
@@ -28,15 +28,16 @@ const CustomEditor = ({id}:any) => {
     const content = JSON.stringify(
       convertToRaw(editorState.getCurrentContent())
     );
+    console.log("🚀 ~ file: CustomEditor.tsx:31 ~ updateData ~ content:", content)
 
     const data = {
       email: session?.user.email,
       userId:session?.user.userId,
-      _id:idPage,
+      _id:_id,
       body: content, // данные редактора
     };
 
-    const response = await fetch("/api/updateData", {
+    const response = await fetch(`/api/updateData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,9 +65,10 @@ const CustomEditor = ({id}:any) => {
 
   useEffect(() => {
     async function fetchData() {
-      if (userId) {
+      if (_id) {
+        console.log("🚀 ~ file: CustomEditor.tsx:67 ~ fetchData ~ _id:", _id)
         // получаем данные
-        const data = await fetch(`/api/getData?userId=${userId}`);
+        const data = await fetch(`/api/getData?_id=${_id}`);
         if (data) {
           const response = await data.json();
           if (typeof response === "string") {
