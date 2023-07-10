@@ -25,19 +25,6 @@ export async function getAllNotesFromDatabase(userId: any,email: any) {
 
 }
 
-export async function getId(userId: any) {
-  const client = await clientPromise;
-  const database = client.db('notes2');
-  const collection = database.collection('page2');
-  const query = userId ? { userId } : {};
-  const data = await collection.find(query).toArray();
-  const [body] = data;
-  
-  return body._id; 
-
-}
-
-
 export async function createDatabase (data:any) {
   const client = await clientPromise;
   const database = client.db('notes2');

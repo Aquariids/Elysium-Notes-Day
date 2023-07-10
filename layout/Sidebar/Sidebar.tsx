@@ -19,7 +19,7 @@ const path = router.query.index;
           return (
             <Link {...path === item._id ? {style: { color: "red" }}:''} key={i} href={`/mainPage/${item._id}`}>
               <div  >{`Новая заметка ${i}`}</div>
-            </Link>
+            </Link> 
           );
         })}
 

@@ -7,6 +7,6 @@ export default async function handler(req, res) {
         const data = await getAllNotesFromDatabase(userId,email);
         res.status(200).json(data);
     } catch (error) {
-        res.status(500).json({ message: error.message + 'лох' });
+        res.status(500).json({ message: error.message });
     }
 }

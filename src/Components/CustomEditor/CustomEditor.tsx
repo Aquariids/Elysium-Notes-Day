@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Session } from "next-auth";
 
-const CustomEditor = ({ id }: any) => {
+const CustomEditor = ({ id, body }: any) => {
   const { data: session } = useSession();
   const _id = id;
 
@@ -27,22 +27,11 @@ const CustomEditor = ({ id }: any) => {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (_id) {
-        const data = await fetch(`/api/getData?_id=${_id}`);
-        if (data) {
-          const response = await data.json();
-          if (typeof response === "string") {
-            const contentState = await convertFromRaw(JSON.parse(response));
+        if (body) {
+            const contentState = convertFromRaw(JSON.parse(body));
             setEditorState(EditorState.createWithContent(contentState));
-          } else {
-            setEditorState(EditorState.createEmpty());
-          }
-        }
-      }
-    };
+          } 
 
-    fetchData();
   }, [_id, session]);
   useEffect(() => {
     const updateData = async (editorState: EditorState, session: Session | null, _id: any) => {
