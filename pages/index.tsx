@@ -44,24 +44,3 @@ export async function getServerSideProps(context:any) {
 }
 
 
-
-// export async function getServerSideProps(context: any) {
-//   const session = await getSession(context);
-
-//   try {
-//     const client = await clientPromise;
-//     const db = client.db('notes');
-
-//     const user = await db
-//       .collection('chek').insertOne({userId: session?.user.email})
-
-
-
-//     return {
-//       props: { user: JSON.parse(JSON.stringify(user)) }
-//     }
-//   }
-//   catch (e) {
-//     console.log(e);
-//   }
-// }
