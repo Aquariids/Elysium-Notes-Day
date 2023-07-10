@@ -11,7 +11,7 @@ const MainPage = ({ data }: any) => {
   return (
     <>
     {data && data.map((item: { _id: string | string[] | undefined; }) => {
-      return router.query.index === item._id ? <CustomEditor id={item._id} />: '' 
+      return router.query.index === item._id ? <CustomEditor key={item._id} id={item._id} />: '' 
     })}
     </>
 

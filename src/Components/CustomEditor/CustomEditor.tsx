@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState, useCallback } from "react";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import {
   Editor,
@@ -9,64 +9,44 @@ import {
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { Session } from "next-auth";
 
-// сразу пару моментов. - слишком много рендеринга, надо чет будет делать.
-// мне не нужно каждый раз обновлять айди и мыло пользователя - тоже чет делать будем.
-// но пока работает и норм. Оптимизация потом.
-const CustomEditor = ({id}:any) => {
-
-  // получаем сессию авторизованного человека
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const _id = id // айди авторизованного человека
-
-
-  async function updateData() {
-    // получаем состояние редактора(contentState) с помощью getCurrentContent()
-    // convertToRaw преобразуеnт в сырой объект тдля отпарки в базу данных
-    const content = JSON.stringify(
-      convertToRaw(editorState.getCurrentContent())
-    );
-  
-
-    const data = {
-      email: session?.user.email,
-      userId:session?.user.userId,
-      _id:_id,
-      body: content, // данные редактора
-    };
-
-    const response = await fetch(`/api/updateData`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-  }
-
-  const emptyContentState = convertFromRaw(emptyRawContentState);
-  const [editorState, setEditorState] = useState<EditorState>(
-    EditorState.createWithContent(emptyContentState)
-  );
-
-  const handleEditorChange = (editorState: SetStateAction<EditorState>) => {
-    setEditorState(editorState);
+const updateData = async (editorState: EditorState, session: Session | null, _id: any) => {
+  const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+  const data = {
+    email: session?.user.email,
+    userId: session?.user.userId,
+    _id: _id,
+    body: content,
   };
 
-  useEffect(()=> {
-   setTimeout(() => {
-    updateData();
-   },500)
-   console.log('пусть будет пока что так');
-   
-  })
+  const response = await fetch(`/api/updateData`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+};
+
+const CustomEditor = ({ id }: any) => {
+  const { data: session } = useSession();
+  const _id = id;
+
+  const [editorState, setEditorState] = useState<EditorState>(
+    EditorState.createWithContent(convertFromRaw(emptyRawContentState))
+  );
+
+  const handleEditorChange = useCallback(
+    (editorState: SetStateAction<EditorState>) => {
+      setEditorState(editorState);
+    },
+    []
+  );
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       if (_id) {
-        console.log("🚀 ~ file: CustomEditor.tsx:67 ~ fetchData ~ _id:", _id)
-        // получаем данные
         const data = await fetch(`/api/getData?_id=${_id}`);
         if (data) {
           const response = await data.json();
@@ -76,12 +56,19 @@ const CustomEditor = ({id}:any) => {
           } else {
             setEditorState(EditorState.createEmpty());
           }
-        } 
+        }
       }
-    }
+    };
 
     fetchData();
-  }, [session]);
+  }, [_id, session]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      updateData(editorState, session, _id);
+    }, 1000);
+    console.log("пусть будет пока что так");
+  }, [editorState]);
 
   return (
     <>
@@ -89,7 +76,7 @@ const CustomEditor = ({id}:any) => {
         editorState={editorState}
         setEditorState={setEditorState}
       />
-      <button onClick={updateData}> нажми </button>
+      <button onClick={() => updateData(editorState, session, _id)}>нажми</button>
 
       <Editor
         editorKey="editor"
