@@ -1,5 +1,3 @@
-import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
-import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { emptyRawContentState } from "contenido";
 import { convertFromRaw } from "draft-js";
 import { getSession, useSession } from "next-auth/react";
@@ -7,10 +5,6 @@ import Link from "next/link";
 import { withLayout } from "../../layout/Layout";
 
 const MainPage = ({ data }: any) => {
-  console.log("🚀 ~ file: index.tsx:9 ~ MainPage ~ data:", data)
-  const { data: session, status } = useSession();
-  const emptyContentState = convertFromRaw(emptyRawContentState);
-  
   return (
     <>
    {data && data.map((item:any,i:any)=> {

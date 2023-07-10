@@ -2,8 +2,7 @@ import { emptyRawContentState } from "contenido";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-import { AppContext } from "../../../context/app.context";
+import {useState } from "react";
 
 const ButtonCreateNewNotes = ({userId}:any) => {
   const emptyContentState = convertFromRaw(emptyRawContentState);

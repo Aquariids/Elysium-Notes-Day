@@ -1,5 +1,4 @@
 import { isBold, isItalic, isUnderline, toggleBold, toggleItalic, toggleUnderline } from "contenido";
-import { EditorState } from "draft-js";
 import { EditorStateProps } from "./CustomEditor.props";
 
 const toolbarButtons = [

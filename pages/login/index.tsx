@@ -1,5 +1,4 @@
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
-import MainPage from "../MainPage/[index]";
 import s from './login.module.scss';
 
 

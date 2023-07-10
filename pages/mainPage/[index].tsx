@@ -1,17 +1,17 @@
 import { getSession } from "next-auth/react";
-import React, { useContext, useState } from "react";
+import React from "react";
 import { withLayout } from "../../layout/Layout";
 import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { AppContext } from "../../context/app.context";
+
+
 
 const MainPage = ({ data }: any) => {  
   const router = useRouter();
   console.log("🚀 ~ file: [index].tsx:11 ~ MainPage ~ router:", router.query.index)
   return (
     <>
-    {data && data.map(item => {
+    {data && data.map((item: { _id: string | string[] | undefined; }) => {
       return router.query.index === item._id ? <CustomEditor id={item._id} />: '' 
     })}
     </>
