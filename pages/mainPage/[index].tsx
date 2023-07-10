@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 
 const MainPage = ({ data }: any) => {  
   const router = useRouter();
-  console.log("🚀 ~ file: [index].tsx:11 ~ MainPage ~ router:", router.query.index)
   return (
     <>
     {data && data.map((item: { _id: string | string[] | undefined; }) => {

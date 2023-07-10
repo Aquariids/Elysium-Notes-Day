@@ -31,7 +31,7 @@ const ButtonCreateNewNotes = ({userId}:any) => {
         body: JSON.stringify(data),
       });
       const responseData = await response.json();
-      router.push(`/mainpage/${responseData._id}`);
+      router.push(`/mainPage/${responseData._id}`);
     } catch (error) {
       console.error(error);
     }
