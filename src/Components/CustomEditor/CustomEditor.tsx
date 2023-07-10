@@ -9,7 +9,6 @@ import {
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { AppContext } from "../../../context/app.context";
 
 // сразу пару моментов. - слишком много рендеринга, надо чет будет делать.
 // мне не нужно каждый раз обновлять айди и мыло пользователя - тоже чет делать будем.
