@@ -10,3 +10,17 @@ body { margin:0 ;}
     background-color: wheat;
 }
 
+
+.DraftEditor-root {
+    position: relative;
+  }
+  
+  .public-DraftEditorPlaceholder-root {
+    color:rgba(150, 150, 150, 0.589);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }

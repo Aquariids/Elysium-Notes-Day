@@ -5,8 +5,7 @@ import Login from "../../pages/login";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import React, { useState } from "react";
 const Sidebar = ({ className, ...props }: SidebarProps) => {
   const router = useRouter();
   const path = router.query.index;
@@ -17,6 +16,8 @@ const Sidebar = ({ className, ...props }: SidebarProps) => {
     setLinks(links.filter((link: any) => link !== linkId));
     fetch(`/api/deleteData?_id=${linkId}`)
     router.push(router.asPath);
+    console.log(links);
+    
   };
 
   return (
