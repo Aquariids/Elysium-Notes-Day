@@ -13,10 +13,16 @@ const Sidebar = ({ className, ...props }: SidebarProps) => {
   const all_id = data.map((obj: { _id: any; }) => obj._id)
   const [links, setLinks] = useState(all_id);
   const handleDeleteLink = async (linkId: any) => {
-    setLinks(links.filter((link: any) => link !== linkId));
     fetch(`/api/deleteData?_id=${linkId}`)
+    setLinks(links.filter((link: any) => link !== linkId));
     router.push(router.asPath);
-    console.log(links);
+    links.map((item: any, i:any) => {
+      console.log(path === item);
+      
+      if(path === item) {
+        router.push(links[i - 1])
+      }
+    })
     
   };
 
