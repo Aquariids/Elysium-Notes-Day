@@ -31,9 +31,16 @@ export async function createDatabase (data:any) {
   const collection = database.collection('page2');
   const result =  collection.insertOne(data); // Этот метод позволяет вставить документ в коллекцию
   return result;
-
 }
 
+export async function deleteData (_id:any) {
+  const client = await clientPromise;
+  const database = client.db('notes2');
+  const collection = database.collection('page2');
+  const id = new ObjectId(_id)
+  const result = await collection.deleteOne({_id:id}); // Этот метод позволяет вставить документ в коллекцию
+  return result;
+}
 
 
 // В общем ту я отправляю данные на базу монго.

@@ -10,8 +10,7 @@ const MainPage = ({ data }: any) => {
   const router = useRouter();
   const selectedId = router.query.index; // это наш path по сути url
   const selectedItem = data.find((item: { _id: string }) => item._id === selectedId); // ищем в нашем массиве первый _id попавший под услвоие. То есть если он равен id из url
- console.log(selectedItem.body);
- 
+
   
   return (
     // ну и паередаем его в наш редактор.
