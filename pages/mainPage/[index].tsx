@@ -3,39 +3,51 @@ import React, { useState } from "react";
 import { withLayout } from "../../layout/Layout";
 import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { useRouter } from "next/router";
-import s from './mainPage.module.scss';
+import s from "./mainPage.module.scss";
 import Error404 from "../Error404";
 import Link from "next/link";
 
 const MainPage = ({ data }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
-  const all_id = data.map((obj: { _id: any; }) => obj._id)
-
+  const all_id = data.map((obj: { _id: any }) => obj._id);
 
   const handleDeleteLink = async (linkId: any) => {
-    fetch(`/api/deleteData?_id=${linkId}`)
-    all_id.filter((link: any) => link !== linkId);
-   
-   const currentIndex = all_id.findIndex((i:string) => i == selectedId); 
-
- 
-   
-
-    if(all_id[currentIndex + 1] === undefined) {
-      router.push(all_id[currentIndex - 1])
-
-    } else {
-      router.push(all_id[currentIndex + 1])
-
-    }
   
     
+    fetch(`/api/deleteData?_id=${linkId}`);
+    all_id.filter((link: any) => link !== linkId);
+
+    const currentIndex = all_id.findIndex((i: string) => i == selectedId);
+
+
+  
+  
+    if (all_id[currentIndex + 1] === undefined && all_id.length !== 1) {
+      router.push(all_id[currentIndex - 1]);
+    }
+    else if (all_id[currentIndex - 1] === undefined && all_id.length !== 1) {
+      router.push(all_id[currentIndex + 1]);
+    } 
+    else if (all_id[currentIndex - 1] !== undefined && all_id.length !== 1) {
+      router.push(all_id[currentIndex]);
+    } 
+    else if (all_id[currentIndex - 2] == undefined && all_id.length !== 1) {
+      router.push(all_id[currentIndex - 1]);
+    } 
+    else if (all_id[currentIndex + 2] == undefined && all_id.length !== 1) {
+      router.push(all_id[currentIndex + 1]);
+    } 
+    else if(all_id.length == 1) {
+      router.push('mainPage');
+    }  
+    else {
+      router.push(all_id[currentIndex]);
+    }
+
   };
 
-
-
-   // это наш path по сути url
+  // это наш path по сути url
   const selectedItem = data.find(
     (item: { _id: string }) => item._id === selectedId
   ); // ищем в нашем массиве первый _id попавший под услвоие. То есть если он равен id из url
@@ -43,37 +55,35 @@ const MainPage = ({ data }: any) => {
   // if (!selectedItem) {
   //   return <Error404 />;
   // } else {
-    return (
-      // ну и паередаем его в наш редактор.
-      <div className={s.wrapper}>
-        <div className={s.container}>
-          {all_id &&
-            all_id.map((item: any, i: any) => {
-              return (
-                <React.Fragment key={item}>
-                  <Link
-                    {...(selectedId === item ? { style: { color: "red" } } : "")}
-                    href={`/mainPage/${item}`}
-                  >
-                    <div>{`Новая заметка ${i + 1}`}</div>
-                  </Link>
-                  <button onClick={() => handleDeleteLink(item)}>
-                    Удалить
-                  </button>
-                </React.Fragment>
-              );
-            })}
-        </div>
-        {selectedItem && (
-          <CustomEditor
-            body={selectedItem.body}
-            key={selectedItem._id}
-            id={selectedItem._id}
-          />
-        )}
+  return (
+    // ну и паередаем его в наш редактор.
+    <div className={s.wrapper}>
+      <div className={s.container}>
+        {all_id &&
+          all_id.map((item: any, i: any) => {
+            return (
+              <React.Fragment key={item}>
+                <Link
+                  {...(selectedId === item ? { style: { color: "red" } } : "")}
+                  href={`/mainPage/${item}`}
+                >
+                  <div>{`Новая заметка ${i + 1}`}</div>
+                </Link>
+                <button onClick={() => handleDeleteLink(item)}>Удалить</button>
+              </React.Fragment>
+            );
+          })}
       </div>
-    );
-  }
+      {selectedItem && (
+        <CustomEditor
+          body={selectedItem.body}
+          key={selectedItem._id}
+          id={selectedItem._id}
+        />
+      )}
+    </div>
+  );
+};
 // };
 
 export async function getServerSideProps(context: any) {
