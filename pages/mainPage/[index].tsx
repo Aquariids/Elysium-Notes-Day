@@ -13,37 +13,53 @@ const MainPage = ({ data }: any) => {
   const all_id = data.map((obj: { _id: any }) => obj._id);
 
   const handleDeleteLink = async (linkId: any) => {
+    const res = await fetch(`/api/deleteData?_id=${linkId}`);
+    await all_id.filter((link: any) => link !== linkId);
+
+      async function handle() {
+
+        const currentIndex = all_id.findIndex((i: string) => i == selectedId);
+        console.log("🚀 ~ file: [index].tsx:23 ~ handle ~ currentIndex:", currentIndex)
+   
+        if( all_id.length >= 2 ) {
+          if (linkId != selectedId ) {
+            router.push(all_id[currentIndex]);
+          }
+           else if(linkId === selectedId && all_id[currentIndex + 1] === undefined) {
+            router.push(all_id[currentIndex - 1]);
+           } else {
+            router.push(all_id[currentIndex + 1]);
+           }
+        
+        } else if (all_id.length === 1) {
+          router.push('/mainPage');
+        } 
+        else {
+          alert('ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ')
+        }
+      }
+     
+
+      handle();
+
+   
+    //  if (all_id[currentIndex - 2] == undefined && all_id.length !== 1) {
+    //    router.push(all_id[currentIndex - 1]);
+    //  } 
+    //  if (all_id[currentIndex + 2] == undefined && all_id.length !== 1) {
+    //    router.push(all_id[currentIndex + 1]);
+    //  }
   
+   
+   
+
+
+ 
+
+
+
     
-    fetch(`/api/deleteData?_id=${linkId}`);
-    all_id.filter((link: any) => link !== linkId);
 
-    const currentIndex = all_id.findIndex((i: string) => i == selectedId);
-
-
-  
-  
-    if (all_id[currentIndex + 1] === undefined && all_id.length !== 1) {
-      router.push(all_id[currentIndex - 1]);
-    }
-    else if (all_id[currentIndex - 1] === undefined && all_id.length !== 1) {
-      router.push(all_id[currentIndex + 1]);
-    } 
-    else if (all_id[currentIndex - 1] !== undefined && all_id.length !== 1) {
-      router.push(all_id[currentIndex]);
-    } 
-    else if (all_id[currentIndex - 2] == undefined && all_id.length !== 1) {
-      router.push(all_id[currentIndex - 1]);
-    } 
-    else if (all_id[currentIndex + 2] == undefined && all_id.length !== 1) {
-      router.push(all_id[currentIndex + 1]);
-    } 
-    else if(all_id.length == 1) {
-      router.push('mainPage');
-    }  
-    else {
-      router.push(all_id[currentIndex]);
-    }
 
   };
 
@@ -67,7 +83,7 @@ const MainPage = ({ data }: any) => {
                   {...(selectedId === item ? { style: { color: "red" } } : "")}
                   href={`/mainPage/${item}`}
                 >
-                  <div>{`Новая заметка ${i + 1}`}</div>
+                  <div>{`Новая заметка ${i}`}</div>
                 </Link>
                 <button onClick={() => handleDeleteLink(item)}>Удалить</button>
               </React.Fragment>
@@ -110,3 +126,5 @@ export async function getServerSideProps(context: any) {
 }
 
 export default withLayout(MainPage);
+
+
