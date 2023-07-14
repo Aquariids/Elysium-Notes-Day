@@ -49,6 +49,7 @@ const MainPage = ({ data }: any) => {
     // ну и паередаем его в наш редактор.
     <div className={s.wrapper}>
       <div className={s.container}>
+        <div className={s.list_id}>
         {all_id &&
           all_id.map((item: any, i: any) => {
             return (
@@ -63,6 +64,7 @@ const MainPage = ({ data }: any) => {
               </React.Fragment>
             );
           })}
+          </div>
       </div>
       <div className={s.editor}>
       {selectedItem && (

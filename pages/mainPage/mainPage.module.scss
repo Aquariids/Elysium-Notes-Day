@@ -1,6 +1,6 @@
 .wrapper {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 225px 1fr;
     grid-template-rows: 100px;
     gap: 10px;
 }
@@ -8,16 +8,20 @@
 
 
 .container {
+max-width: 225px;
 overflow-x:hidden;  /*для горизонтального*/
-
 scroll-behavior: smooth;
 height: 100vh;
 border-right:  1px solid rgba(128, 128, 128, 0.349);;
 padding-top: 16px;
 }
 
+.list_id  {
+    padding-bottom: 25px;
+}
+
 
 .editor {
-    overflow-x:hidden;
+    width: 500px;
     height: 100vh;
 }
