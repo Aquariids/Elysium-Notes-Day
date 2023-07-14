@@ -11,27 +11,38 @@ const MainPage = ({ data }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
   const all_id = data.map((obj: { _id: any; }) => obj._id)
-  const [links, setLinks] = useState(all_id);
+
+
   const handleDeleteLink = async (linkId: any) => {
     fetch(`/api/deleteData?_id=${linkId}`)
-    setLinks(links.filter((link: any) => link !== linkId));
-    router.push(router.asPath);
-    links.map((item: any, i:any) => {
-      if(selectedId === item) {
-        router.push(links[i - 1])
-      }
-    })
+    all_id.filter((link: any) => link !== linkId);
+   
+   const currentIndex = all_id.findIndex((i:string) => i == selectedId); 
+
+ 
+   
+
+    if(all_id[currentIndex + 1] === undefined) {
+      router.push(all_id[currentIndex - 1])
+
+    } else {
+      router.push(all_id[currentIndex + 1])
+
+    }
+  
     
   };
+
+
 
    // это наш path по сути url
   const selectedItem = data.find(
     (item: { _id: string }) => item._id === selectedId
   ); // ищем в нашем массиве первый _id попавший под услвоие. То есть если он равен id из url
 
-  if (!selectedItem) {
-    return <Error404 />;
-  } else {
+  // if (!selectedItem) {
+  //   return <Error404 />;
+  // } else {
     return (
       // ну и паередаем его в наш редактор.
       <div className={s.wrapper}>
@@ -44,7 +55,7 @@ const MainPage = ({ data }: any) => {
                     {...(selectedId === item ? { style: { color: "red" } } : "")}
                     href={`/mainPage/${item}`}
                   >
-                    <div>{`Новая заметка ${i}`}</div>
+                    <div>{`Новая заметка ${i + 1}`}</div>
                   </Link>
                   <button onClick={() => handleDeleteLink(item)}>
                     Удалить
@@ -63,7 +74,7 @@ const MainPage = ({ data }: any) => {
       </div>
     );
   }
-};
+// };
 
 export async function getServerSideProps(context: any) {
   const session = await getSession(context);
