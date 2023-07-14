@@ -1,7 +1,13 @@
 @import "./variableRoot.scss";
 @import "./error404.scss";
 
-body { margin:0 ;}
+
+
+body { 
+  margin:0 ;
+overflow: hidden;
+
+}
 
 
 .text-editor {

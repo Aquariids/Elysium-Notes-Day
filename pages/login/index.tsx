@@ -8,7 +8,6 @@ const Login:  React.FunctionComponent = (): JSX.Element=> {
     return (
         <>
         <main className={s.main}>
-            {/* <TextEditor/> */}
 
             {!session && (
                 <>

@@ -13,13 +13,11 @@ const MainPage = ({ data }: any) => {
   const all_id = data.map((obj: { _id: any }) => obj._id);
 
   const handleDeleteLink = async (linkId: any) => {
+
     const res = await fetch(`/api/deleteData?_id=${linkId}`);
     await all_id.filter((link: any) => link !== linkId);
 
-      async function handle() {
-
         const currentIndex = all_id.findIndex((i: string) => i == selectedId);
-        console.log("🚀 ~ file: [index].tsx:23 ~ handle ~ currentIndex:", currentIndex)
    
         if( all_id.length >= 2 ) {
           if (linkId != selectedId ) {
@@ -37,30 +35,6 @@ const MainPage = ({ data }: any) => {
         else {
           alert('ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ')
         }
-      }
-     
-
-      handle();
-
-   
-    //  if (all_id[currentIndex - 2] == undefined && all_id.length !== 1) {
-    //    router.push(all_id[currentIndex - 1]);
-    //  } 
-    //  if (all_id[currentIndex + 2] == undefined && all_id.length !== 1) {
-    //    router.push(all_id[currentIndex + 1]);
-    //  }
-  
-   
-   
-
-
- 
-
-
-
-    
-
-
   };
 
   // это наш path по сути url
@@ -68,9 +42,9 @@ const MainPage = ({ data }: any) => {
     (item: { _id: string }) => item._id === selectedId
   ); // ищем в нашем массиве первый _id попавший под услвоие. То есть если он равен id из url
 
-  // if (!selectedItem) {
-  //   return <Error404 />;
-  // } else {
+  if (!selectedItem) {
+    return <Error404 />;
+  } else {
   return (
     // ну и паередаем его в наш редактор.
     <div className={s.wrapper}>
@@ -90,6 +64,7 @@ const MainPage = ({ data }: any) => {
             );
           })}
       </div>
+      <div className={s.editor}>
       {selectedItem && (
         <CustomEditor
           body={selectedItem.body}
@@ -97,10 +72,11 @@ const MainPage = ({ data }: any) => {
           id={selectedItem._id}
         />
       )}
+      </div>
     </div>
   );
 };
-// };
+};
 
 export async function getServerSideProps(context: any) {
   const session = await getSession(context);
@@ -108,7 +84,7 @@ export async function getServerSideProps(context: any) {
   const email = session?.user.email;
   const res = await fetch(
     `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`
-  ); // тут наверное лучше сразу сделатьт запрос к нужному документу, а не все грузить
+  ); 
   const data = await res.json();
 
   if (!session) {

@@ -2,13 +2,22 @@
     display: grid;
     grid-template-columns: 300px 1fr;
     grid-template-rows: 100px;
-
+    gap: 10px;
 }
 
 
 
 .container {
-    
-    
-margin-top: 16px;
+overflow-x:hidden;  /*для горизонтального*/
+
+scroll-behavior: smooth;
+height: 100vh;
+border-right:  1px solid rgba(128, 128, 128, 0.349);;
+padding-top: 16px;
+}
+
+
+.editor {
+    overflow-x:hidden;
+    height: 100vh;
 }
