@@ -18,10 +18,10 @@ const Login:  React.FunctionComponent = (): JSX.Element=> {
             )}
 
             {session && (
-                <>
-                    Signed in as {session.user.email} <br />
-                    <button onClick={() => signOut()}> sign Out</button>
-                </>
+                <div className={s.login}>
+                    <p>{session.user.email}</p>
+                    <button className={s.login_btn} onClick={() => signOut()}> Выйти </button>
+                </div>
             )}
         </main>
         </>

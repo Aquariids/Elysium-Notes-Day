@@ -1,3 +1,20 @@
 .main {
     
 }
+
+
+.login {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100px;
+
+    &_btn {
+        color: #FFF;
+        width: 100px;
+        background-color: transparent; 
+        border: 1px solid rgb(126, 126, 126);
+    }
+}
+
+

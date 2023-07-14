@@ -5,11 +5,13 @@
         "sidebar body body"
         "footer footer footer";
         grid-template-columns: var(--grid_columns_wrapper);
-        gap: 10px;
+        gap: 0px 20px;
+
 }
 
 
 .header {
+    height: 60px;
     background-color: green;
     grid-area: header;
 
@@ -26,6 +28,7 @@
 }
 
 .body {
+    min-height: 100vh;
     background-color: rgba(235, 235, 235, 0.616);
     grid-area: body;
 }

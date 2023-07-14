@@ -7,9 +7,9 @@ import {
 } from "contenido";
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { Session } from "next-auth";
 import Editor from '@draft-js-plugins/editor';
+import s from './CustomEditor.module.scss'
 const CustomEditor = ({ id, body }: any) => {
   
   const { data: session } = useSession();
@@ -57,27 +57,28 @@ const CustomEditor = ({ id, body }: any) => {
   
     const timer = setTimeout(() => {
       updateData(editorState, session, _id);
-      console.log('дав');
-      
-    }, 300);
+    }, 200);
   
     return () => clearTimeout(timer);
   }, [editorState, session, _id]);
   
   return (
     <>
+    <div className={s.toolbar}>
       <ToolbarButtons
         editorState={editorState}
         setEditorState={setEditorState}
       />
+      
       <Editor 
-      placeholder="Введите текст"
+        placeholder="Введите текст"
         editorKey="editor"
         editorState={editorState}
         onChange={handleEditorChange}
         handleKeyCommand={shortcutHandler(setEditorState)}
         keyBindingFn={getDefaultKeyBindingFn}
       />
+      </div>
     </>
   );
 };

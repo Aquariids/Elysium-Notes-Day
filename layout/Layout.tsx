@@ -9,10 +9,10 @@ const Layout = ({ children, ...props}: LayoutProps) => {
     // props из withLayout
     return (
         <div className={s.wrapper}>
-            <Header className={s.header} />
+            {/* <Header className={s.header} /> */}
             <Sidebar {...props} className={s.sidebar} />
             <main className={s.body}>{children}</main>
-            <Footer className={s.footer} />
+            {/* <Footer className={s.footer} /> */}
         </div>
     )
 }
