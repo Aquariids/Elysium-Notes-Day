@@ -3,22 +3,24 @@
     grid-template-columns: 225px 1fr;
     grid-template-rows: 100px;
     gap: 10px;
+    height: 100%;
 }
 
 
 
 .container {
+display: flex;
+flex-direction: column;
+margin-left: 2px;
+padding-right: 5px;
 max-width: 225px;
 overflow-x:hidden;  /*для горизонтального*/
 scroll-behavior: smooth;
 height: 100vh;
-border-right:  1px solid rgba(128, 128, 128, 0.349);;
+border-right:  1px solid rgba(128, 128, 128, 0.349);
 padding-top: 16px;
 }
 
-.list_id  {
-    padding-bottom: 25px;
-}
 
 
 .editor {

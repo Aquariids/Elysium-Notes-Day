@@ -4,3 +4,20 @@
         margin: 0;
     }
 }
+
+.title {
+    width: 100%;
+    font-size: 30px;
+    border:0;
+ &:focus {
+    border: 0;
+    outline: none;
+ }   
+ 
+}
+
+
+
+.body {
+    padding-top: 10px;
+}

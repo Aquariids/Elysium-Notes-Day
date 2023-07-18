@@ -1,17 +1,19 @@
 import { ObjectId } from 'mongodb';
 import clientPromise from './mongodb';
 
-export async function getDataFromDatabase(_id: any) {
-  const client = await clientPromise;
-  const database = client.db('notes2');
-  const collection = database.collection('page2');
-  const id =  new ObjectId(_id)
-  const data = await collection.find(id).toArray();
-  const [body] = data;
+// export async function getTitleFromDatabase(userId: any ,email:any) {
+//   const client = await clientPromise;
+//   const database = client.db('notes2');
+//   const collection = database.collection('page2');
+//   const query = userId && email ? {userId, email}: {};
+//   const title = await collection.find()
+//   console.log("🚀 ~ file: dataFromDatabase.ts:10 ~ getTitleFromDatabase ~ title:", title.title)
+  
+  
 
-  return body.body; // получаю пока что только тело, то есть данные из редактора draft js
+//   return title && title.title; 
 
-}
+// }
 
 
 export async function getAllNotesFromDatabase(userId: any,email: any) {
@@ -38,14 +40,14 @@ export async function deleteData (_id:any) {
   const database = client.db('notes2');
   const collection = database.collection('page2');
   const id = new ObjectId(_id)
-  const result = await collection.deleteOne({_id:id}); // Этот метод позволяет вставить документ в коллекцию
+  const result = await collection.deleteOne({_id:id});
   return result;
 }
 
 
 // В общем ту я отправляю данные на базу монго.
 export async function updateDataInDatabase(data: any) {
-  const id =  new ObjectId(data._id)
+  const id = new ObjectId(data._id)
   const client = await clientPromise;
   const database = client.db('notes2');
   const collection = database.collection('page2');  
@@ -55,9 +57,28 @@ export async function updateDataInDatabase(data: any) {
   await collection.findOneAndUpdate (
     //$and - объеденяет выражение и возрвращает документы подходящие под условие. типо тоже самое что логическое &&
     {  $and: [ {userId:data.userId}, {email:data.email}, {_id: id}]}, // фильтрация - проверяем если email равен data.email и userId равен data.userId
-    { $set: { body: data.body } }, // то обновляем тело. $set оператор обновления поля или может добавить его.
+    { $set: {
+      body: data.body,
+    }
+ }, // то обновляем тело. $set оператор обновления поля или может добавить его.
 
   );
+
+}
+  export async function updateDataTitle(data: any) {
+    console.log("🚀 ~ file: dataFromDatabase.ts:69 ~ updateDataTitle ~ data:", data)
+    const id = new ObjectId(data._id)
+    const client = await clientPromise;
+    const database = client.db('notes2');
+    const collection = database.collection('page2');  
+    await collection.updateOne (
+      { _id: id}, 
+      { $set: {
+        title: data.title
+      }
+   }, // то обновляем тело. $set оператор обновления поля или может добавить его.
+  
+    );
 
   
 }
