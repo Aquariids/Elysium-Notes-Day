@@ -11,7 +11,6 @@ import { Session } from "next-auth";
 import Editor from '@draft-js-plugins/editor';
 import s from './CustomEditor.module.scss'
 import { useRouter } from "next/router";
-import { AppContext } from "../../../context/app.context";
 const CustomEditor = ({ id, body, title,setCheckTitle,checkTitle }: any) => {
 
   const [value, setValue] = useState('');
