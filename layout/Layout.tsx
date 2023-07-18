@@ -4,7 +4,6 @@ import { LayoutProps } from "./Layout.props";
 import Sidebar from "./Sidebar/Sidebar";
 import s from "./Layout.module.scss";
 import { FunctionComponent } from "react";
-import { AppContextProvider } from "../context/app.context";
 
 const Layout = ({ children, ...props }: LayoutProps) => {
   // props из withLayout
@@ -26,11 +25,11 @@ export const withLayout = <T extends Record<string, unknown>>(
   return function withLayoutComponent(props: T): JSX.Element {
     // пропсы передаю в лейоут и потом получаю где нужно. sidebar, footer, header и так далее.
     return (
-      <AppContextProvider title={props.title1}>
+     
         <Layout {...props}>
           <Component {...props} />
         </Layout>
-      </AppContextProvider>
+     
     );
   };
 };
