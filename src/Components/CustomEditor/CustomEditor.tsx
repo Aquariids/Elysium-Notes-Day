@@ -11,8 +11,10 @@ import { Session } from "next-auth";
 import Editor from '@draft-js-plugins/editor';
 import s from './CustomEditor.module.scss'
 import { useRouter } from "next/router";
-const CustomEditor = ({ id, body, title,setCheckTitle,checkTitle }: any) => {
-
+import { format } from 'date-fns';
+const CustomEditor = ({ id, body, title,setCheckTitle,checkTitle, date }: any) => {
+const currentDate = new Date() ?? '';
+const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm:ss');  
   const [value, setValue] = useState('');
   const { data: session } = useSession();
   const router = useRouter()
@@ -61,7 +63,7 @@ const CustomEditor = ({ id, body, title,setCheckTitle,checkTitle }: any) => {
         userId: session?.user.userId,
         _id: _id,
         body: content,
-        title:value // короче делай отдельную функцию для  title обновления ее. Это будет только под тело! 
+        updateDate: formattedDate
       };
   
       try {
@@ -88,7 +90,7 @@ const CustomEditor = ({ id, body, title,setCheckTitle,checkTitle }: any) => {
     }, 200);
   
     return () => clearTimeout(timer);
-  }, [editorState, session, _id,]);
+  }, [editorState]);
 
   useEffect(() => {
     const updateTitle = async (session: Session | null, _id: any,) => {
@@ -133,6 +135,7 @@ const CustomEditor = ({ id, body, title,setCheckTitle,checkTitle }: any) => {
     <>
     
     <div className={s.toolbar}>
+      <p>Полследние изменения: {date}</p>
       <ToolbarButtons
         editorState={editorState}
         setEditorState={setEditorState}

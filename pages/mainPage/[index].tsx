@@ -18,6 +18,7 @@ const MainPage = ({ data }: any) => {
   const selectedItem = data.find(
     (item: { _id: string }) => item._id === selectedId
   ); // ищем в нашем массиве первый _id попавший под услвоие. То есть если он равен id из url
+  console.log("🚀 ~ file: [index].tsx:21 ~ MainPage ~ selectedItem:", selectedItem)
 
   if (!selectedItem) {
     return <Error404 />;
@@ -39,6 +40,7 @@ const MainPage = ({ data }: any) => {
               body={selectedItem.body}
               key={selectedItem._id}
               id={selectedItem._id}
+              date = {selectedItem?.updateDate}
             />
             
           )}

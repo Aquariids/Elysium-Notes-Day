@@ -1,4 +1,5 @@
 export interface ILinks {
     _id: string,
-    title:string
+    title:string,
+    date:string
 }

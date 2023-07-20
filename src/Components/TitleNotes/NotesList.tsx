@@ -30,6 +30,7 @@ const NotesList = ({ data, id, checkTitle }: any) => {
           return {
             title: item.title,
             _id: item._id,
+            date: item.date
           };
         })
       );
@@ -113,6 +114,7 @@ const NotesList = ({ data, id, checkTitle }: any) => {
                 <p className={s.title_link}>
                   {item.title ? item.title : "Без названия"}
                 </p>
+                <div>{item.date}</div>
               </Link>
             </div>
           );

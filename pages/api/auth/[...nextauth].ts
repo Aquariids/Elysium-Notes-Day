@@ -14,9 +14,6 @@ interface ExtendedSession extends Session {
   userId: string
 }
 
-interface ExtendedUser extends User {
-  userId: string
-}
 
 export const  authOptions:NextAuthOptions = {
 
