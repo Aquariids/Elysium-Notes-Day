@@ -1,21 +1,16 @@
-import '../styles/globals.scss'
-import type { AppProps } from 'next/app'
-import { SessionProvider } from "next-auth/react";
-
+import "../styles/globals.scss";
+import type { AppProps } from "next/app";
+import { Providers } from "@/Components/Providers";
 
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
-
   return (
-    <SessionProvider session={session}>
+    <Providers>
       {/* <TextEditorProvider> */}
-     <Component  {...pageProps} />
+      <Component {...pageProps} />
       {/* </TextEditorProvider> */}
-    </SessionProvider>
-    
-
-  )
-
+    </Providers>
+  );
 }

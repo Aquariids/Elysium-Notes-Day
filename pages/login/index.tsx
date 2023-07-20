@@ -5,10 +5,14 @@ import s from './login.module.scss';
 const Login:  React.FunctionComponent = (): JSX.Element=> {
     const { data: session, status: loading } = useSession();
     
-    return (
+    if(loading === 'loading') {
+      return(<>
+      Загрузка профиля
+      </>)
+    } else {
+      return  (
         <>
         <main className={s.main}>
-
             {!session && (
                 <>
                     <p>Not signed in</p>
@@ -25,6 +29,8 @@ const Login:  React.FunctionComponent = (): JSX.Element=> {
         </main>
         </>
     )
+    }
+   
 }
 
 

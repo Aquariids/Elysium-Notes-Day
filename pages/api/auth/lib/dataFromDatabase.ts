@@ -66,7 +66,6 @@ export async function updateDataInDatabase(data: any) {
 
 }
   export async function updateDataTitle(data: any) {
-    console.log("🚀 ~ file: dataFromDatabase.ts:69 ~ updateDataTitle ~ data:", data)
     const id = new ObjectId(data._id)
     const client = await clientPromise;
     const database = client.db('notes2');

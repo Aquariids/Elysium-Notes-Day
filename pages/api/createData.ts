@@ -1,6 +1,6 @@
 import { createDatabase } from './auth/lib/dataFromDatabase';
-
-export default async function handler(req, res) {
+import { NextApiRequest, NextApiResponse } from 'next';
+export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     try {
         const data = req.body;
         await createDatabase(data);

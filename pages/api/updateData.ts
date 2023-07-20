@@ -1,6 +1,7 @@
 import { updateDataInDatabase } from './auth/lib/dataFromDatabase';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req, res) {
+export default async function POST(req:NextApiRequest, res:NextApiResponse) {
     try {
         const data = req.body;
         await updateDataInDatabase(data);
