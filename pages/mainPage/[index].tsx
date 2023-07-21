@@ -28,7 +28,7 @@ const MainPage = ({ data }: any) => {
      
       <div className={s.wrapper}>
         <div className={s.container}>
-           <NotesList data = {data} checkTitle={checkTitle}  id={selectedItem._id} title={selectedItem.title} data={data} />
+           <NotesList data = {data} checkTitle={checkTitle}  id={selectedItem._id} title={selectedItem.title} body={data} />
         </div>
         <div className={s.editor}>
           

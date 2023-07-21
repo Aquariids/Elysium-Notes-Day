@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import cn from "classnames";
 import { ILinks } from "./NotesList.props";
-const NotesList = ({ data, checkTitle }: any) => {
+const NotesList = ({ body, checkTitle }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
   const session = useSession();
@@ -86,8 +86,8 @@ const NotesList = ({ data, checkTitle }: any) => {
   if (loadingDelete) {
     return (
       <>
-        {data &&
-          data.map((item: ILinks) => {
+        {body &&
+          body.map((item: ILinks) => {
             return (
               <div
                 key={item._id}
