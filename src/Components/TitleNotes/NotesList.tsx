@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { use, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import s from "./NotesList.module.scss";
 import Link from "next/link";
@@ -13,6 +13,12 @@ const NotesList = ({ body, checkTitle }: any) => {
   const email = session.data?.user.email;
   const [links, setLinks] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
+  const [loadingData, setLoadingData] = useState(true); 
+  useEffect(()=> {
+    setTimeout(() => {
+      setLoadingData(false)
+    },500)
+  },[])
   useEffect(() => {
     async function getTitle() {
       const res = await fetch(
@@ -83,7 +89,7 @@ const NotesList = ({ body, checkTitle }: any) => {
     }, 750);
   };
 
-  if (loadingDelete) {
+  if (loadingData || loadingDelete) {
     return (
       <>
         {body &&

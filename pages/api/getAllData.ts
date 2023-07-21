@@ -1,16 +1,7 @@
 import { getAllNotesFromDatabase } from './auth/lib/dataFromDatabase';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-interface IRequest {
-    req:NextApiRequest,
-    query: {
-        userId:string
-        email:string
-    }
-}
-
-
-export default async function GET(req:IRequest, res:NextApiResponse) {
+export default async function GET(req:NextApiRequest, res:NextApiResponse) {
     const userId = req.query.userId;
     const email = req.query.email;
 
