@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import cn from "classnames";
 import { ILinks } from "./NotesList.props";
 const NotesList = ({ data, id, checkTitle }: any) => {
-  console.log("🚀 ~ file: NotesList.tsx:8 ~ NotesList ~ data:", data);
   const router = useRouter();
   const selectedId = router.query.index;
   const all_id = data.map((obj: { _id: string }) => obj._id);

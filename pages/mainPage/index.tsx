@@ -1,8 +1,10 @@
 import { emptyRawContentState } from "contenido";
 import { convertFromRaw } from "draft-js";
+import { getServerSession } from "next-auth/next";
 import { getSession, useSession } from "next-auth/react";
 import Link from "next/link";
 import { withLayout } from "../../layout/Layout";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 const MainPage = ({ data }: any) => {
   return (
@@ -24,7 +26,7 @@ const MainPage = ({ data }: any) => {
 
 
 export async function getServerSideProps(context: any) {
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions)
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(`${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`);

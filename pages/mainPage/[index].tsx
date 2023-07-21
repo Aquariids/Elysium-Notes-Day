@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 import s from "./mainPage.module.scss";
 import Error404 from "../Error404";
 import NotesList from "@/Components/TitleNotes/NotesList";
-
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "../api/auth/[...nextauth]";
 const MainPage = ({ data }: any) => {
   const  [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -18,7 +19,6 @@ const MainPage = ({ data }: any) => {
   const selectedItem = data.find(
     (item: { _id: string }) => item._id === selectedId
   ); // ищем в нашем массиве первый _id попавший под услвоие. То есть если он равен id из url
-  console.log("🚀 ~ file: [index].tsx:21 ~ MainPage ~ selectedItem:", selectedItem)
 
   if (!selectedItem) {
     return <Error404 />;
@@ -53,7 +53,8 @@ const MainPage = ({ data }: any) => {
 };
 
 export async function getServerSideProps(context: any) {
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions)
+  
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(

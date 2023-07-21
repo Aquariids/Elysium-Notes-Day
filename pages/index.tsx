@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import React, { useState } from 'react';
 import { getSession,useSession } from 'next-auth/react'
+import { authOptions } from './api/auth/[...nextauth]';
+import { getServerSession } from 'next-auth/next';
 
 
 function Home({ user }: any) {
@@ -22,7 +24,7 @@ function Home({ user }: any) {
 export default Home;
 
 export async function getServerSideProps(context:any) {
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions)
   
   if (!session) {
     return {
