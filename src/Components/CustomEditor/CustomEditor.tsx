@@ -18,6 +18,7 @@ const CustomEditor = ({
   setCheckTitle,
   checkTitle,
   date,
+
 }: any) => {
   const currentDate = new Date() ?? "";
   const formattedDate = format(currentDate, "yyyy-MM-dd HH:mm:ss");

@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import cn from "classnames";
 import { ILinks } from "./NotesList.props";
 const NotesList = ({ body, checkTitle }: any) => {
-  console.log("🚀 ~ file: NotesList.tsx:9 ~ NotesList ~ body:", body[0].body)
   const router = useRouter();
   const selectedId = router.query.index;
   const session = useSession();
@@ -28,37 +27,23 @@ const NotesList = ({ body, checkTitle }: any) => {
       );
       const data = await res.json();
       setLinks(
-        data.map((item: ILinks) => {
+        data.map((item: ILinks) => {                    
           return {
             title: item.title,
             _id: item._id,
             date: item.date,
-            body:item.body
+            body:item.body,
+          
           };
         })
       );
     }
-    updateCurrentLink();
     getTitle();
+    // updateCurrentLink();
+    
   }, [checkTitle, session, selectedId]);
 
-  async function updateCurrentLink() {
-    try {
-      const response = await fetch(`/api/updateTitle`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(links),
-      });
-    } catch (error) {
-      alert(error)
-    }
-  }
-
-  const handleDeleteLink = async (linkId?: any) => {
-    console.log(userId);
-    
+  const handleDeleteLink = async (linkId?: any) => {    
     const all_id = links && links.map((obj: { _id: string }) => obj._id);
     await all_id.filter((link: any) => link !== linkId);
     const currentIndex = all_id.findIndex((i: string) => i == selectedId);

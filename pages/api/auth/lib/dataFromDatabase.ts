@@ -74,19 +74,31 @@ export async function updateDataInDatabase(data: any) {
  
 
 }
-  export async function updateDataTitle(data: any) {
-    const id = new ObjectId(data._id)
+  export async function updateDataTitle(data: any, ) {
     const client = await clientPromise;
-    const database = client.db('notes2');
-    const collection = database.collection(`user_${data.userId}`);  
-    await collection.updateOne (
-      { _id: id}, 
-      { $set: {
-        title: data.title
-      }
-   }, // то обновляем тело. $set оператор обновления поля или может добавить его.
+    try {
+      
+      const id = new ObjectId(data._id)
+      const database = client.db('notes2');
+      const collection = database.collection(`user_${data.userId}`);  
+      await collection.updateOne (
+        { _id: id}, 
+        { $set: {
+          title: data.title
+        }
+     }, // то обновляем тело. $set оператор обновления поля или может добавить его.
+    
+      );
   
-    );
-
+    }
+    catch(error) {
+      console.log(error);
+      client.close()
+      
+    }
+   
+    
+    
+ 
   
 }
