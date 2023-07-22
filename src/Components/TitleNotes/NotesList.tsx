@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import cn from "classnames";
 import { ILinks } from "./NotesList.props";
 const NotesList = ({ body, checkTitle }: any) => {
+  console.log("🚀 ~ file: NotesList.tsx:9 ~ NotesList ~ body:", body[0].body)
   const router = useRouter();
   const selectedId = router.query.index;
   const session = useSession();
@@ -19,6 +20,7 @@ const NotesList = ({ body, checkTitle }: any) => {
       setLoadingData(false)
     },500)
   },[])
+  
   useEffect(() => {
     async function getTitle() {
       const res = await fetch(
@@ -31,6 +33,7 @@ const NotesList = ({ body, checkTitle }: any) => {
             title: item.title,
             _id: item._id,
             date: item.date,
+            body:item.body
           };
         })
       );
@@ -54,13 +57,15 @@ const NotesList = ({ body, checkTitle }: any) => {
   }
 
   const handleDeleteLink = async (linkId?: any) => {
+    console.log(userId);
+    
     const all_id = links && links.map((obj: { _id: string }) => obj._id);
     await all_id.filter((link: any) => link !== linkId);
     const currentIndex = all_id.findIndex((i: string) => i == selectedId);
 
     if (linkId) {
       try {
-        const res = await fetch(`/api/deleteData?_id=${linkId}`);
+        const res = await fetch(`/api/deleteData?_id=${linkId}&userId=${userId}`);
       } catch (error) {
         alert(error);
       }
@@ -106,6 +111,7 @@ const NotesList = ({ body, checkTitle }: any) => {
                   <p className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
                   </p>
+                  <p> {item.body}</p>
                   <div>{item.date}</div>
                 </Link>
               </div>
@@ -133,6 +139,7 @@ const NotesList = ({ body, checkTitle }: any) => {
                   <p className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
                   </p>
+                  <p> {item.body}</p>
                   <div>{item.date}</div>
                 </Link>
               </div>

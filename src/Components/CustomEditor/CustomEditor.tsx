@@ -24,7 +24,6 @@ const CustomEditor = ({
   const [value, setValue] = useState("");
   const { data: session } = useSession();
   const _id = id;
-  // const { title1 } = useContext(AppContext);
 
   // convertFromRaw - с помощью этого метода мы наш пустой объект превращаем в спец объект для draft js
   const [editorState, setEditorState] = useState<EditorState>(
@@ -33,7 +32,9 @@ const CustomEditor = ({
 
   const handleEditorChange = (editorState: SetStateAction<EditorState>) => {
     setEditorState(editorState);
+    
   };
+
 
   useEffect(() => {
     if (body) {
@@ -124,7 +125,7 @@ const CustomEditor = ({
   return (
     <>
       <div className={s.toolbar}>
-        <p>Полследние изменения: {date}</p>
+        {/* <p>Полследние изменения: {date}</p> */}
         <ToolbarButtons
           editorState={editorState}
           setEditorState={setEditorState}

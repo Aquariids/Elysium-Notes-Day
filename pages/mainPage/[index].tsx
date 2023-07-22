@@ -28,7 +28,7 @@ const MainPage = ({ data }: any) => {
      
       <div className={s.wrapper}>
         <div className={s.container}>
-           <NotesList data = {data} checkTitle={checkTitle}  id={selectedItem._id} title={selectedItem.title} body={data} />
+           <NotesList checkTitle={checkTitle}  id={selectedItem._id} title={selectedItem.title} body={data} />
         </div>
         <div className={s.editor}>
           
@@ -72,7 +72,7 @@ export async function getServerSideProps(context: any) {
   }
 
   return {
-    props: { data, revalidate: 5 },
+    props: { data, revalidate: 10 },
   };
 }
 
