@@ -4,6 +4,7 @@ import { LayoutProps } from "./Layout.props";
 import Sidebar from "./Sidebar/Sidebar";
 import s from "./Layout.module.scss";
 import { FunctionComponent } from "react";
+import { Providers } from "@/Components/Providers";
 
 const Layout = ({ children, ...props }: LayoutProps) => {
   // props из withLayout
@@ -12,6 +13,7 @@ const Layout = ({ children, ...props }: LayoutProps) => {
       {/* <Header className={s.header} /> */}
       <Sidebar {...props} className={s.sidebar} />
       <main className={s.body}>{children}</main>
+   
       {/* <Footer className={s.footer} /> */}
     </div>
   );
@@ -29,6 +31,7 @@ export const withLayout = <T extends Record<string, unknown>>(
         <Layout {...props}>
           <Component {...props} />
         </Layout>
+        
      
     );
   };

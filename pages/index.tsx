@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import React, { useState } from 'react';
-import { getSession,useSession } from 'next-auth/react'
 import { authOptions } from './api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth/next';
 
@@ -14,6 +13,9 @@ function Home({ user }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+
+      
     </>
   )
 }
@@ -32,15 +34,18 @@ export async function getServerSideProps(context:any) {
         destination: '/login',
         permanent: false,
       },
-    }
-  } 
-  else {
+    } 
+  }  else {
     return {
       redirect: {
         destination: '/mainPage',
         permanent: false,
       },
-    }
+    } 
+  }
+
+  return {
+    props:{}
   }
 }
 

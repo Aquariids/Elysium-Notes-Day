@@ -9,7 +9,7 @@ const NotesList = ({ body, checkTitle }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
   const session = useSession();
-  const userId = session.data?.user.userId; // айди авторизованного человека
+  const userId = session.data?.user.userId; 
   const email = session.data?.user.email;
   const [links, setLinks] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
