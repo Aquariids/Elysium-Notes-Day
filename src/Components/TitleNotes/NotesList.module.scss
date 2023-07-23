@@ -1,23 +1,24 @@
 .block_link {
     width: 100%;
-    border:  1px solid rgba(128, 128, 128, 0.349);
-    height: 100px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    height: 100%;
+    border-bottom:  1px solid rgba(128, 128, 128, 0.349);
     text-decoration: none;
     position: relative;
-    overflow: hidden;
-
+    color:rgb(87, 87, 87);
+    height: 110px;
+    margin-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
-
 .link {
-    display: flex;
+    display: block;
     width: 100%;
     height: 100%;
     text-decoration: none;
-
+    color: #666;
 }
+
 .delete_btn {
     position: absolute;
     right: 0;
@@ -26,22 +27,27 @@
     height: 10px;
     background-color: rgb(223, 223, 223);
     border: 1px solid rgba(75, 74, 74, 0.521);
+ 
 }
 
 
 .title_link {
-    display: flex;
-    margin: 0;
-    position: absolute;
-    top: 0;
+    color: black;
+    font-size: 16px;
 }
 
 .body_link {
-    display: flex;
-    position: absolute;
-    width: 90%;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+
+  
 }
 
 .active {
-    border: 1px solid rgba(17, 152, 241, 0.699);
+    padding-right: 10px;
+    background-color: rgba(102, 102, 102, 0.082);
+    border-bottom: 1px solid rgba(103, 180, 231, 0.699);
 }
+

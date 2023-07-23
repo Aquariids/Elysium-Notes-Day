@@ -6,7 +6,7 @@ import { HeaderProps } from './Header.props';
 const Header = ({ className, ...props }:HeaderProps) => {
     return (
 
-        <header className={cn(className, )} {...props}>Header</header>
+        <header className={cn(className, )} {...props}></header>
 
     )
 }

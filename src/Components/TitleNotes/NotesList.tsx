@@ -105,9 +105,9 @@ const NotesList = ({ body, checkTitle }: any) => {
               >
                 <button disabled className={s.delete_btn}></button>
                 <Link className={s.link} href={`/mainPage/${item._id}`}>
-                  <p className={s.title_link}>
+                  <div className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
-                  </p>
+                  </div>
                   <p> {DraftJsObjectInText(item.body)} </p>
                 </Link>
               </div>
@@ -131,16 +131,18 @@ const NotesList = ({ body, checkTitle }: any) => {
                   [s.active]: selectedId === item._id,
                 })}
               >
+           
                 <button
                   className={s.delete_btn}
                   onClick={() => handleDeleteLink(selectedId)}
                 ></button>
                 <Link className={s.link} href={`/mainPage/${item._id}`}>
-                  <p className={s.title_link}>
+                  <div className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
-                  </p>
+                  </div>
                   <p className={s.body_link}> {DraftJsObjectInText(item.body)}</p>
                 </Link>
+           
               </div>
             );
           })}
