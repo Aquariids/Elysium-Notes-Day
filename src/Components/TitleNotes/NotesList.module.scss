@@ -6,9 +6,7 @@
     position: relative;
     color:rgb(87, 87, 87);
     height: 110px;
-    margin-bottom: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-top: 10px;
 }
 
 .link {
@@ -46,7 +44,6 @@
 }
 
 .active {
-    padding-right: 10px;
     background-color: rgba(102, 102, 102, 0.082);
     border-bottom: 1px solid rgba(103, 180, 231, 0.699);
 }
