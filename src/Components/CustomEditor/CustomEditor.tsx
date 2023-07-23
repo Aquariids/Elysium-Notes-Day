@@ -11,43 +11,40 @@ import { Session } from "next-auth";
 import Editor from "@draft-js-plugins/editor";
 import s from "./CustomEditor.module.scss";
 import { format } from "date-fns";
+import Router from "next/router";
 const CustomEditor = ({
   id,
   body,
   title,
   setCheckTitle,
   checkTitle,
-  date,
 
 }: any) => {
-  const currentDate = new Date() ?? "";
-  const formattedDate = format(currentDate, "yyyy-MM-dd HH:mm:ss");
   const [value, setValue] = useState("");
   const { data: session } = useSession();
   const _id = id;
 
   // convertFromRaw - с помощью этого метода мы наш пустой объект превращаем в спец объект для draft js
   const [editorState, setEditorState] = useState<EditorState>(
-    EditorState.createWithContent(convertFromRaw(emptyRawContentState)) // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
+    EditorState.createWithContent(convertFromRaw(JSON.parse(body))) // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
   );
 
   const handleEditorChange = (editorState: SetStateAction<EditorState>) => {
     setEditorState(editorState);
   };
 
+
   useEffect(() => {
     if (body) {
       const contentState = convertFromRaw(JSON.parse(body)); // тут мы парсим данные с базы в спец объект draft js
       setEditorState(EditorState.createWithContent(contentState)); // и на его основе меняем состояние редактора\
-      setValue(title);
+     
     }
-  }, [_id, session]);
-  useEffect(() => {
-    if (title) {
-      setValue(title);
-    }
-  }, [_id, session]);
+  }, [body]);
 
+useEffect(() => {
+  setValue(title);
+}, [title])
   useEffect(() => {
     const updateData = async (
       editorState: EditorState,
@@ -83,12 +80,15 @@ const CustomEditor = ({
     };
 
     const timer = setTimeout(() => {
+      console.log('aaa');
+      
       updateData(editorState, session, _id);
       setCheckTitle(!checkTitle);
-    }, 100);
+      
+    }, 300);
 
     return () => clearTimeout(timer);
-  }, [editorState]);
+  }, [editorState, _id, session]);
 
   useEffect(() => {
     const updateTitle = async (session: Session | null, _id: any) => {
@@ -116,9 +116,14 @@ const CustomEditor = ({
     const timer = setTimeout(() => {
       updateTitle(session, _id);
       setCheckTitle(!checkTitle);
-    }, 100);
+      
+    }, 300);
 
     return () => clearTimeout(timer);
+      
+
+
+   
   }, [value]);
 
   return (
@@ -132,7 +137,7 @@ const CustomEditor = ({
 
         <div className={s.body}>
           <input
-            placeholder="Заголовок "
+            placeholder="Заголовок"
             className={s.title}
             value={value}
             onChange={(e) => setValue(e.target.value)}
