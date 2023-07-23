@@ -33,9 +33,7 @@ const CustomEditor = ({
 
   const handleEditorChange = (editorState: SetStateAction<EditorState>) => {
     setEditorState(editorState);
-    
   };
-
 
   useEffect(() => {
     if (body) {
@@ -87,7 +85,7 @@ const CustomEditor = ({
 
     const timer = setTimeout(() => {
       updateData(editorState, session, _id);
-    }, 200);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, [editorState]);
@@ -118,7 +116,7 @@ const CustomEditor = ({
     const timer = setTimeout(() => {
       updateTitle(session, _id);
       setCheckTitle(!checkTitle);
-    }, 200);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, [value]);

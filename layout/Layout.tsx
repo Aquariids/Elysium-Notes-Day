@@ -5,15 +5,16 @@ import Sidebar from "./Sidebar/Sidebar";
 import s from "./Layout.module.scss";
 import { FunctionComponent } from "react";
 import { Providers } from "@/Components/Providers";
+import { useSession } from "next-auth/react";
 
 const Layout = ({ children, ...props }: LayoutProps) => {
+  const session = useSession();
   // props из withLayout
   return (
     <div className={s.wrapper}>
       {/* <Header className={s.header} /> */}
       <Sidebar {...props} className={s.sidebar} />
       <main className={s.body}>{children}</main>
-   
       {/* <Footer className={s.footer} /> */}
     </div>
   );

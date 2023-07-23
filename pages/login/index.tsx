@@ -4,11 +4,13 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import s from './login.module.scss';
 
 
-const Login:  React.FunctionComponent = (props): JSX.Element=> {
-    console.log("🚀 ~ file: index.tsx:8 ~ props:", props)
+const Login:  React.FunctionComponent = (): JSX.Element=> {
     const { data: session, status: loading } = useSession();
     
     
+    if(loading === 'loading') {
+      return(<>Загрузка</>)
+    } else {
       return  (
         <>
         <main className={s.main}>
@@ -28,6 +30,9 @@ const Login:  React.FunctionComponent = (props): JSX.Element=> {
         </main>
         </>
     )
+    }
+
+    
     
    
 }
@@ -39,7 +44,6 @@ export default Login;
 
 export async function getServerSideProps(context:any) {
   const session = await getServerSession(context.req, context.res, authOptions)
-    console.log("🚀 ~ file: index.tsx:42 ~ getServerSideProps ~ session:", session)
     if (session) {
       return {
         redirect: {
@@ -49,12 +53,6 @@ export async function getServerSideProps(context:any) {
       }
     }
     return {
-      props: {
-        session: await getServerSession(
-          context.req,
-          context.res,
-          authOptions
-        ),
-      },
+      props: {},
     }
   }

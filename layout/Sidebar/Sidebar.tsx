@@ -6,10 +6,13 @@ import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreate
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-const Sidebar = ({ className, ...props }: SidebarProps) => {
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../../pages/api/auth/[...nextauth]";
+import { useSession } from "next-auth/react";
+const Sidebar = ({ className,  ...props }: SidebarProps) => {
   
   const { data }: any = props;
- 
+ const session = useSession();
 
   return (
     <div className={cn(className, s.sidebar)} {...props}>
@@ -24,3 +27,7 @@ const Sidebar = ({ className, ...props }: SidebarProps) => {
 };
 
 export default Sidebar;
+
+
+
+
