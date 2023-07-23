@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import cn from "classnames";
 import { ILinks } from "./NotesList.props";
+import { convertFromRaw, EditorState } from "draft-js";
 const NotesList = ({ body, checkTitle }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
@@ -78,11 +79,20 @@ const NotesList = ({ body, checkTitle }: any) => {
     }, 750);
   };
 
+
+  const DraftJsObjectInText = (body:string) => {
+    const contentState = convertFromRaw(JSON.parse(body));
+    const editorState = EditorState.createWithContent(contentState);
+    const plainText = editorState.getCurrentContent().getPlainText();
+    return plainText;
+  }
+
   if (loadingData || loadingDelete) {
     return (
       <>
         {body &&
           body.map((item: ILinks) => {
+            
             return (
               <div
                 key={item._id}
@@ -95,7 +105,7 @@ const NotesList = ({ body, checkTitle }: any) => {
                   <p className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
                   </p>
-                  <p> {item.body}</p>
+                  <p> {DraftJsObjectInText(item.body)} </p>
                   <div>{item.date}</div>
                 </Link>
               </div>
@@ -108,6 +118,10 @@ const NotesList = ({ body, checkTitle }: any) => {
       <>
         {links &&
           links.map((item: ILinks) => {
+            const contentState = convertFromRaw(JSON.parse(item.body));
+            const editorState = EditorState.createWithContent(contentState);
+            const plainText = editorState.getCurrentContent().getPlainText();
+            
             return (
               <div
                 key={item._id}
@@ -123,7 +137,7 @@ const NotesList = ({ body, checkTitle }: any) => {
                   <p className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
                   </p>
-                  <p> {item.body}</p>
+                  <p> {DraftJsObjectInText(item.body)}</p>
                   <div>{item.date}</div>
                 </Link>
               </div>
