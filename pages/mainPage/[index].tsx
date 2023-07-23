@@ -71,7 +71,7 @@ export async function getServerSideProps(context: any) {
   }
 
   return {
-    props: { data, revalidate: 10 },
+    props: { data},
   };
 }
 

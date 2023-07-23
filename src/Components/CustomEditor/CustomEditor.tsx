@@ -39,7 +39,7 @@ const CustomEditor = ({
     if (body) {
       const contentState = convertFromRaw(JSON.parse(body)); // тут мы парсим данные с базы в спец объект draft js
       setEditorState(EditorState.createWithContent(contentState)); // и на его основе меняем состояние редактора\
-      
+      setValue(title);
     }
   }, [_id, session]);
   useEffect(() => {
@@ -63,8 +63,6 @@ const CustomEditor = ({
         userId: session?.user.userId,
         _id: _id,
         body: content,
-        title: value,
-        updateDate: formattedDate,
       };
 
       try {
@@ -90,7 +88,7 @@ const CustomEditor = ({
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [editorState,value]);
+  }, [editorState]);
 
   useEffect(() => {
     const updateTitle = async (session: Session | null, _id: any) => {
