@@ -6,6 +6,8 @@
     margin-bottom: 10px;
     text-decoration: none;
     position: relative;
+    overflow: hidden;
+
 }
 
 
@@ -30,6 +32,14 @@
 .title_link {
     display: flex;
     margin: 0;
+    position: absolute;
+    top: 0;
+}
+
+.body_link {
+    display: flex;
+    position: absolute;
+    width: 90%;
 }
 
 .active {

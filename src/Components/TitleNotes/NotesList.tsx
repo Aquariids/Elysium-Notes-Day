@@ -7,6 +7,8 @@ import cn from "classnames";
 import { ILinks } from "./NotesList.props";
 import { convertFromRaw, EditorState } from "draft-js";
 const NotesList = ({ body, checkTitle }: any) => {
+
+  
   const router = useRouter();
   const selectedId = router.query.index;
   const session = useSession();
@@ -27,6 +29,7 @@ const NotesList = ({ body, checkTitle }: any) => {
         `/api/getAllData?userId=${userId}&email=${email}`
       );
       const data = await res.json();
+      console.log("🚀 ~ file: NotesList.tsx:30 ~ getTitle ~ data:", data)
       setLinks(
         data.map((item: ILinks) => {                    
           return {
@@ -106,7 +109,6 @@ const NotesList = ({ body, checkTitle }: any) => {
                     {item.title ? item.title : "Без названия"}
                   </p>
                   <p> {DraftJsObjectInText(item.body)} </p>
-                  <div>{item.date}</div>
                 </Link>
               </div>
             );
@@ -137,8 +139,7 @@ const NotesList = ({ body, checkTitle }: any) => {
                   <p className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
                   </p>
-                  <p> {DraftJsObjectInText(item.body)}</p>
-                  <div>{item.date}</div>
+                  <p className={s.body_link}> {DraftJsObjectInText(item.body)}</p>
                 </Link>
               </div>
             );
