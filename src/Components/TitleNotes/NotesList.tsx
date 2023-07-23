@@ -7,8 +7,6 @@ import cn from "classnames";
 import { ILinks } from "./NotesList.props";
 import { convertFromRaw, EditorState } from "draft-js";
 const NotesList = ({ body, checkTitle }: any) => {
-
-  
   const router = useRouter();
   const selectedId = router.query.index;
   const session = useSession();
@@ -20,13 +18,13 @@ const NotesList = ({ body, checkTitle }: any) => {
   useEffect(()=> {
     setTimeout(() => {
       setLoadingData(false)
-    },2000)
+    },1000)
   },[])
   
   useEffect(() => {
     async function getTitle() {
       const res = await fetch(
-        `/api/getAllData?userId=${userId}&email=${email}`
+        `/api/getAllData?userId=${userId}&email=${email}`,{ next: { revalidate: 10 } }
       );
       const data = await res.json();
       console.log("🚀 ~ file: NotesList.tsx:30 ~ getTitle ~ data:", data)
@@ -108,7 +106,7 @@ const NotesList = ({ body, checkTitle }: any) => {
                   <div className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
                   </div>
-                  <p> {DraftJsObjectInText(item.body)} </p>
+                  <p className={s.body_link}> {DraftJsObjectInText(item.body)} </p>
                 </Link>
               </div>
             );
@@ -120,10 +118,6 @@ const NotesList = ({ body, checkTitle }: any) => {
       <>
         {links &&
           links.map((item: ILinks) => {
-            const contentState = convertFromRaw(JSON.parse(item.body));
-            const editorState = EditorState.createWithContent(contentState);
-            const plainText = editorState.getCurrentContent().getPlainText();
-            
             return (
               <div
                 key={item._id}
@@ -131,7 +125,6 @@ const NotesList = ({ body, checkTitle }: any) => {
                   [s.active]: selectedId === item._id,
                 })}
               >
-           
                 <button
                   className={s.delete_btn}
                   onClick={() => handleDeleteLink(selectedId)}
