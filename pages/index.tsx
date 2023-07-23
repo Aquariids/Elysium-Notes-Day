@@ -21,8 +21,6 @@ function Home({ user }: any) {
 }
 
 
-
-
 export default Home;
 
 export async function getServerSideProps(context:any) {

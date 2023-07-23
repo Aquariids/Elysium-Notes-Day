@@ -17,7 +17,7 @@ const NotesList = ({ body, checkTitle }: any) => {
   useEffect(()=> {
     setTimeout(() => {
       setLoadingData(false)
-    },500)
+    },2000)
   },[])
   
   useEffect(() => {
@@ -39,7 +39,6 @@ const NotesList = ({ body, checkTitle }: any) => {
       );
     }
     getTitle();
-    // updateCurrentLink();
     
   }, [checkTitle, session, selectedId]);
 
