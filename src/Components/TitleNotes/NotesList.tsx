@@ -18,7 +18,7 @@ const NotesList = ({ body, checkTitle }: any) => {
   useEffect(()=> {
     setTimeout(() => {
       setLoadingData(false)
-    },1000)
+    },3000)
   },[])
   
   useEffect(() => {
