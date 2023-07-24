@@ -26,8 +26,10 @@ const MainPage = ({ data }: any) => {
       // ну и паередаем его в наш редактор.
      
       <div className={s.wrapper}>
+        <div className={s.notes_list}>
         <div className={s.container}>
            <NotesList checkTitle={checkTitle}  id={selectedItem._id} title={selectedItem.title} body={data} />
+        </div>
         </div>
         <div className={s.editor}>
           

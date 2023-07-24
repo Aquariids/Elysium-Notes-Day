@@ -80,7 +80,6 @@ useEffect(() => {
     };
 
     const timer = setTimeout(() => {
-      console.log('aaa');
       
       updateData(editorState, session, _id);
       setCheckTitle(!checkTitle);

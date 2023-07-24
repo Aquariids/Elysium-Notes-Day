@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import cn from "classnames";
 import { ILinks } from "./NotesList.props";
 import { convertFromRaw, EditorState } from "draft-js";
-const NotesList = ({ body, checkTitle }: any) => {
+const NotesList = ({ body, checkTitle,id }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
   const session = useSession();
@@ -18,7 +18,7 @@ const NotesList = ({ body, checkTitle }: any) => {
   useEffect(()=> {
     setTimeout(() => {
       setLoadingData(false)
-    },3000)
+    },2000)
   },[])
   
   useEffect(() => {
@@ -27,7 +27,6 @@ const NotesList = ({ body, checkTitle }: any) => {
         `/api/getAllData?userId=${userId}&email=${email}`,{ next: { revalidate: 10 } }
       );
       const data = await res.json();
-      console.log("🚀 ~ file: NotesList.tsx:30 ~ getTitle ~ data:", data)
       setLinks(
         data.map((item: ILinks) => {                    
           return {
@@ -49,22 +48,23 @@ const NotesList = ({ body, checkTitle }: any) => {
     await all_id.filter((link: any) => link !== linkId);
     const currentIndex = all_id.findIndex((i: string) => i == selectedId);
 
-    if (linkId) {
-      try {
-        const res = await fetch(`/api/deleteData?_id=${linkId}&userId=${userId}`);
-      } catch (error) {
-        alert(error);
-      }
+    const res = await fetch(`/api/deleteData?_id=${linkId}&userId=${userId}`);
+   
+   
 
       if (all_id.length >= 2) {
         if (linkId != selectedId) {
           router.push(all_id[currentIndex]);
+          console.log('да');
         } else if (
           linkId === selectedId &&
           all_id[currentIndex + 1] === undefined
         ) {
           router.push(all_id[currentIndex - 1]);
+          console.log('да');
+          
         } else {
+          console.log('да');
           router.push(all_id[currentIndex + 1]);
         }
       } else if (all_id.length === 1) {
@@ -72,7 +72,7 @@ const NotesList = ({ body, checkTitle }: any) => {
       } else {
         alert("ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ");
       }
-    }
+    
 
     setLoadingDelete(true);
     setTimeout(() => {
@@ -84,9 +84,9 @@ const NotesList = ({ body, checkTitle }: any) => {
   const DraftJsObjectInText = (body:string) => {
     const contentState = convertFromRaw(JSON.parse(body));
     const editorState = EditorState.createWithContent(contentState);
-    const plainText = editorState.getCurrentContent().getPlainText();
-    if(plainText.length >= 150) {
-      const text = plainText.slice(0, 155) + '...'
+    const plainText = editorState.getCurrentContent().getPlainText().toLowerCase()
+    if(plainText.length >= 125) {
+      const text = plainText.slice(0, 125) + '...'
       return text;
     } else {
       return plainText
@@ -99,7 +99,6 @@ const NotesList = ({ body, checkTitle }: any) => {
       <>
         {body &&
           body.map((item: ILinks) => {
-            
             return (
               <div
                 key={item._id}
@@ -107,7 +106,10 @@ const NotesList = ({ body, checkTitle }: any) => {
                   [s.active]: selectedId === item._id,
                 })}
               >
-                <button disabled className={s.delete_btn}></button>
+                <button disabled className={cn(s.delete_btn, {
+                  [s.show]: selectedId === item._id,
+                })}
+                  onClick={() => handleDeleteLink()}></button>
                 <Link className={s.link} href={`/mainPage/${item._id}`}>
                   <div className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
@@ -132,7 +134,9 @@ const NotesList = ({ body, checkTitle }: any) => {
                 })}
               >
                 <button
-                  className={s.delete_btn}
+                 className={cn(s.delete_btn, {
+                  [s.show]: selectedId === item._id,
+                })}
                   onClick={() => handleDeleteLink(selectedId)}
                 ></button>
                 <Link className={s.link} href={`/mainPage/${item._id}`}>
