@@ -60,8 +60,11 @@
 }
 
 .active {
-    pointer-events: none;
     background-color: rgba(102, 102, 102, 0.082);
     border-bottom: 1px solid rgba(103, 180, 231, 0.699);
+}
+
+.blockLink {
+    pointer-events: none;
 }
 

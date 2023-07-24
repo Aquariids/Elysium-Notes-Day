@@ -95,6 +95,9 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   }
 
   if (loadingData || loadingDelete) {
+    // да это тупая тема, я на 2 секунды подгружаю данные из getServerSideProps, а потом гружу уже данные из fetch на клиенте.
+    // но таким образом я избавился от некоторых мелкий визуальных багов с удалением постов
+    // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу.
     return (
       <>
         {body &&
@@ -108,9 +111,12 @@ const NotesList = ({ body, checkTitle,id }: any) => {
               >
                 <button disabled className={cn(s.delete_btn, {
                   [s.show]: selectedId === item._id,
-                })}
-                  onClick={() => handleDeleteLink()}></button>
-                <Link className={s.link} href={`/mainPage/${item._id}`}>
+                })}></button>
+                <Link className = {
+                  cn(s.link, {
+                    [s.blockLink]: selectedId === item._id,
+                  })
+                }  href={`/mainPage/${item._id}`}>
                   <div className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
                   </div>
@@ -139,7 +145,11 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                 })}
                   onClick={() => handleDeleteLink(selectedId)}
                 ></button>
-                <Link className={s.link} href={`/mainPage/${item._id}`}>
+                <Link className = {
+                  cn(s.link, {
+                    [s.blockLink]: selectedId === item._id,
+                  })
+                }  href={`/mainPage/${item._id}`}>
                   <div className={s.title_link}>
                     {item.title ? item.title : "Без названия"}
                   </div>
