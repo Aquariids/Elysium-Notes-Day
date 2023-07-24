@@ -1,9 +1,9 @@
 .wrapper {
     display: grid;
-    grid-template-columns: 325px 1fr;
+    grid-template-columns: 310px 1fr;
     grid-template-rows: auto;
-    gap: 10px;
     height: 100vh;
+    
 }
 
 
@@ -21,6 +21,7 @@ border-right:  1px solid rgba(128, 128, 128, 0.349);
 }
 
 .editor {
+    padding: 0 40px;
     min-width: 300px;
     height: 100vh;
 }
