@@ -7,6 +7,8 @@
     color:rgb(87, 87, 87);
     height: 110px;
     padding-top: 10px;
+    display: flex;
+    overflow: hidden;
 }
 
 .link {
@@ -30,12 +32,14 @@
 
 
 .title_link {
+    padding: 0 10px;
     color: black;
     font-size: 16px;
 }
 
 .body_link {
-    width: 100%;
+    padding: 0 10px;
+    height: 80%;
     display: block;
     overflow: hidden;
     margin: 0;

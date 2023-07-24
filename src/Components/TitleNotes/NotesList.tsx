@@ -85,7 +85,13 @@ const NotesList = ({ body, checkTitle }: any) => {
     const contentState = convertFromRaw(JSON.parse(body));
     const editorState = EditorState.createWithContent(contentState);
     const plainText = editorState.getCurrentContent().getPlainText();
-    return plainText;
+    if(plainText.length >= 150) {
+      const text = plainText.slice(0, 155) + '...'
+      return text;
+    } else {
+      return plainText
+    }
+    
   }
 
   if (loadingData || loadingDelete) {
