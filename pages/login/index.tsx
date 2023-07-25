@@ -23,7 +23,7 @@ const Login:  React.FunctionComponent = (): JSX.Element=> {
 
             {session && (
                 <div className={s.login}>
-                    <p>{session.user.email}</p>
+                    <p style={{color:'#fff'}}>{session.user.email}</p>
                     <button className={s.login_btn} onClick={() => signOut()}> Выйти </button>
                 </div>
             )}
