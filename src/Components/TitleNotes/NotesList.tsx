@@ -128,7 +128,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
               >
                 <button disabled className={cn(s.delete_btn, {
                   [s.show]: selectedId === item._id,
-                })}></button>
+                })}>x</button>
                 <Link className = {
                   cn(s.link, {
                     [s.blockLink]: selectedId === item._id,
@@ -162,7 +162,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                   [s.show]: selectedId === item._id,
                 })}
                   onClick={() => handleDeleteLink(selectedId)}
-                ></button>
+                >x</button>
                 <Link className = {
                   cn(s.link, {
                     [s.blockLink]: selectedId === item._id,
