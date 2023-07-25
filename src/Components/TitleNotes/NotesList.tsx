@@ -15,6 +15,8 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   const [links, setLinks] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingData, setLoadingData] = useState(true); 
+  const [bodyLinkText, setBodyLinkText] = useState(''); 
+  const [bodyLinkTitle, setBodyLinkTitle] = useState(''); 
   useEffect(()=> {
     setTimeout(() => {
       setLoadingData(false)
@@ -85,14 +87,29 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     const contentState = convertFromRaw(JSON.parse(body));
     const editorState = EditorState.createWithContent(contentState);
     const plainText = editorState.getCurrentContent().getPlainText().toLowerCase()
-    if(plainText.length >= 125) {
-      const text = plainText.slice(0, 125) + '...'
+    
+    if(plainText.length >= 130) {
+      const text = plainText.slice(0, 130) + '...'
       return text;
     } else {
       return plainText
     }
     
   }
+
+  const title = (title:string) => {
+    
+    if(title.length >= 30) {
+      
+      const text = title.slice(0, 30) + '...';
+      return text;
+    } else {
+      return title
+    }
+    
+  }
+
+
 
   if (loadingData || loadingDelete) {
     // да это тупая тема, я на 2 секунды подгружаю данные из getServerSideProps, а потом гружу уже данные из fetch на клиенте.
@@ -117,9 +134,9 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                     [s.blockLink]: selectedId === item._id,
                   })
                 }  href={`/mainPage/${item._id}`}>
-                  <div className={s.title_link}>
-                    {item.title ? item.title : "Без названия"}
-                  </div>
+                  <p className={s.title_link}>
+                    {item.title ? title(item.title) : "Без названия"}
+                  </p>
                   <p className={s.body_link}> {DraftJsObjectInText(item.body)} </p>
                 </Link>
               </div>
@@ -150,9 +167,9 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                     [s.blockLink]: selectedId === item._id,
                   })
                 }  href={`/mainPage/${item._id}`}>
-                  <div className={s.title_link}>
-                    {item.title ? item.title : "Без названия"}
-                  </div>
+                  <p className={s.title_link}>
+                    {item.title ? title(item.title) : "Без названия"}
+                  </p>
                   <p className={s.body_link}> {DraftJsObjectInText(item.body)}</p>
                 </Link>
            

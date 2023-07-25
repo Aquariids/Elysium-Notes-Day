@@ -44,14 +44,19 @@
 }
 
 .title_link {
+    word-wrap: break-word;
     padding: 0 10px;
     color: black;
     font-size: 16px;
+    margin: 0;
+    display: block;
+    overflow: hidden;
 }
 
 .body_link {
+    
     padding: 0 10px;
-    height: 75%;
+    height: 80%;
     display: block;
     overflow: hidden;
     margin: 0;

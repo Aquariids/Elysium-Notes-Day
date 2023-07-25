@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import {
   getDefaultKeyBindingFn,
@@ -12,6 +12,8 @@ import Editor from "@draft-js-plugins/editor";
 import s from "./CustomEditor.module.scss";
 import { format } from "date-fns";
 import Router from "next/router";
+import ContentEditable from 'react-contenteditable'
+import TextareaAutosize from 'react-textarea-autosize';
 const CustomEditor = ({
   id,
   body,
@@ -124,7 +126,6 @@ useEffect(() => {
 
    
   }, [value]);
-
   return (
     <>
       <div className={s.toolbar}>
@@ -135,12 +136,14 @@ useEffect(() => {
         />
 
         <div className={s.body}>
-          <input
+         
+          <TextareaAutosize 
             placeholder="Заголовок"
-            className={s.title}
             value={value}
+            className={s.title}
             onChange={(e) => setValue(e.target.value)}
           />
+       
           <Editor
             placeholder="Введите текст"
             editorKey="editor"
