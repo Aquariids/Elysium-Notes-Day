@@ -1,7 +1,8 @@
 import { emptyRawContentState } from "contenido";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-
+import { NOTES } from "../../../pages/api/paths";
+import s from './ButtonCreateNewNotes.module.scss';
 
 const ButtonCreateNewNotes = () => {
   const {data: session} = useSession();
@@ -29,13 +30,13 @@ const ButtonCreateNewNotes = () => {
         body: JSON.stringify(data),
       });
       const responseData = await response.json();
-      router.push(`/mainPage/${responseData._id}`);
+      router.push(`/${NOTES}/${responseData._id}`);
     } catch (error) {
       console.error(error);
     }
   };
 
-  return <button onClick={create}>Создать новую заметку</button>;
+  return <button className={s.btn} onClick={create}>+</button>;
 };
 
 export default ButtonCreateNewNotes;

@@ -9,18 +9,17 @@ import React, { useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
+import SideBarMenu from "@/Components/SidebarMenu/SidebarMenu";
 const Sidebar = ({ className,  ...props }: SidebarProps) => {
   
   const { data }: any = props;
+  console.log("🚀 ~ file: Sidebar.tsx:16 ~ Sidebar ~ data:", data)
  const session = useSession();
 
   return (
     <div className={cn(className, s.sidebar)} {...props}>
-      <div className={s.sidebar_auth}>
-      <Login />
-      <ButtonCreateNewNotes />
-      </div>
 
+      <SideBarMenu data ={data}/>
       
     </div>
   );

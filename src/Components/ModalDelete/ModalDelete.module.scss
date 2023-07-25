@@ -1,0 +1,23 @@
+.modal {
+    width: 100vw;
+    height: 100vh;
+    // right: 50%;
+    // left: 50%;
+    // bottom: 50%;
+    top: 0;
+    background-color: rgba(141, 139, 139, 0.719);
+    position: absolute;
+    z-index: 1000;
+    -webkit-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.modal_content {
+    width: 300px;
+    height: 150px;
+    background-color: azure;
+   
+}

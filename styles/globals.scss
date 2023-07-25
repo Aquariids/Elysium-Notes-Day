@@ -21,14 +21,13 @@ html {
     background-color: wheat;
 }
 
-
 .DraftEditor-root {
     position: relative;
     padding-top: 10px;
   }
   
   .public-DraftEditorPlaceholder-root {
-    // padding-top: 15px;
+    padding-top: 10px;
     color:rgba(150, 150, 150, 0.589);
     position: absolute;
     top: 0;
@@ -38,9 +37,4 @@ html {
     pointer-events: none;
     
   }
-//   .public-DraftStyleDefault-block {
-//   }
-
-// .public-DraftStyleDefault-block .public-DraftStyleDefault-ltr {
-//   padding-top: 15px;
-// }
+ 

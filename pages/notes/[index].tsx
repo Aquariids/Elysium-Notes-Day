@@ -61,6 +61,7 @@ export async function getServerSideProps(context: any) {
     `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`, { next: { revalidate: 10 } });
   const data = await res.json();
 
+    
   if (!session) {
     return {
       redirect: {

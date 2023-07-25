@@ -6,6 +6,8 @@ import { useSession } from "next-auth/react";
 import cn from "classnames";
 import { ILinks } from "./NotesList.props";
 import { convertFromRaw, EditorState } from "draft-js";
+import ModalDelete from "../ModalDelete/ModalDelete";
+import { NOTES } from "../../../pages/api/paths";
 const NotesList = ({ body, checkTitle,id }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
@@ -15,8 +17,6 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   const [links, setLinks] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingData, setLoadingData] = useState(true); 
-  const [bodyLinkText, setBodyLinkText] = useState(''); 
-  const [bodyLinkTitle, setBodyLinkTitle] = useState(''); 
   useEffect(()=> {
     setTimeout(() => {
       setLoadingData(false)
@@ -26,7 +26,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   useEffect(() => {
     async function getTitle() {
       const res = await fetch(
-        `/api/getAllData?userId=${userId}&email=${email}`,{ next: { revalidate: 10 } }
+        `/api/getAllData?userId=${userId}&email=${email}`,{ next: { revalidate: 60 } }
       );
       const data = await res.json();
       setLinks(
@@ -43,7 +43,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     }
     getTitle();
     
-  }, [checkTitle, session, selectedId]);
+  }, [checkTitle, selectedId]);
 
   const handleDeleteLink = async (linkId?: any) => {    
     const all_id = links && links.map((obj: { _id: string }) => obj._id);
@@ -114,9 +114,9 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   if (loadingData || loadingDelete) {
     // да это тупая тема, я на 2 секунды подгружаю данные из getServerSideProps, а потом гружу уже данные из fetch на клиенте.
     // но таким образом я избавился от некоторых мелкий визуальных багов с удалением постов
-    // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу.
+    // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу. я прнимаю, что это параша, но что уж сдлеать, я не профи, простите.
     return (
-      <>
+      <>    
         {body &&
           body.map((item: ILinks) => {
             return (
@@ -133,7 +133,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                   cn(s.link, {
                     [s.blockLink]: selectedId === item._id,
                   })
-                }  href={`/mainPage/${item._id}`}>
+                }  href={`/${NOTES}/${item._id}`}>
                   <p className={s.title_link}>
                     {item.title ? title(item.title) : "Без названия"}
                   </p>
@@ -147,6 +147,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   } else {
     return (
       <>
+      {/* <ModalDelete/>  */}
         {links &&
           links.map((item: ILinks) => {
             return (
@@ -166,7 +167,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                   cn(s.link, {
                     [s.blockLink]: selectedId === item._id,
                   })
-                }  href={`/mainPage/${item._id}`}>
+                }  href={`/${NOTES}/${item._id}`}>
                   <p className={s.title_link}>
                     {item.title ? title(item.title) : "Без названия"}
                   </p>
