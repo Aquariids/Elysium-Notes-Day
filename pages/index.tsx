@@ -8,8 +8,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 function Home({ data }: any) {
-  const router = useRouter()
-  console.log(router);
   
   return (
     <>
