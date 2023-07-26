@@ -4,11 +4,12 @@ import {
   getDefaultKeyBindingFn,
   shortcutHandler,
   emptyRawContentState,
+  Editor,
+  initialStyleMap,
 } from "contenido";
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
-import Editor from "@draft-js-plugins/editor";
 import s from "./CustomEditor.module.scss";
 import { format } from "date-fns";
 import Router from "next/router";
@@ -122,10 +123,18 @@ useEffect(() => {
 
     return () => clearTimeout(timer);
       
-
+ 
 
    
   }, [value]);
+
+  const styleMap = {
+    ...initialStyleMap,
+    COLORIZE: {
+      fontWeight: 'bold',
+      color: '#4cb5f5',
+    },
+  };
   return (
     <>
       <div className={s.toolbar}>
@@ -151,6 +160,7 @@ useEffect(() => {
             onChange={handleEditorChange}
             handleKeyCommand={shortcutHandler(setEditorState)}
             keyBindingFn={getDefaultKeyBindingFn}
+            customStyleMap={styleMap}
           />
         </div>
       </div>
