@@ -111,40 +111,40 @@ const NotesList = ({ body, checkTitle,id }: any) => {
 
 
 
-  // if (loadingData || loadingDelete) {
-  //   // да это тупая тема, я на 2 секунды подгружаю данные из getServerSideProps, а потом гружу уже данные из fetch на клиенте.
-  //   // но таким образом я избавился от некоторых мелкий визуальных багов с удалением постов
-  //   // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу. я прнимаю, что это параша, но что уж сдлеать, я не профи, простите.
-  //   return (
-  //     <>    
-  //       {body &&
-  //         body.map((item: ILinks) => {
-  //           return (
-  //             <div
-  //               key={item._id}
-  //               className={cn(s.block_link, {
-  //                 [s.active]: selectedId === item._id,
-  //               })}
-  //             >
-  //               <button disabled className={cn(s.delete_btn, {
-  //                 [s.show]: selectedId === item._id,
-  //               })}>x</button>
-  //               <Link className = {
-  //                 cn(s.link, {
-  //                   [s.blockLink]: selectedId === item._id,
-  //                 })
-  //               }  href={`/${NOTES}/${item._id}`}>
-  //                 <p className={s.title_link}>
-  //                   {item.title ? title(item.title) : "Без названия"}
-  //                 </p>
-  //                 <p className={s.body_link}> {DraftJsObjectInText(item.body)} </p>
-  //               </Link>
-  //             </div>
-  //           );
-  //         })}
-  //     </>
-  //   );
-  // } else {
+  if (loadingData || loadingDelete) {
+    // да это тупая тема, я на 2 секунды подгружаю данные из getServerSideProps, а потом гружу уже данные из fetch на клиенте.
+    // но таким образом я избавился от некоторых мелкий визуальных багов с удалением постов
+    // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу. я прнимаю, что это параша, но что уж сдлеать, я не профи, простите.
+    return (
+      <>    
+        {body &&
+          body.map((item: ILinks) => {
+            return (
+              <div
+                key={item._id}
+                className={cn(s.block_link, {
+                  [s.active]: selectedId === item._id,
+                })}
+              >
+                <button disabled className={cn(s.delete_btn, {
+                  [s.show]: selectedId === item._id,
+                })}>x</button>
+                <Link className = {
+                  cn(s.link, {
+                    [s.blockLink]: selectedId === item._id,
+                  })
+                }  href={`/${NOTES}/${item._id}`}>
+                  <p className={s.title_link}>
+                    {item.title ? title(item.title) : "Без названия"}
+                  </p>
+                  <p className={s.body_link}> {DraftJsObjectInText(item.body)} </p>
+                </Link>
+              </div>
+            );
+          })}
+      </>
+    );
+  } else {
     return (
       <>
       {/* <ModalDelete/>  */}
@@ -180,6 +180,6 @@ const NotesList = ({ body, checkTitle,id }: any) => {
       </>
     );
   }
-// };
+};
 
 export default NotesList;

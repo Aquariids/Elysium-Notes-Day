@@ -11,9 +11,7 @@ interface IsidebarLink {
     btn?: 'add';
 }
 const SidebarLink = ({children,href,btn}:IsidebarLink) => {
-    console.log("🚀 ~ file: SidebarLink.tsx:14 ~ SidebarLink ~ href:", href)
     const [url, setUrl] = useState('/');
-    console.log("🚀 ~ file: SidebarLink.tsx:16 ~ SidebarLink ~ url:", url)
     const router = useRouter();
     
 useEffect(() => {
