@@ -7,15 +7,18 @@
     color:rgb(87, 87, 87);
     height: 110px;
     display: flex;
+    transition: all .2s;
     overflow: hidden;
 }
 
 .link {
+    transition: all .1s;
     padding: 10px 0;
     display: block;
     width: 100%;
     text-decoration: none;
     color: #666;
+   
    
 
 }
@@ -49,6 +52,7 @@
 }
 
 .title_link {
+    transition: all .1s;
     word-wrap: break-word;
     padding: 0 10px;
     color: black;
@@ -59,7 +63,7 @@
 }
 
 .body_link {
-    
+    transition: all .1s;
     padding: 0 10px;
     height: 80%;
     display: block;
@@ -70,7 +74,8 @@
 }
 
 .active {
-    background-color: rgba(102, 102, 102, 0.082);
+    transition: all .1s;
+    background-color: rgba(70, 68, 68, 0.082);
     border-bottom: 1px solid rgba(38, 58, 71, 0.699);
 }
 

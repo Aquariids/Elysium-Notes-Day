@@ -28,6 +28,6 @@ export default function App({
     };
   }, []);
 
-  return <>{loading?  <p>Ты да</p> : <SessionProvider session={session}> <Component {...pageProps} /></SessionProvider>}</>
+  return <SessionProvider session={session}> <Component {...pageProps} /></SessionProvider>
 
 }

@@ -6,9 +6,11 @@
     height: 100%;
     display: flex;
     align-items: center;
+    
 }
 
 .container {
+    transition: all .2s;
     position: relative;
     display: flex;
     align-items: center;
@@ -16,12 +18,22 @@
     height: 32px;
     list-style: none;
     &:hover {
+        transition: all .2s;
         background-color: #55555556;
     }
 }
 
 .active {
+    transition: all .2s;
     background-color: #404040;
+}
+.active {
+    cursor: pointer;
+    .link {
+      
+        pointer-events: none;
+    }
+   
 }
 
 .btn {

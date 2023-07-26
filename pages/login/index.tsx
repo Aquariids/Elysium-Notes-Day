@@ -1,15 +1,17 @@
 import { getServerSession } from "next-auth/next";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { authOptions } from "../api/auth/[...nextauth]";
+import Loader from "./Loader";
 import s from './login.module.scss';
 
 
 const Login:  React.FunctionComponent = (): JSX.Element=> {
     const { data: session, status: loading } = useSession();
+    const [load, setLoad] = useState(true);
     
-    
-    if(loading === 'loading') {
-      return(<>Загрузка</>)
+    if(loading == 'loading') {
+      return(<Loader/>)
     } else {
       return  (
         <>
