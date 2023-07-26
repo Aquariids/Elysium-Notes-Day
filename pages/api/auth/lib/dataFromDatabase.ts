@@ -9,7 +9,7 @@ export async function getAllNotesFromDatabase(userId: any,email: any) {
   const client = await clientPromise;
   try {
     const query = userId && email ? {userId, email}: {};
-      const database = client.db('notes2');
+      const database = client.db('notes');
       const collection = database.collection(`user_${userId}`); // создаем или подключаемся к коллекции
       const data = await collection.find(query).toArray();
       return data; 
@@ -23,7 +23,7 @@ export async function getAllNotesFromDatabase(userId: any,email: any) {
 
 export async function createDatabase (data:any) {  
   const client = await clientPromise;
-  const database = client.db('notes2');
+  const database = client.db('notes');
   const collection = database.collection(`user_${data.userId}`);
   const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm   :ss');
   data.date = formattedDate;
@@ -34,7 +34,7 @@ export async function createDatabase (data:any) {
 export async function deleteData (_id:any, userId:any) {  
   const client = await clientPromise;
   try {
-    const database = client.db('notes2');
+    const database = client.db('notes');
     const collection = database.collection(`user_${userId}`);
     const id = new ObjectId(_id)
     const result = await collection.deleteOne({_id:id});
@@ -52,7 +52,7 @@ export async function updateDataInDatabase(data: any) {
   const client = await clientPromise;
   try {
     const id = new ObjectId(data._id)
-    const database = client.db('notes2');
+    const database = client.db('notes');
     const collection = database.collection(`user_${data.userId}`);  
     // const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm:ss');  
     // Сохранение сырого содержимого в базе данных - это объект состояния редактора draft js
@@ -79,7 +79,7 @@ export async function updateDataInDatabase(data: any) {
     try {
       
       const id = new ObjectId(data._id)
-      const database = client.db('notes2');
+      const database = client.db('notes');
       const collection = database.collection(`user_${data.userId}`);  
       await collection.updateOne (
         { _id: id}, 
