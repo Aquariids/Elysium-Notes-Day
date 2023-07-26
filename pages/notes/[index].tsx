@@ -54,14 +54,13 @@ const MainPage = ({ data }: any) => {
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions)
-  
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(
     `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`, { next: { revalidate: 60 } });
   const data = await res.json();
 
-    
+  context.res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   if (!session) {
     return {
       redirect: {
