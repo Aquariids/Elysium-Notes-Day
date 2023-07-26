@@ -8,11 +8,12 @@ import Error404 from "../Error404";
 import NotesList from "@/Components/TitleNotes/NotesList";
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]";
-const notes = ({ data }: any) => {
+import { NOTES } from "../api/paths";
+import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
+const MainPage = ({ data }: any) => {
   const  [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const router = useRouter();
-  console.log("🚀 ~ file: [index].tsx:15 ~ notes ~ router:", router)
   const selectedId = router.query.index;
 
   // это наш path по сути текущий url = _id человека
@@ -20,16 +21,15 @@ const notes = ({ data }: any) => {
     (item: { _id: string }) => item._id === selectedId
   ); // ищем в нашем массиве первый _id попавший под услвоие. То есть если он равен id из url
 
-  if (!selectedItem) {
-    return <Error404 />;
-  } else {
     return (
       // ну и паередаем его в наш редактор.
-     
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <div className={s.container}>
-           {data[0]  && <NotesList checkTitle={checkTitle}  id={selectedItem._id} title={selectedItem.title} body={data} />}
+            <div>
+            <h2>Создание первой заметки</h2>
+        <div className={s.alert}>Нажмите на кнопку {<ButtonCreateNewNotes alert="alert"/>} в боковой панели "Заметки" или здесь, чтобы начать.</div>
+            </div>
         </div>
         </div>
         <div className={s.editor}>
@@ -51,7 +51,6 @@ const notes = ({ data }: any) => {
     
     );
   }
-};
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions)
@@ -62,18 +61,21 @@ export async function getServerSideProps(context: any) {
     context.res.setHeader('Cache-Control', 'no-cache');
   const data = await res.json();
 
-  if (!session) {
+  if (session && data[0] != undefined) {
     return {
       redirect: {
-        destination: "/",
+        destination: `/${NOTES}/${data[0]._id}`,
         permanent: false,
       },
     };
-  }   
+  }  else {
+    return {
+        props: { data},
+      };
+  }
 
-  return {
-    props: { data},
-  };
+
+ 
 }
 
-export default withLayout(notes);
+export default withLayout(MainPage);

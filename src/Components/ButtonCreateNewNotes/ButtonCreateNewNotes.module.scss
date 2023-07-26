@@ -17,3 +17,16 @@ cursor: pointer;
     background-color: rgba(83, 83, 83, 0.658);
 }
 }
+
+
+.alert {
+    color: rgba(45, 8, 253, 0.822);
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+

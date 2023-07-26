@@ -9,24 +9,24 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      setLoading(true);
-    };
+  // const [loading, setLoading] = useState(false);
+  // useEffect(() => {
+  //   const handleBeforeUnload = () => {
+  //     setLoading(true);
+  //   };
 
-    const handleLoad = () => {
-      setLoading(false);
-    };
+  //   const handleLoad = () => {
+  //     setLoading(false);
+  //   };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    window.addEventListener("load", handleLoad);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  //   window.addEventListener("load", handleLoad);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      window.removeEventListener("load", handleLoad);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //     window.removeEventListener("load", handleLoad);
+  //   };
+  // }, []);
 
   return <SessionProvider session={session}> <Component {...pageProps} /></SessionProvider>
 

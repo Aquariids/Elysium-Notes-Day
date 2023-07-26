@@ -1,10 +1,14 @@
 import { emptyRawContentState } from "contenido";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { NOTES } from "../../../pages/api/paths";
 import s from './ButtonCreateNewNotes.module.scss';
 
-const ButtonCreateNewNotes = () => {
+interface IButton {
+  alert?: 'alert'
+}
+const ButtonCreateNewNotes = ({alert}:IButton) => {
   const {data: session} = useSession();
    // emptyRawContentState - пустой объект содержимого draft js. Превращаем его в JSON и отправляем в базу
  
@@ -36,7 +40,12 @@ const ButtonCreateNewNotes = () => {
     }
   };
 
-  return <button className={s.btn} onClick={create}>+</button>;
+  if(alert === 'alert') {
+    return <Link className={s.alert} onClick={create} href={""}>+</Link>;
+  } else {
+    return <button className={s.btn} onClick={create}>+</button>;
+  }
+ 
 };
 
 export default ButtonCreateNewNotes;

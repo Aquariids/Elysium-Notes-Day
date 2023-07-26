@@ -11,21 +11,18 @@ interface IsidebarLink {
     btn?: 'add';
 }
 const SidebarLink = ({children,href,btn}:IsidebarLink) => {
-    const [url, setUrl] = useState('/');
     const router = useRouter();
-    
-useEffect(() => {
-    if(router.query.index) {
-        setUrl(router.asPath.split('/')[1])
-    } else {
-        setUrl('/')
-    }
-    
-},[])
+  
+   
+
+
+
     
     return(
         <li className={cn(s.container, {
-            [s.active]: href === url || href.split('/')[1] === url,
+            [s.active]: href === '/',
+            [s.active]: href ===  `/${router.asPath.split('/')[1]}`,
+         
             
         })}>
         <Link className={s.link} href={href}>{children}</Link>

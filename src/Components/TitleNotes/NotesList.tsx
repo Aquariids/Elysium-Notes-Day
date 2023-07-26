@@ -70,7 +70,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
           router.push(all_id[currentIndex + 1]);
         }
       } else if (all_id.length === 1) {
-        router.push("/mainPage");
+        router.push("/notes");
       } else {
         alert("ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ");
       }
