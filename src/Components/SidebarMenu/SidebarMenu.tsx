@@ -8,7 +8,6 @@ import s from './SidebarMenu.module.scss';
 const SideBarMenu = ({data}:any) => {
   const [id, setId] = useState();
     const router = useRouter();
-    console.log("🚀 ~ file: SidebarMenu.tsx:11 ~ SideBarMenu ~ router:", router)
   
     return (
     <div className={s.sidebar}>

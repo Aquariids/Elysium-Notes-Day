@@ -1,9 +1,8 @@
-import { SetStateAction, useEffect, useRef, useState } from "react";
+import { SetStateAction, useCallback, useEffect, useState } from "react";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import {
   getDefaultKeyBindingFn,
   shortcutHandler,
-  emptyRawContentState,
   Editor,
   initialStyleMap,
 } from "contenido";
@@ -11,9 +10,6 @@ import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import s from "./CustomEditor.module.scss";
-import { format } from "date-fns";
-import Router from "next/router";
-import ContentEditable from 'react-contenteditable'
 import TextareaAutosize from 'react-textarea-autosize';
 const CustomEditor = ({
   id,
@@ -23,19 +19,21 @@ const CustomEditor = ({
   checkTitle,
 
 }: any) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(title);
   const { data: session } = useSession();
   const _id = id;
 
   // convertFromRaw - с помощью этого метода мы наш пустой объект превращаем в спец объект для draft js
-  const [editorState, setEditorState] = useState<EditorState>(
-    EditorState.createWithContent(convertFromRaw(JSON.parse(body))) // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
-  );
-
-  const handleEditorChange = (editorState: SetStateAction<EditorState>) => {
+ 
+  const [editorState, setEditorState] = useState(() => {
+    const contentState = convertFromRaw(JSON.parse(body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
+    return EditorState.createWithContent(contentState);
+  });
+ 
+  const handleEditorChange = useCallback((editorState: SetStateAction<EditorState>) => {
+    
     setEditorState(editorState);
-  };
-
+  }, []);
 
   useEffect(() => {
     if (body) {
@@ -45,88 +43,78 @@ const CustomEditor = ({
     }
   }, [body]);
 
+  
+
 useEffect(() => {
   setValue(title);
 }, [title])
-  useEffect(() => {
-    const updateData = async (
-      editorState: EditorState,
-      session: Session | null,
-      _id: string
-    ) => {
-      // convertToRaw превращает объект draft js в обычный объект, который мы сразу бахаем в json, что бы отправить в базу данных
-      const content = JSON.stringify(
-        convertToRaw(editorState.getCurrentContent())
-      ); // getCurrentContent - возваращет нам состояние редактора в спец объект draft js
-      const data = {
-        email: session?.user.email,
-        userId: session?.user.userId,
-        _id: _id,
-        body: content,
-      };
-
-      try {
-        const response = await fetch(`/api/updateData`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-      } catch (error) {
-        console.log(
-          "🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:",
-          error
-        );
-        // Обработка ошибок, если необходимо
-      }
+  
+  const updateData = useCallback(async (editorState:any, session: any, _id:string) => {
+    
+    const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+    const data = {
+      email: session?.user.email,
+      userId: session?.user.userId,
+      _id: _id,
+      body: content,
     };
 
+    try {
+      const response = await fetch(`/api/updateData`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.log("🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:", error);
+    }
+  }, []);
+
+  const updateTitle = useCallback(async (session:any, _id:string, title:string) => {
+    console.log('1');
+    
+    const data = {
+      email: session?.user.email,
+      userId: session?.user.userId,
+      _id: _id,
+      title: title,
+    };
+
+    try {
+      const response = await fetch(`/api/updateTitle`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
+
+
+
+  useEffect(() => {
     const timer = setTimeout(() => {
-      
       updateData(editorState, session, _id);
-      setCheckTitle(!checkTitle);
-      
+      setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [editorState, _id, session]);
+  }, [editorState, _id, session, updateData]);
 
   useEffect(() => {
-    const updateTitle = async (session: Session | null, _id: any) => {
-      // convertToRaw превращает объект draft js в обычный объект, который мы сразу бахаем в json, что бы отправить в базу данных
-      const data = {
-        email: session?.user.email,
-        userId: session?.user.userId,
-        _id: _id,
-        title: value, // короче делай отдельную функцию для  title обновления ее. Это будет только под тело!
-      };
-
-      try {
-        const response = await fetch(`/api/updateTitle`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-      } catch (error) {
-        alert(error)
-      }
-    };
-
     const timer = setTimeout(() => {
-      updateTitle(session, _id);
-      setCheckTitle(!checkTitle);
-      
+      updateTitle(session, _id, value);
+      setCheckTitle((prevCheckTitle:boolean) => !prevCheckTitle);
     }, 300);
 
     return () => clearTimeout(timer);
-      
- 
+  }, [value, updateTitle]);
 
-   
-  }, [value]);
 
   const styleMap = {
     ...initialStyleMap,
@@ -138,7 +126,6 @@ useEffect(() => {
   return (
     <>
       <div className={s.toolbar}>
-        {/* <p>Полследние изменения: {date}</p> */}
         <ToolbarButtons
           editorState={editorState}
           setEditorState={setEditorState}

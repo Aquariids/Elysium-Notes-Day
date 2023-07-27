@@ -13,7 +13,6 @@ import SideBarMenu from "@/Components/SidebarMenu/SidebarMenu";
 const Sidebar = ({ className,  ...props }: SidebarProps) => {
   
   const { data }: any = props;
-  console.log("🚀 ~ file: Sidebar.tsx:16 ~ Sidebar ~ data:", data)
  const session = useSession();
 
   return (
