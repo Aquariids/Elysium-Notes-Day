@@ -1,4 +1,4 @@
-import React, { use, useEffect, useMemo, useState } from "react";
+import React, { use, useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import s from "./NotesList.module.scss";
 import Link from "next/link";
@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import cn from "classnames";
 import { ILinks } from "./NotesList.props";
 import { convertFromRaw, EditorState } from "draft-js";
-import ModalDelete from "../ModalDelete/ModalDelete";
 import { NOTES } from "../../../pages/api/paths";
 const NotesList = ({ body, checkTitle,id }: any) => {
   const router = useRouter();
@@ -23,25 +22,35 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     },2000)
   },[])
   
+
   useEffect(() => {
-    async function getTitle() {
-      const res = await fetch(
-        `/api/getAllData?userId=${userId}&email=${email}`,{ next: { revalidate: 60 } }
-      );
-      const data = await res.json();
-      setLinks(
-        data.map((item: ILinks) => {                    
-          return {
-            title: item.title,
-            _id: item._id,
-            date: item.date,
-            body:item.body,
-          
-          };
-        })
-      );
+  
+
+    try {
+      const getTitle = async ()=>{
+        
+        const res = await fetch(
+          `/api/getAllData?userId=${userId}&email=${email}`,{ next: { revalidate: 120 } }
+        );
+        const data = await res.json();
+        setLinks(
+          data.map((item: ILinks) => {                    
+            return {
+              title: item.title,
+              _id: item._id,
+              date: item.date,
+              body:item.body,
+            
+            };
+          })
+        );
+      }
+      getTitle();
     }
-    getTitle();
+    catch(error) {
+      alert(error)
+    }
+    
     
   }, [checkTitle, selectedId]);
 
@@ -57,16 +66,13 @@ const NotesList = ({ body, checkTitle,id }: any) => {
       if (all_id.length >= 2) {
         if (linkId != selectedId) {
           router.push(all_id[currentIndex]);
-          console.log('да');
         } else if (
           linkId === selectedId &&
           all_id[currentIndex + 1] === undefined
         ) {
           router.push(all_id[currentIndex - 1]);
-          console.log('да');
           
         } else {
-          console.log('да');
           router.push(all_id[currentIndex + 1]);
         }
       } else if (all_id.length === 1) {
@@ -98,9 +104,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   }
 
   const title = (title:string) => {
-    
     if(title.length >= 30) {
-      
       const text = title.slice(0, 30) + '...';
       return text;
     } else {

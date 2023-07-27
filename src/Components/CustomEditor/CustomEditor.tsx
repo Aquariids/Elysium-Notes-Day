@@ -16,7 +16,6 @@ const CustomEditor = ({
   body,
   title,
   setCheckTitle,
-  checkTitle,
 
 }: any) => {
   const [value, setValue] = useState(title);
@@ -73,7 +72,6 @@ useEffect(() => {
   }, []);
 
   const updateTitle = useCallback(async (session:any, _id:string, title:string) => {
-    console.log('1');
     
     const data = {
       email: session?.user.email,

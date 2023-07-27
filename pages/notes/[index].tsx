@@ -1,5 +1,4 @@
-import { getSession, useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { withLayout } from "../../layout/Layout";
 import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { useRouter } from "next/router";
@@ -15,9 +14,12 @@ const notes = ({ data }: any) => {
   const selectedId = router.query.index;
 
   // это наш path по сути текущий url = _id человека
-  const selectedItem = data.find(
-    (item: { _id: string }) => item._id === selectedId
-  ); // ищем в нашем массиве первый _id попавший под услвоие. То есть если он равен id из url
+  const selectedItem = useMemo(  
+    () => data.find((item: { _id: string }) => {
+      return item._id === selectedId}),
+    [data, selectedId]
+  ); 
+ 
 
   if (!selectedItem) {
     return <Error404 />;
