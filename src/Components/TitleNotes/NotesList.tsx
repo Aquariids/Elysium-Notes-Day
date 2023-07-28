@@ -30,8 +30,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
       const getTitle = async ()=>{
         
         const res = await fetch(
-          `/api/getAllData?userId=${userId}&email=${email}`,{ next: { revalidate: 120 } }
-        );
+          `/api/getAllData?userId=${userId}&email=${email}`);
         const data = await res.json();
         setLinks(
           data.map((item: ILinks) => {                    

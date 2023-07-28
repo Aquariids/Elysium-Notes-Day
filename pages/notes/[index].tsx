@@ -14,7 +14,7 @@ const notes = ({ data }: any) => {
   const selectedId = router.query.index;
 
   // это наш path по сути текущий url = _id человека
-  const selectedItem = useMemo(  
+  const selectedItem = useMemo(  // с помощью useMemo уменьшаю кол рендеров
     () => data.find((item: { _id: string }) => {
       return item._id === selectedId}),
     [data, selectedId]
