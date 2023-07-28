@@ -2,7 +2,7 @@ import { emptyRawContentState } from "contenido";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NOTES } from "../../../pages/api/paths";
 import s from './ButtonCreateNewNotes.module.scss';
 import LoaderCreate from "./LoaderCreate";
@@ -18,6 +18,7 @@ const ButtonCreateNewNotes = ({alert}:IButton) => {
   const create = async () => {  
 
     
+
     const content = JSON.stringify(emptyRawContentState); 
     
     const data = {
@@ -41,13 +42,18 @@ const ButtonCreateNewNotes = ({alert}:IButton) => {
       );
       const responseData = await response.json();
       router.push(`/${NOTES}/${responseData._id}`);
-      setLoad(true)
+      
      
      
     } catch (error) {
       console.error(error);
     }
   };
+
+
+  useEffect(()=> {
+    setLoad(true)
+  },[router])
 
   if(alert === 'alert') {
     return <Link className={s.alert} onClick={create} href={""}>+</Link>;
