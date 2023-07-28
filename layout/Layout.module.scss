@@ -2,8 +2,8 @@
     display: grid;
     grid-template-areas:
         "header header header"
-        "sidebar body body"
-        "footer footer footer";
+        "sidebar body body";
+        // "footer footer footer";
         grid-template-columns: var(--grid_columns_wrapper);
         // gap: 0px 10px;
 
@@ -22,7 +22,7 @@
 }
 
 .footer {
-    height: 100px;
+    
     background-color: blue;
     grid-area: footer;
 }
