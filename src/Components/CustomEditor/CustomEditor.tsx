@@ -5,6 +5,7 @@ import {
   shortcutHandler,
   Editor,
   initialStyleMap,
+  blockStyleFn,
 } from "contenido";
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
@@ -23,14 +24,12 @@ const CustomEditor = ({
 
  
   // convertFromRaw - с помощью этого метода мы наш пустой объект превращаем в спец объект для draft js
- 
   const [editorState, setEditorState] = useState(() => {
     const contentState = convertFromRaw(JSON.parse(body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
     return EditorState.createWithContent(contentState);
   });
  
   const handleEditorChange = useCallback((editorState: SetStateAction<EditorState>) => {
-    
     setEditorState(editorState);
   }, []);
 
@@ -147,7 +146,7 @@ useEffect(() => {
             onChange={handleEditorChange}
             handleKeyCommand={shortcutHandler(setEditorState)}
             keyBindingFn={getDefaultKeyBindingFn}
-            customStyleMap={styleMap}
+            blockStyleFn={blockStyleFn}
           />
         </div>
       </div>

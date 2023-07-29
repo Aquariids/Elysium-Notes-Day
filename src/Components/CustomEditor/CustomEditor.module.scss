@@ -15,9 +15,7 @@
 
 
 
-    .bold * {
-    fill: red;
-    }
+  
 
  &:focus {
     border: 0;
@@ -25,8 +23,6 @@
  }   
  
 }
-
-
 
 
 
@@ -39,7 +35,18 @@
     visibility: hidden;
 }
 
-
 .btn {
+    border: none;
+}
 
+    .btn svg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+       
+    }
+
+
+    .toolbarHeader {
+        border-left: 1px solid rgba(122, 122, 122, 0.452);
     }

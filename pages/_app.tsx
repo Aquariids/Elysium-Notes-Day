@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { Providers } from "@/Components/Providers";
 import { useEffect, useState } from "react";
 import { getSession, SessionProvider, useSession } from "next-auth/react";
-
+import 'contenido/dist/styles.css';
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
