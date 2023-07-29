@@ -7,7 +7,7 @@ import Bold from './icons/bold.svg';
 
 
 const toolbarButtons = [
-  { name:  <Bold className={s.bold}/>, handler: toggleBold, detector: isBold },
+  { name:  'bold', handler: toggleBold, detector: isBold },
   { name: "Italic", handler: toggleItalic, detector: isItalic },
   { name: "Underline", handler: toggleUnderline, detector: isUnderline },
   { name: 'Список', handler: toggleUL, detector:isUL },
