@@ -1,12 +1,13 @@
 import { isBold, isItalic, isUnderline, toggleBold, toggleItalic, toggleUnderline, toggleSub, isSub, toggleH1, isH1,toggleUL, isUL, toggleInlineStyle, hasInlineStyleOf, initialStyleMap} from "contenido";
 import { EditorStateProps } from "./CustomEditor.props";
-
-
-
+import cn from 'classnames';
+import s from './CustomEditor.module.scss';
+import ToolbarButton from "../UI/ToolbarButton/ToolbarButton";
+import Bold from './icons/bold.svg';
 
 
 const toolbarButtons = [
-  { name: "Bold", handler: toggleBold, detector: isBold },
+  { name:  <Bold className={s.bold}/>, handler: toggleBold, detector: isBold },
   { name: "Italic", handler: toggleItalic, detector: isItalic },
   { name: "Underline", handler: toggleUnderline, detector: isUnderline },
   { name: 'Список', handler: toggleUL, detector:isUL },
@@ -22,7 +23,9 @@ const ToolbarButtons = ({editorState, setEditorState}:EditorStateProps) => {
     
   return (
     <>
-        <button
+
+  
+        <ToolbarButton
         onMouseDown={(e) => {
           e.preventDefault();
           toggleColorize();
@@ -33,10 +36,11 @@ const ToolbarButtons = ({editorState, setEditorState}:EditorStateProps) => {
         }}
       >
         Colorize
-      </button>
+      </ToolbarButton>
 
       {toolbarButtons.map((btn) => (
-        <button
+        <ToolbarButton
+          name= {btn.name}
           key={btn.name}
           onMouseDown={(e) => {
             e.preventDefault();
@@ -47,7 +51,7 @@ const ToolbarButtons = ({editorState, setEditorState}:EditorStateProps) => {
           }}
         >
           {btn.name}
-        </button>
+        </ToolbarButton>
       ))}
     </>
   );

@@ -8,7 +8,6 @@ import {
 } from "contenido";
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
 import s from "./CustomEditor.module.scss";
 import TextareaAutosize from 'react-textarea-autosize';
 const CustomEditor = ({
@@ -22,6 +21,7 @@ const CustomEditor = ({
   const { data: session } = useSession();
   const _id = id;
 
+ 
   // convertFromRaw - с помощью этого метода мы наш пустой объект превращаем в спец объект для draft js
  
   const [editorState, setEditorState] = useState(() => {
@@ -114,6 +114,7 @@ useEffect(() => {
   }, [value, updateTitle]);
 
 
+  
   const styleMap = {
     ...initialStyleMap,
     COLORIZE: {
@@ -124,10 +125,11 @@ useEffect(() => {
   return (
     <>
       <div className={s.toolbar}>
-        <ToolbarButtons
+        <ToolbarButtons 
           editorState={editorState}
           setEditorState={setEditorState}
         />
+
 
         <div className={s.body}>
          

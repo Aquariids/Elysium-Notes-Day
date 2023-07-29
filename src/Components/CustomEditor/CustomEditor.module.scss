@@ -15,7 +15,9 @@
 
 
 
-    
+    .bold * {
+    fill: red;
+    }
 
  &:focus {
     border: 0;
@@ -32,3 +34,12 @@
     padding-top: 15px;
 }
 
+
+.test {
+    visibility: hidden;
+}
+
+
+.btn {
+
+    }
