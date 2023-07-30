@@ -1,5 +1,4 @@
 .toolbar {
-    padding-top: 10px;
     h1 {
         margin: 0;
     }
@@ -36,10 +35,19 @@
 }
 
 .btn {
+   
+    min-width: 2rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
     border: none;
+    cursor: pointer;
+    text-transform: "capitalize";
+   
+    
 }
 
     .btn svg {
+        transition: all .2s;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -48,5 +56,24 @@
 
 
     .toolbarHeader {
+        padding-left: 10px;
         border-left: 1px solid rgba(122, 122, 122, 0.452);
+
+       
+    }
+
+
+    .btn_active svg {
+        fill: #b11f1f;
+    }
+
+
+
+    .alignmentBtns {
+        &:last-child {
+            padding-right: 10px;
+         }
+        padding-left: 10px;
+        border-left: 1px solid rgba(122, 122, 122, 0.452);
+        display: inline-block;
     }

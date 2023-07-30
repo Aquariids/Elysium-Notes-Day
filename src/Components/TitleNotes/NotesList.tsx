@@ -7,6 +7,7 @@ import cn from "classnames";
 import { ILinks } from "./NotesList.props";
 import { convertFromRaw, EditorState } from "draft-js";
 import { NOTES } from "../../../pages/api/paths";
+import HeaderNotes from "../HeaderNotes/HeaderNotes";
 const NotesList = ({ body, checkTitle,id }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
@@ -118,7 +119,8 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     // но таким образом я избавился от некоторых мелкий визуальных багов с удалением постов
     // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу. я прнимаю, что это параша, но что уж сдлеать, я не профи, простите.
     return (
-      <>    
+      <>   
+      <HeaderNotes/> 
         {body &&
           body.map((item: ILinks) => {
             return (
@@ -149,7 +151,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   } else {
     return (
       <>
-      {/* <ModalDelete/>  */}
+      <HeaderNotes/>
         {links &&
           links.map((item: ILinks) => {
             return (

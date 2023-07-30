@@ -5,9 +5,10 @@ import {
   toggleBold,
   toggleItalic,
   toggleUnderline,
-  toggleSub,
-  toggleH1,
-  isH1,
+  toggleBlockquote,
+  toggleOL,
+  isOL,
+  isBlockquote,
   toggleUL,
   isUL,
   toggleInlineStyle,
@@ -21,22 +22,21 @@ import {
 import { EditorStateProps } from "./CustomEditor.props";
 import cn from "classnames";
 import s from "./CustomEditor.module.scss";
-import ToolbarButton from "../UI/ToolbarButton/ToolbarButton";
 import * as Icons from "./icons";
 
 const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
-  const COLORIZE = "COLORIZE";
+  const HIGHLIGHTER = "HIGHLIGHTER";
 
-  const toggleColorize = () =>
-    toggleInlineStyle(editorState, setEditorState, COLORIZE);
-  const isColorize = () => hasInlineStyleOf(editorState, COLORIZE);
+  const toggleHighlighter = () =>
+    toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER);
+  const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
 
   const toolbarButtons = [
     {
       name: "bold",
       handler: toggleBold,
       detector: isBold,
-      children: <Icons.Bold className={s.bold} />,
+      children: <Icons.Bold />,
     },
     {
       name: "Italic",
@@ -44,10 +44,36 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
       detector: isItalic,
       children: <Icons.Italic />,
     },
-    { name: "Underline", handler: toggleUnderline, detector: isUnderline },
-    { name: "Список", handler: toggleUL, detector: isUL },
-    { name: "h1", handler: toggleH1, detector: isH1 },
-    { name: "colorize", handler: toggleColorize, detector: isColorize },
+    {
+      name: "Underline",
+      handler: toggleUnderline,
+      detector: isUnderline,
+      children: <Icons.Underline />,
+    },
+    {
+      name: "list-ul",
+      handler: toggleUL,
+      detector: isUL,
+      children: <Icons.ListUl />,
+    },
+    {
+      name: "list-ol",
+      handler: toggleOL,
+      detector: isOL,
+      children: <Icons.ListOl />,
+    },
+    {
+      name: "blockQuote",
+      handler: toggleBlockquote,
+      detector: isBlockquote,
+      children: <Icons.BlockQuote />,
+    },
+    {
+      name: "highlighter",
+      handler: toggleHighlighter,
+      detector: isHighlighter,
+      children: <Icons.Highlighter />,
+    },
   ];
 
   const alignmentButtons = [
@@ -76,48 +102,39 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
     <div className={s.toolbarHeader}>
       {toolbarButtons.map((btn) => (
         <button
-          className={s.btn}
+          className={cn(s.btn, {
+            [s.btn_active]: btn.detector(editorState),
+          })}
           name={btn.name}
           key={btn.name}
           onMouseDown={(e) => {
             e.preventDefault();
             btn.handler(editorState, setEditorState);
           }}
-          style={{
-            color: btn.detector(editorState) ? "skyblue" : "black",
-          }}
         >
-          {btn.name}
+          {btn.children}
         </button>
       ))}
-
-      {alignmentButtons.map((button) => (
-        <button
-          key={button.name}
-          style={{
-            minWidth: "2rem",
-            padding: "0.5rem",
-            backgroundColor: button.detector(editorState)
-              ? "#4cb5f5"
-              : "rgba(125, 125, 125, 0.25)",
-            color: button.detector(editorState) ? "#fff" : "inherit",
-            borderRadius: "0.5rem",
-            border: "none",
-            cursor: "pointer",
-            textTransform: "capitalize",
-          }}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            toggleTextAlign(
-              editorState,
-              setEditorState,
-              `text-align-${button.name}`
-            );
-          }}
-        >
-          {button.children}
-        </button>
-      ))}
+      <div className={s.alignmentBtns}>
+        {alignmentButtons.map((btn) => (
+          <button
+            key={btn.name}
+            className={cn(s.btn, {
+              [s.btn_active]: btn.detector(editorState),
+            })}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              toggleTextAlign(
+                editorState,
+                setEditorState,
+                `text-align-${btn.name}`
+              );
+            }}
+          >
+            {btn.children}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

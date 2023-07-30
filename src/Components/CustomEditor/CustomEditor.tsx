@@ -116,9 +116,8 @@ useEffect(() => {
   
   const styleMap = {
     ...initialStyleMap,
-    COLORIZE: {
-      fontWeight: 'bold',
-      color: '#4cb5f5',
+    HIGHLIGHTER: {
+      backgroundColor: '#b11f1f85',
     },
   };
   return (
@@ -147,6 +146,7 @@ useEffect(() => {
             handleKeyCommand={shortcutHandler(setEditorState)}
             keyBindingFn={getDefaultKeyBindingFn}
             blockStyleFn={blockStyleFn}
+            customStyleMap={styleMap}
           />
         </div>
       </div>
