@@ -130,8 +130,9 @@ const NotesList = ({ body, checkTitle,id }: any) => {
               <div
                 key={item._id}
                 className={cn(s.block_link, {
+                  [s.first_block_link]: i === 0,
                   [s.active]: selectedId === item._id,
-                  [s.test]: i ===  0
+                
                 })}
               >
                 <button disabled className={cn(s.delete_btn, {
