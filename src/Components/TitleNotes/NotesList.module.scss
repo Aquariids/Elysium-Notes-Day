@@ -1,7 +1,10 @@
+
+
+
 .block_link {
     width: 100%;
     height: 100%;
-    border-bottom:  1px solid rgba(128, 128, 128, 0.349);
+    
     text-decoration: none;
     position: relative;
     color:rgb(87, 87, 87);
@@ -10,9 +13,15 @@
     transition: all .2s;
     overflow: hidden;
     word-wrap: break-word;
+    
+}
+
+.first_block_link {
+    border-top:  1px solid rgba(128, 128, 128, 0.349);
 }
 
 .link {
+   
     transition: all .1s;
     padding: 10px 0;
     display: block;
@@ -23,6 +32,7 @@
    
 
 }
+
 
 .delete_btn {
     visibility: hidden;
@@ -53,6 +63,8 @@
 }
 
 .title_link {
+   
+    
     transition: all .1s;
     word-wrap: break-word;
     padding: 0 10px;
@@ -64,6 +76,7 @@
 }
 
 .body_link {
+    
     transition: all .1s;
     padding: 0 10px;
     height: 80%;
@@ -76,11 +89,12 @@
 
 .active {
     transition: all .1s;
-    background-color: rgba(70, 68, 68, 0.082);
+    background-color: #b11f1f2a;
     border-bottom: 1px solid rgba(38, 58, 71, 0.699);
 }
 
 .blockLink {
+    
     pointer-events: none;
 }
 

@@ -17,6 +17,9 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   const [links, setLinks] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingData, setLoadingData] = useState(true); 
+  const lengthAllListNotes = body.length;  
+  console.log("🚀 ~ file: NotesList.tsx:21 ~ NotesList ~ lengthAllListNotes:", lengthAllListNotes)
+  
   useEffect(()=> {
     setTimeout(() => {
       setLoadingData(false)
@@ -120,14 +123,15 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу. я прнимаю, что это параша, но что уж сдлеать, я не профи, простите.
     return (
       <>   
-      <HeaderNotes/> 
+      <HeaderNotes length={lengthAllListNotes}/> 
         {body &&
-          body.map((item: ILinks) => {
+          body.map((item: ILinks, i:number) => {
             return (
               <div
                 key={item._id}
                 className={cn(s.block_link, {
                   [s.active]: selectedId === item._id,
+                  [s.test]: i ===  0
                 })}
               >
                 <button disabled className={cn(s.delete_btn, {
@@ -151,14 +155,17 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   } else {
     return (
       <>
-      <HeaderNotes/>
+         <HeaderNotes length={lengthAllListNotes}/> 
         {links &&
-          links.map((item: ILinks) => {
+          links.map((item: ILinks, i:number) => {
             return (
               <div
                 key={item._id}
                 className={cn(s.block_link, {
+                  [s.first_block_link]: i === 0,
                   [s.active]: selectedId === item._id,
+                  
+                  
                 })}
               >
                 <button
@@ -181,6 +188,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
               </div>
             );
           })}
+          
       </>
     );
   }

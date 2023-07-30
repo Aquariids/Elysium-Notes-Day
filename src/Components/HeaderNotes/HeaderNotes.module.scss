@@ -1,6 +1,5 @@
 .header {
-    padding: 10px 10px;
-    padding-top: 35px;
+    padding: 0 10px;
 }
 
 
@@ -13,4 +12,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.allNotesCounter {
+    padding-bottom: 10px;
+    color: rgba(95, 94, 94, 0.808);
+   
 }
