@@ -95,7 +95,7 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
     {
       name: "justify",
       detector: isTextJustifyAligned,
-      children: <Icons.AlignRight />,
+      children: <Icons.AlignJustify />,
     },
   ];
   return (

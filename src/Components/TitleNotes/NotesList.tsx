@@ -17,8 +17,12 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   const [links, setLinks] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingData, setLoadingData] = useState(true); 
-  const lengthAllListNotes = body.length;  
-  console.log("🚀 ~ file: NotesList.tsx:21 ~ NotesList ~ lengthAllListNotes:", lengthAllListNotes)
+  const [counterNotes, setCounterNotes] = useState(0);
+  
+
+  useEffect(()=> {
+    setCounterNotes(body.length)
+  },[router])
   
   useEffect(()=> {
     setTimeout(() => {
@@ -29,10 +33,8 @@ const NotesList = ({ body, checkTitle,id }: any) => {
 
   useEffect(() => {
   
-
     try {
       const getTitle = async ()=>{
-        
         const res = await fetch(
           `/api/getAllData?userId=${userId}&email=${email}`);
         const data = await res.json();
@@ -53,7 +55,6 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     catch(error) {
       alert(error)
     }
-    
     
   }, [checkTitle, selectedId]);
 
@@ -104,7 +105,6 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     }
     
   }
-
   const title = (title:string) => {
     if(title.length >= 30) {
       const text = title.slice(0, 30) + '...';
@@ -116,14 +116,13 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   }
 
 
-
   if (loadingData || loadingDelete) {
     // да это тупая тема, я на 2 секунды подгружаю данные из getServerSideProps, а потом гружу уже данные из fetch на клиенте.
     // но таким образом я избавился от некоторых мелкий визуальных багов с удалением постов
     // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу. я прнимаю, что это параша, но что уж сдлеать, я не профи, простите.
     return (
       <>   
-      <HeaderNotes length={lengthAllListNotes}/> 
+      <HeaderNotes length={counterNotes}/> 
         {body &&
           body.map((item: ILinks, i:number) => {
             return (
@@ -156,7 +155,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   } else {
     return (
       <>
-         <HeaderNotes length={lengthAllListNotes}/> 
+         <HeaderNotes length={counterNotes}/> 
         {links &&
           links.map((item: ILinks, i:number) => {
             return (
