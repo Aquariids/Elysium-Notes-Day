@@ -1,12 +1,12 @@
 /**
  * @type {import('next').NextConfig}
  */
-const withPWA = require('next-pwa')({
-  dest: 'public'
+// const withPWA = require('next-pwa')({
+//   dest: 'public'
   
-})
+// })
 
-module.exports = withPWA({
+module.exports = {
   webpack(nextConfig) {
 	nextConfig.module.rules.push({
 			loader: '@svgr/webpack',
@@ -24,4 +24,4 @@ module.exports = withPWA({
 
 		return nextConfig;
 	},
-})
+}
