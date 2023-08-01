@@ -36,7 +36,10 @@ export async function deleteData (_id:any, userId:any) {
   try {
     const database = client.db('notes');
     const collection = database.collection(`user_${userId}`);
-    const id = new ObjectId(_id)
+    const id = new ObjectId(_id);
+    const collectionDel = database.collection(`delete_user_${userId}`);
+    const data = await collection.find(id).toArray();
+    collectionDel.insertOne({data})
     const result = await collection.deleteOne({_id:id});
     return result;
   } 
