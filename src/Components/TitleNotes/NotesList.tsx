@@ -17,7 +17,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   const [links, setLinks] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingData, setLoadingData] = useState(true); 
-  const [counterNotes, setCounterNotes] = useState(0);
+  const [counterNotes, setCounterNotes] = useState(body.length);
   
 
   useEffect(()=> {
