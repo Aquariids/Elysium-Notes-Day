@@ -30,7 +30,7 @@ const notes = ({ data }: any) => {
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <div className={s.container}>
-           {data[0]  && <NotesList checkTitle={checkTitle} title={selectedItem.title} body={data} />}
+           {data[0]  && <NotesList checkTitle={checkTitle} body={data} />}
         </div>
         </div>
         <div className={s.editor}>
