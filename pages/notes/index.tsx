@@ -57,8 +57,7 @@ export async function getServerSideProps(context: any) {
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(
-    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`, { next: { revalidate:120 } });
-    context.res.setHeader('Cache-Control', 'no-cache');
+    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`);
   const data = await res.json();
 
   if (session && data[0] != undefined) {

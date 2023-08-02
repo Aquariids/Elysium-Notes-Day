@@ -4,11 +4,11 @@ import s from "./NotesList.module.scss";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import cn from "classnames";
-import { ILinks } from "./NotesList.props";
+import { ILinks, INotesList } from "./NotesList.props";
 import { convertFromRaw, EditorState } from "draft-js";
 import { NOTES } from "../../../pages/api/paths";
 import HeaderNotes from "../HeaderNotes/HeaderNotes";
-const NotesList = ({ body, checkTitle,id }: any) => {
+const NotesList = ({ body, checkTitle }: INotesList) => {
   const router = useRouter();
   const selectedId = router.query.index;
   const session = useSession();
@@ -58,7 +58,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     
   }, [checkTitle, selectedId]);
 
-  const handleDeleteLink = async (linkId?: any) => {    
+  const handleDeleteLink = async (linkId?: string | string[]) => {    
     const all_id = links && links.map((obj: { _id: string }) => obj._id);
     await all_id.filter((link: any) => link !== linkId);
     const currentIndex = all_id.findIndex((i: string) => i == selectedId);
@@ -105,7 +105,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     }
     
   }
-  const title = (title:string) => {
+  const sliceTitle = (title:string) => {
     if(title.length >= 30) {
       const text = title.slice(0, 30) + '...';
       return text;
@@ -115,6 +115,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     
   }
   const bodyTextsCache = useMemo(() => new Map(), []);
+  const TitleTextsCache = useMemo(() => new Map(), []);
   const getCachedText = useCallback(
     (body: string) => {
       if (!bodyTextsCache.has(body)) {
@@ -124,6 +125,17 @@ const NotesList = ({ body, checkTitle,id }: any) => {
       return bodyTextsCache.get(body);
     },
     [bodyTextsCache]
+  );
+
+  const getCachedTextTitle = useCallback(
+    (title: string) => {
+      if (!TitleTextsCache.has(title)) {
+        const text = sliceTitle(title);
+        TitleTextsCache.set(title, text);
+      }
+      return TitleTextsCache.get(title);
+    },
+    [TitleTextsCache]
   );
 
   if (loadingData || loadingDelete) {
@@ -153,7 +165,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                   })
                 }  href={`/${NOTES}/${item._id}`}>
                   <p className={s.title_link}>
-                    {item.title ? title(item.title) : "Без названия"}
+                    {item.title ? getCachedTextTitle(item.title) : "Без названия"}
                   </p>
                   <p className={s.body_link}> {getCachedText(item.body)} </p>
                 </Link>
@@ -190,7 +202,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                   })
                 }  href={`/${NOTES}/${item._id}`}>
                   <p className={s.title_link}>
-                    {item.title ? title(item.title) : "Без названия"}
+                    {item.title ? getCachedTextTitle(item.title) : "Без названия"}
                   </p>
                   <p className={s.body_link}> {getCachedText(item.body)}</p>
                 </Link>

@@ -30,7 +30,7 @@ const notes = ({ data }: any) => {
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <div className={s.container}>
-           {data[0]  && <NotesList checkTitle={checkTitle}  id={selectedItem._id} title={selectedItem.title} body={data} />}
+           {data[0]  && <NotesList checkTitle={checkTitle} title={selectedItem.title} body={data} />}
         </div>
         </div>
         <div className={s.editor}>
@@ -59,8 +59,7 @@ export async function getServerSideProps(context: any) {
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(
-    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`, { next: { revalidate:120 } });
-    context.res.setHeader('Cache-Control', 'no-cache');
+    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`);
   const data = await res.json();
 
   if (!session) {

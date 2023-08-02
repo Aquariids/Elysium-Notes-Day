@@ -5,3 +5,8 @@ export interface ILinks {
     body:string,
     userId:string
 }
+
+export interface INotesList {
+    body: ILinks[]
+    checkTitle:any
+}
