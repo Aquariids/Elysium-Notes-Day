@@ -1,0 +1,18 @@
+{
+  "background_color": "#fff",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/ico",
+      "purpose": "any"
+    }
+  ],
+  "name": "EnotesDay",
+  "short_name": "Disco",
+  "lang": "ru-Ru",
+  "start_url": "/",
+  "scope": "/",
+  "theme_color": "#ffffff"
+}
