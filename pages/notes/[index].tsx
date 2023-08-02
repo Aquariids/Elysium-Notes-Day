@@ -32,7 +32,7 @@ const notes = ({ data }: any) => {
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <div className={s.container}>
-        {data && data.map((item:any,i:any)=> {
+        {/* {data && data.map((item:any,i:any)=> {
     return (
       <Link key={i}  href={`/${NOTES}/${item._id}`}> 
         <div>
@@ -40,8 +40,8 @@ const notes = ({ data }: any) => {
         </div>
       </Link>
     )
-   })}
-           {/* {data[0]  && <NotesList checkTitle={checkTitle} body={data} />} */}
+   })} */}
+           {data[0]  && <NotesList checkTitle={checkTitle} body={data} />}
         </div>
         </div>
         <div className={s.editor}>
