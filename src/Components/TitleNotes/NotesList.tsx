@@ -34,7 +34,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
   useEffect(() => {
   
     try {
-      const getTitle = async ()=>{
+      const getData = async ()=>{
         const res = await fetch(
           `/api/getAllData?userId=${userId}&email=${email}`);
         const data = await res.json();
@@ -50,7 +50,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
           })
         );
       }
-      getTitle();
+      getData();
     }
     catch(error) {
       alert(error)
@@ -114,7 +114,17 @@ const NotesList = ({ body, checkTitle,id }: any) => {
     }
     
   }
-
+  const bodyTextsCache = useMemo(() => new Map(), []);
+  const getCachedText = useCallback(
+    (body: string) => {
+      if (!bodyTextsCache.has(body)) {
+        const text = DraftJsObjectInText(body);
+        bodyTextsCache.set(body, text);
+      }
+      return bodyTextsCache.get(body);
+    },
+    [bodyTextsCache]
+  );
 
   if (loadingData || loadingDelete) {
     // да это тупая тема, я на 2 секунды подгружаю данные из getServerSideProps, а потом гружу уже данные из fetch на клиенте.
@@ -145,7 +155,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                   <p className={s.title_link}>
                     {item.title ? title(item.title) : "Без названия"}
                   </p>
-                  <p className={s.body_link}> {DraftJsObjectInText(item.body)} </p>
+                  <p className={s.body_link}> {getCachedText(item.body)} </p>
                 </Link>
               </div>
             );
@@ -182,7 +192,7 @@ const NotesList = ({ body, checkTitle,id }: any) => {
                   <p className={s.title_link}>
                     {item.title ? title(item.title) : "Без названия"}
                   </p>
-                  <p className={s.body_link}> {DraftJsObjectInText(item.body)}</p>
+                  <p className={s.body_link}> {getCachedText(item.body)}</p>
                 </Link>
            
               </div>

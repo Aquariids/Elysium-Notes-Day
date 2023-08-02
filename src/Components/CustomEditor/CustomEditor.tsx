@@ -1,4 +1,4 @@
-import { SetStateAction, useCallback, useEffect, useState } from "react";
+import { SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import {
   getDefaultKeyBindingFn,
@@ -28,19 +28,22 @@ const CustomEditor = ({
     const contentState = convertFromRaw(JSON.parse(body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
     return EditorState.createWithContent(contentState);
   });
- 
+
+  const editorStateMemo = useMemo(() => {
+    const contentState = convertFromRaw(JSON.parse(body)); // тут мы парсим данные с базы в спец объект draft js
+    return EditorState.createWithContent(contentState); // и на его основе меняем состояние редактора
+  }, [body]);
+  useEffect(() => {
+    if (body) {
+      setEditorState(editorStateMemo); 
+    }
+  }, [body]);
+
   const handleEditorChange = useCallback((editorState: SetStateAction<EditorState>) => {
     setEditorState(editorState);
   }, []);
 
-  useEffect(() => {
-    if (body) {
-      const contentState = convertFromRaw(JSON.parse(body)); // тут мы парсим данные с базы в спец объект draft js
-      setEditorState(EditorState.createWithContent(contentState)); // и на его основе меняем состояние редактора\
-     
-    }
-  }, [body]);
-
+ 
   
 
 useEffect(() => {
