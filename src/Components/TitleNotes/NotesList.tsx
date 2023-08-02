@@ -138,43 +138,43 @@ const NotesList = ({ body, checkTitle }: INotesList) => {
     [TitleTextsCache]
   );
 
-  if (loadingData || loadingDelete) {
-    // да это тупая тема, я на 2 секунды подгружаю данные из getServerSideProps, а потом гружу уже данные из fetch на клиенте.
-    // но таким образом я избавился от некоторых мелкий визуальных багов с удалением постов
-    // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу. я прнимаю, что это параша, но что уж сдлеать, я не профи, простите.
-    return (
-      <>   
-      <HeaderNotes length={counterNotes}/> 
-        {body &&
-          body.map((item: ILinks, i:number) => {
-            return (
-              <div
-                key={item._id}
-                className={cn(s.block_link, {
-                  [s.first_block_link]: i === 0,
-                  [s.active]: selectedId === item._id,
+  // if (loadingData || loadingDelete) {
+  //   // да это тупая тема, я на 2 секунды подгружаю данные из getServerSideProps, а потом гружу уже данные из fetch на клиенте.
+  //   // но таким образом я избавился от некоторых мелкий визуальных багов с удалением постов
+  //   // а также отображаю их  без подгрузок и тп тд. Делаю как могу кастылю как могу. я прнимаю, что это параша, но что уж сдлеать, я не профи, простите.
+  //   return (
+  //     <>   
+  //     <HeaderNotes length={counterNotes}/> 
+  //       {body &&
+  //         body.map((item: ILinks, i:number) => {
+  //           return (
+  //             <div
+  //               key={item._id}
+  //               className={cn(s.block_link, {
+  //                 [s.first_block_link]: i === 0,
+  //                 [s.active]: selectedId === item._id,
                 
-                })}
-              >
-                <button disabled className={cn(s.delete_btn, {
-                  [s.show]: selectedId === item._id,
-                })}>x</button>
-                <Link className = {
-                  cn(s.link, {
-                    [s.blockLink]: selectedId === item._id,
-                  })
-                }  href={`/${NOTES}/${item._id}`}>
-                  <p className={s.title_link}>
-                    {item.title ? getCachedTextTitle(item.title) : "Без названия"}
-                  </p>
-                  <p className={s.body_link}> {getCachedText(item.body)} </p>
-                </Link>
-              </div>
-            );
-          })}
-      </>
-    );
-  } else {
+  //               })}
+  //             >
+  //               <button disabled className={cn(s.delete_btn, {
+  //                 [s.show]: selectedId === item._id,
+  //               })}>x</button>
+  //               <Link rel="preload"  className = {
+  //                 cn(s.link, {
+  //                   [s.blockLink]: selectedId === item._id,
+  //                 })
+  //               }  href={`/${NOTES}/${item._id}`}>
+  //                 <p className={s.title_link}>
+  //                   {item.title ? getCachedTextTitle(item.title) : "Без названия"}
+  //                 </p>
+  //                 <p className={s.body_link}> {getCachedText(item.body)} </p>
+  //               </Link>
+  //             </div>
+  //           );
+  //         })}
+  //     </>
+  //   );
+  // } else {
     return (
       <>
          <HeaderNotes length={counterNotes}/> 
@@ -196,7 +196,7 @@ const NotesList = ({ body, checkTitle }: INotesList) => {
                 })}
                   onClick={() => handleDeleteLink(selectedId)}
                 >x</button>
-                <Link className = {
+                <Link rel="preload" className = {
                   cn(s.link, {
                     [s.blockLink]: selectedId === item._id,
                   })
@@ -214,6 +214,6 @@ const NotesList = ({ body, checkTitle }: INotesList) => {
       </>
     );
   }
-};
+// };
 
 export default NotesList;
