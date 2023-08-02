@@ -7,6 +7,8 @@ import Error404 from "../Error404";
 import NotesList from "@/Components/TitleNotes/NotesList";
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]";
+import Link from "next/link";
+import { NOTES } from "../api/paths";
 const notes = ({ data }: any) => {
   const  [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -30,7 +32,16 @@ const notes = ({ data }: any) => {
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <div className={s.container}>
-           {data[0]  && <NotesList checkTitle={checkTitle} body={data} />}
+        {data && data.map((item:any,i:any)=> {
+    return (
+      <Link key={i}  href={`/${NOTES}/${item._id}`}> 
+        <div>
+        {item._id}
+        </div>
+      </Link>
+    )
+   })}
+           {/* {data[0]  && <NotesList checkTitle={checkTitle} body={data} />} */}
         </div>
         </div>
         <div className={s.editor}>
