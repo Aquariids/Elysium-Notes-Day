@@ -46,7 +46,7 @@ const NotesList = ({ body, checkTitle }: INotesList) => {
         })
       );
 
-  }, [checkTitle]);
+  }, [selectedId]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
