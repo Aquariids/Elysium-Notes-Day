@@ -8,7 +8,7 @@ import { ILinks, INotesList } from "./NotesList.props";
 import { convertFromRaw, EditorState } from "draft-js";
 import { NOTES } from "../../../pages/api/paths";
 import HeaderNotes from "../HeaderNotes/HeaderNotes";
-const NotesList = ({data, body, userId }: any) => {
+const NotesList = ({data, body, userId, recycle }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
   const [loadingDelete, setLoadingDelete] = useState(false);
@@ -111,7 +111,7 @@ const NotesList = ({data, body, userId }: any) => {
   );
 
   
-   if(loadingData || loadingDelete) {
+   if(loadingData || loadingDelete && !recycle) {
     return (
       <>
          <HeaderNotes length={counterNotes}/> 
@@ -148,7 +148,7 @@ const NotesList = ({data, body, userId }: any) => {
           
       </>
     );
-   } else {
+   } else  {
     return (
       <>
          <HeaderNotes length={counterNotes}/> 

@@ -21,6 +21,22 @@ export async function getAllNotesFromDatabase(userId: any,email: any) {
 
 }
 
+
+export async function getAllNotesFromDatabaseRecycle(userId: any,email: any) {
+  const client = await clientPromise;
+  try {
+    const query = userId && email ? {userId, email}: {};
+      const database = client.db('notes');
+      const collection = database.collection(`delete_user_${userId}`); // создаем или подключаемся к коллекции
+      const data = await collection.find(query).toArray();
+      return data; 
+    
+  } catch(error) {
+    client.close();
+  }
+  
+
+}
 export async function createDatabase (data:any) {  
   const client = await clientPromise;
   const database = client.db('notes');

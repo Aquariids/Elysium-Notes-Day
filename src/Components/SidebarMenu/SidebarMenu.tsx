@@ -18,7 +18,7 @@ const SideBarMenu = ({data}:any) => {
       <ul className={s.list}>
       <SidebarLink href='/'> Главное меню </SidebarLink>
       <SidebarLink btn={'add'} href={`/${NOTES}`}> Заметки </SidebarLink>
-      <SidebarLink btn={'add'} href={`/${NOTES}`}> Корзина </SidebarLink>
+      <SidebarLink href={`/recycle`}> Корзина </SidebarLink>
       </ul>
         </div>
     )

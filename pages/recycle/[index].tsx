@@ -27,34 +27,6 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   ); 
 
-
-  const getData = useCallback(async () => {
-    
-    const res = await fetch(
-      `/api/getAllData?userId=${userId}&email=${email}`);
-      const data = await res.json();
-      setLinks(
-        data.map((item: any) => {                    
-          return {
-            title: item.title,
-            _id: item._id,
-            date: item.date,
-            body:item.body,
-          
-          };
-        })
-      );
-
-  }, [checkTitle,data]);
- 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      getData()
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [checkTitle,data]);
-
   if (!selectedItem) {
     return <Error404 />;
   } else {
@@ -64,16 +36,8 @@ const notes = ({ data }: any) => {
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <div className={s.container}>
-        {/* {data && data.map((item:any,i:any)=> {
-    return (
-      <Link key={i}  href={`/${NOTES}/${item._id}`}> 
-        <div>
-        {item._id}
-        </div>
-      </Link>
-    )
-   })} */}
-           {data[0]  && <NotesList checkTitle={checkTitle} data={links} body={data} userId={userId} />}
+     
+           {data[0]  && <NotesList recycle={false} checkTitle={checkTitle} body={data} userId={userId} />}
         </div>
         </div>
         <div className={s.editor}>
@@ -102,7 +66,7 @@ export async function getServerSideProps(context: any) {
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(
-    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`);
+    `${process.env.DOMAIN}/api/getAllDataRecycle?userId=${userId}&email=${email}`);
   const data = await res.json();
 
   if (!session) {
