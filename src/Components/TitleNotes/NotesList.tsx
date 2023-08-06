@@ -111,6 +111,44 @@ const NotesList = ({data, body, userId }: any) => {
   );
 
   
+   if(loadingData || loadingDelete) {
+    return (
+      <>
+         <HeaderNotes length={counterNotes}/> 
+        {body &&
+          body.map((item: ILinks, i:number) => {
+            return (
+              <div
+                key={item._id}
+                className={cn(s.block_link, {
+                  [s.first_block_link]: i === 0,
+                  [s.active]: selectedId === item._id,
+                })}
+              >
+                <button
+                 className={cn(s.delete_btn, {
+                  [s.show]: selectedId === item._id,
+                })}
+                  onClick={() => handleDeleteLink(selectedId)}
+                >x</button>
+                {loadingDelete ? "пидар" :<Link rel="preload" className = {
+                  cn(s.link, {
+                    [s.blockLink]: selectedId === item._id,
+                  })
+                }  href={`/${NOTES}/${item._id}`}>
+                  <p className={s.title_link}>
+                    {item.title ? getCachedTextTitle(item.title) : "Без названия"}
+                  </p>
+                  <p className={s.body_link}> {getCachedText(item.body)}</p>
+                </Link>}
+           
+              </div>
+            );
+          })}
+          
+      </>
+    );
+   } else {
     return (
       <>
          <HeaderNotes length={counterNotes}/> 
@@ -149,6 +187,7 @@ const NotesList = ({data, body, userId }: any) => {
           
       </>
     );
+   }
   }
 
 

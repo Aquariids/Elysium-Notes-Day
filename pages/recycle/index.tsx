@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { getSession, useSession } from "next-auth/react";
+import React, { useState } from "react";
 import { withLayout } from "../../layout/Layout";
 import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { useRouter } from "next/router";
@@ -7,73 +8,28 @@ import Error404 from "../Error404";
 import NotesList from "@/Components/TitleNotes/NotesList";
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]";
-import Link from "next/link";
 import { NOTES } from "../api/paths";
-import { useSession } from "next-auth/react";
-import { ILinks } from "@/Components/TitleNotes/NotesList.props";
-const notes = ({ data }: any) => {
+import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
+const MainPage = ({ data }: any) => {
   const  [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const router = useRouter();
   const selectedId = router.query.index;
-  const [links, setLinks] = useState<any>();
-  const session = useSession();
-  const userId = session.data?.user.userId; 
-  const email = session.data?.user.email;
+
   // это наш path по сути текущий url = _id человека
-  const selectedItem = useMemo(  // с помощью useMemo уменьшаю кол рендеров
-    () => data.find((item: { _id: string }) => {
-      return item._id === selectedId}),
-    [data, selectedId]
-  ); 
+  const selectedItem = data.find(
+    (item: { _id: string }) => item._id === selectedId
+  ); // ищем в нашем массиве первый _id попавший под услвоие. То есть если он равен id из url
 
-
-  const getData = useCallback(async () => {
-    
-    const res = await fetch(
-      `/api/getAllData?userId=${userId}&email=${email}`);
-      const data = await res.json();
-      setLinks(
-        data.map((item: any) => {                    
-          return {
-            title: item.title,
-            _id: item._id,
-            date: item.date,
-            body:item.body,
-          
-          };
-        })
-      );
-
-  }, [checkTitle,data]);
- 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      getData()
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [checkTitle,data]);
-
-  if (!selectedItem) {
-    return <Error404 />;
-  } else {
     return (
       // ну и паередаем его в наш редактор.
-     
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <div className={s.container}>
-        {/* {data && data.map((item:any,i:any)=> {
-    return (
-      <Link key={i}  href={`/${NOTES}/${item._id}`}> 
-        <div>
-        {item._id}
-        </div>
-      </Link>
-    )
-   })} */}
-           {data[0]  && <NotesList checkTitle={checkTitle} data={links} body={data} userId={userId} />}
+            <div>
+            <h2> Корзина пуста</h2>
+          Если в корзине есть заметки, нажмите на «...», чтобы восстановить или удалить их.
+            </div>
         </div>
         </div>
         <div className={s.editor}>
@@ -95,7 +51,6 @@ const notes = ({ data }: any) => {
     
     );
   }
-};
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions)
@@ -105,18 +60,21 @@ export async function getServerSideProps(context: any) {
     `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`);
   const data = await res.json();
 
-  if (!session) {
+  if (session && data[0] != undefined) {
     return {
       redirect: {
-        destination: "/",
+        destination: `/${NOTES}/${data[0]._id}`,
         permanent: false,
       },
     };
-  }   
+  }  else {
+    return {
+        props: { data},
+      };
+  }
 
-  return {
-    props: { data},
-  };
+
+ 
 }
 
-export default withLayout(notes);
+export default withLayout(MainPage);
