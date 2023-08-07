@@ -5,7 +5,7 @@ import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { useRouter } from "next/router";
 import s from "./mainPage.module.scss";
 import Error404 from "../Error404";
-import NotesList from "@/Components/TitleNotes/NotesList";
+import NotesList from "@/Components/NotesList/NotesList";
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]";
 import { NOTES } from "../api/paths";
