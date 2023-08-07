@@ -31,7 +31,7 @@ const NotesList = ({data, body, userId, recycle }: any) => {
   
    
     return (
-     <List body={data}userId={userId} />
+     <List body={data}userId={userId} counterNotes={counterNotes} />
     );
   
    }

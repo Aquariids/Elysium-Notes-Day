@@ -2,6 +2,8 @@
     h1 {
         margin: 0;
     }
+
+
 }
 
 .title {
@@ -27,7 +29,11 @@
 
 
 .body {
+    line-height: 1.5;
+    height:  90vh;
+    overflow: auto;
     padding-top: 15px;
+   
 }
 
 
@@ -57,6 +63,9 @@
 
 
     .toolbarHeader {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #fff;
         padding-left: 10px;
         border-left: 1px solid rgba(122, 122, 122, 0.452);
 
