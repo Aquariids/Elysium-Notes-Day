@@ -15,7 +15,6 @@ const NotesList = ({data, body, userId, recycle }: any) => {
   const [loadingData, setLoadingData] = useState(true); 
   const [counterNotes, setCounterNotes] = useState(body.length);
   
-
   useEffect(()=> {
     setCounterNotes(body.length)
   },[router])
@@ -30,9 +29,17 @@ const NotesList = ({data, body, userId, recycle }: any) => {
 
   
    
+  if(!data) {
     return (
-     <List body={data}userId={userId} counterNotes={counterNotes} />
-    );
+      <List body={body}userId={userId} counterNotes={counterNotes} />
+     );
+   
+  } else {
+    return (
+      <List body={data}userId={userId} counterNotes={counterNotes} />
+     );
+   
+  }
   
    }
 

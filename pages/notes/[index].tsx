@@ -29,21 +29,28 @@ const notes = ({ data }: any) => {
 
 
   const getData = useCallback(async () => {
-    
-    const res = await fetch(
-      `/api/getAllData?userId=${userId}&email=${email}`);
-      const data = await res.json();
-      setLinks(
-        data.map((item: any) => {                    
-          return {
-            title: item.title,
-            _id: item._id,
-            date: item.date,
-            body:item.body,
-          
-          };
-        })
-      );
+    if(session.status === 'authenticated') {
+      const res = await fetch(
+        `/api/getAllData?userId=${userId}&email=${email}`);
+        const data = await res.json();
+       
+       
+       
+        setLinks(
+          data.map((item: any) => {                    
+            return {
+              title: item.title,
+              _id: item._id,
+              date: item.date,
+              body:item.body,
+            
+            };
+          })
+        );
+    }
+
+
+     
 
   }, [checkTitle,data]);
  
@@ -64,15 +71,6 @@ const notes = ({ data }: any) => {
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <div className={s.container}>
-        {/* {data && data.map((item:any,i:any)=> {
-    return (
-      <Link key={i}  href={`/${NOTES}/${item._id}`}> 
-        <div>
-        {item._id}
-        </div>
-      </Link>
-    )
-   })} */}
            {data[0]  && <NotesList checkTitle={checkTitle} data={links} body={data} userId={userId} />}
         </div>
         </div>

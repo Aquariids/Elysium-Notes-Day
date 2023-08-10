@@ -37,21 +37,20 @@ const bodyTextsCache = useMemo(() => new Map(), []);
   );
     const handleDeleteLink = async (linkId?: string | string[]) => {    
         const all_id = body && body.map((obj: { _id: string }) => obj._id);
-        await all_id.filter((link: any) => link !== linkId);
+        await all_id.filter((link:string) => link !== linkId);
         const currentIndex = all_id.findIndex((i: string) => i == selectedId);
-    
         const res = await fetch(`/api/deleteData?_id=${linkId}&userId=${userId}`);
+        setLoadingDelete(true);
        
-       
-          if (all_id.length >= 2) {
+          if (all_id.length >= 2 && res.status === 200) {
             if (linkId != selectedId) {
               router.push(all_id[currentIndex]);
             } else if (
               linkId === selectedId &&
               all_id[currentIndex + 1] === undefined
             ) {
+             
               router.push(all_id[currentIndex - 1]);
-              
             } else {
               router.push(all_id[currentIndex + 1]);
             }
@@ -60,52 +59,60 @@ const bodyTextsCache = useMemo(() => new Map(), []);
           } else {
             alert("ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ");
           }
-        
-    
-        setLoadingDelete(true);
-        setTimeout(() => {
-          setLoadingDelete(false);
-        }, 750);
+
+          setTimeout(() => {
+            setLoadingDelete(false);
+          }, 2000);
       };
     
 
 
+  if(loadingDelete) {
     return (
-        <>
-        <HeaderNotes length={counterNotes}/> 
-       {body &&
-         body.map((item: ILinks, i:number) => {
-           return (
-             <div
-               key={item._id}
-               className={cn(s.block_link, {
-                 [s.first_block_link]: i === 0,
-                 [s.active]: selectedId === item._id,
-               })}
-             >
-               <button
-                className={cn(s.delete_btn, {
-                 [s.show]: selectedId === item._id,
-               })}
-                 onClick={() => handleDeleteLink(selectedId)}
-               >x</button>
-               {loadingDelete ? "пидар" :<Link rel="preload" className = {
-                 cn(s.link, {
-                   [s.blockLink]: selectedId === item._id,
-                 })
-               }  href={`/${NOTES}/${item._id}`}>
-                 <p className={s.title_link}>
-                   {item.title ? getCachedTextTitle(item.title) : "Без названия"}
-                 </p>
-                 <p className={s.body_link}> {getCachedText(item.body)}</p>
-               </Link>}
-          
-             </div>
-           );
-         })}
-         
-     </>
-    )
+      <>
+      <HeaderNotes length={counterNotes}/> 
+    
+       
+   </>
+  )
+  } else {
+    return (
+      <>
+      <HeaderNotes length={counterNotes}/> 
+     {body &&
+       body.map((item: ILinks, i:number) => {
+         return (
+           <div
+             key={item._id}
+             className={cn(s.block_link, {
+               [s.first_block_link]: i === 0,
+               [s.active]: selectedId === item._id,
+             })}
+           >
+             <button
+              className={cn(s.delete_btn, {
+               [s.show]: selectedId === item._id,
+             })}
+               onClick={() => handleDeleteLink(selectedId)}
+             >x</button>
+            <Link rel="preload" className = {
+               cn(s.link, {
+                 [s.blockLink]: selectedId === item._id,
+               })
+             }  href={`/${NOTES}/${item._id}`}>
+               <p className={s.title_link}>
+                 {item.title ? getCachedTextTitle(item.title) : "Без названия"}
+               </p>
+               <p className={s.body_link}> {getCachedText(item.body)}</p>
+             </Link>
+        
+           </div>
+         );
+       })}
+       
+   </>
+  )
+  }
 }
 
 
