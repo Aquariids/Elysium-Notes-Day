@@ -52,17 +52,16 @@ width: 308px;
 
 
 .container:hover::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.349);
     
 }
 .notes_list {
-    
     height: 100vh;
 }
 
 .editor {
 
-    border-left:  1px solid rgba(128, 128, 128, 0.349);
+    border-left:  1px solid rgba(128, 128, 128, 0.151);
     padding: 45px 45px;
     min-width: 300px;
     height: 100vh;

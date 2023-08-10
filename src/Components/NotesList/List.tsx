@@ -10,8 +10,7 @@ const List = ({body,userId,counterNotes}:any) => {
 const router = useRouter();
 const selectedId = router.query.index;
 const [loadingDelete, setLoadingDelete] = useState(false);
-
-
+const [deleleElement, setDeleleElement] = useState<any>();
 const bodyTextsCache = useMemo(() => new Map(), []);
   const TitleTextsCache = useMemo(() => new Map(), []);
    const getCachedText = useCallback(
@@ -35,12 +34,14 @@ const bodyTextsCache = useMemo(() => new Map(), []);
     },
     [TitleTextsCache]
   );
-    const handleDeleteLink = async (linkId?: string | string[]) => {    
-        const all_id = body && body.map((obj: { _id: string }) => obj._id);
+    const handleDeleteLink = async (linkId?: string | string[]) => {  
+        setDeleleElement(linkId)
+        const res = await fetch(`/api/deleteData?_id=${linkId}&userId=${userId}`);
+        let all_id = body && body.map((obj: { _id: string }) => obj._id);
         await all_id.filter((link:string) => link !== linkId);
         const currentIndex = all_id.findIndex((i: string) => i == selectedId);
-        const res = await fetch(`/api/deleteData?_id=${linkId}&userId=${userId}`);
         setLoadingDelete(true);
+    
        
           if (all_id.length >= 2 && res.status === 200) {
             if (linkId != selectedId) {
@@ -67,26 +68,22 @@ const bodyTextsCache = useMemo(() => new Map(), []);
     
 
 
-  if(loadingDelete) {
-    return (
-      <>
-      <HeaderNotes length={counterNotes}/> 
-    
-       
-   </>
-  )
-  } else {
+ 
     return (
       <>
       <HeaderNotes length={counterNotes}/> 
      {body &&
        body.map((item: ILinks, i:number) => {
-         return (
-           <div
+        if(loadingDelete && deleleElement === item._id ) {
+          return <> </>
+        } else {
+          return (
+            <div
              key={item._id}
              className={cn(s.block_link, {
                [s.first_block_link]: i === 0,
                [s.active]: selectedId === item._id,
+            
              })}
            >
              <button
@@ -107,12 +104,14 @@ const bodyTextsCache = useMemo(() => new Map(), []);
              </Link>
         
            </div>
-         );
+          )
+        }
+           
+         
        })}
        
    </>
   )
-  }
 }
 
 

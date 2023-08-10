@@ -4,7 +4,7 @@
 .block_link {
     width: 100%;
     height: 100%;
-    border-bottom:  1px solid rgba(128, 128, 128, 0.349);
+    border-bottom:  1px solid rgba(128, 128, 128, 0.151);
     text-decoration: none;
     position: relative;
     color:rgb(87, 87, 87);
@@ -13,6 +13,9 @@
     transition: all .2s;
     overflow: hidden;
     word-wrap: break-word;
+    &:last-child {
+        margin-bottom: 2px;
+    }
     
 }
 
@@ -89,12 +92,19 @@
 
 .active {
     transition: all .1s;
-    background-color: #b11f1f2a;
+    background-color: #8a3a3a3f;
+   
     border-bottom: 1px solid rgba(38, 58, 71, 0.699);
 }
 
 .blockLink {
     
     pointer-events: none;
+}
+
+
+
+.delete {
+  display: none;
 }
 
