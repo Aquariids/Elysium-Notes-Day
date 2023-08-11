@@ -9,34 +9,26 @@ import { convertFromRaw, EditorState } from "draft-js";
 import { NOTES } from "../../../pages/api/paths";
 import HeaderNotes from "../HeaderNotes/HeaderNotes";
 import List from "./List";
-const NotesList = ({data, body, userId, recycle }: any) => {
+const NotesList = ({data, body, userId, email, recycle }: any) => {
   const router = useRouter();
   const selectedId = router.query.index;
-  const [loadingData, setLoadingData] = useState(true); 
+
   const [counterNotes, setCounterNotes] = useState(body.length);
   
   useEffect(()=> {
     setCounterNotes(body.length)
   },[router])
   
-  useEffect(()=> {
-    setTimeout(() => {
-      setLoadingData(false)
-    },2000)
-  },[])
- 
- 
 
-  
    
   if(!data) {
     return (
-      <List body={body}userId={userId} counterNotes={counterNotes} />
+      <List body={body}userId={userId} email={email} counterNotes={counterNotes} />
      );
    
   } else {
     return (
-      <List body={data}userId={userId} counterNotes={counterNotes} />
+      <List body={data}userId={userId} email={email} counterNotes={counterNotes} />
      );
    
   }

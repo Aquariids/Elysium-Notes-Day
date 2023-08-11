@@ -26,9 +26,10 @@ export async function getAllNotesFromDatabaseRecycle(userId: any,email: any) {
   const client = await clientPromise;
   try {
     const query = userId && email ? {userId, email}: {};
-      const database = client.db('notes');
-      const collection = database.collection(`delete_user_${userId}`); // создаем или подключаемся к коллекции
+    const deeltedDb = client.db('deleted_notes');
+      const collection = deeltedDb.collection(`delete_user_${userId}`); // создаем или подключаемся к коллекции
       const data = await collection.find(query).toArray();
+      console.log("🚀 ~ file: dataFromDatabase.ts:32 ~ getAllNotesFromDatabaseRecycle ~ data:", data)
       return data; 
     
   } catch(error) {
@@ -51,11 +52,12 @@ export async function deleteData (_id:any, userId:any) {
   const client = await clientPromise;
   try {
     const database = client.db('notes');
+    const deeltedDb = client.db('deleted_notes');
     const collection = database.collection(`user_${userId}`);
     const id = new ObjectId(_id);
-    const collectionDel = database.collection(`delete_user_${userId}`);
+    const collectionDel = deeltedDb.collection(`delete_user_${userId}`);
     const data = await collection.find(id).toArray();
-    collectionDel.insertOne({data})
+    collectionDel.insertOne({...data[0]})
     const result = await collection.deleteOne({_id:id});
     return result;
   } 
