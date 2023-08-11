@@ -87,3 +87,44 @@
         border-left: 1px solid rgba(122, 122, 122, 0.452);
         display: inline-block;
     }
+
+
+    .block {
+        
+        pointer-events: none;
+        
+    }
+
+
+  
+    @keyframes fade {
+        from {
+          opacity: 1;
+          visibility: visible;
+        }
+        to {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+
+      .animated {
+        transition: all .2s;
+        animation: fade 3s ease-in-out forwards;
+      }
+    
+    .modal {
+        border-radius: 3px;
+        transition: all .2s;
+        width: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        height: 25px;
+        pointer-events: none;
+        background-color: rgba(255, 0, 0, 0.863);
+        
+    }
+
+    
