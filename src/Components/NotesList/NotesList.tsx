@@ -23,12 +23,19 @@ const NotesList = ({data, body, userId, email, recycle }: any) => {
    
   if(!data) {
     return (
-      <List body={body}userId={userId} email={email} counterNotes={counterNotes} />
+  
+      
+      <List body={body} userId={userId} email={email} counterNotes={counterNotes} />
+     
      );
    
   } else {
     return (
-      <List body={data}userId={userId} email={email} counterNotes={counterNotes} />
+    
+     
+      <List body={data} userId={userId} email={email} counterNotes={counterNotes} />
+      
+
      );
    
   }

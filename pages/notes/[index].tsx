@@ -70,6 +70,7 @@ const notes = ({ data }: any) => {
      
       <div className={s.wrapper}>
         <div className={s.notes_list}>
+          
         <div className={s.container}>
            {data[0]  && <NotesList checkTitle={checkTitle} data={links} body={data} userId={userId} />}
         </div>
@@ -78,6 +79,7 @@ const notes = ({ data }: any) => {
           
           {selectedItem && (
             <CustomEditor 
+              data={links}
               checkTitle = {checkTitle}
               setCheckTitle = {setCheckTitle}
               title={selectedItem.title}

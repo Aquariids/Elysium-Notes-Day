@@ -20,7 +20,8 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
 import cn from "classnames";
 import Modal from "./Modal";
-const CustomEditor = ({ id, body, title, setCheckTitle }: any) => {
+import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
+const CustomEditor = ({ id, body, title, setCheckTitle,data }: any) => {
   const [value, setValue] = useState(title);
   const { data: session } = useSession();
   const _id = id;
@@ -180,10 +181,14 @@ const CustomEditor = ({ id, body, title, setCheckTitle }: any) => {
             [s.block]: routerReclycle,
           })}
         >
-          <ToolbarButtons
+          <div className={s.toolbar}>
+          {routerReclycle ? '' :  <ToolbarButtons
             editorState={editorState}
             setEditorState={setEditorState}
-          />
+          />}
+          <ButtonDeleteNotes body={data}/>
+          </div>
+        
 
           <div className={s.body}>
             <TextareaAutosize
