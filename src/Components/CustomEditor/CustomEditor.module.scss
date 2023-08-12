@@ -2,7 +2,8 @@
     h1 {
         margin: 0;
     }
-
+    display:grid;
+    grid-template-columns: 1fr auto;
 
 }
 
@@ -129,3 +130,55 @@
     }
 
     
+
+
+    .dropbtn {
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .dropbtn:hover, .dropbtn:focus svg {
+        fill: #b11f1f;
+    }
+    
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        
+    }
+    
+    .dropdown_content {
+        opacity: 0; /* Начальное значение нулевой прозрачности */
+        transition: opacity 0.5s; /* Добавлена анимация только для opacity */
+        position: absolute;
+        right: 25px;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        padding: 10px;
+        min-height: 125px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    
+    /* Убраны display и visibility из .dropdown_content */
+    
+    .dropdown_content a {
+        opacity: 1;
+        transition: background-color 0.5s; /* Добавлена анимация только для background-color */
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+    
+    .dropdown_content a:hover {
+        background-color: #ddd;
+    }
+    
+    /* При наведении на .dropdown, меняем прозрачность .dropdown_content */
+    .show {
+        opacity: 1;
+    }
+    
+    /* Класс .show больше не нужен */

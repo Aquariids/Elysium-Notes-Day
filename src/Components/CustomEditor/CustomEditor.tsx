@@ -3,6 +3,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
@@ -20,8 +21,10 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
 import cn from "classnames";
 import Modal from "./Modal";
+import DotsMenu from "./dots.svg";
 import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
-const CustomEditor = ({ id, body, title, setCheckTitle,data }: any) => {
+const CustomEditor = ({ id, body, title, setCheckTitle, data }: any) => {
+  const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
   const { data: session } = useSession();
   const _id = id;
@@ -32,7 +35,7 @@ const CustomEditor = ({ id, body, title, setCheckTitle,data }: any) => {
   const [isTimeoutInProgress, setIsTimeoutInProgress] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isClickBlocked, setIsClickBlocked] = useState(false);
-
+const refActiveMenu = useRef<HTMLDivElement>(null)
   useEffect(() => {
     setRouterReclycle(router.asPath.split("/")[1] === "recycle");
   }, []);
@@ -59,6 +62,19 @@ const CustomEditor = ({ id, body, title, setCheckTitle,data }: any) => {
     },
     []
   );
+
+  const handleOutsideClick = (event:any) => {
+    if (refActiveMenu.current && !refActiveMenu.current.contains(event.target)) {
+      setDotsMenuActive(false);
+    }
+};
+
+useEffect(() => {
+    document.addEventListener('click', handleOutsideClick, false);
+    return () => {
+        document.removeEventListener('click', handleOutsideClick, false);
+    };
+}, []);
 
   useEffect(() => {
     setValue(title);
@@ -145,7 +161,7 @@ const CustomEditor = ({ id, body, title, setCheckTitle,data }: any) => {
   return (
     <>
       <div
-        onMouseMove={(e) => {}}
+        onMouseMove={() => {}}
         className={s.toolbar}
         onClick={(event) => {
           const { clientX, clientY } = event;
@@ -182,13 +198,29 @@ const CustomEditor = ({ id, body, title, setCheckTitle,data }: any) => {
           })}
         >
           <div className={s.toolbar}>
-          {routerReclycle ? '' :  <ToolbarButtons
-            editorState={editorState}
-            setEditorState={setEditorState}
-          />}
-          <ButtonDeleteNotes body={data}/>
+            {routerReclycle ? (
+              ""
+            ) : (
+              <ToolbarButtons
+                editorState={editorState}
+                setEditorState={setEditorState}
+              />
+            )}
+            <div ref={refActiveMenu} className={s.dropdown}>
+              <button onClick={(e)=> {
+                setDotsMenuActive(!dotsMenuActive)
+              }} className={s.dropbtn}>
+                {" "}
+                <DotsMenu />
+              </button>
+              <div id={s.myDropdown}  className={cn(s.dropdown_content, {
+                [s.show]: dotsMenuActive
+              })}>
+                <ButtonDeleteNotes body={data}/>
+              </div>
+            </div>
+            {/* <ButtonDeleteNotes body={data}/> */}
           </div>
-        
 
           <div className={s.body}>
             <TextareaAutosize

@@ -1,12 +1,11 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { ButtonDeleteProps } from "./ButtonDeleteNotes.props";
-
+import s from './ButtonDeleteNotes.module.scss';
 const ButtonDeleteNotes = ({body, ...props}:ButtonDeleteProps) => {
     const router = useRouter();
     const session = useSession();
     const recycleRouter = router.asPath.split('/')[1] === 'recycle';
-    console.log("🚀 ~ file: ButtonDeleteNotes.tsx:9 ~ ButtonDeleteNotes ~ RecycleRouter:", recycleRouter)
     const selectedId = router.query.index;
     const userId = session.data?.user.userId; 
 
@@ -43,7 +42,7 @@ const ButtonDeleteNotes = ({body, ...props}:ButtonDeleteProps) => {
       };
     return(
        <>
-       {recycleRouter ? <span>Окончательно удалить</span>: <div onClick={(() => handleDeleteLink(selectedId))} {...props} >Переместить в корзину</div>}
+       {recycleRouter ? <div className={s.delete}><p>Окончательно удалить</p></div>: <div className={s.delete} onClick={(() => handleDeleteLink(selectedId))} {...props} ><p>Переместить в корзину</p></div>}
        </>
     )
 }
