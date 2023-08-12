@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { withLayout } from "../../layout/Layout";
 import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { useRouter } from "next/router";
-import s from "./mainPage.module.scss";
+import s from "../notes/notes.module.scss"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]";
 

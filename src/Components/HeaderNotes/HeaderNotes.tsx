@@ -5,14 +5,15 @@ import Recycle from './recycle.svg';
 import { useRouter } from 'next/router';
 
 
-const HeaderNotes = ({length}:any) => {
-  const [counter,setCounter] = useState(length);
+const HeaderNotes = ({data}:any) => {
+  const [counterNotes, setCounterNotes] = useState(data.length);
   const router = useRouter();
   const routerRecycle = router.asPath.split('/')[1] === 'recycle';
-  console.log("🚀 ~ file: HeaderNotes.tsx:12 ~ HeaderNotes ~ routerRecycle:", routerRecycle)
-useEffect(() => {
-  setCounter(length)
-},[length])
+  useEffect(()=> {
+    setCounterNotes(data.length)
+  },[router])
+
+
   function declOfNum(number:number, titles:string[]) { // это не я такой умный, это не моя функция, ну простите..
     const cases = [2, 0, 1, 1, 1, 2];
     return titles[
@@ -24,7 +25,7 @@ useEffect(() => {
   
 
   
-const result = `${counter} ${declOfNum(counter, ['Заметка', 'Заметки', 'Заметок'])}`;
+const result = `${counterNotes} ${declOfNum(counterNotes, ['Заметка', 'Заметки', 'Заметок'])}`;
   return <div className={s.header}>
     <div className={s.container}>
     {routerRecycle ?   <><Recycle /><p>КОРЗИНА</p></> : <><Notes /><p>ЗАМЕТКИ</p></>}

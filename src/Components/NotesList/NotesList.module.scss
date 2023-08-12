@@ -13,14 +13,10 @@
     transition: all .2s;
     overflow: hidden;
     word-wrap: break-word;
-    &:last-child {
-        margin-bottom: 2px;
-    }
-    
 }
 
 .first_block_link {
-    border-top:  1px solid rgba(128, 128, 128, 0.349);
+    border-top:  1px solid rgba(128, 128, 128, 0.151);
 }
 
 .link {

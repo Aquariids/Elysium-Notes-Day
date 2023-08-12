@@ -1,12 +1,11 @@
 import Link from "next/link";
-import HeaderNotes from "../HeaderNotes/HeaderNotes";
 import { DraftJsObjectInText, ILinks, sliceTitle } from "./NotesList.props";
 import s from './NotesList.module.scss';
 import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 import cn from 'classnames';
 import { NOTES } from "../../../pages/api/paths";
-const List = ({body,userId,counterNotes}:any) => {
+const List = ({body}:any) => {
 const router = useRouter();
 const routerRecycle = router.asPath.split('/')[1];
 const selectedId = router.query.index;
@@ -40,10 +39,6 @@ const bodyTextsCache = useMemo(() => new Map(), []);
  
     return (
       <>
-      <div className={s.d}>
-      <HeaderNotes length={counterNotes}/> 
-      </div>
-      
      {body &&
        body.map((item: ILinks, i:number) => {
         if(loadingDelete && deleteElement === item._id ) {
@@ -58,12 +53,6 @@ const bodyTextsCache = useMemo(() => new Map(), []);
             
              })}
            >
-             <button
-              className={cn(s.delete_btn, {
-               [s.show]: selectedId === item._id,
-             })}
-               onClick={() => handleDeleteLink(selectedId)}
-             >x</button>
             <Link rel="preload" className = {
                cn(s.link, {
                  [s.blockLink]: selectedId === item._id,
