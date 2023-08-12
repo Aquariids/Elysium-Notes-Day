@@ -193,9 +193,7 @@ useEffect(() => {
         )}
 
         <div
-          className={cn({
-            [s.block]: routerReclycle,
-          })}
+          
         >
           <div className={s.toolbar}>
             {routerReclycle ? (
@@ -219,10 +217,11 @@ useEffect(() => {
                 <ButtonDeleteNotes body={data}/>
               </div>
             </div>
-            {/* <ButtonDeleteNotes body={data}/> */}
           </div>
 
-          <div className={s.body}>
+          <div className={cn( s.body,{
+            [s.block]: routerReclycle,
+          })}>
             <TextareaAutosize
               placeholder="Заголовок"
               value={value}
