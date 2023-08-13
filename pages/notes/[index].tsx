@@ -31,8 +31,6 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   ); 
   
-
-
   const getData = useCallback(async () => {
     if(session.status === 'authenticated') {
       const res = await fetch(
@@ -57,7 +55,7 @@ const notes = ({ data }: any) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       getData()
-    }, 300);
+    }, 0);
 
     return () => clearTimeout(timer);
   }, [checkTitle,data]);
@@ -67,7 +65,6 @@ const notes = ({ data }: any) => {
   } else {
     return (
       // ну и паередаем его в наш редактор.
-     
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <HeaderNotes data={data}/> 
