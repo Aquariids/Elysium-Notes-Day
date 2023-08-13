@@ -42,6 +42,7 @@
     "@types/draft-convert": "^2.1.4",
     "@types/draft-js": "^0.11.12",
     "@types/draftjs-to-html": "^0.8.1",
+    "@types/react-window": "^1.8.5",
     "sass": "^1.61.0"
   }
 }

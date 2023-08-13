@@ -35,7 +35,7 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data }: any) => {
   const [isTimeoutInProgress, setIsTimeoutInProgress] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isClickBlocked, setIsClickBlocked] = useState(false);
-const refActiveMenu = useRef<HTMLDivElement>(null)
+  const refActiveMenu = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setRouterReclycle(router.asPath.split("/")[1] === "recycle");
   }, []);
@@ -63,18 +63,21 @@ const refActiveMenu = useRef<HTMLDivElement>(null)
     []
   );
 
-  const handleOutsideClick = (event:any) => {
-    if (refActiveMenu.current && !refActiveMenu.current.contains(event.target)) {
+  const handleOutsideClick = (event: any) => {
+    if (
+      refActiveMenu.current &&
+      !refActiveMenu.current.contains(event.target)
+    ) {
       setDotsMenuActive(false);
     }
-};
+  };
 
-useEffect(() => {
-    document.addEventListener('click', handleOutsideClick, false);
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick, false);
     return () => {
-        document.removeEventListener('click', handleOutsideClick, false);
+      document.removeEventListener("click", handleOutsideClick, false);
     };
-}, []);
+  }, []);
 
   useEffect(() => {
     setValue(title);
@@ -160,6 +163,41 @@ useEffect(() => {
   };
   return (
     <>
+      <div className={s.toolbar}>
+        {routerReclycle ? (
+          ""
+        ) : (
+          <ToolbarButtons
+            editorState={editorState}
+            setEditorState={setEditorState}
+          />
+        )}
+        <div
+          ref={refActiveMenu}
+          className={cn(s.dropdown, {
+            [s.recycleDots]: routerReclycle,
+          })}
+        >
+          <button
+            onClick={(e) => {
+              setDotsMenuActive(!dotsMenuActive);
+            }}
+            className={s.dropbtn}
+          >
+            {" "}
+            <DotsMenu />
+          </button>
+          <div
+            id={s.myDropdown}
+            className={cn(s.dropdown_content, {
+              [s.show]: dotsMenuActive,
+            })}
+          >
+            <ButtonDeleteNotes body={data} />
+          </div>
+        </div>
+      </div>
+
       <div
         onMouseMove={() => {}}
         className={s.toolbar}
@@ -192,36 +230,12 @@ useEffect(() => {
           />
         )}
 
-        <div
-          
-        >
-          <div className={s.toolbar}>
-            {routerReclycle ? (
-              ""
-            ) : (
-              <ToolbarButtons
-                editorState={editorState}
-                setEditorState={setEditorState}
-              />
-            )}
-            <div ref={refActiveMenu} className={s.dropdown}>
-              <button onClick={(e)=> {
-                setDotsMenuActive(!dotsMenuActive)
-              }} className={s.dropbtn}>
-                {" "}
-                <DotsMenu />
-              </button>
-              <div id={s.myDropdown}  className={cn(s.dropdown_content, {
-                [s.show]: dotsMenuActive
-              })}>
-                <ButtonDeleteNotes body={data}/>
-              </div>
-            </div>
-          </div>
-
-          <div className={cn( s.body,{
-            [s.block]: routerReclycle,
-          })}>
+        <div>
+          <div
+            className={cn(s.body, {
+              [s.block]: routerReclycle,
+            })}
+          >
             <TextareaAutosize
               placeholder="Заголовок"
               value={value}

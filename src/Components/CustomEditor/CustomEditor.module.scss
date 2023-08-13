@@ -1,5 +1,5 @@
 .toolbar {
-    position: relative;
+   
     h1 {
         margin: 0;
     }
@@ -34,7 +34,7 @@
     line-height: 1.5;
     height:  90vh;
     overflow: auto;
-    padding-top: 15px;
+   
    
 }
 
@@ -144,8 +144,7 @@
     }
     
     .dropdown {
-        right: 0;
-        position: absolute;
+        position: relative;
         display: inline-block;
         
     }
@@ -184,3 +183,10 @@
     }
     
     /* Класс .show больше не нужен */
+
+
+    .recycleDots {
+        display: flex;
+        width: 100%;
+        justify-content: right;
+    }

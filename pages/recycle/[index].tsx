@@ -46,6 +46,7 @@ const notes = ({ data }: any) => {
           
           {selectedItem && (
             <CustomEditor 
+              data={data}
               checkTitle = {checkTitle}
               setCheckTitle = {setCheckTitle}
               title={selectedItem.title}

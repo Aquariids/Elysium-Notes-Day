@@ -12,6 +12,7 @@ import { NOTES } from "../api/paths";
 import { useSession } from "next-auth/react";
 import { ILinks } from "@/Components/NotesList/NotesList.props";
 import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
+import { log } from "console";
 const notes = ({ data }: any) => {
   const  [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -21,15 +22,15 @@ const notes = ({ data }: any) => {
   const session = useSession();
   const userId = session.data?.user.userId; 
   const email = session.data?.user.email;
-
-  
-
   // это наш path по сути текущий url = _id человека
+  console.log(data[0]); // тут получаю в консоли 5 раз объект
+  
   const selectedItem = useMemo(  // с помощью useMemo уменьшаю кол рендеров
     () => data.find((item: { _id: string }) => {
       return item._id === selectedId}),
     [data, selectedId]
   ); 
+  
 
 
   const getData = useCallback(async () => {
@@ -37,9 +38,6 @@ const notes = ({ data }: any) => {
       const res = await fetch(
         `/api/getAllData?userId=${userId}&email=${email}`);
         const data = await res.json();
-       
-       
-       
         setLinks(
           data.map((item: any) => {                    
             return {
@@ -54,7 +52,7 @@ const notes = ({ data }: any) => {
     }
 
 
-  }, [checkTitle,data]);
+  }, [data]);
  
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -81,7 +79,7 @@ const notes = ({ data }: any) => {
           
           {selectedItem && (
             <CustomEditor 
-              data={links}
+              data={data}
               checkTitle = {checkTitle}
               setCheckTitle = {setCheckTitle}
               title={selectedItem.title}
@@ -101,12 +99,6 @@ const notes = ({ data }: any) => {
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions)
-  const userId = session?.user.userId; // айди авторизованного человека
-  const email = session?.user.email;
-  const res = await fetch(
-    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`);
-  const data = await res.json();
-
   if (!session) {
     return {
       redirect: {
@@ -116,6 +108,13 @@ export async function getServerSideProps(context: any) {
     };
   }   
 
+  const userId = session?.user.userId; // айди авторизованного человека
+  const email = session?.user.email;
+  const res = await fetch(
+    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`);
+  const data = await res.json();
+
+  
   return {
     props: { data},
   };

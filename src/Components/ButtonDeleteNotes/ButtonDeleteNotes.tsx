@@ -11,7 +11,7 @@ const ButtonDeleteNotes = ({body, ...props}:ButtonDeleteProps) => {
 
     const handleDeleteLink = async (linkId?: string | string[]) => {  
         // setDeleleElement(linkId)
-        const res = await fetch(`/api/deleteData?_id=${linkId}&userId=${userId}`);
+        const res = await fetch(`/api/${recycleRouter? 'deleteData':'deleteDataRecycle'}?_id=${linkId}&userId=${userId}`);
         let all_id = body && body.map((obj: { _id: string }) => obj._id);
         await all_id.filter((link:string) => link !== linkId);
         const currentIndex = all_id.findIndex((i: string) => i == selectedId);
@@ -42,7 +42,7 @@ const ButtonDeleteNotes = ({body, ...props}:ButtonDeleteProps) => {
       };
     return(
        <>
-       {recycleRouter ? <div className={s.delete}><p>Окончательно удалить</p></div>: <div className={s.delete} onClick={(() => handleDeleteLink(selectedId))} {...props} ><p>Переместить в корзину</p></div>}
+       {recycleRouter ? <div  onClick={(() => handleDeleteLink(selectedId))} className={s.delete}><p>Окончательно удалить</p></div>: <div className={s.delete} onClick={(() => handleDeleteLink(selectedId))} {...props} ><p>Переместить в корзину</p></div>}
        </>
     )
 }

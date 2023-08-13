@@ -48,7 +48,7 @@ export async function createDatabase (data:any) {
   return result;
 }
 
-export async function deleteData (_id:any, userId:any) {  
+export async function deleteDataRecycle (_id:any, userId:any) {  
   const client = await clientPromise;
   try {
     const database = client.db('notes');
@@ -66,6 +66,23 @@ export async function deleteData (_id:any, userId:any) {
   }  
   
 }
+
+
+export async function deleteData (_id:any, userId:any) {  
+  const client = await clientPromise;
+  try {
+    const database = client.db('deleted_notes');
+    const collection = database.collection(`delete_user_${userId}`);
+    const id = new ObjectId(_id);
+    const result = await collection.deleteOne({_id:id});
+    return result;
+  } 
+  catch(error) {
+    client.close()
+  }  
+  
+}
+
 
 
 // В общем ту я отправляю данные на базу монго.

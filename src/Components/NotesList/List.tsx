@@ -5,12 +5,15 @@ import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 import cn from 'classnames';
 import { NOTES } from "../../../pages/api/paths";
+
 const List = ({body}:any) => {
 const router = useRouter();
 const routerRecycle = router.asPath.split('/')[1];
 const selectedId = router.query.index;
 const [loadingDelete, setLoadingDelete] = useState(false);
 const [deleteElement, setDeleteElement] = useState<any>();
+
+
 const bodyTextsCache = useMemo(() => new Map(), []);
   const TitleTextsCache = useMemo(() => new Map(), []);
    const getCachedText = useCallback(
