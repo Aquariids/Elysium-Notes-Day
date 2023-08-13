@@ -34,9 +34,11 @@ const ButtonDeleteNotes = ({body,setDeleteElement, setLoadingDelete, ...props}:B
           } else {
             alert("ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ");
           }          
-          !recycleRouter && setTimeout(() => {
-            setLoadingDelete(false);
-          }, 670);
+            const timer = setTimeout(() => {
+              !recycleRouter && setLoadingDelete(false);
+          }, 300);
+      
+          return () => clearTimeout(timer);
       };
     return(
        <>

@@ -18,12 +18,11 @@ const notes = ({ data }: any) => {
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
 
   const [loadingDelete, setLoadingDelete] = useState(false);
+  console.log("🚀 ~ file: [index].tsx:21 ~ notes ~ loadingDelete:", loadingDelete)
 const [deleteElement, setDeleteElement] = useState<any>();
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
-  console.log("🚀 ~ file: [index].tsx:25 ~ notes ~ links:", links)
-  console.log("🚀 ~ file: [index].tsx:22 ~ notes ~ links:", links)
   const session = useSession();
   const userId = session.data?.user.userId; 
   const email = session.data?.user.email;
@@ -49,8 +48,17 @@ const [deleteElement, setDeleteElement] = useState<any>();
 
   
   useEffect(() => {
+    if(loadingDelete) {
       getData()
-  }, [checkTitle,data]);
+    } else {
+      const timer = setTimeout(() => {
+        getData()
+      }, 300);
+  
+      return () => clearTimeout(timer);
+    }
+   
+  }, [checkTitle,data,loadingDelete]);
 
   if (!selectedItem) {
     return <Error404 />;
