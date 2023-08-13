@@ -1,10 +1,10 @@
-import React, { use, useCallback, useEffect, useMemo, useState } from "react";
+import React from "react";
 import List from "./List";
-const NotesList = ({ data, body, userId, email }: any) => {
+const NotesList = ({ data, body, userId, email, deleteElement,loadingDelete }: any) => {
   if (!data) {
     return <List body={body} userId={userId} email={email} />;
   } else {
-    return <List body={data} userId={userId} email={email} />;
+    return <List loadingDelete={loadingDelete} deleteElement={deleteElement} body={data} userId={userId} email={email} />;
   }
 };
 

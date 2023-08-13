@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { ButtonDeleteProps } from "./ButtonDeleteNotes.props";
 import s from './ButtonDeleteNotes.module.scss';
-const ButtonDeleteNotes = ({body, ...props}:ButtonDeleteProps) => {
+const ButtonDeleteNotes = ({body,setDeleteElement, setLoadingDelete, ...props}:ButtonDeleteProps) => {
     const router = useRouter();
     const session = useSession();
     const recycleRouter = router.asPath.split('/')[1] === 'recycle';
@@ -10,14 +10,13 @@ const ButtonDeleteNotes = ({body, ...props}:ButtonDeleteProps) => {
     const userId = session.data?.user.userId; 
 
     const handleDeleteLink = async (linkId?: string | string[]) => {  
-        // setDeleleElement(linkId)
+      !recycleRouter && setDeleteElement(linkId)
         const res = await fetch(`/api/${recycleRouter? 'deleteData':'deleteDataRecycle'}?_id=${linkId}&userId=${userId}`);
         let all_id = body && body.map((obj: { _id: string }) => obj._id);
         await all_id.filter((link:string) => link !== linkId);
         const currentIndex = all_id.findIndex((i: string) => i == selectedId);
-        // setLoadingDelete(true);
-    
-       
+        !recycleRouter && setLoadingDelete(true);
+        
           if (all_id.length >= 2 && res.status === 200) {
             if (linkId != selectedId) {
               router.push(all_id[currentIndex]);
@@ -34,11 +33,10 @@ const ButtonDeleteNotes = ({body, ...props}:ButtonDeleteProps) => {
             router.push("/notes");
           } else {
             alert("ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ");
-          }
-
-        //   setTimeout(() => {
-        //     setLoadingDelete(false);
-        //   }, 2000);
+          }          
+          !recycleRouter && setTimeout(() => {
+            setLoadingDelete(false);
+          }, 670);
       };
     return(
        <>

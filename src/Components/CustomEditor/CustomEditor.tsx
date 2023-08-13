@@ -23,7 +23,7 @@ import cn from "classnames";
 import Modal from "./Modal";
 import DotsMenu from "./dots.svg";
 import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
-const CustomEditor = ({ id, body, title, setCheckTitle, data }: any) => {
+const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,setLoadingDelete }: any) => {
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
   const { data: session } = useSession();
@@ -193,7 +193,7 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data }: any) => {
               [s.show]: dotsMenuActive,
             })}
           >
-            <ButtonDeleteNotes body={data} />
+            <ButtonDeleteNotes  setDeleteElement={setDeleteElement} setLoadingDelete={setLoadingDelete} body={data} />
           </div>
         </div>
       </div>

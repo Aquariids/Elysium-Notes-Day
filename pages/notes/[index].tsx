@@ -16,15 +16,18 @@ import { log } from "console";
 const notes = ({ data }: any) => {
   const  [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
+
+  const [loadingDelete, setLoadingDelete] = useState(false);
+const [deleteElement, setDeleteElement] = useState<any>();
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
+  console.log("🚀 ~ file: [index].tsx:25 ~ notes ~ links:", links)
+  console.log("🚀 ~ file: [index].tsx:22 ~ notes ~ links:", links)
   const session = useSession();
   const userId = session.data?.user.userId; 
   const email = session.data?.user.email;
-  // это наш path по сути текущий url = _id человека
-  console.log(data[0]); // тут получаю в консоли 5 раз объект
-  
+  // это наш path по сути текущий url = _id человека  
   const selectedItem = useMemo(  // с помощью useMemo уменьшаю кол рендеров
     () => data.find((item: { _id: string }) => {
       return item._id === selectedId}),
@@ -36,28 +39,17 @@ const notes = ({ data }: any) => {
       const res = await fetch(
         `/api/getAllData?userId=${userId}&email=${email}`);
         const data = await res.json();
-        setLinks(
-          data.map((item: any) => {                    
-            return {
-              title: item.title,
-              _id: item._id,
-              date: item.date,
-              body:item.body,
-            
-            };
-          })
-        );
+        setLinks(data);
     }
 
 
-  }, [data]);
+  }, [checkTitle, data]);
  
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      getData()
-    }, 0);
 
-    return () => clearTimeout(timer);
+
+  
+  useEffect(() => {
+      getData()
   }, [checkTitle,data]);
 
   if (!selectedItem) {
@@ -69,13 +61,15 @@ const notes = ({ data }: any) => {
         <div className={s.notes_list}>
         <HeaderNotes data={data}/> 
         <div className={s.container}>
-           {data[0]  && <NotesList checkTitle={checkTitle} data={links} body={data} userId={userId} />}
+           {data[0]  && <NotesList deleteElement={deleteElement} loadingDelete={loadingDelete} checkTitle={checkTitle} data={links} body={data} userId={userId} />}
         </div>
         </div>
         <div className={s.editor}>
           
           {selectedItem && (
             <CustomEditor 
+            setDeleteElement={setDeleteElement}
+            setLoadingDelete={setLoadingDelete}
               data={data}
               checkTitle = {checkTitle}
               setCheckTitle = {setCheckTitle}
