@@ -14,8 +14,7 @@ const notes = ({ data }: any) => {
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
 
   const [loadingDelete, setLoadingDelete] = useState(false);
-  console.log("🚀 ~ file: [index].tsx:21 ~ notes ~ loadingDelete:", loadingDelete)
-const [deleteElement, setDeleteElement] = useState<any>();
+  const [deleteElement, setDeleteElement] = useState<any>();
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
@@ -36,7 +35,6 @@ const [deleteElement, setDeleteElement] = useState<any>();
         const data = await res.json();
         setLinks(data);
     }
-
 
   }, [checkTitle, data]);
   

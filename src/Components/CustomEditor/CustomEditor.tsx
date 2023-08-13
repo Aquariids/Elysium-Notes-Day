@@ -163,8 +163,10 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,se
   };
   return (
     <>
-      <div className={s.toolbar}>
-        {routerReclycle ? (
+      <div className={cn(s.toolbar, {
+        [s.hide]:router.asPath.split("/")[1] === "recycle"
+      })}>
+        { router.asPath.split("/")[1] === "recycle" ? (
           ""
         ) : (
           <ToolbarButtons
