@@ -164,17 +164,18 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,se
 
   return (
     <>
-      <div className={cn(s.toolbar, {
-        [s.hide]:router.asPath.split("/")[1] === "recycle"
-      })}>
-        { router.asPath.split("/")[1] === "recycle" ? (
-          ""
-        ) : (
+      <div className={s.toolbar}>
+        
+          <div className={cn({
+            [s.hide]:router.asPath.split("/")[1] === "recycle"
+          })}
+          > 
           <ToolbarButtons
             editorState={editorState}
             setEditorState={setEditorState}
           />
-        )}
+          </div>
+       
         <div
           ref={refActiveMenu}
           className={cn(s.dropdown, {

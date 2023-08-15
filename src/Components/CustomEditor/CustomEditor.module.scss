@@ -185,15 +185,11 @@
     /* Класс .show больше не нужен */
 
 
-    .recycleDots {
-        display: flex;
-        width: 100%;
-        justify-content: right;
     
-    }
 
     .hide {
         opacity: 0;
-        display: none;
+        visibility: none;
+        pointer-events: none;
         
     }
