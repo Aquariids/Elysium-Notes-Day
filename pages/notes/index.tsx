@@ -49,7 +49,14 @@ export async function getServerSideProps(context: any) {
     `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`
   );
   const data = await res.json();
-
+  if(!session){
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
   if (session && data[0] != undefined) {
     return {
       redirect: {
@@ -58,15 +65,11 @@ export async function getServerSideProps(context: any) {
       },
     };
   } 
-  else{
-    return {
-      redirect: {
-        destination: `/`,
-        permanent: false,
-      },
-    };
-  }
-  
+
+  return {
+    props: { data},
+  };
+
   
 }
 

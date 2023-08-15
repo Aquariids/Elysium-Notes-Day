@@ -55,15 +55,7 @@ export async function getServerSideProps(context: any) {
   const res = await fetch(
     `${process.env.DOMAIN}/api/getAllDataRecycle?userId=${userId}&email=${email}`);
   const data = await res.json();
-
-  if (session && data[0] != undefined) {
-    return {
-      redirect: {
-        destination: `/recycle/${data[0]._id}`,
-        permanent: false,
-      },
-    };
-  }  else {
+  if(!session) {
     return {
       redirect: {
         destination: `/`,
@@ -71,6 +63,19 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
+  if (session && data[0] != undefined) {
+    return {
+      redirect: {
+        destination: `/recycle/${data[0]._id}`,
+        permanent: false,
+      },
+    };
+  }  
+
+
+  return {
+    props: { data},
+  };
 
 }
 
