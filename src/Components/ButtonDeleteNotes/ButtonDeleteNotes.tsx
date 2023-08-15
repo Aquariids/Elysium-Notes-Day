@@ -57,7 +57,7 @@ const ButtonDeleteNotes = ({
     <>
       {recycleRouter ? (
         <div
-          onClick={() => handleDeleteLink(selectedId, true)}
+          onClick={() => handleDeleteLink(selectedId, recycleRouter)}
           className={s.delete}
         >
           <p>Окончательно удалить</p>
