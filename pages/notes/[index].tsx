@@ -54,9 +54,13 @@ const notes = ({ data }: any) => {
    
   }, [checkTitle,data,loadingDelete]);
 
-  if (!selectedItem) {
-    return <Error404 />;
-  } else {
+  useEffect(()=> {
+    if(!selectedItem) {
+      router.push('/notes')
+    }
+  },[router])
+
+  
     return (
       // ну и паередаем его в наш редактор.
       <div className={s.wrapper}>
@@ -89,8 +93,8 @@ const notes = ({ data }: any) => {
       </div>
     
     );
-  }
-};
+  };
+
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions)

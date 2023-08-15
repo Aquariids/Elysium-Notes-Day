@@ -28,9 +28,14 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   ); 
 
-  if (!selectedItem) {
-    return <Error404 />;
-  } else {
+
+  useEffect(()=> {
+    if(!selectedItem) {
+      router.push('/recycle')
+    }
+  },[router])
+
+  
     return (
       // ну и паередаем его в наш редактор.
      
@@ -62,8 +67,7 @@ const notes = ({ data }: any) => {
       </div>
     
     );
-  }
-};
+  };
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions)

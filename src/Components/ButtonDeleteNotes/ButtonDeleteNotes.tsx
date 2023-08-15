@@ -2,6 +2,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { ButtonDeleteProps } from "./ButtonDeleteNotes.props";
 import s from "./ButtonDeleteNotes.module.scss";
+import cn from 'classnames';
+import { useEffect, useState } from "react";
 const ButtonDeleteNotes = ({
   body,
   setDeleteElement,
@@ -32,14 +34,11 @@ const ButtonDeleteNotes = ({
       }?_id=${linkId}&userId=${userId}`
     );
  
-    
-    
 
     let all_id = body && body.map((obj: { _id: string }) => obj._id);
     await all_id.filter((link: string) => link !== linkId);
     const currentIndex = all_id.findIndex((i: string) => i == selectedId);
     !recycleRouter && setLoadingDelete(true);
-
     if (all_id.length >= 2) {
       if (linkId != selectedId) {
         router.push(all_id[currentIndex]);
@@ -54,8 +53,6 @@ const ButtonDeleteNotes = ({
     } else if (all_id.length === 1 && !recycle && !restore) {
       router.push("/notes");
     } else if (all_id.length === 1 && recycle) {
-      console.log('че такое');
-      
       router.push("/recycle");
     } else {
       alert("ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ");
@@ -63,6 +60,8 @@ const ButtonDeleteNotes = ({
     const timer = setTimeout(() => {
       !recycleRouter && setLoadingDelete(false);
     }, 300);
+
+
 
     return () => clearTimeout(timer);
   };
@@ -90,7 +89,7 @@ const ButtonDeleteNotes = ({
         </>
       ) : (
         <div
-          className={s.delete}
+          className={cn(s.delete)}
           onClick={() => handleDeleteLink({ linkId: selectedId })}
           {...props}
         >
