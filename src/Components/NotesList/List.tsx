@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 import cn from 'classnames';
 import { NOTES } from "../../../pages/api/paths";
+import React from "react";
 
 const List = ({body,loadingDelete,deleteElement}:any) => {
 const router = useRouter();
@@ -44,7 +45,7 @@ const bodyTextsCache = useMemo(() => new Map(), []);
      {body &&
        body.map((item: ILinks) => {
         if(loadingDelete && deleteElement === item._id ) {
-          return <> </>
+          return <React.Fragment key={item._id}> </React.Fragment>
         } else {
           return (
             <div

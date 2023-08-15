@@ -13,7 +13,6 @@ const ButtonDeleteNotes = ({
   const recycleRouter = router.asPath.split("/")[1] === "recycle";
   const selectedId = router.query.index;
   const userId = session.data?.user.userId;
-
   interface DeleteLinkProps {
     linkId?: string | string[];
     recycle?: boolean;
@@ -26,15 +25,15 @@ const ButtonDeleteNotes = ({
   }: DeleteLinkProps) => {
     !recycleRouter && setDeleteElement(linkId);
 
-    if (restore) {
-      const res = fetch(`/api/restoreData?_id=${linkId}&userId=${userId}`);
-    } else {
-      const res = await fetch(
-        `/api/${
-          recycleRouter ? "deleteData" : "deleteDataRecycle"
-        }?_id=${linkId}&userId=${userId}`
-      );
-    }
+   
+    restore ? await fetch(`/api/restoreData?_id=${linkId}&userId=${userId}`): await fetch(
+      `/api/${
+        recycleRouter ? "deleteData" : "deleteDataRecycle"
+      }?_id=${linkId}&userId=${userId}`
+    );
+ 
+    
+    
 
     let all_id = body && body.map((obj: { _id: string }) => obj._id);
     await all_id.filter((link: string) => link !== linkId);
@@ -54,7 +53,9 @@ const ButtonDeleteNotes = ({
       }
     } else if (all_id.length === 1 && !recycle && !restore) {
       router.push("/notes");
-    } else if (all_id.length === 1 || recycle || restore) {
+    } else if (all_id.length === 1 && recycle) {
+      console.log('че такое');
+      
       router.push("/recycle");
     } else {
       alert("ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ");
@@ -66,9 +67,6 @@ const ButtonDeleteNotes = ({
     return () => clearTimeout(timer);
   };
 
-  const handleRestoreLink = async (linkId: string | string[] | undefined) => {
-    const res = fetch(`/api/restoreData?_id=${linkId}&userId=${userId}`);
-  };
   return (
     <>
       {recycleRouter ? (
@@ -83,7 +81,7 @@ const ButtonDeleteNotes = ({
           </div>
           <div
             onClick={() =>
-              handleDeleteLink({ linkId: selectedId, restore: true })
+              handleDeleteLink({ linkId: selectedId, restore: true,  recycle: recycleRouter})
             }
             className={s.delete}
           >
