@@ -65,8 +65,11 @@ export async function getServerSideProps(context: any) {
     };
   }  else {
     return {
-        props: { data},
-      };
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
   }
 
 }

@@ -57,11 +57,17 @@ export async function getServerSideProps(context: any) {
         permanent: false,
       },
     };
-  } else {
+  } 
+  else{
     return {
-      props: { data },
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
     };
   }
+  
+  
 }
 
 export default withLayout(MainPage);
