@@ -11,11 +11,20 @@ const HeaderNotes = ({ data }: any) => {
   const session = useSession();
   const userId = session.data?.user.userId;
   async function deleteAllDataRecycle() {
-    const res = await fetch(`/api/deleteAllData?userId=${userId}`);
 
-    if (res.status === 200) {
-      router.push("/recycle");
+    let  result = confirm("Уверены, что хотите очистить корзину? Данные будут окончательно удалены без возможности восстановления.")
+
+    if(result) {
+      fetch(`/api/deleteAllData?userId=${userId}`)
+      .then(()=> {
+        router.push("/recycle");
+      })
+
+     
     }
+  
+
+    
   }
 
   const [counterNotes, setCounterNotes] = useState(data.length);
@@ -46,7 +55,7 @@ const HeaderNotes = ({ data }: any) => {
           <>
             <Recycle />
             <p className={s.text}>КОРЗИНА</p>{" "}
-            <button onClick={deleteAllDataRecycle}>УДАЛИТЬ ВСЕ ЗАМЕТКИ</button>
+            <button onClick={deleteAllDataRecycle}>Очистить корзину</button>
           </>
         ) : (
           <>
