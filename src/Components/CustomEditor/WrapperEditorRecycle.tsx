@@ -1,8 +1,9 @@
 import { ReactNode, useState } from "react";
 import s from "./CustomEditor.module.scss";
-import Modal from "./Modal";
+import Modal from "./ModalRecycle";
+import { WrapperEditorRecycleProps } from "./CustomEditor.props";
 
-const WrapperEditorRecycle = ({ routerReclycle, children }: any) => {
+const WrapperEditorRecycle = ({ routerReclycle, children }: WrapperEditorRecycleProps) => {
   const [display, setDisplay] = useState("none");
   const [isAnimating, setIsAnimating] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });

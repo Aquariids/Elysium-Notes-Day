@@ -77,6 +77,29 @@ export async function deleteDataRecycle(_id: any, userId: any) {
   }
 }
 
+export async function restoreDataRecycle(_id: any, userId: any) {
+  try{
+    const id = new ObjectId(_id);
+    const collectionDel = await getCollection({
+      collectionName: `delete_user_${userId}`,
+      db: "deleted_notes",
+    });
+    const collection = await getCollection({
+      collectionName: `user_${userId}`,
+      db: "notes",
+    });
+    const data = await collectionDel.find(id).toArray();
+    collection.insertOne({ ...data[0] });
+    const result = await collectionDel.deleteOne({ _id: id });
+    return result;
+  }
+
+  catch {
+    const client = await getClient();
+    client.close();
+  }
+}
+
 export async function deleteData(_id: any, userId: any) {
   try {
     const id = new ObjectId(_id);

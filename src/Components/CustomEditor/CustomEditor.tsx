@@ -19,36 +19,36 @@ import s from "./CustomEditor.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
 import cn from "classnames";
-import Modal from "./Modal";
+import Modal from "./ModalRecycle";
 import DotsMenu from "./dots.svg";
 import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
 import { styleMap } from "./styleMap";
 import WrapperEditor from "./WrapperEditorRecycle";
 import WrapperEditorRecycle from "./WrapperEditorRecycle";
-const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,setLoadingDelete }: any) => {
+const CustomEditor = ({
+  id,
+  body,
+  title,
+  setCheckTitle,
+  data,
+  setDeleteElement,
+  setLoadingDelete,
+}: any) => {
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
   const { data: session } = useSession();
   const _id = id;
   const router = useRouter();
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
-  // const [position, setPosition] = useState({ x: 0, y: 0 });
-  // const [display, setDisplay] = useState("none");
-  // const [isTimeoutInProgress, setIsTimeoutInProgress] = useState(false);
-  // const [isAnimating, setIsAnimating] = useState(false);
-  // const [isClickBlocked, setIsClickBlocked] = useState(false);
-
   const refActiveMenu = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setRouterReclycle(router.asPath.split("/")[1] === "recycle");
   }, []);
-  useEffect(()=> {
+  useEffect(() => {
     const screenWidth = window.screen.width;
-   const pageWidth = document.documentElement.scrollWidth; 
-   console.log(pageWidth);
-   
-    
-  })
+    const pageWidth = document.documentElement.scrollWidth;
+    console.log(pageWidth);
+  });
   // convertFromRaw - с помощью этого метода мы наш пустой объект превращаем в спец объект для draft js
   const [editorState, setEditorState] = useState(() => {
     const contentState = convertFromRaw(JSON.parse(body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
@@ -164,21 +164,20 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,se
     return () => clearTimeout(timer);
   }, [value, updateTitle]);
 
-
   return (
     <>
       <div className={s.toolbar}>
-        
-          <div className={cn({
-            [s.hide]:router.asPath.split("/")[1] === "recycle"
+        <div
+          className={cn({
+            [s.hide]: router.asPath.split("/")[1] === "recycle",
           })}
-          > 
+        >
           <ToolbarButtons
             editorState={editorState}
             setEditorState={setEditorState}
           />
-          </div>
-       
+        </div>
+
         <div
           ref={refActiveMenu}
           className={cn(s.dropdown, {
@@ -200,7 +199,11 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,se
               [s.show]: dotsMenuActive,
             })}
           >
-            <ButtonDeleteNotes  setDeleteElement={setDeleteElement} setLoadingDelete={setLoadingDelete} body={data} />
+            <ButtonDeleteNotes
+              setDeleteElement={setDeleteElement}
+              setLoadingDelete={setLoadingDelete}
+              body={data}
+            />
           </div>
         </div>
       </div>

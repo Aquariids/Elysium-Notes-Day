@@ -12,3 +12,9 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
 export interface ModalProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
 
 }
+
+export interface WrapperEditorRecycleProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+children: ReactNode;
+routerReclycle:boolean | undefined
+
+}

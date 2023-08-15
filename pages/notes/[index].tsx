@@ -28,6 +28,9 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   ); 
   
+  // console.log([...data].sort((a, b) => a.title.localeCompare(b.title)))
+  // console.log(links);
+  const  sortA = links && [...links].sort((a, b) => a.title.localeCompare(b.title)); // сортировка по алфавиту
   const getData = useCallback(async () => {
     if(session.status === 'authenticated') {
       const res = await fetch(
@@ -61,7 +64,7 @@ const notes = ({ data }: any) => {
         <HeaderNotes data={data}/> 
         <div className={s.container}>
           <div className={s.list}>
-           {data[0]  && <NotesList deleteElement={deleteElement} loadingDelete={loadingDelete} checkTitle={checkTitle} data={links} body={data} userId={userId} />}
+           {data[0] && <NotesList deleteElement={deleteElement} loadingDelete={loadingDelete} checkTitle={checkTitle} data={links} body={data} userId={userId} />}
            </div>
         </div>
         </div>
