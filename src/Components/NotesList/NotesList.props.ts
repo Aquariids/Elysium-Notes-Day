@@ -24,7 +24,7 @@ export const DraftJsObjectInText = (body:string) => {
     const editorState = EditorState.createWithContent(contentState);
     const plainText = editorState.getCurrentContent().getPlainText().toLowerCase()
     
-    if(plainText.length >= 130) {
+    if(plainText.length >= 100) {
       const text = plainText.slice(0, 100) + '...'
       return text;
     } else {
@@ -34,7 +34,7 @@ export const DraftJsObjectInText = (body:string) => {
   }
  export const sliceTitle = (title:string) => {
     if(title.length >= 30) {
-      const text = title.slice(0, 32) + '...';
+      const text = title.slice(0, 30) + '...';
       return text;
     } else {
       return title

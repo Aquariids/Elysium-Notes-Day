@@ -23,7 +23,6 @@ const HeaderNotes = ({ data }: any) => {
      
     }
   
-
     
   }
 
