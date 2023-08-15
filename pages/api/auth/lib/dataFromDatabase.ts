@@ -84,6 +84,20 @@ export async function deleteData (_id:any, userId:any) {
 }
 
 
+export async function deleteAllData (userId:any) { 
+  const client = await clientPromise;
+  try {
+    const database = client.db('deleted_notes');
+    const collection = database.collection(`delete_user_${userId}`);
+    const result = await collection.deleteMany({});
+    return result;
+  } 
+  catch(error) {
+    client.close()
+  }  
+  
+}
+
 
 // В общем ту я отправляю данные на базу монго.
 export async function updateDataInDatabase(data: any) {

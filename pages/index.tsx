@@ -1,14 +1,13 @@
-import Head from 'next/head'
-import React, { useState } from 'react';
-import { authOptions } from './api/auth/[...nextauth]';
-import { getServerSession } from 'next-auth/next';
-import { NOTES } from './api/paths';
+import Head from "next/head";
+import React, { useState } from "react";
+import { authOptions } from "./api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
+import { NOTES } from "./api/paths";
 import { withLayout } from "../layout/Layout";
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 function Home({ data }: any) {
-  
   return (
     <>
       <Head>
@@ -18,32 +17,27 @@ function Home({ data }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <>
-   {data && data.map((item:any,i:any)=> {
-    return (
-      <Link key={i}  href={`${NOTES}/${item._id}`}> 
-        <div>
-        {item._id}
-        </div>
-      </Link>
-    )
-   })}
+      {data &&
+        data.map((item: any, i: any) => {
+          return (
+            <Link key={i} href={`${NOTES}/${item._id}`}>
+              <div>{item._id}</div>
+            </Link>
+          );
+        })}
     </>
-      
-    </>
-  )
+  );
 }
-
 
 export default withLayout(Home);
 
-
-
 export async function getServerSideProps(context: any) {
-  const session = await getServerSession(context.req, context.res, authOptions)
+  const session = await getServerSession(context.req, context.res, authOptions);
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
-  const res = await fetch(`${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`);
+  const res = await fetch(
+    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`
+  );
   const data = await res.json();
 
   if (!session) {
@@ -57,13 +51,7 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
-      data
-    }
+      data,
+    },
   };
-
- 
-
 }
-
-
-

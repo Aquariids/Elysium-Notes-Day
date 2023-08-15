@@ -11,7 +11,6 @@ import {
   getDefaultKeyBindingFn,
   shortcutHandler,
   Editor,
-  initialStyleMap,
   blockStyleFn,
 } from "contenido";
 import ToolbarButtons from "./ToolbarButtons";
@@ -23,6 +22,7 @@ import cn from "classnames";
 import Modal from "./Modal";
 import DotsMenu from "./dots.svg";
 import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
+import { styleMap } from "./styleMap";
 const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,setLoadingDelete }: any) => {
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
@@ -39,7 +39,13 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,se
   useEffect(() => {
     setRouterReclycle(router.asPath.split("/")[1] === "recycle");
   }, []);
-
+  useEffect(()=> {
+    const screenWidth = window.screen.width;
+   const pageWidth = document.documentElement.scrollWidth; 
+   console.log(pageWidth);
+   
+    
+  })
   // convertFromRaw - с помощью этого метода мы наш пустой объект превращаем в спец объект для draft js
   const [editorState, setEditorState] = useState(() => {
     const contentState = convertFromRaw(JSON.parse(body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
@@ -155,12 +161,7 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,se
     return () => clearTimeout(timer);
   }, [value, updateTitle]);
 
-  const styleMap = {
-    ...initialStyleMap,
-    HIGHLIGHTER: {
-      backgroundColor: "#b11f1f85",
-    },
-  };
+
   return (
     <>
       <div className={cn(s.toolbar, {
