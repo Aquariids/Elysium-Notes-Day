@@ -26,9 +26,9 @@ const MainPage = ({ data }: any) => {
     <div className={s.wrapper}>
       <div className={s.notes_list}>
         <div className={s.container}>
-          <div>
+          <div className={s.alert}>
             <h2>Создание первой заметки</h2>
-            <div className={s.alert}>
+            <div>
               Нажмите на кнопку {<ButtonCreateNewNotes alert="alert" />} в
               боковой панели "Заметки" или здесь, чтобы начать.
             </div>

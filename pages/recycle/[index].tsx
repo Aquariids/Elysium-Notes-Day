@@ -38,8 +38,9 @@ const notes = ({ data }: any) => {
         <div className={s.notes_list}>
         <HeaderNotes data={data}/> 
         <div className={s.container}>
-    
+      <div className={s.list}>
            {data[0]  && <NotesList recycle={true} checkTitle={checkTitle} body={data} userId={userId} />}
+           </div>
         </div>
         </div>
         <div className={s.editor}>

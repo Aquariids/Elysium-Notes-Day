@@ -22,7 +22,7 @@ const MainPage = ({ data }: any) => {
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <div className={s.container}>
-            <div>
+            <div className={s.alert}>
             <h2> Корзина пуста</h2>
           Если в корзине есть заметки, нажмите на «...», чтобы восстановить или удалить их.
             </div>
