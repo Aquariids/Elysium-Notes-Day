@@ -60,7 +60,9 @@ const notes = ({ data }: any) => {
         <div className={s.notes_list}>
         <HeaderNotes data={data}/> 
         <div className={s.container}>
+          <div className={s.list}>
            {data[0]  && <NotesList deleteElement={deleteElement} loadingDelete={loadingDelete} checkTitle={checkTitle} data={links} body={data} userId={userId} />}
+           </div>
         </div>
         </div>
         <div className={s.editor}>

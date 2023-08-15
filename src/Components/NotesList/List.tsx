@@ -42,7 +42,7 @@ const bodyTextsCache = useMemo(() => new Map(), []);
     return (
       <>
      {body &&
-       body.map((item: ILinks, i:number) => {
+       body.map((item: ILinks) => {
         if(loadingDelete && deleteElement === item._id ) {
           return <> </>
         } else {
@@ -50,7 +50,6 @@ const bodyTextsCache = useMemo(() => new Map(), []);
             <div
              key={item._id}
              className={cn(s.block_link, {
-               [s.first_block_link]: i === 0,
                [s.active]: selectedId === item._id,
             
              })}
