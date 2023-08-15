@@ -23,6 +23,8 @@ import Modal from "./Modal";
 import DotsMenu from "./dots.svg";
 import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
 import { styleMap } from "./styleMap";
+import WrapperEditor from "./WrapperEditorRecycle";
+import WrapperEditorRecycle from "./WrapperEditorRecycle";
 const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,setLoadingDelete }: any) => {
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
@@ -30,11 +32,12 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,se
   const _id = id;
   const router = useRouter();
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [display, setDisplay] = useState("none");
-  const [isTimeoutInProgress, setIsTimeoutInProgress] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [isClickBlocked, setIsClickBlocked] = useState(false);
+  // const [position, setPosition] = useState({ x: 0, y: 0 });
+  // const [display, setDisplay] = useState("none");
+  // const [isTimeoutInProgress, setIsTimeoutInProgress] = useState(false);
+  // const [isAnimating, setIsAnimating] = useState(false);
+  // const [isClickBlocked, setIsClickBlocked] = useState(false);
+
   const refActiveMenu = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setRouterReclycle(router.asPath.split("/")[1] === "recycle");
@@ -202,38 +205,7 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,se
         </div>
       </div>
 
-      <div
-        onMouseMove={() => {}}
-        className={s.toolbar}
-        onClick={(event) => {
-          const { clientX, clientY } = event;
-          setDisplay("flex");
-          setIsAnimating(true);
-          setIsTimeoutInProgress(true);
-          if (!isClickBlocked) {
-            setPosition({ x: clientX, y: clientY });
-            setIsClickBlocked(true);
-            setTimeout(() => {
-              setDisplay("none");
-              setIsAnimating(false);
-              setIsTimeoutInProgress(false);
-              setIsClickBlocked(false);
-            }, 3000);
-          }
-        }}
-      >
-        {routerReclycle && (
-          <Modal
-            className={`${s.modal} ${isAnimating ? `${s.animated}` : ""}`}
-            style={{
-              display: display,
-              position: "absolute",
-              left: position.x,
-              top: position.y,
-            }}
-          />
-        )}
-
+      <WrapperEditorRecycle routerReclycle={routerReclycle}>
         <div>
           <div
             className={cn(s.body, {
@@ -259,7 +231,7 @@ const CustomEditor = ({ id, body, title, setCheckTitle, data,setDeleteElement,se
             />
           </div>
         </div>
-      </div>
+      </WrapperEditorRecycle>
     </>
   );
 };
