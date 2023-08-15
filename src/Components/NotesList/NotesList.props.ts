@@ -24,8 +24,8 @@ export const DraftJsObjectInText = (body:string) => {
     const editorState = EditorState.createWithContent(contentState);
     const plainText = editorState.getCurrentContent().getPlainText().toLowerCase()
     
-    if(plainText.length >= 100) {
-      const text = plainText.slice(0, 100) + '...'
+    if(plainText.length >= 90) {
+      const text = plainText.slice(0, 90) + '...'
       return text;
     } else {
       return plainText
