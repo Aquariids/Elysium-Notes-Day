@@ -4,7 +4,6 @@ import { LayoutProps } from "./Layout.props";
 import Sidebar from "./Sidebar/Sidebar";
 import s from "./Layout.module.scss";
 import { FunctionComponent } from "react";
-import { Providers } from "@/Components/Providers";
 import { useSession } from "next-auth/react";
 
 const Layout = ({ children, ...props }: LayoutProps) => {
