@@ -1,7 +1,7 @@
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 import clientPromise from "./lib/mongodb";
 import NextAuth from 'next-auth'
-import {NextAuthOptions, Session,User}   from 'next-auth'
+import {NextAuthOptions, Session}   from 'next-auth'
 import GitHub from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
 
@@ -22,23 +22,31 @@ adapter: MongoDBAdapter(clientPromise),
   providers: [
     GitHub({
       clientId: GITHUB_ID,
-      clientSecret: GITHUB_SECRET
+      clientSecret: GITHUB_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     Google({
       clientId: GOOGLE_ID,
-      clientSecret: GOOGLE_SECRET
+      clientSecret: GOOGLE_SECRET,
+      allowDangerousEmailAccountLinking: true,
     })
   ],
 
   callbacks: {
-    session: async ({ session, user }) => {
-
-        const newSession = session as ExtendedSession
-        newSession.user.userId = user.id
-        return newSession
-    
+ 
+    session: async ({ session, user}) => {
+        if(!session.user.userId){
+          const newSession = session as ExtendedSession
+          newSession.user.userId = user.id
+          return newSession
+         
+        } else {
+          return session;
+        }
+       
     
     }
+   
   }
   
 }
