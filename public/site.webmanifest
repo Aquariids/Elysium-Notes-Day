@@ -1,18 +1,1 @@
-{
-  "background_color": "#fff",
-  "display": "fullscreen",
-  "icons": [
-    {
-      "src": "/favicon.ico",
-      "sizes": "64x64",
-      "type": "image/ico",
-      "purpose": "any"
-    }
-  ],
-  "name": "EnotesDay",
-  "short_name": "Disco",
-  "lang": "ru-Ru",
-  "start_url": "/",
-  "scope": "/",
-  "theme_color": "#ffffff"
-}
+{"name":"","short_name":"","icons":[{"src":"\/favicon-16x16.png","sizes":"16x16","type":"image\/png"},{"src":"\/favicon-32x32.png","sizes":"32x32","type":"image\/png"}]}

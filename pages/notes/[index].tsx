@@ -28,6 +28,7 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   ); 
   
+
   // console.log([...data].sort((a, b) => a.title.localeCompare(b.title)))
   // console.log(links);
   const  sortA = links && [...links].sort((a, b) => a.title.localeCompare(b.title)); // сортировка по алфавиту
