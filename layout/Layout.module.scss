@@ -6,7 +6,6 @@
         // "footer footer footer";
         grid-template-columns: var(--grid_columns_wrapper);
         // gap: 0px 10px;
-
 }
 
 
@@ -29,6 +28,5 @@
 
 .body {
     min-height: 100vh;
-    background-color: rgba(235, 235, 235, 0.616);
     grid-area: body;
 }

@@ -1,5 +1,5 @@
 .toolbar {
-   
+   background-color: transparent;
     h1 {
         margin: 0;
     }
@@ -40,7 +40,7 @@
 }
 
 .btn {
-   
+    background-color: #FFF;
     min-width: 2rem;
     padding: 0.5rem;
     border-radius: 0.5rem;
@@ -63,7 +63,6 @@
     .toolbarHeader {
         padding-top: 5px;
         padding-bottom: 5px;
-        background-color: #fff;
         padding-left: 10px;
         border-left: 1px solid rgba(122, 122, 122, 0.452);
 
@@ -130,6 +129,7 @@
 
 
     .dropbtn {
+        background-color: #FFF;
         color: white;
         border: none;
         cursor: pointer;
