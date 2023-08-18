@@ -1,0 +1,27 @@
+.btn {
+    align-items: center;
+    background-color: var(--provider-bg,var(--color-background-card));
+    border-color: rgba(0,0,0,.1);
+    border-radius: 5px;
+    display: flex;
+    font-size: 1.1rem;
+    font-weight: 500;
+    justify-content: center;
+    margin: 0 0 0.75rem;
+    min-height: 62px;
+    padding: 0.75rem 1rem;
+    position: relative;
+    transition: all .2s;
+    width: 300px;
+    cursor: pointer;
+
+    &:hover {
+        transition: all .2s;
+        background-color: rgba(107, 94, 94, 0.055);
+        border-color:  rgba(104, 90, 90, 0.158);
+    }
+}
+
+.logo {
+    margin-right: 15px;
+}

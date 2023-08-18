@@ -37,7 +37,9 @@ callbacks: {
   }
  
 },
-
+pages: {
+  signIn: '/signin'
+},
   providers: [
     GitHub({
       clientId: GITHUB_ID,

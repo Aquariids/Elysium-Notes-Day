@@ -1,7 +1,7 @@
 import s from "./Sidebar.module.scss";
 import { SidebarProps } from "./Sidebar.props";
 import cn from "classnames";
-import Login from "../../pages/login";
+import Login from "../../pages/signin";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import Link from "next/link";
 import { useRouter } from "next/router";

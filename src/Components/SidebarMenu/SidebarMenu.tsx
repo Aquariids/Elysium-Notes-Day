@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { NOTES } from '../../../pages/api/paths';
-import Login from '../../../pages/login';
+import Login from '../../../pages/signin';
 import SidebarLink from '../UI/SidebarLink/SidebarLink';
 import s from './SidebarMenu.module.scss';
 

@@ -1,4 +1,4 @@
-import s from "./login.module.scss";
+import s from "./signin.module.scss";
 
 const Loader = () => {
   return (

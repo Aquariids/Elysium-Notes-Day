@@ -1,0 +1,16 @@
+.github {
+    align-items: center;
+    background-color: var(--provider-bg,var(--color-background-card));
+    border-color: rgba(0,0,0,.1);
+    border-radius: var(--border-radius);
+    color: var(--provider-color,var(--color-primary));
+    display: flex;
+    font-size: 1.1rem;
+    font-weight: 500;
+    justify-content: center;
+    margin: 0 0 0.75rem;
+    min-height: 62px;
+    padding: 0.75rem 1rem;
+    position: relative;
+    transition: all .1s ease-in-out;
+}
