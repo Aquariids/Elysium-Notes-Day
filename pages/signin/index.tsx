@@ -20,7 +20,7 @@ const Login: React.FunctionComponent = (): JSX.Element => {
             <div className={s.login_form}>
             <img className={s.logo} src="/logo.png" alt="Logo"/>
               <p className={s.title}>Elysium Notes Day</p>
-              <p>Посвяти день заметкам в месте блаженства и вечной жизни.</p>
+              <p className={s.text}>Посвяти день заметкам в месте блаженства и вечной жизни.</p>
               <GoogleButton />
               <GithubButton />
             </div>
