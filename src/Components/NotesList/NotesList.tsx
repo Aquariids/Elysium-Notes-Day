@@ -1,6 +1,6 @@
 import React from "react";
 import List from "./List";
-const NotesList = ({ data, body, userId, email, deleteElement,loadingDelete }: any) => {
+const NotesList = ({ data, body, userId, email, deleteElement, loadingDelete }: any) => {
   if (!data) {
     return <List body={body} userId={userId} email={email} />;
   } else {

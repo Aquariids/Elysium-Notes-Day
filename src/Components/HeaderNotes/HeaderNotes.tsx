@@ -51,11 +51,11 @@ const HeaderNotes = ({ data }: any) => {
     <div className={s.header}>
       <div className={s.container}>
         {routerRecycle ? (
-          <>
+          <div className={s.recycle}>
             <Recycle />
             <p className={s.text}>КОРЗИНА</p>{" "}
-            <button onClick={deleteAllDataRecycle}>Очистить корзину</button>
-          </>
+            <button className={s.recycle_btn} onClick={deleteAllDataRecycle}>Очистить корзину</button>
+          </div>
         ) : (
           <>
             <Notes />

@@ -1,17 +1,41 @@
 import Link from "next/link";
-import { DraftJsObjectInText, ILinks, sliceTitle } from "./NotesList.props";
+import { ILinks } from "./NotesList.props";
 import s from './NotesList.module.scss';
 import { useRouter } from "next/router";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import cn from 'classnames';
 import { NOTES } from "../../../pages/api/paths";
 import React from "react";
-
+import { EditorState, convertFromRaw } from "draft-js";
 const List = ({body,loadingDelete,deleteElement}:any) => {
 const router = useRouter();
 const routerRecycle = router.asPath.split('/')[1];
 const selectedId = router.query.index;
 
+
+ const DraftJsObjectInText = (body:string) => {
+  const contentState = convertFromRaw(JSON.parse(body));
+  const editorState = EditorState.createWithContent(contentState);
+  const plainText = editorState.getCurrentContent().getPlainText().toLowerCase()
+  
+  const sizeText = router.asPath === '/' ? 200: 90;
+  if(plainText.length >= sizeText) {
+    const text = plainText.slice(0, sizeText) + '...'
+    return text;
+  } else {
+    return plainText
+  }
+  
+}
+ const sliceTitle = (title:string) => {
+  if(title.length >= 30) {
+    const text = title.slice(0, 30) + '...';
+    return text;
+  } else {
+    return title
+  }
+  
+}
 
 
 const bodyTextsCache = useMemo(() => new Map(), []);
@@ -52,12 +76,14 @@ const bodyTextsCache = useMemo(() => new Map(), []);
              key={item._id}
              className={cn(s.block_link, {
                [s.active]: selectedId === item._id,
+               [s.mainMenu]: router.asPath === '/'
             
              })}
            >
             <Link rel="preload" className = {
                cn(s.link, {
                  [s.blockLink]: selectedId === item._id,
+                 [s.mainMenu]: router.asPath === '/'
                })
              }  href={`/${routerRecycle ? routerRecycle: NOTES}/${item._id}`}>
                <p className={s.title_link}>

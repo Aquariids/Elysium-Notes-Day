@@ -6,7 +6,8 @@ import { NOTES } from "./api/paths";
 import { withLayout } from "../layout/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import s from './index.module.scss';
+import List from "@/Components/NotesList/List";
 function Home({ data }: any) {
   return (
     <>
@@ -16,15 +17,13 @@ function Home({ data }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      {data &&
-        data.map((item: any, i: any) => {
-          return (
-            <Link key={i} href={`${NOTES}/${item._id}`}>
-              <div>{item._id}</div>
-            </Link>
-          );
-        })}
+      <div className={s.wrapper}>
+      <div className={s.container}>
+    <List body={data}/>
+    </div>
+      </div>
+    
+     
     </>
   );
 }

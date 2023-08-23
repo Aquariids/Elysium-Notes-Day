@@ -70,7 +70,7 @@
 }
 
 .active {
-    background-color:rgb(247, 247, 230);
+background-color:rgb(247, 247, 230);
 
     border-radius: 2px;
     transition: all .3s;
@@ -89,3 +89,15 @@
 }
 
 
+
+
+.mainMenu {
+    height: 100%;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    &:first-child {
+        margin: 0;
+    }
+}
