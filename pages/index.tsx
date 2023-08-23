@@ -6,7 +6,7 @@ import { NOTES } from "./api/paths";
 import { withLayout } from "../layout/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import s from './index.module.scss';
+import s from "./index.module.scss";
 import List from "@/Components/NotesList/List";
 function Home({ data }: any) {
   return (
@@ -18,12 +18,18 @@ function Home({ data }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={s.wrapper}>
-      <div className={s.container}>
-    <List body={data}/>
-    </div>
+        <div className={s.bg}></div>
+        
+          <div>
+          <Link href={"/notes"}>Заметки</Link>
+          <div className={s.container}>
+          <List body={data} />
+          </div>
+        </div>
+        <div placeholder="запишите что нибудь" className={s.notes}>
+          <p>ЗАПИСНАЯ КНИЖКА</p>
+        </div>
       </div>
-    
-     
     </>
   );
 }
