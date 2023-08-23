@@ -7,7 +7,7 @@ import cn from 'classnames';
 import { NOTES } from "../../../pages/api/paths";
 import React from "react";
 import { EditorState, convertFromRaw } from "draft-js";
-const List = ({body,loadingDelete,deleteElement}:any) => {
+const List = ({body,loadingDelete,deleteElement, }:any) => {
 const router = useRouter();
 const routerRecycle = router.asPath.split('/')[1];
 const selectedId = router.query.index;
@@ -18,7 +18,7 @@ const selectedId = router.query.index;
   const editorState = EditorState.createWithContent(contentState);
   const plainText = editorState.getCurrentContent().getPlainText().toLowerCase()
   
-  const sizeText = router.asPath === '/' ? 200: 90;
+  const sizeText = router.asPath === '/' ? 150: 90;
   if(plainText.length >= sizeText) {
     const text = plainText.slice(0, sizeText) + '...'
     return text;
@@ -72,9 +72,9 @@ const bodyTextsCache = useMemo(() => new Map(), []);
           return <React.Fragment key={item._id}> </React.Fragment>
         } else {
           return (
-            <div
+            <div 
              key={item._id}
-             className={cn(s.block_link, {
+             className={cn( s.block_link, {
                [s.active]: selectedId === item._id,
                [s.mainMenu]: router.asPath === '/'
             

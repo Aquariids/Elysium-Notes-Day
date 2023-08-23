@@ -1,21 +1,24 @@
 .container {
-    padding: 10px;
-    max-width: 800px;
     display: grid;
-    grid-auto-columns: 210px;
+    grid-auto-columns: 150px;
     grid-auto-flow: column;
-    gap: 20px;
     height: 250px;
     overflow-x: scroll;
     overflow-y: hidden;
-    margin-left: 50px;
-    border-radius: 10px;
-    box-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
-    z-index: 2;
-    background-color: aliceblue;
+    z-index: 1;
+
+    
 }
 
+.wrapp2 {
+    box-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: minmax(150px, 750px);
+    padding: 10px;
+    border-radius: 10px;
 
+}
 .wrapper {
     display: flex;
     height: 100%;
@@ -39,8 +42,12 @@
 
 
 .notes {
+
+    overflow: hidden;
+    overflow-y: auto;
+    position: relative;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
     width: 400px;
     height: 250px;
     background-color: rgb(235, 199, 233);;
@@ -53,4 +60,37 @@
 
 
     
+}
+
+
+.link_notes {
+    width: 65px;
+    padding-left: 10px;
+    text-decoration: none;
+    color: rgb(43, 44, 44);
+
+
+
+
+
+
+}
+
+
+.textArea {
+    line-height: 1.5;
+    overflow: hidden;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    outline: none;
+    height: 100%;
+    resize: none;
+}
+
+
+
+
+.notes::-webkit-scrollbar {
+    width: 0px;
 }

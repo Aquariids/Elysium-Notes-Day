@@ -5,10 +5,12 @@ import { getServerSession } from "next-auth/next";
 import { NOTES } from "./api/paths";
 import { withLayout } from "../layout/Layout";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import s from "./index.module.scss";
 import List from "@/Components/NotesList/List";
-function Home({ data }: any) {
+import TextareaAutosize from "react-textarea-autosize";
+import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
+function Home({ data,data1}: any) {
+  const [value, setValue] = useState<string>();
   return (
     <>
       <Head>
@@ -19,15 +21,18 @@ function Home({ data }: any) {
       </Head>
       <div className={s.wrapper}>
         <div className={s.bg}></div>
-        
-          <div>
-          <Link href={"/notes"}>Заметки</Link>
-          <div className={s.container}>
-          <List body={data} />
-          </div>
+        <div className={s.wrapp2}>
+            <Link className={s.link_notes} href={`${NOTES}`}>
+              Заметки
+            </Link>
+            <div className={s.container}>
+              <List  className={s.link} body={data} />
+              <ButtonCreateNewNotes />
+            </div>
         </div>
-        <div placeholder="запишите что нибудь" className={s.notes}>
+        <div className={s.notes}>
           <p>ЗАПИСНАЯ КНИЖКА</p>
+          <TextareaAutosize placeholder="Запишите что-нибудь..." className={s.textArea} value={value} onChange={(e)=> {setValue(e.target.value)}}/>
         </div>
       </div>
     </>
@@ -44,7 +49,7 @@ export async function getServerSideProps(context: any) {
     `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`
   );
   const data = await res.json();
-
+  const data1 = 'helo'
   if (!session) {
     return {
       redirect: {
@@ -57,6 +62,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       data,
+      data1
     },
   };
 }
