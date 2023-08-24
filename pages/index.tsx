@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { NOTES } from "./api/paths";
@@ -9,8 +9,30 @@ import s from "./index.module.scss";
 import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
-function Home({ data,data1}: any) {
+import { useSession } from "next-auth/react";
+function Home({ data}: any) {
   const [value, setValue] = useState<string>();
+const session = useSession();
+const userId = session.data?.user.userId 
+const email = session.data?.user.email;
+
+
+  const getNotesBook = async () => {
+
+    if(userId && email){
+      const res = await fetch(`/api/noteBook?userId=${userId}&email=${email}`);
+      const data = res.json()
+    }
+    
+ 
+  }
+
+
+  useEffect(() => {
+    getNotesBook()
+  },[value])
+
+
   return (
     <>
       <Head>
@@ -62,7 +84,6 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       data,
-      data1
     },
   };
 }

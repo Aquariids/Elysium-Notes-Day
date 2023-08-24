@@ -175,3 +175,40 @@ export async function updateDataTitle(data: any) {
     client.close();
   }
 }
+
+
+
+
+export async function getNoteBook(userId:string | string[] | undefined, email:string | string[] | undefined) {
+  try {
+    const query = userId && email ? { userId, email } : {};
+    const collection = await getCollection({
+      collectionName: `user_nooteBook_${userId}`,
+      db: "notes",
+    }); // создаем или подключаемся к коллекции
+    const data = await collection.find(query).toArray();
+    return data;
+  } catch (error) {}
+}
+
+
+export async function updateNooteBook(data: any) {
+  try {
+    const id = new ObjectId(data._id);
+    const collection = await getCollection({
+      collectionName: `user_nooteBook_${data.userId}`,
+      db: "notes",
+    });
+    await collection.updateOne(
+      { _id: id },
+      {
+        $set: {
+          title: data.title,
+        },
+      } // то обновляем тело. $set оператор обновления поля или может добавить его.
+    );
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
