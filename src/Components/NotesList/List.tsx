@@ -18,7 +18,7 @@ const selectedId = router.query.index;
   const editorState = EditorState.createWithContent(contentState);
   const plainText = editorState.getCurrentContent().getPlainText().toLowerCase()
   
-  const sizeText = router.asPath === '/' ? 150: 90;
+  const sizeText = router.asPath === '/' ? 120: 90;
   if(plainText.length >= sizeText) {
     const text = plainText.slice(0, sizeText) + '...'
     return text;

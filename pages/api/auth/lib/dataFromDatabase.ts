@@ -177,8 +177,6 @@ export async function updateDataTitle(data: any) {
 }
 
 
-
-
 export async function getNoteBook(userId:string | string[] | undefined, email:string | string[] | undefined) {
   try {
     const query = userId && email ? { userId, email } : {};
@@ -192,18 +190,35 @@ export async function getNoteBook(userId:string | string[] | undefined, email:st
 }
 
 
-export async function updateNooteBook(data: any) {
+export async function createNoteBook(data: any) {
+  const collection = await getCollection({
+    collectionName: `user_nooteBook_${data.userId}`,
+    db: "notes",
+  });
+
+  const existingDocument = await collection.findOne({});
+  if (!existingDocument) {
+  await collection.insertOne(data);
+  }
+  else {
+    console.log('Document already exists.');
+  }
+}
+
+
+
+export async function updateNoteBook(data: any) {
+  console.log("🚀 ~ file: dataFromDatabase.ts:211 ~ updateNoteBook ~ data:", data)
   try {
-    const id = new ObjectId(data._id);
     const collection = await getCollection({
       collectionName: `user_nooteBook_${data.userId}`,
       db: "notes",
     });
     await collection.updateOne(
-      { _id: id },
+      { userId: data.userId },
       {
         $set: {
-          title: data.title,
+          body: data.body,
         },
       } // то обновляем тело. $set оператор обновления поля или может добавить его.
     );
@@ -212,3 +227,4 @@ export async function updateNooteBook(data: any) {
     client.close();
   }
 }
+

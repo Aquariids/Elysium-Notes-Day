@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { NOTES } from "./api/paths";
@@ -10,27 +10,68 @@ import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import { useSession } from "next-auth/react";
-function Home({ data}: any) {
-  const [value, setValue] = useState<string>();
+function Home({ data,data1}: any) {
+console.log("🚀 ~ file: index.tsx:14 ~ Home ~ data1:", data1)
+const [value, setValue] = useState<string>('');
 const session = useSession();
 const userId = session.data?.user.userId 
 const email = session.data?.user.email;
-
-
-  const getNotesBook = async () => {
-
-    if(userId && email){
-      const res = await fetch(`/api/noteBook?userId=${userId}&email=${email}`);
-      const data = res.json()
-    }
+const dataNoteBook = {
+  userId,
+  email,
+  body:''
+}
+  const createNotesBook = async () => {
+      const response = await fetch("/api/createNoteBook", { 
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataNoteBook),
+        
+      }
+      );
     
- 
   }
 
+  useEffect(() => {
+    if(userId && email) {      
+      createNotesBook()
+    }
+    
+  },[userId, email])
+
+  const updateData = useCallback(
+    async (value:any,userId:any,email:any) => {
+      try {
+        const response = await fetch(`/api/updateNoteBook`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            email,
+            body: value
+          }),
+        });
+      } catch (error) {
+        console.log(
+          "🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:",
+          error
+        );
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    getNotesBook()
-  },[value])
+    const timer = setTimeout(() => {
+      updateData(value,userId,email);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [value]);
 
 
   return (
@@ -54,7 +95,7 @@ const email = session.data?.user.email;
         </div>
         <div className={s.notes}>
           <p>ЗАПИСНАЯ КНИЖКА</p>
-          <TextareaAutosize placeholder="Запишите что-нибудь..." className={s.textArea} value={value} onChange={(e)=> {setValue(e.target.value)}}/>
+          <TextareaAutosize placeholder="Запишите что-нибудь..." className={s.textArea} value={value || data1[0].body} onChange={(e)=> {setValue(e.target.value)}}/>
         </div>
       </div>
     </>
@@ -70,8 +111,11 @@ export async function getServerSideProps(context: any) {
   const res = await fetch(
     `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`
   );
+  const res1 = await fetch(
+    `${process.env.DOMAIN}/api/noteBook?userId=${userId}&email=${email}`
+  );
   const data = await res.json();
-  const data1 = 'helo'
+  const data1 = await res1.json();
   if (!session) {
     return {
       redirect: {
@@ -84,6 +128,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       data,
+      data1
     },
   };
 }
