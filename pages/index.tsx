@@ -2,7 +2,7 @@ import Head from "next/head";
 import React, { useCallback, useEffect, useState } from "react";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
-import { NOTES } from "./api/paths";
+import { NOTES, SIGNIN } from "./api/paths";
 import { withLayout } from "../layout/Layout";
 import Link from "next/link";
 import s from "./index.module.scss";
@@ -10,51 +10,50 @@ import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import { useSession } from "next-auth/react";
-import { update_action } from "./api/actios";
-function Home({ data,data1}: any) {
-const [value, setValue] = useState<string>(data1[0].body);
-const session = useSession();
-const userId = session.data?.user.userId 
-const email = session.data?.user.email;
-const dataNoteBook = {
-  userId,
-  email,
-  body:''
-}
+import { get_action, update_action } from "./api/actios";
+function Home({ data_editor, data_note_main_menu }: any) {
+  const [value, setValue] = useState<string>(data_note_main_menu[0].body);
+  const session = useSession();
+  const userId = session.data?.user.userId;
+  const email = session.data?.user.email;
+  const dataNoteBook = {
+    userId,
+    email,
+    body: "",
+  };
   const createNotesBook = async () => {
-      const response = await fetch("/api/createNoteBookMainMenu", { 
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataNoteBook),
-        
-      }
-      );
-    
-  }
+    const response = await fetch("/api/createNoteBookMainMenu", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataNoteBook),
+    });
+  };
 
   useEffect(() => {
-    if(userId && email) {      
-      createNotesBook()
+    if (userId && email) {
+      createNotesBook();
     }
-    
-  },[userId, email])
+  }, [userId, email]);
 
   const updateData = useCallback(
-    async (value:any,userId:any,email:any) => {
+    async (value: any, userId: any, email: any) => {
       try {
-        const response = await fetch(`/api/updateData?action=${update_action.book_main_menu}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId,
-            email,
-            body: value
-          }),
-        });
+        const response = await fetch(
+          `/api/updateData?action=${update_action.book_main_menu}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId,
+              email,
+              body: value,
+            }),
+          }
+        );
       } catch (error) {
         console.log(
           "🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:",
@@ -67,12 +66,11 @@ const dataNoteBook = {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateData(value,userId,email);
+      updateData(value, userId, email);
     }, 500);
 
     return () => clearTimeout(timer);
   }, [value]);
-
 
   return (
     <>
@@ -85,17 +83,24 @@ const dataNoteBook = {
       <div className={s.wrapper}>
         <div className={s.bg}></div>
         <div className={s.wrapp2}>
-            <Link className={s.link_notes} href={`${NOTES}`}>
-              Заметки
-            </Link>
-            <div className={s.container}>
-              <List  className={s.link} body={data} />
-              <ButtonCreateNewNotes />
-            </div>
+          <Link className={s.link_notes} href={`${NOTES}`}>
+            Заметки
+          </Link>
+          <div className={s.container}>
+            <List className={s.link} body={data_editor} />
+            <ButtonCreateNewNotes />
+          </div>
         </div>
         <div className={s.notes}>
           <p>ЗАПИСНАЯ КНИЖКА</p>
-          <TextareaAutosize placeholder="Запишите что-нибудь..." className={s.textArea} value={value} onChange={(e)=> {setValue(e.target.value)}}/>
+          <TextareaAutosize
+            placeholder="Запишите что-нибудь..."
+            className={s.textArea}
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+          />
         </div>
       </div>
     </>
@@ -108,18 +113,19 @@ export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
-  const res = await fetch(
-    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`
+  const responseEditorData = await fetch(
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
   );
-  const res1 = await fetch(
-    `${process.env.DOMAIN}/api/getNoteBookMainMenu?userId=${userId}&email=${email}`
+  
+  const responseNoteMainMenuData = await fetch(
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_note_main_menu}&userId=${userId}&email=${email}`
   );
-  const data = await res.json();
-  const data1 = await res1.json();
+  const data_editor = await responseEditorData.json();
+  const data_note_main_menu = await responseNoteMainMenuData.json();
   if (!session) {
     return {
       redirect: {
-        destination: "/signin",
+        destination: `/${SIGNIN}`,
         permanent: false,
       },
     };
@@ -127,8 +133,8 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
-      data,
-      data1
+      data_editor,
+      data_note_main_menu,
     },
   };
 }

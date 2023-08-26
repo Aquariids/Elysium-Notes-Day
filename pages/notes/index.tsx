@@ -10,6 +10,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { NOTES } from "../api/paths";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
+import { get_action } from "../api/actios";
 const MainPage = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -46,7 +47,7 @@ export async function getServerSideProps(context: any) {
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(
-    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
   );
   const data = await res.json();
   if(!session){

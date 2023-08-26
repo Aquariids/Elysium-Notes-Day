@@ -54,6 +54,7 @@ const CustomEditor = ({
     const contentState = convertFromRaw(JSON.parse(body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
     return EditorState.createWithContent(contentState);
   });
+  
 
   const editorStateMemo = useMemo(() => {
     const contentState = convertFromRaw(JSON.parse(body)); // тут мы парсим данные с базы в спец объект draft js
@@ -148,8 +149,11 @@ const CustomEditor = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateData(editorState, session, _id);
-      setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
+      if(routerReclycle === false) {
+        updateData(editorState, session, _id);
+        setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
+      }
+    
     }, 300);
 
     return () => clearTimeout(timer);
@@ -157,8 +161,13 @@ const CustomEditor = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateTitle(session, _id, value);
-      setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
+      if(routerReclycle === false) {
+        console.log('100');
+        updateTitle(session, _id, value);
+        setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
+       }
+
+    
     }, 300);
 
     return () => clearTimeout(timer);

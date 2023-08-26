@@ -6,6 +6,7 @@ import s from "../notes/notes.module.scss";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { RECYCLE } from "../api/paths";
+import { get_action } from "../api/actios";
 
 const MainPage = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
@@ -51,7 +52,7 @@ export async function getServerSideProps(context: any) {
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(
-    `${process.env.DOMAIN}/api/getAllDataRecycle?userId=${userId}&email=${email}`
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_recycle}&userId=${userId}&email=${email}`
   );
   const data = await res.json();
   if (!session) {

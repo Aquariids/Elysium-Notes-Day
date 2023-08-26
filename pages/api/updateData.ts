@@ -1,4 +1,4 @@
-import { Action, update_action } from "./actios";
+import { UpdateAction, update_action } from "./actios";
 import {
   updateDataInDatabase,
   updateDataTitle,
@@ -7,7 +7,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function POST(req: NextApiRequest, res: NextApiResponse) {
-  const action: Action = req.query.action as Action;
+  const action: UpdateAction = req.query.action as UpdateAction;
   try {
     const data = req.body;
     switch (action) {

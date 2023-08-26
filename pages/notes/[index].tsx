@@ -9,6 +9,7 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { NOTES } from "../api/paths";
+import { get_action } from "../api/actios";
 const notes = ({ data }: any) => {
   const  [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -35,7 +36,7 @@ const notes = ({ data }: any) => {
   const getData = useCallback(async () => {
     if(session.status === 'authenticated') {
       const res = await fetch(
-        `/api/getAllData?userId=${userId}&email=${email}`);
+        `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`);
         const data = await res.json();
         setLinks(data);
     }
@@ -111,7 +112,7 @@ export async function getServerSideProps(context: any) {
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(
-    `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`);
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`);
   const data = await res.json();
 
   
