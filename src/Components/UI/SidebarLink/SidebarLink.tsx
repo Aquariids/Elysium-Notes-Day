@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import s from './SidebarLink.module.scss';
 import cn from 'classnames';
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
-import { use, useEffect, useState } from "react";
 
 interface IsidebarLink {
     children: React.ReactNode;

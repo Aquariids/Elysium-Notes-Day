@@ -1,28 +1,24 @@
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { NOTES } from '../../../pages/api/paths';
-import Login from '../../../pages/signin';
-import SidebarLink from '../UI/SidebarLink/SidebarLink';
-import s from './SidebarMenu.module.scss';
+import { NOTES, RECYCLE } from "../../../pages/api/paths";
+import Login from "../../../pages/signin";
+import SidebarLink from "../UI/SidebarLink/SidebarLink";
+import s from "./SidebarMenu.module.scss";
 
-const SideBarMenu = ({data}:any) => {
-  const [id, setId] = useState();
-    const router = useRouter();
-  
-    return (
+const SideBarMenu = () => {
+  return (
     <div className={s.sidebar}>
-    <div className={s.sidebar_auth}>
-      <Login />
-      
-      </div>    
+      <div className={s.sidebar_auth}>
+        <Login />
+      </div>
       <ul className={s.list}>
-      <SidebarLink href='/'> Главное меню </SidebarLink>
-      <SidebarLink btn={'add'} href={`/${NOTES}`}> Заметки </SidebarLink>
-      <SidebarLink href={`/recycle`}> Корзина </SidebarLink>
+        <SidebarLink href="/"> Главное меню </SidebarLink>
+        <SidebarLink btn={"add"} href={`/${NOTES}`}>
+          {" "}
+          Заметки{" "}
+        </SidebarLink>
+        <SidebarLink href={`/${RECYCLE}`}> Корзина </SidebarLink>
       </ul>
-        </div>
-    )
-}
-
+    </div>
+  );
+};
 
 export default SideBarMenu;

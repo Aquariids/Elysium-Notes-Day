@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth/next";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { authOptions } from "../api/auth/[...nextauth]";
 import Loader from "./Loader";
 import s from "./signin.module.scss";

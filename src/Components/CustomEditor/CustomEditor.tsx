@@ -19,12 +19,12 @@ import s from "./CustomEditor.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
 import cn from "classnames";
-import Modal from "./ModalRecycle";
 import DotsMenu from "./dots.svg";
 import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
 import { styleMap } from "./styleMap";
 import WrapperEditorRecycle from "./WrapperEditorRecycle";
 import { update_action } from "../../../pages/api/actios";
+import { RECYCLE } from "../../../pages/api/paths";
 const CustomEditor = ({
   id,
   body,
@@ -42,7 +42,7 @@ const CustomEditor = ({
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
   const refActiveMenu = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    setRouterReclycle(router.asPath.split("/")[1] === "recycle");
+    setRouterReclycle(router.asPath.split("/")[1] === `${RECYCLE}`);
   }, []);
   useEffect(() => {
     const screenWidth = window.screen.width;
@@ -169,7 +169,7 @@ const CustomEditor = ({
       <div className={s.toolbar}>
         <div
           className={cn({
-            [s.hide]: router.asPath.split("/")[1] === "recycle",
+            [s.hide]: router.asPath.split("/")[1] === `${RECYCLE}`,
           })}
         >
           <ToolbarButtons

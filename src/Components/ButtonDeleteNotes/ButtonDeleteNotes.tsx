@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { ButtonDeleteProps } from "./ButtonDeleteNotes.props";
 import s from "./ButtonDeleteNotes.module.scss";
 import cn from 'classnames';
-import { useEffect, useState } from "react";
+import { RECYCLE } from "../../../pages/api/paths";
 const ButtonDeleteNotes = ({
   body,
   setDeleteElement,
@@ -12,7 +12,7 @@ const ButtonDeleteNotes = ({
 }: ButtonDeleteProps) => {
   const router = useRouter();
   const session = useSession();
-  const recycleRouter = router.asPath.split("/")[1] === "recycle";
+  const recycleRouter = router.asPath.split("/")[1] === `${RECYCLE}`;
   const selectedId = router.query.index;
   const userId = session.data?.user.userId;
   interface DeleteLinkProps {
@@ -53,7 +53,7 @@ const ButtonDeleteNotes = ({
     } else if (all_id.length === 1 && !recycle && !restore) {
       router.push("/notes");
     } else if (all_id.length === 1 && recycle) {
-      router.push("/recycle");
+      router.push(`/${RECYCLE}`);
     } else {
       alert("ЧЕ ТО ТЫ НЕ ТО ДЕЛАЕШЬ");
     }

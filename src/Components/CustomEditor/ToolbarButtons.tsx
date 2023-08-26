@@ -26,7 +26,7 @@ import * as Icons from "./icons";
 
 const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
   const HIGHLIGHTER = "HIGHLIGHTER";
-  
+
   const toggleHighlighter = () =>
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER);
   const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
