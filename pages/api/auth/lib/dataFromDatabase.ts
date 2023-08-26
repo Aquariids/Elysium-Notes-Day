@@ -176,8 +176,7 @@ export async function updateDataTitle(data: any) {
   }
 }
 
-
-export async function getNoteBook(userId:string | string[] | undefined, email:string | string[] | undefined) {
+export async function getNoteBookMainMenu(userId:string | string[] | undefined, email:string | string[] | undefined) {
   try {
     const query = userId && email ? { userId, email } : {};
     const collection = await getCollection({
@@ -190,7 +189,7 @@ export async function getNoteBook(userId:string | string[] | undefined, email:st
 }
 
 
-export async function createNoteBook(data: any) {
+export async function createNoteBookMainMenu(data: any) {
   const collection = await getCollection({
     collectionName: `user_nooteBook_${data.userId}`,
     db: "notes",
@@ -207,7 +206,7 @@ export async function createNoteBook(data: any) {
 
 
 
-export async function updateNoteBook(data: any) {
+export async function updateNoteBookMainMenu(data: any) {
   console.log("🚀 ~ file: dataFromDatabase.ts:211 ~ updateNoteBook ~ data:", data)
   try {
     const collection = await getCollection({

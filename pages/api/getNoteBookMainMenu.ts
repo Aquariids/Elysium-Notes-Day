@@ -1,4 +1,4 @@
-import { getNoteBook } from './auth/lib/dataFromDatabase';
+import { getNoteBookMainMenu } from './auth/lib/dataFromDatabase';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function GET(req:NextApiRequest, res:NextApiResponse) {
@@ -9,7 +9,7 @@ export default async function GET(req:NextApiRequest, res:NextApiResponse) {
       
     }
     else {
-        const data = await getNoteBook(userId, email);
+        const data = await getNoteBookMainMenu(userId, email);
         res.status(200).json(data);
     }
    

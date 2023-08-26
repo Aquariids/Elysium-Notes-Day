@@ -11,8 +11,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import { useSession } from "next-auth/react";
 function Home({ data,data1}: any) {
-console.log("🚀 ~ file: index.tsx:14 ~ Home ~ data1:", data1)
-const [value, setValue] = useState<string>('');
+const [value, setValue] = useState<string>(data1[0].body);
 const session = useSession();
 const userId = session.data?.user.userId 
 const email = session.data?.user.email;
@@ -22,7 +21,7 @@ const dataNoteBook = {
   body:''
 }
   const createNotesBook = async () => {
-      const response = await fetch("/api/createNoteBook", { 
+      const response = await fetch("/api/createNoteBookMainMenu", { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +43,7 @@ const dataNoteBook = {
   const updateData = useCallback(
     async (value:any,userId:any,email:any) => {
       try {
-        const response = await fetch(`/api/updateNoteBook`, {
+        const response = await fetch(`/api/updateNoteBookMainMenu`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -68,7 +67,7 @@ const dataNoteBook = {
   useEffect(() => {
     const timer = setTimeout(() => {
       updateData(value,userId,email);
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [value]);
@@ -95,7 +94,7 @@ const dataNoteBook = {
         </div>
         <div className={s.notes}>
           <p>ЗАПИСНАЯ КНИЖКА</p>
-          <TextareaAutosize placeholder="Запишите что-нибудь..." className={s.textArea} value={value || data1[0].body} onChange={(e)=> {setValue(e.target.value)}}/>
+          <TextareaAutosize placeholder="Запишите что-нибудь..." className={s.textArea} value={value} onChange={(e)=> {setValue(e.target.value)}}/>
         </div>
       </div>
     </>
@@ -112,7 +111,7 @@ export async function getServerSideProps(context: any) {
     `${process.env.DOMAIN}/api/getAllData?userId=${userId}&email=${email}`
   );
   const res1 = await fetch(
-    `${process.env.DOMAIN}/api/noteBook?userId=${userId}&email=${email}`
+    `${process.env.DOMAIN}/api/getNoteBookMainMenu?userId=${userId}&email=${email}`
   );
   const data = await res.json();
   const data1 = await res1.json();

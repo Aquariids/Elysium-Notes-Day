@@ -1,16 +1,11 @@
-import { updateNoteBook } from './auth/lib/dataFromDatabase';
+import { createNoteBookMainMenu } from './auth/lib/dataFromDatabase';
 import { NextApiRequest, NextApiResponse } from 'next';
-
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     try {
-        
         const data = req.body;
-        console.log("🚀 ~ file: updateNoteBook.ts:8 ~ handler ~ data:", data)
-        await updateNoteBook(data);
-        res.status(200).send('Data updated successfully');
+        await createNoteBookMainMenu(data);
+        res.status(200).json(data);
     } catch (error) {
         res.status(500).send('An error occurred while updating data');
     }
 }
-
-
