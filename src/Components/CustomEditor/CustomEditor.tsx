@@ -23,8 +23,8 @@ import Modal from "./ModalRecycle";
 import DotsMenu from "./dots.svg";
 import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
 import { styleMap } from "./styleMap";
-import WrapperEditor from "./WrapperEditorRecycle";
 import WrapperEditorRecycle from "./WrapperEditorRecycle";
+import { update_action } from "../../../pages/api/actios";
 const CustomEditor = ({
   id,
   body,
@@ -105,7 +105,7 @@ const CustomEditor = ({
       };
 
       try {
-        const response = await fetch(`/api/updateData`, {
+        const response = await fetch(`/api/updateData?action=${update_action.editor}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -132,7 +132,7 @@ const CustomEditor = ({
       };
 
       try {
-        const response = await fetch(`/api/updateTitle`, {
+        const response = await fetch(`/api/updateData?action=${update_action.editor_title}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

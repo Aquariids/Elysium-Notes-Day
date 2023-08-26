@@ -10,6 +10,7 @@ import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import { useSession } from "next-auth/react";
+import { update_action } from "./api/actios";
 function Home({ data,data1}: any) {
 const [value, setValue] = useState<string>(data1[0].body);
 const session = useSession();
@@ -43,7 +44,7 @@ const dataNoteBook = {
   const updateData = useCallback(
     async (value:any,userId:any,email:any) => {
       try {
-        const response = await fetch(`/api/updateNoteBookMainMenu`, {
+        const response = await fetch(`/api/updateData?action=${update_action.book_main_menu}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
