@@ -9,11 +9,19 @@ export const update_action = {
 
 
 // get actions
-
 export type GetAction = "editor" | "editor_title" | "book_main_menu";
 
 export const get_action = {
     data_editor:'data_editor',
     data_recycle:'data_recycle',
     data_note_main_menu:'data_note_main_menu'
+}
+
+// delete and restore actions
+export type DeleteRestoreAction = "delete_one_notes_recycle" | "delete_one_notes" | "delete_all_notes_recycle";
+
+export const delete_restore_action = {
+    delete_one_notes_recycle: "delete_one_notes_recycle",
+    delete_one_notes: "delete_one_notes",
+    delete_all_notes_recycle: "delete_all_notes_recycle"
 }
