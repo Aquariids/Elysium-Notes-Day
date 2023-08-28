@@ -89,7 +89,7 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
       name: "left",
       detector: isTextLeftAligned,
       children: <Icons.AlignLeft />,
-      title:'Выравнивание по левой стороне'
+      title:'Выравнивание по левому краю'
     },
     {
       name: "center",
