@@ -59,7 +59,7 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
         +
       </button>
     ) : (
-      <LoaderCreate />
+      router.asPath !== '/' && <LoaderCreate />
     );
   }
 };
