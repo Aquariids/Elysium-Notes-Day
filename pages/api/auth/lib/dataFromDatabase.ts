@@ -29,7 +29,6 @@ export async function getAllNotesFromDatabase(userId: any, email: any) {
     const data = await collection.find(query).toArray();
     return data;
   } catch (error) {
-    console.log(error);
     const client = await getClient();
     client.close();
   }
@@ -211,7 +210,6 @@ export async function createNoteBookMainMenu(data: any) {
 
 
 export async function updateNoteBookMainMenu(data: any) {
-  console.log("🚀 ~ file: dataFromDatabase.ts:211 ~ updateNoteBook ~ data:", data)
   try {
     const collection = await getCollection({
       collectionName: `user_nooteBook_${data.userId}`,
