@@ -34,9 +34,7 @@
     position: absolute;
     height: 45%;
     width: 100%;
-    background-image: url(./1.png);
-    background-size: cover;
-    background-repeat: no-repeat;
+
     box-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
 }
 
@@ -48,10 +46,28 @@
     z-index: 1;
     opacity:1;
     width: 100%;
+    
+    
 }
 
-.notes {
+.anim {
+    animation-name: blur;
+    animation-duration: 3s;
+}
 
+
+
+@keyframes blur {
+    from {
+    filter: blur(6px);
+    }
+
+    to {
+        filter: blur(0px);
+    }
+}
+.notes {
+  
     overflow: hidden;
     overflow-y: auto;
     position: relative;
@@ -59,7 +75,7 @@
     padding: 20px;
     width: 400px;
     height: 250px;
-    background-color: rgb(219, 208, 157);;
+    background-color: rgb(219, 208, 157);
 
     p {
         text-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
@@ -87,6 +103,8 @@
 
 
 .textArea {
+    color: #3a3939;
+    text-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
     line-height: 1.5;
     overflow: hidden;
     background-color: transparent;

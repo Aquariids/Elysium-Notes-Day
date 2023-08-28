@@ -12,11 +12,13 @@ import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreate
 import { useSession } from "next-auth/react";
 import { get_action, update_action } from "./api/actios";
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
+import cn from 'classnames';
 function Home({ data_editor, data_note_main_menu }: any) {
   const [value, setValue] = useState<string>(data_note_main_menu[0].body);
   const session = useSession();
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
+
   const dataNoteBook = {
     userId,
     email,
@@ -83,7 +85,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
       </Head>
       <div className={s.wrapper}>
         <div className={s.bg}>
-          <video className={s.video} autoPlay muted loop  src="/bg.mp4"></video>
+          <video className={cn(s.video, s.anim)} autoPlay muted loop  src="/bg.mp4"></video>
         </div>
         <div className={s.wrapp2}>
           <Link className={s.link_notes} href={`${NOTES}`}>

@@ -102,6 +102,7 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
     <div className={s.toolbarHeader}>
       {toolbarButtons.map((btn) => (
         <button
+          
           className={cn(s.btn, {
             [s.btn_active]: btn.detector(editorState),
           })}

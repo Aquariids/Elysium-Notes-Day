@@ -197,7 +197,9 @@ const CustomEditor = ({
             onClick={(e) => {
               setDotsMenuActive(!dotsMenuActive);
             }}
-            className={s.dropbtn}
+            className={cn(s.dropbtn, {
+              [s.activeDots]: dotsMenuActive === true
+            })}
           >
             {" "}
             <DotsMenu />

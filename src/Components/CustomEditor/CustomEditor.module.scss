@@ -47,6 +47,12 @@
     border: none;
     cursor: pointer;
     text-transform: "capitalize";
+   &:hover {
+    svg {
+        fill: #b11f1f;
+    }
+   }
+
    
     
 }
@@ -135,8 +141,12 @@
         cursor: pointer;
     }
     
-    .dropbtn:hover, .dropbtn:focus svg {
+    .dropbtn:hover svg {
         fill: #b11f1f;
+    }
+
+    .activeDots svg {
+       fill: #b11f1f;
     }
     
     .dropdown {
