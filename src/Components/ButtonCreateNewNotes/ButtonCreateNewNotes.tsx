@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import LoaderCreate from "./LoaderCreate";
-
+import AddNotes from './add_notes.svg';
 interface IButton {
   alert?: "alert";
 }
@@ -17,8 +17,9 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   const router = useRouter();
   const create = async () => {
     const content = JSON.stringify(emptyRawContentState);
-
-    const data = {
+    console.log(router.asPath);
+    
+   const data = {
       userId: session?.user.userId,
       email: session?.user.email,
       body: content, // данные редактора
@@ -51,7 +52,8 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
         +
       </Link>
     );
-  } else {
+  }
+   else {
     return load ? (
       <button className={s.btn} onClick={create}>
         +

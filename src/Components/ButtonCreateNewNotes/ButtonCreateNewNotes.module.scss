@@ -103,3 +103,20 @@ cursor: pointer;
 }
 
 
+.add_notes {
+  border: none;
+  cursor: pointer;
+
+  svg {
+    fill: #b1b16b;
+  }
+  
+
+  &:hover {
+    svg {
+      fill: #707045;
+    }
+  }
+
+}
+

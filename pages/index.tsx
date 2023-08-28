@@ -11,6 +11,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import { useSession } from "next-auth/react";
 import { get_action, update_action } from "./api/actios";
+import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 function Home({ data_editor, data_note_main_menu }: any) {
   const [value, setValue] = useState<string>(data_note_main_menu[0].body);
   const session = useSession();
@@ -81,14 +82,16 @@ function Home({ data_editor, data_note_main_menu }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={s.wrapper}>
-        <div className={s.bg}></div>
+        <div className={s.bg}>
+          <video className={s.video} autoPlay muted loop  src="/bg.mp4"></video>
+        </div>
         <div className={s.wrapp2}>
           <Link className={s.link_notes} href={`${NOTES}`}>
             Заметки
           </Link>
           <div className={s.container}>
             <List className={s.link} body={data_editor} />
-            <ButtonCreateNewNotes />
+            <NewNotesMainMenu />
           </div>
         </div>
         <div className={s.notes}>

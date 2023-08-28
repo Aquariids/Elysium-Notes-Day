@@ -28,18 +28,27 @@
 }
 
 .bg {
+    overflow: hidden;
     z-index: -1;
     top: 0;
     position: absolute;
     height: 45%;
     width: 100%;
-    background-image: url(./1.jpg);
+    background-image: url(./1.png);
     background-size: cover;
-    background-position-y: -20px;
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     box-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
 }
 
+
+
+
+.video{
+    position: absolute;
+    z-index: 1;
+    opacity:1;
+    width: 100%;
+}
 
 .notes {
 
@@ -50,7 +59,7 @@
     padding: 20px;
     width: 400px;
     height: 250px;
-    background-color: rgb(235, 199, 233);;
+    background-color: rgb(219, 208, 157);;
 
     p {
         text-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
