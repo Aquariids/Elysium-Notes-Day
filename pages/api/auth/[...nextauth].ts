@@ -4,9 +4,6 @@ import NextAuth from 'next-auth'
 import {NextAuthOptions, Session, User}   from 'next-auth'
 import GitHub from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
-import Credentials from "next-auth/providers/credentials";
-import { getSession, useSession } from "next-auth/react";
-
 const GITHUB_ID = process.env.GITHUB_ID as string;
 const GITHUB_SECRET = process.env.GITHUB_SECRET as string;
 const GOOGLE_ID = process.env.GOOGLE_ID as string;

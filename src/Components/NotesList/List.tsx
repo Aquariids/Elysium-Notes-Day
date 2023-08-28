@@ -62,13 +62,14 @@ const bodyTextsCache = useMemo(() => new Map(), []);
     [TitleTextsCache]
   );
 
+   
     
  
     return (
       <>
      {body &&
        body.map((item: ILinks) => {
-        if(loadingDelete && deleteElement === item._id ) {
+        if(loadingDelete && deleteElement === item._id) {
           return <React.Fragment key={item._id}> </React.Fragment>
         } else {
           return (

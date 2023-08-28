@@ -28,7 +28,11 @@ export async function getAllNotesFromDatabase(userId: any, email: any) {
     }); // создаем или подключаемся к коллекции
     const data = await collection.find(query).toArray();
     return data;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    const client = await getClient();
+    client.close();
+  }
 }
 
 export async function getAllNotesFromDatabaseRecycle(userId: any, email: any) {

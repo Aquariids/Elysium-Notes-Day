@@ -4,10 +4,12 @@ import Notes from "./notes.svg";
 import Recycle from "./recycle.svg";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { delete_restore_action } from "../../../pages/api/actios";
+import { RECYCLE } from "../../../pages/api/paths";
 
 const HeaderNotes = ({ data }: any) => {
   const router = useRouter();
-  const routerRecycle = router.asPath.split("/")[1] === "recycle";
+  const routerRecycle = router.asPath.split("/")[1] === RECYCLE;
   const session = useSession();
   const userId = session.data?.user.userId;
   async function deleteAllDataRecycle() {
@@ -15,9 +17,9 @@ const HeaderNotes = ({ data }: any) => {
     let  result = confirm("Уверены, что хотите очистить корзину? Данные будут окончательно удалены без возможности восстановления.")
 
     if(result) {
-      fetch(`/api/deleteAllData?userId=${userId}`)
+      fetch(`/api/deleteAndRestoreData?action=${delete_restore_action.delete_all_notes_recycle}&userId=${userId}`)
       .then(()=> {
-        router.push("/recycle");
+        router.push(`/${RECYCLE}`);
       })
 
      

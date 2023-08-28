@@ -18,10 +18,11 @@ export const get_action = {
 }
 
 // delete and restore actions
-export type DeleteRestoreAction = "delete_one_notes_recycle" | "delete_one_notes" | "delete_all_notes_recycle";
+export type DeleteRestoreAction = "delete_one_notes_recycle" | "delete_one_notes" | "delete_all_notes_recycle" | "restore_data";
 
 export const delete_restore_action = {
     delete_one_notes_recycle: "delete_one_notes_recycle",
     delete_one_notes: "delete_one_notes",
-    delete_all_notes_recycle: "delete_all_notes_recycle"
+    delete_all_notes_recycle: "delete_all_notes_recycle",
+    restore_data:"restore_data"
 }

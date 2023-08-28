@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { ButtonDeleteProps } from "./ButtonDeleteNotes.props";
 import s from "./ButtonDeleteNotes.module.scss";
 import cn from 'classnames';
-import { RECYCLE } from "../../../pages/api/paths";
+import { NOTES, RECYCLE } from "../../../pages/api/paths";
+import { delete_restore_action } from "../../../pages/api/actios";
 const ButtonDeleteNotes = ({
   body,
   setDeleteElement,
@@ -26,13 +27,9 @@ const ButtonDeleteNotes = ({
     restore,
   }: DeleteLinkProps) => {
     !recycleRouter && setDeleteElement(linkId);
-
+    const {restore_data,delete_one_notes,delete_one_notes_recycle} = delete_restore_action
    
-    restore ? await fetch(`/api/restoreData?_id=${linkId}&userId=${userId}`): await fetch(
-      `/api/${
-        recycleRouter ? "deleteData" : "deleteDataRecycle"
-      }?_id=${linkId}&userId=${userId}`
-    );
+    await fetch(`/api/deleteAndRestoreData?action=${restore ? restore_data: '' || recycleRouter ? delete_one_notes: delete_one_notes_recycle }&_id=${linkId}&userId=${userId}`);
  
 
     let all_id = body && body.map((obj: { _id: string }) => obj._id);
@@ -51,7 +48,8 @@ const ButtonDeleteNotes = ({
         router.push(all_id[currentIndex + 1]);
       }
     } else if (all_id.length === 1 && !recycle && !restore) {
-      router.push("/notes");
+      !recycleRouter && setLoadingDelete(false);
+      router.push(`/${NOTES}`);
     } else if (all_id.length === 1 && recycle) {
       router.push(`/${RECYCLE}`);
     } else {
