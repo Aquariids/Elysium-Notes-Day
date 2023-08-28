@@ -37,42 +37,50 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
       handler: toggleBold,
       detector: isBold,
       children: <Icons.Bold />,
+      title:'Жирный'
+      
     },
     {
       name: "Italic",
       handler: toggleItalic,
       detector: isItalic,
       children: <Icons.Italic />,
+      title:'Курсив'
     },
     {
       name: "Underline",
       handler: toggleUnderline,
       detector: isUnderline,
       children: <Icons.Underline />,
+      title:'Подчеркивание'
     },
     {
       name: "list-ul",
       handler: toggleUL,
       detector: isUL,
       children: <Icons.ListUl />,
+      title:'Маркированный список'
     },
     {
       name: "list-ol",
       handler: toggleOL,
       detector: isOL,
       children: <Icons.ListOl />,
+      title:'Нумерованный список'
     },
     {
       name: "blockQuote",
       handler: toggleBlockquote,
       detector: isBlockquote,
       children: <Icons.BlockQuote />,
+      title:'Цитата'
     },
     {
       name: "highlighter",
       handler: toggleHighlighter,
       detector: isHighlighter,
       children: <Icons.Highlighter />,
+      title:'Выделение'
     },
   ];
 
@@ -81,28 +89,32 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
       name: "left",
       detector: isTextLeftAligned,
       children: <Icons.AlignLeft />,
+      title:'Выравнивание по левой стороне'
     },
     {
       name: "center",
       detector: isTextCenterAligned,
       children: <Icons.AlignCenter />,
+      title:'Выравнивание по центру'
     },
     {
       name: "right",
       detector: isTextRightAligned,
       children: <Icons.AlignRight />,
+      title:'Выравнивание по правому краю'
     },
     {
       name: "justify",
       detector: isTextJustifyAligned,
       children: <Icons.AlignJustify />,
+      title:'Выравнивание по ширине'
     },
   ];
   return (
     <div className={s.toolbarHeader}>
       {toolbarButtons.map((btn) => (
         <button
-          
+          title={btn.title}
           className={cn(s.btn, {
             [s.btn_active]: btn.detector(editorState),
           })}
@@ -119,6 +131,7 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
       <div className={s.alignmentBtns}>
         {alignmentButtons.map((btn) => (
           <button
+            title={btn.title}
             key={btn.name}
             className={cn(s.btn, {
               [s.btn_active]: btn.detector(editorState),
