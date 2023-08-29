@@ -2,18 +2,13 @@ import Link from "next/link";
 import { ILinks } from "./NotesList.props";
 import s from "./NotesList.module.scss";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import cn from "classnames";
 import { NOTES } from "../../../pages/api/paths";
 import React from "react";
 import { EditorState, convertFromRaw } from "draft-js";
-import Lock from "./lock.svg";
-import LockOpen from "./lock_open.svg";
-import { get_action, update_action } from "../../../pages/api/actios";
-import { useSession } from "next-auth/react";
 
 const List = ({ body, loadingDelete, deleteElement }: any) => {
-  const [op,setOp] = useState();
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1];
   const selectedId = router.query.index;

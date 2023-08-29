@@ -151,11 +151,15 @@ span {
 
 
 .date_bg {
+    font-size:small;
+    text-shadow: 1px 2px 6px rgba(59, 59, 59, 0.651);
     color: #fff;
-    right: 15%;
+    right: 10%;
     margin-left: 100px;
     display: flex;
     top: 10%;
     position: absolute;
     z-index: 2;
+
+  
 }

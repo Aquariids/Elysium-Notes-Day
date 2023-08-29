@@ -13,12 +13,18 @@ import { get_action, update_action } from "./api/actios";
 import Arrow from './arr.svg';
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from 'classnames';
-import { format, compareAsc } from 'date-fns'
+import { parseISO, format } from 'date-fns';
+import { ru } from 'date-fns/locale'; // Импортируйте локаль для русского языка
+
 function Home({ data_editor, data_note_main_menu }: any) {
+  const currentDate = new Date();
+  const formattedDate = format(currentDate, "EEEE, d MMMM yyyy 'г.'", { locale: ru }).toLocaleUpperCase();
+ 
   const [value, setValue] = useState<string>(data_note_main_menu[0] === undefined ? '' :data_note_main_menu[0].body  );
   const session = useSession();
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
+
 
   const dataNoteBook = {
     userId,
@@ -86,7 +92,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
       </Head>
       <div className={s.wrapper}>
         <div className={s.bg}>
-        <div className={s.date_bg}>{format(new Date(), 'do MMMM Y')}</div>
+        <div className={s.date_bg}>{formattedDate}</div>
           <video className={cn(s.video, s.anim)} autoPlay muted loop  src="/bg.mp4"></video>
         </div>
         <div className={s.wrapp2}>
