@@ -87,6 +87,7 @@ const notes = ({ data }: any) => {
               body={selectedItem.body}
               key={selectedItem._id}
               id={selectedItem._id}
+              hideNotes = {selectedItem.block}
             />
             
           )}

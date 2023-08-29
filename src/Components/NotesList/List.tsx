@@ -20,34 +20,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
 
 
 
-  async function hideLink(currentLink: any) {
-    const linkToToggle = body.find((item:any) => item._id === currentLink);  
-    if (linkToToggle) {
-      const updatedLink = { ...linkToToggle, block: !linkToToggle.block }; // Инвертируем значение block
-      try {
-        const updateRes = await fetch(
-          `/api/updateData?action=${update_action.block_link}`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedLink),
-          }
-        );
   
-        if (updateRes.ok) {
-          setOp(updatedLink);
-          router.push(currentLink)
-
-        } else {
-          console.error("Ошибка при обновлении данных");
-        }
-      } catch (error) {
-        console.error("Ошибка при обновлении данных:", error);
-      }
-    } else {
-      console.error("Ссылка не найдена");
-    }
-  }
 
   
   const DraftJsObjectInText = (body: string) => {
@@ -119,15 +92,12 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                 })}
               >
                 <div
-                  onClick={() => {
-                    hideLink(item._id);
-                  }}
                   
                   className={cn(s.hide_content_link, {
                     [s.hide_content_link_active]: selectedId === item._id,
                   })}
                 >
-                  {item.block ? <Lock /> : <LockOpen />}
+                
                 </div>
                 <Link
                   rel="preload"

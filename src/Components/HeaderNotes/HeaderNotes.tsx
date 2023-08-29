@@ -21,12 +21,11 @@ const HeaderNotes = ({ data }: any) => {
       .then(()=> {
         router.push(`/${RECYCLE}`);
       })
-
-     
     }
-  
-    
   }
+
+
+  
 
   const [counterNotes, setCounterNotes] = useState(data.length);
 

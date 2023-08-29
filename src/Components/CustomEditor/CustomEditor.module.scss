@@ -199,3 +199,18 @@
         pointer-events: none;
         
     }
+
+
+
+    .hideNote { 
+        filter:blur(5px)
+    }
+
+    .hide_btn {
+        cursor: pointer;
+    
+        &:hover {
+         color: rgb(116, 115, 115);
+        }
+    }
+    

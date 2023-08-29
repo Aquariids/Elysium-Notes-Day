@@ -33,7 +33,9 @@ const CustomEditor = ({
   data,
   setDeleteElement,
   setLoadingDelete,
+  hideNotes
 }: any) => {
+
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
   const { data: session } = useSession();
@@ -41,14 +43,46 @@ const CustomEditor = ({
   const router = useRouter();
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
   const refActiveMenu = useRef<HTMLDivElement>(null);
+  const [op,setOp] = useState();
+
+
+
+  async function hideLink(currentLink: any) {
+    const linkToToggle = data.find((item:any) => item._id === currentLink);  
+    if (linkToToggle) {
+      const updatedLink = { ...linkToToggle, block: !linkToToggle.block }; // Инвертируем значение block
+      try {
+        const updateRes = await fetch(
+          `/api/updateData?action=${update_action.block_link}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedLink),
+          }
+        );
+  
+        if (updateRes.ok) {
+          setOp(updatedLink);
+          router.push(currentLink)
+
+        } else {
+          console.error("Ошибка при обновлении данных");
+        }
+      } catch (error) {
+        console.error("Ошибка при обновлении данных:", error);
+      }
+    } else {
+      console.error("Ссылка не найдена");
+    }
+  }
   useEffect(() => {
     setRouterReclycle(router.asPath.split("/")[1] === `${RECYCLE}`);
   }, []);
-  useEffect(() => {
-    const screenWidth = window.screen.width;
-    const pageWidth = document.documentElement.scrollWidth;
-    console.log(pageWidth);
-  });
+  // useEffect(() => {
+  //   const screenWidth = window.screen.width;
+  //   const pageWidth = document.documentElement.scrollWidth;
+  //   console.log(pageWidth);
+  // });
   // convertFromRaw - с помощью этого метода мы наш пустой объект превращаем в спец объект для draft js
   const [editorState, setEditorState] = useState(() => {
     const contentState = convertFromRaw(JSON.parse(body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
@@ -215,6 +249,7 @@ const CustomEditor = ({
               setLoadingDelete={setLoadingDelete}
               body={data}
             />
+            <div className={s.hide_btn} onClick={() => {hideLink(id)}}> {hideNotes ? <>Показать заметку</>: <>Скрыть заметку</>}</div>
           </div>
         </div>
       </div>
@@ -224,6 +259,7 @@ const CustomEditor = ({
           <div
             className={cn(s.body, {
               [s.block]: routerReclycle,
+              [s.hideNote]:hideNotes
             })}
           >
             <TextareaAutosize
