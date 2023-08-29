@@ -14,7 +14,7 @@ import { get_action, update_action } from "./api/actios";
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from 'classnames';
 function Home({ data_editor, data_note_main_menu }: any) {
-  const [value, setValue] = useState<string>(data_note_main_menu[0].body);
+  const [value, setValue] = useState<string>(data_note_main_menu[0] === undefined ? '' :data_note_main_menu[0].body  );
   const session = useSession();
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;

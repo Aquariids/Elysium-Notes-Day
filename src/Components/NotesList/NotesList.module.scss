@@ -129,3 +129,16 @@
 .block_item {
     filter: blur(3px);
 }
+
+.lock {
+    opacity: 0; /* Начальная непрозрачность */
+    transition: opacity 0.4s; /* Плавное появление */
+    background-image: url(./lock_png.png);
+    background-position: center;
+    background-size: 80px;
+    background-repeat: no-repeat;
+}
+
+.showBlock{
+    opacity: 1;
+}

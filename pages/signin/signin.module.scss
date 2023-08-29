@@ -4,7 +4,7 @@
 
 
 .login {
-  padding-left: 18px;
+    padding-left: 18px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -30,9 +30,10 @@
 
 
 .loading {
+  
     transition: all .2s;
     position: absolute;
-    z-index: 2;
+    z-index: 20;
     width: 100%;
     height: 100vh;
     -webkit-filter: blur(1px);
