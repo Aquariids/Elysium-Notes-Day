@@ -13,7 +13,7 @@ import { get_action, update_action } from "./api/actios";
 import Arrow from './arr.svg';
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from 'classnames';
-import { parseISO, format } from 'date-fns';
+import { format } from 'date-fns';
 import { ru } from 'date-fns/locale'; // Импортируйте локаль для русского языка
 
 function Home({ data_editor, data_note_main_menu }: any) {

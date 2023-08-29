@@ -12,8 +12,9 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1];
   const selectedId = router.query.index;
-
-
+  const remove_line_break = (str:string) => {
+return str.replace(/\n/g, '')
+  }
 
   
 
@@ -26,20 +27,23 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
       .getPlainText()
       .toLowerCase();
 
-    const sizeText = router.asPath === "/" ? 115 : 100;
+    const sizeText = router.asPath === "/" ? 100 : 90;
+    
     if (plainText.length >= sizeText) {
       const text = plainText.slice(0, sizeText) + "...";
-      return text.replace(/\s+/g, ' ').trim();
+      return remove_line_break(text)
     } else {
-      return plainText.replace(/\s+/g, ' ').trim();
+      return remove_line_break(plainText)
     }
   };
+
   const sliceTitle = (title: string) => {
-    if (title.length >= 30) {
-      const text = title.slice(0, 30) + "...";
-      return text
+    const sizeTitle = router.asPath === "/" ? 30 : 30;
+    if (title.length >= sizeTitle) {
+      const text = title.slice(0, sizeTitle) + "...";
+      return remove_line_break(text)
     } else {
-      return title
+      return remove_line_break(title)
     }
   };
 
@@ -104,7 +108,9 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                   })}
                   href={`/${routerRecycle ? routerRecycle : NOTES}/${item._id}`}
                 >
-                  <p className={s.title_link}>
+                  <p className={cn(s.title_link, {
+                    [s.boldTitle]:router.asPath === "/",
+                  })}>
                     {item.title
                       ? getCachedTextTitle(item.title)
                       : "Без названия"}
