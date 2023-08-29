@@ -58,8 +58,11 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
       <button className={s.btn} onClick={create}>
         +
       </button>
-    ) : (
-      router.asPath !== '/' && <LoaderCreate />
+    ) :(
+      <>
+      {  router.asPath !== '/' && <LoaderCreate />}
+      </>
+    
     );
   }
 };
