@@ -19,6 +19,7 @@ const ButtonCreateNewNotes = () => {
       email: session?.user.email,
       body: content, // данные редактора
       title: "",
+      block:false
     };
 
     try {

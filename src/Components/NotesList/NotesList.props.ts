@@ -3,7 +3,8 @@ export interface ILinks {
     title:string,
     date:string,
     body:string,
-    userId:string
+    userId:string,
+    block: boolean
 }
 
 

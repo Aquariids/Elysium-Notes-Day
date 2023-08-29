@@ -179,6 +179,30 @@ export async function updateDataTitle(data: any) {
   }
 }
 
+
+export async function updateBlockLink(data: any) {
+  try {
+    console.log(data.block);
+    
+    const id = new ObjectId(data._id);
+    const collection = await getCollection({
+      collectionName: `user_${data.userId}`,
+      db: "notes",
+    });
+    await collection.updateOne(
+      { _id: id },
+      {
+        $set: {
+          block: data.block,
+        },
+      } // то обновляем тело. $set оператор обновления поля или может добавить его.
+    );
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
+
 export async function getNoteBookMainMenu(userId:string | string[] | undefined, email:string | string[] | undefined) {
   try {
     const query = userId && email ? { userId, email } : {};

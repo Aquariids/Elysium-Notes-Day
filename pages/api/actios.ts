@@ -1,10 +1,11 @@
 // update actions
-export type UpdateAction = "editor" | "editor_title" | "book_main_menu";
+export type UpdateAction = "editor" | "editor_title" | "book_main_menu" | "block_link";
 
 export const update_action = {
     editor:'editor',
     editor_title:'editor_title',
-    book_main_menu:'book_main_menu'
+    book_main_menu:'book_main_menu',
+    block_link:'block_link'
 }
 
 

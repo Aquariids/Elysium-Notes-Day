@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import LoaderCreate from "./LoaderCreate";
-import AddNotes from './add_notes.svg';
 interface IButton {
   alert?: "alert";
 }
@@ -24,6 +23,7 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
       email: session?.user.email,
       body: content, // данные редактора
       title: "",
+      block: false
     };
 
     try {
