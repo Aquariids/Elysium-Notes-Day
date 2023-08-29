@@ -58,20 +58,20 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
       .getPlainText()
       .toLowerCase();
 
-    const sizeText = router.asPath === "/" ? 120 : 90;
+    const sizeText = router.asPath === "/" ? 140 : 100;
     if (plainText.length >= sizeText) {
       const text = plainText.slice(0, sizeText) + "...";
-      return text;
+      return text.replace(/\s+/g, ' ').trim();
     } else {
-      return plainText;
+      return plainText.replace(/\s+/g, ' ').trim();
     }
   };
   const sliceTitle = (title: string) => {
     if (title.length >= 30) {
       const text = title.slice(0, 30) + "...";
-      return text;
+      return text
     } else {
-      return title;
+      return title
     }
   };
 
