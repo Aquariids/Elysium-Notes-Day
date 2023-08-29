@@ -13,6 +13,7 @@ import { get_action, update_action } from "./api/actios";
 import Arrow from './arr.svg';
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from 'classnames';
+import { format, compareAsc } from 'date-fns'
 function Home({ data_editor, data_note_main_menu }: any) {
   const [value, setValue] = useState<string>(data_note_main_menu[0] === undefined ? '' :data_note_main_menu[0].body  );
   const session = useSession();
@@ -85,6 +86,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
       </Head>
       <div className={s.wrapper}>
         <div className={s.bg}>
+        <div className={s.date_bg}>{format(new Date(), 'do MMMM Y')}</div>
           <video className={cn(s.video, s.anim)} autoPlay muted loop  src="/bg.mp4"></video>
         </div>
         <div className={s.wrapp2}>

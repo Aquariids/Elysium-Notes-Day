@@ -148,3 +148,14 @@ span {
 .notes::-webkit-scrollbar {
     width: 0px;
 }
+
+
+.date_bg {
+    color: #fff;
+    right: 15%;
+    margin-left: 100px;
+    display: flex;
+    top: 10%;
+    position: absolute;
+    z-index: 2;
+}
