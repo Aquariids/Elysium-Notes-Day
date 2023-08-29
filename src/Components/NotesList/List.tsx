@@ -31,7 +31,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
       .getPlainText()
       .toLowerCase();
 
-    const sizeText = router.asPath === "/" ? 140 : 100;
+    const sizeText = router.asPath === "/" ? 115 : 100;
     if (plainText.length >= sizeText) {
       const text = plainText.slice(0, sizeText) + "...";
       return text.replace(/\s+/g, ' ').trim();
