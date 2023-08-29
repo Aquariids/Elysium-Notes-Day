@@ -42,9 +42,10 @@ const CustomEditor = ({
   const _id = id;
   const router = useRouter();
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
+  console.log("🚀 ~ file: CustomEditor.tsx:45 ~ routerReclycle:", routerReclycle)
   const refActiveMenu = useRef<HTMLDivElement>(null);
   const [op,setOp] = useState();
-
+  const btn_hide = hideNotes ? <>Показать заметку</>: <>Скрыть заметку</>;
 
 
   async function hideLink(currentLink: any) {
@@ -249,7 +250,7 @@ const CustomEditor = ({
               setLoadingDelete={setLoadingDelete}
               body={data}
             />
-            <div className={s.hide_btn} onClick={() => {hideLink(id)}}> {hideNotes ? <>Показать заметку</>: <>Скрыть заметку</>}</div>
+          <div className={s.hide_btn} onClick={() => {hideLink(id)}}> {!routerReclycle &&  btn_hide} </div>
           </div>
         </div>
       </div>
