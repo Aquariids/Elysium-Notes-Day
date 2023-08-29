@@ -8,9 +8,9 @@ import Link from "next/link";
 import s from "./index.module.scss";
 import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
-import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import { useSession } from "next-auth/react";
 import { get_action, update_action } from "./api/actios";
+import Arrow from './arr.svg';
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from 'classnames';
 function Home({ data_editor, data_note_main_menu }: any) {
@@ -88,9 +88,11 @@ function Home({ data_editor, data_note_main_menu }: any) {
           <video className={cn(s.video, s.anim)} autoPlay muted loop  src="/bg.mp4"></video>
         </div>
         <div className={s.wrapp2}>
+          <div className={s.link_container}>
           <Link className={s.link_notes} href={`${NOTES}`}>
-            Заметки
+            <span>ЗАМЕТКИ</span> <Arrow/>
           </Link>
+          </div>
           <div className={s.container}>
             <List className={s.link} body={data_editor} />
             <NewNotesMainMenu />

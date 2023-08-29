@@ -127,10 +127,12 @@
 
 
 .block_item {
+    transition: opacity 0.4s;
     filter: blur(3px);
 }
 
 .lock {
+    visibility: hidden;
     opacity: 0; /* Начальная непрозрачность */
     transition: opacity 0.4s; /* Плавное появление */
     background-image: url(./lock_png.png);
@@ -140,5 +142,6 @@
 }
 
 .showBlock{
+    visibility: visible;
     opacity: 1;
 }

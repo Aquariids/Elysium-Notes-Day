@@ -88,12 +88,38 @@
     
 }
 
-
+.link_container {
+    display: flex;
+    justify-content:start;
+    align-items: center;
+}
 .link_notes {
-    width: 65px;
+    align-items: center;
+    display: flex;
     padding-left: 10px;
     text-decoration: none;
     color: rgb(43, 44, 44);
+    padding-bottom: 15px;
+
+    &:hover svg {
+        fill: rgb(117, 117, 117);
+    }
+
+    &:hover {
+     
+            color: rgb(117, 117, 117);;
+       
+    }
+
+   
+
+    svg {
+        margin-bottom: 2px;
+    }
+span {
+    
+    padding-right: 5px;
+}
 
 
 
