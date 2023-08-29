@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { ButtonDeleteProps } from "./ButtonDeleteNotes.props";
 import s from "./ButtonDeleteNotes.module.scss";
-import cn from 'classnames';
+import cn from "classnames";
 import { NOTES, RECYCLE } from "../../../pages/api/paths";
 import { delete_restore_action } from "../../../pages/api/actios";
 const ButtonDeleteNotes = ({
@@ -27,10 +27,18 @@ const ButtonDeleteNotes = ({
     restore,
   }: DeleteLinkProps) => {
     !recycleRouter && setDeleteElement(linkId);
-    const {restore_data,delete_one_notes,delete_one_notes_recycle} = delete_restore_action
-   
-    await fetch(`/api/deleteAndRestoreData?action=${restore ? restore_data: '' || recycleRouter ? delete_one_notes: delete_one_notes_recycle }&_id=${linkId}&userId=${userId}`);
- 
+    const { restore_data, delete_one_notes, delete_one_notes_recycle } =
+      delete_restore_action;
+
+    await fetch(
+      `/api/deleteAndRestoreData?action=${
+        restore
+          ? restore_data
+          : "" || recycleRouter
+          ? delete_one_notes
+          : delete_one_notes_recycle
+      }&_id=${linkId}&userId=${userId}`
+    );
 
     let all_id = body && body.map((obj: { _id: string }) => obj._id);
     await all_id.filter((link: string) => link !== linkId);
@@ -59,8 +67,6 @@ const ButtonDeleteNotes = ({
       !recycleRouter && setLoadingDelete(false);
     }, 300);
 
-
-
     return () => clearTimeout(timer);
   };
 
@@ -70,19 +76,23 @@ const ButtonDeleteNotes = ({
         <>
           <div
             onClick={() =>
+              handleDeleteLink({
+                linkId: selectedId,
+                restore: true,
+                recycle: recycleRouter,
+              })
+            }
+            className={s.delete}
+          >
+            <p>Восстановить запись</p>
+          </div>
+          <div
+            onClick={() =>
               handleDeleteLink({ linkId: selectedId, recycle: recycleRouter })
             }
             className={s.delete}
           >
             <p>Окончательно удалить</p>
-          </div>
-          <div
-            onClick={() =>
-              handleDeleteLink({ linkId: selectedId, restore: true,  recycle: recycleRouter})
-            }
-            className={s.delete}
-          >
-            <p>Восстановить запись</p>
           </div>
         </>
       ) : (

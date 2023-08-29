@@ -20,6 +20,10 @@
 
 }
 .wrapper {
+    background-image:url(./girl1.png), url(./girl2.png);
+    background-position:bottom right, bottom left, bottom center;
+    background-repeat:no-repeat, no-repeat no-repeat;
+    background-size: 190px, 190px;
     display: flex;
     height: 100%;
     align-items: center;

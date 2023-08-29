@@ -203,9 +203,14 @@
 
 
     .hideNote { 
-        filter:blur(5px)
+        filter:blur(4.8px);
+        text-decoration: line-through;
     }
 
+    .hideNoteRecycle {
+        filter:blur(4.8px);
+        text-decoration: line-through;
+    }
     .hide_btn {
         cursor: pointer;
     

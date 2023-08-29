@@ -33,25 +33,24 @@ const CustomEditor = ({
   data,
   setDeleteElement,
   setLoadingDelete,
-  hideNotes
+  hideNotes,
 }: any) => {
-
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
   const { data: session } = useSession();
   const _id = id;
   const router = useRouter();
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
-  console.log("🚀 ~ file: CustomEditor.tsx:45 ~ routerReclycle:", routerReclycle)
+
   const refActiveMenu = useRef<HTMLDivElement>(null);
-  const [op,setOp] = useState();
-  const btn_hide = hideNotes ? <>Показать заметку</>: <>Скрыть заметку</>;
-
-
+  const [op, setOp] = useState();
+  const btn_hide = hideNotes ? <>Показать заметку</> : <>Скрыть заметку</>;
+  const linkToToggle = data.find((item: any) => item._id === id);
+  console.log("🚀 ~ file: CustomEditor.tsx:49 ~ linkToToggle:", linkToToggle.block)
   async function hideLink(currentLink: any) {
-    const linkToToggle = data.find((item:any) => item._id === currentLink);  
+    const linkToToggle = data.find((item: any) => item._id === currentLink);
     if (linkToToggle) {
-      const updatedLink = { ...linkToToggle, block: !linkToToggle.block }; // Инвертируем значение block
+      const updatedLink = { ...linkToToggle, block: !linkToToggle.block }; 
       try {
         const updateRes = await fetch(
           `/api/updateData?action=${update_action.block_link}`,
@@ -61,11 +60,10 @@ const CustomEditor = ({
             body: JSON.stringify(updatedLink),
           }
         );
-  
+
         if (updateRes.ok) {
           setOp(updatedLink);
-          router.push(currentLink)
-
+          router.push(currentLink);
         } else {
           console.error("Ошибка при обновлении данных");
         }
@@ -89,7 +87,6 @@ const CustomEditor = ({
     const contentState = convertFromRaw(JSON.parse(body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
     return EditorState.createWithContent(contentState);
   });
-  
 
   const editorStateMemo = useMemo(() => {
     const contentState = convertFromRaw(JSON.parse(body)); // тут мы парсим данные с базы в спец объект draft js
@@ -141,13 +138,16 @@ const CustomEditor = ({
       };
 
       try {
-        const response = await fetch(`/api/updateData?action=${update_action.editor}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        const response = await fetch(
+          `/api/updateData?action=${update_action.editor}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
       } catch (error) {
         console.log(
           "🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:",
@@ -168,13 +168,16 @@ const CustomEditor = ({
       };
 
       try {
-        const response = await fetch(`/api/updateData?action=${update_action.editor_title}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        const response = await fetch(
+          `/api/updateData?action=${update_action.editor_title}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
       } catch (error) {
         alert(error);
       }
@@ -184,11 +187,10 @@ const CustomEditor = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if(routerReclycle === false) {
+      if (routerReclycle === false) {
         updateData(editorState, session, _id);
         setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
       }
-    
     }, 300);
 
     return () => clearTimeout(timer);
@@ -196,13 +198,11 @@ const CustomEditor = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if(routerReclycle === false) {
-        console.log('100');
+      if (routerReclycle === false) {
+        console.log("100");
         updateTitle(session, _id, value);
         setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
-       }
-
-    
+      }
     }, 300);
 
     return () => clearTimeout(timer);
@@ -233,7 +233,7 @@ const CustomEditor = ({
               setDotsMenuActive(!dotsMenuActive);
             }}
             className={cn(s.dropbtn, {
-              [s.activeDots]: dotsMenuActive === true
+              [s.activeDots]: dotsMenuActive === true,
             })}
           >
             {" "}
@@ -245,12 +245,20 @@ const CustomEditor = ({
               [s.show]: dotsMenuActive,
             })}
           >
+            <div
+              className={s.hide_btn}
+              onClick={() => {
+                hideLink(id);
+              }}
+            >
+              {" "}
+              {!routerReclycle && btn_hide}{" "}
+            </div>
             <ButtonDeleteNotes
               setDeleteElement={setDeleteElement}
               setLoadingDelete={setLoadingDelete}
               body={data}
             />
-          <div className={s.hide_btn} onClick={() => {hideLink(id)}}> {!routerReclycle &&  btn_hide} </div>
           </div>
         </div>
       </div>
@@ -260,7 +268,7 @@ const CustomEditor = ({
           <div
             className={cn(s.body, {
               [s.block]: routerReclycle,
-              [s.hideNote]:hideNotes
+              [s.hideNote]: hideNotes ||  linkToToggle.block === true && routerReclycle
             })}
           >
             <TextareaAutosize
