@@ -136,11 +136,17 @@
     opacity: 0; /* Начальная непрозрачность */
     transition: opacity 0.4s; /* Плавное появление */
     background-image: url(./lock_png.png);
-    background-position: center;
+    background-position-y: 40%;
+    background-position-x:center ;
     background-size: 80px;
     background-repeat: no-repeat;
 }
 
+
+.lockMainMenu {
+    background-size: contain;
+    background-position-y: top;
+}
 .showBlock{
     visibility: visible;
     opacity: 1;

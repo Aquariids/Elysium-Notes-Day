@@ -86,7 +86,8 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                   [s.active]: selectedId === item._id,
                   [s.mainMenu]: router.asPath === "/",
                   [s.lock]: item.block === true,
-                  [s.showBlock]: item.block === true
+                  [s.showBlock]: item.block === true,
+                  [s.lockMainMenu]: item.block === true && router.asPath === '/',
                   
                  
                 })}
