@@ -11,6 +11,7 @@ import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { NOTES } from "../api/paths";
 import { get_action } from "../api/actios";
 const notes = ({ data }: any) => {
+  console.log("🚀 ~ file: [index].tsx:14 ~ notes ~ data:", data)
   const  [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
 
@@ -29,16 +30,16 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   ); 
   
-
-  // console.log([...data].sort((a, b) => a.title.localeCompare(b.title)))
-  // console.log(links);
   const  sortA = links && [...links].sort((a, b) => a.title.localeCompare(b.title)); // сортировка по алфавиту
+  const  sortB = links && [...links].sort((a, b) => a.title.localeCompare(b.date)); // сортировка по алфавиту
+  console.log("🚀 ~ file: [index].tsx:35 ~ notes ~ sortB:", sortB)
+  
   const getData = useCallback(async () => {
     if(session.status === 'authenticated') {
       const res = await fetch(
         `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`);
         const data = await res.json();
-        setLinks(data);
+        setLinks(data.sort((a:any, b:any) => a.title.localeCompare(b.date)));
     }
 
   }, [checkTitle, data]);
@@ -64,7 +65,6 @@ const notes = ({ data }: any) => {
 
   
     return (
-      // ну и паередаем его в наш редактор.
       <div className={s.wrapper}>
         <div className={s.notes_list}>
         <HeaderNotes data={data}/> 
@@ -114,8 +114,8 @@ export async function getServerSideProps(context: any) {
   const email = session?.user.email;
   const res = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`);
-  const data = await res.json();
-
+  const data1 = await res.json();
+  const data = data1.sort((a:any, b:any) => a.title.localeCompare(b.date));
   
   return {
     props: { data},

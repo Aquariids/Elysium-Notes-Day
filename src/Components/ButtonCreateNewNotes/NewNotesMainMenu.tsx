@@ -24,7 +24,7 @@ const ButtonCreateNewNotes = () => {
 
     try {
       const response = await fetch(
-        `/api/createData?action=${create_data.create_data_main_menu}`,
+        `/api/createData?action=${create_data.create_data}`,
         {
           method: "POST",
           headers: {

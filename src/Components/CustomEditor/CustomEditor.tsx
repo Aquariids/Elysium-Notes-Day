@@ -46,7 +46,6 @@ const CustomEditor = ({
   const [op, setOp] = useState();
   const btn_hide = hideNotes ? <>Показать заметку</> : <>Скрыть заметку</>;
   const linkToToggle = data.find((item: any) => item._id === id);
-  console.log("🚀 ~ file: CustomEditor.tsx:49 ~ linkToToggle:", linkToToggle.block)
   async function hideLink(currentLink: any) {
     const linkToToggle = data.find((item: any) => item._id === currentLink);
     if (linkToToggle) {

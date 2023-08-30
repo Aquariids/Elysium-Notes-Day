@@ -9,7 +9,7 @@ import s from "./index.module.scss";
 import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
 import { useSession } from "next-auth/react";
-import { get_action, update_action } from "./api/actios";
+import { create_data, get_action, update_action } from "./api/actios";
 import Arrow from './arr.svg';
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from 'classnames';
@@ -32,7 +32,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
     body: "",
   };
   const createNotesBook = async () => {
-    const response = await fetch("/api/createNoteBookMainMenu", {
+    const response = await fetch(`/api/createData?action=${create_data.create_data_main_menu}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

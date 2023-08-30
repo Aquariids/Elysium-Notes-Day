@@ -10,8 +10,7 @@ import { EditorState, convertFromRaw } from "draft-js";
 import { format } from "date-fns/fp";
 
 const List = ({ body, loadingDelete, deleteElement }: any) => {
-  console.log(new Date(body[0].date));
-
+  
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1];
   const selectedId = router.query.index;
