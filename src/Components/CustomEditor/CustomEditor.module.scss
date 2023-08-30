@@ -35,6 +35,8 @@
 }
 
 
+
+
 .test {
     visibility: hidden;
 }
@@ -75,7 +77,9 @@
        
     }
 
-
+.body .toolbarHeader:focus {
+    visibility: visible;
+}
     .btn_active svg {
         fill: #b11f1f;
     }
@@ -172,6 +176,7 @@
     /* Убраны display и visibility из .dropdown_content */
     
     .dropdown_content a {
+        
         opacity: 1;
         transition: background-color 0.5s; /* Добавлена анимация только для background-color */
         color: black;

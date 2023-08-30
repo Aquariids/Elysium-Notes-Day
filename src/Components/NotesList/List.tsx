@@ -122,7 +122,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                   <p className={s.body_link}> {getCachedText(item.body)}</p>
                 </Link>
 
-                <span className={cn(s.date, {
+                <span title={item.block ?  '':item.date} className={cn(s.date, {
                    [s.block_item]: item.block === true,
                    [s.date_mainMenu]: router.asPath===  '/',
                 })}>{shortDate(item.date)}</span>
