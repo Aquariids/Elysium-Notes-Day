@@ -39,7 +39,7 @@ const notes = ({ data }: any) => {
       const res = await fetch(
         `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`);
         const data = await res.json();
-        setLinks(data.sort((a:any, b:any) => a.title.localeCompare(b.date)));
+        setLinks(data);
     }
 
   }, [checkTitle, data]);
@@ -114,8 +114,7 @@ export async function getServerSideProps(context: any) {
   const email = session?.user.email;
   const res = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`);
-  const data1 = await res.json();
-  const data = data1.sort((a:any, b:any) => a.title.localeCompare(b.date));
+  const data = await res.json();
   
   return {
     props: { data},
