@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "./mongodb";
 import { format } from "date-fns";
+import ru from "date-fns/locale/ru";
 
 interface dbPros {
   collectionName: string;
@@ -53,7 +54,7 @@ export async function createDatabase(data: any) {
     collectionName: `user_${data.userId}`,
     db: "notes",
   });
-  const formattedDate = format(currentDate, "yyyy-MM-dd HH:mm   :ss");
+  const formattedDate = format(currentDate, "EEEE, d MMMM yyyy HH:mm",{ locale: ru });
   data.date = formattedDate;
   const result = collection.insertOne(data); // Этот метод позволяет вставить документ в коллекцию
   return result;

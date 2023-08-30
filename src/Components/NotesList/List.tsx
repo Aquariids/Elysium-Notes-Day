@@ -7,18 +7,25 @@ import cn from "classnames";
 import { NOTES } from "../../../pages/api/paths";
 import React from "react";
 import { EditorState, convertFromRaw } from "draft-js";
+import { format } from "date-fns/fp";
 
 const List = ({ body, loadingDelete, deleteElement }: any) => {
+  console.log(new Date(body[0].date));
+
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1];
   const selectedId = router.query.index;
-  const remove_line_break = (str:string) => {
-return str.replace(/\n/g, '')
+  const remove_line_break = (str: string) => {
+    return str.replace(/\n/g, "");
+  };
+
+  const shortDate = (date:string) => {
+    const short = date.split(" ").slice(1, 3);
+    const day = short[0];
+    const month = short[1].slice(0,3)
+    return `${day} ${month}.`
   }
 
-  
-
-  
   const DraftJsObjectInText = (body: string) => {
     const contentState = convertFromRaw(JSON.parse(body));
     const editorState = EditorState.createWithContent(contentState);
@@ -27,23 +34,23 @@ return str.replace(/\n/g, '')
       .getPlainText()
       .toLowerCase();
 
-    const sizeText = router.asPath === "/" ? 100 : 90;
-    
+    const sizeText = router.asPath === "/" ? 100 : 77;
+
     if (plainText.length >= sizeText) {
       const text = plainText.slice(0, sizeText) + "...";
-      return remove_line_break(text)
+      return remove_line_break(text);
     } else {
-      return remove_line_break(plainText)
+      return remove_line_break(plainText);
     }
   };
 
   const sliceTitle = (title: string) => {
-    const sizeTitle = router.asPath === "/" ? 30 : 30;
+    const sizeTitle = router.asPath === "/" ? 10 : 25;
     if (title.length >= sizeTitle) {
       const text = title.slice(0, sizeTitle) + "...";
-      return remove_line_break(text)
+      return remove_line_break(text);
     } else {
-      return remove_line_break(title)
+      return remove_line_break(title);
     }
   };
 
@@ -86,37 +93,39 @@ return str.replace(/\n/g, '')
                   [s.mainMenu]: router.asPath === "/",
                   [s.lock]: item.block === true,
                   [s.showBlock]: item.block === true,
-                  [s.lockMainMenu]: item.block === true && router.asPath === '/',
-                  
-                 
+                  [s.lockMainMenu]:item.block === true && router.asPath === "/",
                 })}
               >
                 <div
-                  
                   className={cn(s.hide_content_link, {
                     [s.hide_content_link_active]: selectedId === item._id,
                   })}
-                >
-                
-                </div>
+                ></div>
                 <Link
                   rel="preload"
                   className={cn(s.link, {
                     [s.blockLink]: selectedId === item._id,
                     [s.mainMenu]: router.asPath === "/",
-                    [s.block_item]: item.block === true
+                    [s.block_item]: item.block === true,
                   })}
                   href={`/${routerRecycle ? routerRecycle : NOTES}/${item._id}`}
                 >
-                  <p className={cn(s.title_link, {
-                    [s.boldTitle]:router.asPath === "/",
-                  })}>
+                  <p
+                    className={cn(s.title_link, {
+                      [s.boldTitle]: router.asPath === "/",
+                    })}
+                  >
                     {item.title
                       ? getCachedTextTitle(item.title)
                       : "Без названия"}
                   </p>
                   <p className={s.body_link}> {getCachedText(item.body)}</p>
                 </Link>
+
+                <span className={cn(s.date, {
+                   [s.block_item]: item.block === true,
+                   [s.date_mainMenu]: router.asPath===  '/',
+                })}>{shortDate(item.date)}</span>
               </div>
             );
           }
