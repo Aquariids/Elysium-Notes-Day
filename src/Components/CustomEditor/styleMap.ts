@@ -5,6 +5,6 @@ export const styleMap = {
       backgroundColor: "rgb(248, 248, 175)",
     },
     STRIKETHROUGH: {
-      textDecoration: "line-through"
+      textDecoration: "line-through",
     },
   };
