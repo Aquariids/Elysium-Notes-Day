@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
-import AddNotes from './add_notes.svg';
+import AddNotes from "./add_notes.svg";
+import { create_data } from "../../../pages/api/actios";
 
 const ButtonCreateNewNotes = () => {
   const { data: session } = useSession();
@@ -12,24 +13,26 @@ const ButtonCreateNewNotes = () => {
   const router = useRouter();
   const create = async () => {
     const content = JSON.stringify(emptyRawContentState);
-    console.log(router.asPath);
-    
-   const data = {
+
+    const data = {
       userId: session?.user.userId,
       email: session?.user.email,
       body: content, // данные редактора
       title: "",
-      block:false
+      block: false,
     };
 
     try {
-      const response = await fetch("/api/createData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `/api/createData?action=${create_data.create_data_main_menu}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       const responseData = await response.json();
       router.push(`/${NOTES}/${responseData._id}`);
     } catch (error) {
@@ -37,12 +40,11 @@ const ButtonCreateNewNotes = () => {
     }
   };
 
-    return (
-      <button className={s.add_notes} onClick={create}>
-      <AddNotes/>
+  return (
+    <button className={s.add_notes} onClick={create}>
+      <AddNotes />
     </button>
-    )
-    
+  );
 };
 
 export default ButtonCreateNewNotes;

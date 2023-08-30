@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import LoaderCreate from "./LoaderCreate";
+import { create_data } from "../../../pages/api/actios";
 interface IButton {
   alert?: "alert";
 }
@@ -28,7 +29,7 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
 
     try {
       setLoad(false);
-      const response = await fetch("/api/createData", {
+      const response = await fetch(`/api/createData?action=${create_data.create_data}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -27,3 +27,13 @@ export const delete_restore_action = {
     delete_all_notes_recycle: "delete_all_notes_recycle",
     restore_data:"restore_data"
 }
+
+
+// create actions
+export type CreateAction = "create_data" | "create_data_main_menu";
+
+export const create_data = {
+    create_data: "create_data",
+    create_data_main_menu: "create_data_main_menu",
+
+}
