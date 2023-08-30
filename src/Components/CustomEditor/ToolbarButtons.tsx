@@ -26,10 +26,15 @@ import * as Icons from "./icons";
 
 const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
   const HIGHLIGHTER = "HIGHLIGHTER";
+  const STRIKETHROUGH = "STRIKETHROUGH";
 
   const toggleHighlighter = () =>
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER);
   const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
+
+  const toggleStrikethrough = () =>
+  toggleInlineStyle(editorState, setEditorState, STRIKETHROUGH);
+const isStrikethrough = () => hasInlineStyleOf(editorState, STRIKETHROUGH);
 
   const toolbarButtons = [
     {
@@ -81,6 +86,14 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
       detector: isHighlighter,
       children: <Icons.Highlighter />,
       title:'Выделение'
+    },
+
+    {
+      name: "strikethrough",
+      handler: toggleStrikethrough,
+      detector: isStrikethrough,
+      children: <Icons.Strikethrough />,
+      title:'Зачеркнутый'
     },
   ];
 
