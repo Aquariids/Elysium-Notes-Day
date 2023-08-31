@@ -27,6 +27,9 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   );
 
+
+
+
   useEffect(() => {
     if (!selectedItem) {
       router.push(`/${RECYCLE}`);

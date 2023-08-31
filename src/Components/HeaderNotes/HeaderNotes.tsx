@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { delete_restore_action } from "../../../pages/api/actios";
 import { RECYCLE } from "../../../pages/api/paths";
 
-const HeaderNotes = ({ data }: any) => {
+const HeaderNotes = ({ data,setSort }: any) => {
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1] === RECYCLE;
   const session = useSession();
@@ -24,6 +24,18 @@ const HeaderNotes = ({ data }: any) => {
     }
   }
 
+
+  function dateSort () {
+    const sort = localStorage.setItem('number','date')
+    setSort(sort)
+    router.push(router.asPath)
+  }
+
+  function normSort () {
+    const sort = localStorage.setItem('number','no-date')
+    setSort(sort)
+    router.push(router.asPath)
+  }
 
   
 
@@ -64,8 +76,15 @@ const HeaderNotes = ({ data }: any) => {
           </>
         )}
       </div>
-
+        <div className={s.header__foter}>
       <div className={s.allNotesCounter}>{result}</div>
+      <button className={s.btn_sort} onClick={() => {
+        dateSort()
+      }}>Сортировка</button>
+      <button className={s.btn_sort} onClick={() => {
+        normSort()
+      }}>Обратно</button>
+      </div>
     </div>
   );
 };

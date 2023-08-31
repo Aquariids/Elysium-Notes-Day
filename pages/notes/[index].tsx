@@ -11,10 +11,9 @@ import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { NOTES } from "../api/paths";
 import { get_action } from "../api/actios";
 const notes = ({ data }: any) => {
-  console.log("🚀 ~ file: [index].tsx:14 ~ notes ~ data:", data)
   const  [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
-
+  const [sort, setSort] = useState<any>('no-sort');
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [deleteElement, setDeleteElement] = useState<any>();
   const router = useRouter();
@@ -32,18 +31,18 @@ const notes = ({ data }: any) => {
   
   const  sortA = links && [...links].sort((a, b) => a.title.localeCompare(b.title)); // сортировка по алфавиту
   const  sortB = links && [...links].sort((a, b) => a.title.localeCompare(b.date)); // сортировка по алфавиту
-  console.log("🚀 ~ file: [index].tsx:35 ~ notes ~ sortB:", sortB)
+ 
   
   const getData = useCallback(async () => {
     if(session.status === 'authenticated') {
       const res = await fetch(
-        `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`);
+        `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}&sort=${sort}`);
         const data = await res.json();
         setLinks(data);
     }
 
   }, [checkTitle, data]);
-  
+ 
   useEffect(() => {
     if(loadingDelete) {
       getData()
@@ -57,6 +56,12 @@ const notes = ({ data }: any) => {
    
   }, [checkTitle,data,loadingDelete]);
 
+  useEffect(() => {
+    const sort = localStorage.getItem('number'); 
+    setSort(sort)
+  },[sort])
+
+
   useEffect(()=> {
     if(!selectedItem) {
       router.push(`/${NOTES}`)
@@ -67,7 +72,7 @@ const notes = ({ data }: any) => {
     return (
       <div className={s.wrapper}>
         <div className={s.notes_list}>
-        <HeaderNotes data={data}/> 
+        <HeaderNotes setSort={setSort} data={data}/> 
         <div className={s.container}>
           <div className={s.list}>
            {data[0] && <NotesList deleteElement={deleteElement} loadingDelete={loadingDelete} checkTitle={checkTitle} data={links} body={data} userId={userId} />}

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { GetAction, get_action } from "./actios";
 import {
   getAllNotesFromDatabase,
@@ -6,7 +7,10 @@ import {
 } from "./auth/lib/dataFromDatabase";
 import { NextApiRequest, NextApiResponse } from "next";
 
+
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
+ const sort = req.query.sort;
+  console.log("🚀 ~ file: getData.ts:13 ~ GET ~ sort:", sort)
   const userId = req.query.userId;
   const email = req.query.email;
   const action: GetAction = req.query.action as GetAction;
@@ -14,7 +18,7 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
     if (userId && email) {
       switch (action) {
         case get_action.data_editor:
-          res.status(200).json(await getAllNotesFromDatabase(userId, email));
+          res.status(200).json(await getAllNotesFromDatabase(userId, email,sort));
           break;
         case get_action.data_recycle:
           res.status(200).json(await getAllNotesFromDatabaseRecycle(userId, email));
