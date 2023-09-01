@@ -18,7 +18,6 @@ interface IRequest {
 export default async function handler(req: IRequest, res: NextApiResponse) {
   const _id = req.query._id;
   const userId = req.query.userId;
-  console.log("🚀 ~ file: deleteAndRestoreData.ts:21 ~ handler ~ userId:", userId)
   const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(_id); // проверка на то, что _id mongodb в корректном формате
   const action:DeleteRestoreAction = req.query.action as DeleteRestoreAction;
   if(!userId) res.status(500).send("Несуществующий userId. Пожалуйста авторизуйтесь.");

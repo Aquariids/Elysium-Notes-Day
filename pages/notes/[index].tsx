@@ -29,8 +29,8 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   ); 
   
-  const  sortA = links && [...links].sort((a, b) => a.title.localeCompare(b.title)); // сортировка по алфавиту
-  const  sortB = links && [...links].sort((a, b) => a.title.localeCompare(b.date)); // сортировка по алфавиту
+  // const  sortA = links && [...links].sort((a, b) => a.title.localeCompare(b.title)); // сортировка по алфавиту
+  // const  sortB = links && [...links].sort((a, b) => a.title.localeCompare(b.date)); // сортировка по алфавиту
  
   
   const getData = useCallback(async () => {
@@ -57,7 +57,7 @@ const notes = ({ data }: any) => {
   }, [checkTitle,data,loadingDelete]);
 
   useEffect(() => {
-    const sort = localStorage.getItem('number'); 
+    const sort = localStorage.getItem('sorting'); 
     setSort(sort)
   },[sort])
 
@@ -72,7 +72,7 @@ const notes = ({ data }: any) => {
     return (
       <div className={s.wrapper}>
         <div className={s.notes_list}>
-        <HeaderNotes setSort={setSort} data={data}/> 
+        <HeaderNotes setSort={setSort} sort={sort} data={data}/> 
         <div className={s.container}>
           <div className={s.list}>
            {data[0] && <NotesList deleteElement={deleteElement} loadingDelete={loadingDelete} checkTitle={checkTitle} data={links} body={data} userId={userId} />}

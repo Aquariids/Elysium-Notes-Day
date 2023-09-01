@@ -8,7 +8,7 @@ import { delete_restore_action } from "../../../pages/api/actios";
 import { RECYCLE } from "../../../pages/api/paths";
 import SortIcon from "./sort.svg";
 import cn from 'classnames';
-const HeaderNotes = ({ data, setSort }: any) => {
+const HeaderNotes = ({ data, setSort, sort }: any) => {
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1] === RECYCLE;
   const session = useSession();
@@ -45,13 +45,14 @@ const HeaderNotes = ({ data, setSort }: any) => {
     };
   }, []);
   function dateSort() {
-    const sort = localStorage.setItem("number", "date");
+    const sort = localStorage.setItem("sorting", "date");
     setSort(sort);
     router.push(router.asPath);
+    
   }
 
   function normSort() {
-    const sort = localStorage.setItem("number", "no-date");
+    const sort = localStorage.setItem("sorting", "no-date");
     setSort(sort);
     router.push(router.asPath);
   }
@@ -110,13 +111,16 @@ const HeaderNotes = ({ data, setSort }: any) => {
           <div id={s.myDropdown} className={cn(s.dropdown_content, {
             [s.show] : sortMenuActive === true
           })}>
+            <span>Сортировать по</span>
             <button
-              className={s.btn_sort}
+              className={cn(s.btn_sort, {
+                [s.active_btn_sort]: sort === 'date'
+              })}
               onClick={() => {
                 dateSort();
               }}
             >
-              Сортировка
+              дате создания
             </button>
             <button
               className={s.btn_sort}

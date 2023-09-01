@@ -10,7 +10,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
  const sort = req.query.sort;
-  console.log("🚀 ~ file: getData.ts:13 ~ GET ~ sort:", sort)
   const userId = req.query.userId;
   const email = req.query.email;
   const action: GetAction = req.query.action as GetAction;

@@ -1,5 +1,6 @@
 .header {
     padding: 5px 10px;
+    
 }
 
 
@@ -9,6 +10,7 @@
 }
 
 .container {
+    height: 55px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -48,6 +50,8 @@
 }
 
 .header__foter {
+
+    height: 32px;
     display: flex;
     justify-content: space-between;
 }
@@ -75,6 +79,9 @@
 }
 
 .dropdown_content {
+    display: flex;
+    flex-direction: column;
+    width: 195px;
     opacity: 0; /* Начальное значение нулевой прозрачности */
     transition: opacity 0.5s; /* Добавлена анимация только для opacity */
     position: absolute;
@@ -108,4 +115,10 @@
     opacity: 1;
     visibility: visible;
     
+}
+
+
+
+.active_btn_sort {
+    color: red;
 }

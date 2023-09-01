@@ -13,11 +13,11 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
     const data = req.body;
     switch (action) {
       case update_action.editor:
-        await updateDataInDatabase(data);
+        await updateDataInDatabase(data)
         res.status(200).send("Data editor updated successfully");
         break;
       case update_action.editor_title:
-        await updateDataTitle(data);
+        await updateDataTitle(data)
         res.status(200).send("Data title updated successfully");
         break;
       case update_action.book_main_menu:

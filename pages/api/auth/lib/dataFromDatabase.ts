@@ -29,7 +29,7 @@ export async function getAllNotesFromDatabase(userId: string | string[], email: 
       db: "notes",
     }); // создаем или подключаемся к коллекции
     const data = await collection.find(query).toArray();
-    const dataDate = sort === 'date' ? data.sort((a, b) => a.title.localeCompare(b.date)) :data
+    const dataDate = sort === 'date' ? data.sort((a, b) => a.date.localeCompare(b.date)) :data
     return dataDate;
   } catch (error) {
     const client = await getClient();
@@ -152,7 +152,7 @@ export async function updateDataInDatabase(data: any) {
       { $and: [{ userId: data.userId }, { email: data.email }, { _id: id }] }, // фильтрация - проверяем если email равен data.email и userId равен data.userId
       {
         $set: {
-          body: data.body,
+          body: data.body
         },
       } // то обновляем тело. $set оператор обновления поля или может добавить его.
     );
@@ -172,8 +172,8 @@ export async function updateDataTitle(data: any) {
       { _id: id },
       {
         $set: {
-          title: data.title,
-        },
+          title: data.title
+        }
       } // то обновляем тело. $set оператор обновления поля или может добавить его.
     );
   } catch (error) {
@@ -185,7 +185,6 @@ export async function updateDataTitle(data: any) {
 
 export async function updateBlockLink(data: any) {
   try {
-    console.log(data.block);
     
     const id = new ObjectId(data._id);
     const collection = await getCollection({

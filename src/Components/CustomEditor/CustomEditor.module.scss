@@ -13,7 +13,8 @@
     width: 100%;
     font-size: 30px;
     height: 100%;
-    padding: 5px 0;
+    padding-bottom: 5px;
+    padding-top: 0;
     border: none;
     resize: none;
 
@@ -69,7 +70,6 @@
 
 
     .toolbarHeader {
-        padding-top: 5px;
         padding-bottom: 5px;
         padding-left: 10px;
         border-left: 1px solid rgba(122, 122, 122, 0.452);
