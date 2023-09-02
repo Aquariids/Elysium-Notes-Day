@@ -78,9 +78,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
 
 
   useEffect(()=> {
-    const sort = localStorage.getItem('number')
-    console.log(sort);
-    
+    const sort = localStorage.getItem('number')    
   },[])
 
   return (
@@ -127,7 +125,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                   <p className={s.body_link}> {getCachedText(item.body)}</p>
                 </Link>
 
-                <span title={item.block ?  '':item.date} className={cn(s.date, {
+                <span title={item.block ?  '':item.date.slice(0, 30)} className={cn(s.date, {
                    [s.block_item]: item.block === true,
                    [s.date_mainMenu]: router.asPath===  '/',
                 })}>{shortDate(item.date)}</span>

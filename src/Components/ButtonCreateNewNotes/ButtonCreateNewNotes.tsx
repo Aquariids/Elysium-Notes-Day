@@ -7,6 +7,8 @@ import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import LoaderCreate from "./LoaderCreate";
 import { create_data } from "../../../pages/api/actios";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
 interface IButton {
   alert?: "alert";
 }
@@ -17,14 +19,12 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   const router = useRouter();
   const create = async () => {
     const content = JSON.stringify(emptyRawContentState);
-    console.log(router.asPath);
-    
    const data = {
       userId: session?.user.userId,
       email: session?.user.email,
       body: content, // данные редактора
       title: "",
-      block: false
+      block: false,
     };
 
     try {

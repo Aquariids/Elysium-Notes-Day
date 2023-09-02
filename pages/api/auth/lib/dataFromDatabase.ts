@@ -56,8 +56,9 @@ export async function createDatabase(data: any) {
     collectionName: `user_${data.userId}`,
     db: "notes",
   });
-  const formattedDate = format(currentDate, "EEEE, d MMMM yyyy HH:mm",{ locale: ru });
-  data.date = formattedDate;
+  data.date =  format(new Date(), "EEEE, d MMMM yyyy HH:mm ss",{ locale: ru });
+  console.log(data.date);
+  
   const result = collection.insertOne(data); // Этот метод позволяет вставить документ в коллекцию
   return result;
 }
