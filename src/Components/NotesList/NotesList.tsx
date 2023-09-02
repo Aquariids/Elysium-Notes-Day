@@ -24,9 +24,9 @@ console.log("🚀 ~ file: NotesList.tsx:5 ~ NotesList ~ sortDate:", sortDate)
 
 
   if (!data) {
-    return <List body={sortBody(body)} userId={userId} email={email} />; 
+    return <List body={body} userId={userId} email={email} />; 
   } else {
-    return <List loadingDelete={loadingDelete} deleteElement={deleteElement} body={sortBody(data)} userId={userId} email={email} />;
+    return <List loadingDelete={loadingDelete} deleteElement={deleteElement} body={data} userId={userId} email={email} />;
   }
 };
 
