@@ -120,15 +120,17 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
                 dateSort();
               }}
             >
-              дате создания
+              дате создания вверх
             </button>
             <button
-              className={s.btn_sort}
+              className={cn(s.btn_sort, {
+                [s.active_btn_sort]: sort === 'no-date'
+              })}
               onClick={() => {
                 normSort();
               }}
             >
-              Обратно
+                дате создания вниз
             </button>
           </div>
         </div>

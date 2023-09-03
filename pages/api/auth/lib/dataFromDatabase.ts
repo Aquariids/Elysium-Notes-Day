@@ -29,8 +29,20 @@ export async function getAllNotesFromDatabase(userId: string | string[], email: 
       db: "notes",
     }); // создаем или подключаемся к коллекции
     const data = await collection.find(query).toArray();
-    const dataDate = sort === 'date' ? data.sort((a, b) => a.date.localeCompare(b.date)) :data
-    return dataDate;
+    const dataDate = sort === 'date' &&  data.sort((a:any, b:any) => {
+      const dataA = Date.parse(a.date);
+      const dataB = Date.parse(b.date);
+
+      return dataB - dataA;
+    })
+
+    const dataDate2 = sort === 'no-date' &&  data.sort((a:any, b:any) => {
+      const dataB = Date.parse(a.date);
+      const dataA = Date.parse(b.date);
+
+      return dataB - dataA;
+    })
+    return dataDate || data || dataDate2;
   } catch (error) {
     const client = await getClient();
     client.close();
@@ -56,9 +68,8 @@ export async function createDatabase(data: any) {
     collectionName: `user_${data.userId}`,
     db: "notes",
   });
-  data.date =  format(new Date(), "EEEE, d MMMM yyyy HH:mm ss",{ locale: ru });
-  console.log(data.date);
-  
+
+  data.date = new Date();
   const result = collection.insertOne(data); // Этот метод позволяет вставить документ в коллекцию
   return result;
 }
