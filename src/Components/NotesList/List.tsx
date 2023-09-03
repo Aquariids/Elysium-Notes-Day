@@ -21,17 +21,24 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
 
 
   const dateManipulation = (date:string,action:string) => {
-    const dateMillisecond = Date.parse(date);
-    const newDate  = format(dateMillisecond, "EEEE, d MMMM yyyy HH:mm ss",{ locale: ru });
-    switch(action) {
-      case 'short':
-      const short = newDate.split(" ").slice(1, 3);
-      const day = short[0];
-      const month = short[1].slice(0,3)
-      return `${day} ${month}.`
-      case 'long': 
-      return newDate.slice(0, newDate.length - 2);
+    try {
+      const dateMillisecond = Date.parse(date);
+      const newDate  = format(dateMillisecond, "EEEE, d MMMM yyyy HH:mm ss",{ locale: ru });
+      switch(action) {
+        case 'short':
+        const short = newDate.split(" ").slice(1, 3);
+        const day = short[0];
+        const month = short[1].slice(0,3)
+        return `${day} ${month}.`
+        case 'long': 
+        return newDate.slice(0, newDate.length - 2);
+      }
+    } catch(er) {
+      console.log(er);
+      
     }
+   
+   
    
 
   }
