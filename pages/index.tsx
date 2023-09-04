@@ -19,7 +19,6 @@ import { ru } from 'date-fns/locale'; // Импортируйте локаль �
 function Home({ data_editor, data_note_main_menu }: any) {
   const currentDate = new Date();
   const formattedDate = format(currentDate, "EEEE, d MMMM yyyy 'г.'", { locale: ru }).toLocaleUpperCase();
- 
   const [value, setValue] = useState<string>(data_note_main_menu[0] === undefined ? '' :data_note_main_menu[0].body  );
   const session = useSession();
   const userId = session.data?.user.userId;

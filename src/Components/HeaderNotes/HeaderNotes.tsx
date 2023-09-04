@@ -47,14 +47,12 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
   function dateSort() {
     const sort = localStorage.setItem("sorting", "date");
     setSort(sort);
-    router.push(router.asPath);
     
   }
 
   function normSort() {
     const sort = localStorage.setItem("sorting", "no-date");
     setSort(sort);
-    router.push(router.asPath);
   }
 
   const [counterNotes, setCounterNotes] = useState(data.length);

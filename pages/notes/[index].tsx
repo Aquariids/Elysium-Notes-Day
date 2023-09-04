@@ -29,6 +29,20 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   ); 
   
+
+  function sortBody(body: any) {
+    const sortBody = body.sort((a: any, b: any) => {
+      const dateA = Date.parse(a.date);
+      const dateB = Date.parse(b.date);
+
+      if(sort === 'date') return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
+      if(sort === 'no-date') return dateA - dateB;
+     
+    });
+
+    return sortBody;
+
+  }
   // const  sortA = links && [...links].sort((a, b) => a.title.localeCompare(b.title)); // сортировка по алфавиту
   // const  sortB = links && [...links].sort((a, b) => a.title.localeCompare(b.date)); // сортировка по алфавиту
  
@@ -75,7 +89,7 @@ const notes = ({ data }: any) => {
         <HeaderNotes setSort={setSort} sort={sort} data={data}/> 
         <div className={s.container}>
           <div className={s.list}>
-           {data[0] && <NotesList deleteElement={deleteElement} loadingDelete={loadingDelete} checkTitle={checkTitle} data={links} body={data} userId={userId} />}
+           {data[0] && <NotesList deleteElement={deleteElement} loadingDelete={loadingDelete} checkTitle={checkTitle} data={links&& sortBody(links) } body={sortBody(data)} userId={userId} />}
            </div>
         </div>
         </div>
