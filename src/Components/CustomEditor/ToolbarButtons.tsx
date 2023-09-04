@@ -18,6 +18,8 @@ import {
   isTextLeftAligned,
   isTextRightAligned,
   isTextJustifyAligned,
+  isLineThrough,
+  toggleLineThrough,
 } from "contenido";
 import { EditorStateProps } from "./CustomEditor.props";
 import cn from "classnames";
@@ -25,16 +27,11 @@ import s from "./CustomEditor.module.scss";
 import * as Icons from "./icons";
 
 const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
-  const HIGHLIGHTER = "HIGHLIGHTER";
-  const STRIKETHROUGH = "STRIKETHROUGH";
 
+  const HIGHLIGHTER = "HIGHLIGHTER";
   const toggleHighlighter = () =>
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER);
   const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
-
-  const toggleStrikethrough = () =>
-  toggleInlineStyle(editorState, setEditorState, STRIKETHROUGH);
-const isStrikethrough = () => hasInlineStyleOf(editorState, STRIKETHROUGH);
 
   const toolbarButtons = [
     {
@@ -90,8 +87,8 @@ const isStrikethrough = () => hasInlineStyleOf(editorState, STRIKETHROUGH);
 
     {
       name: "strikethrough",
-      handler: toggleStrikethrough,
-      detector: isStrikethrough,
+      handler: toggleLineThrough,
+      detector: isLineThrough,
       children: <Icons.Strikethrough />,
       title:'Зачеркнутый'
     },

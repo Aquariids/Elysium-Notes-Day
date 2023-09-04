@@ -4,7 +4,4 @@ export const styleMap = {
     HIGHLIGHTER: {
       backgroundColor: "rgb(248, 248, 175)",
     },
-    STRIKETHROUGH: {
-      textDecoration: "line-through",
-    },
   };

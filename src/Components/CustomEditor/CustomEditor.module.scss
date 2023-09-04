@@ -211,6 +211,8 @@
 
 
     .hideNote { 
+        user-select:none;
+        pointer-events: none;
         filter:blur(4.8px);
         text-decoration: line-through;
     }
