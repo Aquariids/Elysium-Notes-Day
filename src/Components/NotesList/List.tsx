@@ -98,10 +98,6 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
   );
 
 
-  useEffect(()=> {
-    const sort = localStorage.getItem('number')    
-  },[])
-
   return (
     <>
       {body &&

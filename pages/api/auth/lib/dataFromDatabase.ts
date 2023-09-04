@@ -21,7 +21,7 @@ async function getCollection({ db, collectionName }: dbPros) {
 }
 
 const currentDate = new Date() ?? "";
-export async function getAllNotesFromDatabase(userId: string | string[], email: string | string[],sort:string | string[] | undefined) {
+export async function getAllNotesFromDatabase(userId: string | string[], email: string | string[]) {
   try {
     const query = userId && email ? { userId, email } : {};
     const collection = await getCollection({
@@ -29,20 +29,7 @@ export async function getAllNotesFromDatabase(userId: string | string[], email: 
       db: "notes",
     }); // создаем или подключаемся к коллекции
     const data = await collection.find(query).toArray();
-    const dataDate = sort === 'date' &&  data.sort((a:any, b:any) => {
-      const dataA = Date.parse(a.date);
-      const dataB = Date.parse(b.date);
-
-      return dataB - dataA;
-    })
-
-    const dataDate2 = sort === 'no-date' &&  data.sort((a:any, b:any) => {
-      const dataB = Date.parse(a.date);
-      const dataA = Date.parse(b.date);
-
-      return dataB - dataA;
-    })
-    return dataDate || data || dataDate2;
+    return data 
   } catch (error) {
     const client = await getClient();
     client.close();
