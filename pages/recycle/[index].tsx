@@ -10,6 +10,7 @@ import { RECYCLE } from "../api/paths";
 import { useSession } from "next-auth/react";
 import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { get_action, update_action } from "../api/actios";
+import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 const notes = ({ data }: any) => {
   const [sort, setSort] = useState<any>("no-sort");
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
@@ -91,8 +92,9 @@ const notes = ({ data }: any) => {
 
   return (
     // ну и паередаем его в наш редактор.
-
+    <AnimationContainer> 
     <div className={s.wrapper}>
+   
       <div className={s.notes_list}>
       <HeaderNotes setSort={setSort} sort={sort} data={data} />
         <div className={s.container}>
@@ -121,7 +123,9 @@ const notes = ({ data }: any) => {
           />
         )}
       </div>
+     
     </div>
+    </AnimationContainer> 
   );
 };
 

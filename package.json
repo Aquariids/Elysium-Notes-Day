@@ -26,6 +26,7 @@
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "eslint-config-next": "^13.4.13",
+    "framer-motion": "^10.16.4",
     "mongodb": "^4.15.0",
     "next": "^13.4.13",
     "next-auth": "^4.22.0",

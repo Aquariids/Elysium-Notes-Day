@@ -15,6 +15,7 @@ import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu
 import cn from 'classnames';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale'; // Импортируйте локаль для русского языка
+import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 
 function Home({ data_editor, data_note_main_menu }: any) {
   const currentDate = new Date();
@@ -110,11 +111,13 @@ function Home({ data_editor, data_note_main_menu }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
       <div className={s.wrapper}>
         <div className={s.bg}>
         <div className={s.date_bg}>{formattedDate}</div>
           <video className={cn(s.video, s.anim)} autoPlay muted loop  src="/bg.mp4"></video>
         </div>
+        <AnimationContainer> 
         <div className={s.wrapp2}>
           <div className={s.link_container}>
           <Link className={s.link_notes} href={`${NOTES}`}>
@@ -126,6 +129,8 @@ function Home({ data_editor, data_note_main_menu }: any) {
             <NewNotesMainMenu />
           </div>
         </div>
+        </AnimationContainer> 
+        <AnimationContainer> 
         <div className={s.notes}>
           <p>ЗАПИСНАЯ КНИЖКА</p>
           <TextareaAutosize
@@ -137,7 +142,9 @@ function Home({ data_editor, data_note_main_menu }: any) {
             }}
           />
         </div>
+        </AnimationContainer> 
       </div>
+     
     </>
   );
 }
