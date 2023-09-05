@@ -1,5 +1,5 @@
 import { CreateAction } from './actios';
-import { createDatabase, createNoteBookMainMenu } from './auth/lib/dataFromDatabase';
+import { createDatabase, createNoteBookMainMenu, createSortingDocument } from './auth/lib/dataFromDatabase';
 import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const action:CreateAction = req.query.action as CreateAction;
@@ -14,6 +14,10 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                 
                 case 'create_data_main_menu':
                     await createNoteBookMainMenu(data);
+                    res.status(200).json(data);
+                break;
+                case 'create_data_sorting':
+                    await createSortingDocument(data);
                     res.status(200).json(data);
                 break;
             }

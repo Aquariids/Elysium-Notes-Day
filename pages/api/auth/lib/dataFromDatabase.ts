@@ -1,7 +1,5 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "./mongodb";
-import { format } from "date-fns";
-import ru from "date-fns/locale/ru";
 
 interface dbPros {
   collectionName: string;
@@ -20,7 +18,6 @@ async function getCollection({ db, collectionName }: dbPros) {
   return await collection;
 }
 
-const currentDate = new Date() ?? "";
 export async function getAllNotesFromDatabase(userId: string | string[], email: string | string[]) {
   try {
     const query = userId && email ? { userId, email } : {};
@@ -36,7 +33,7 @@ export async function getAllNotesFromDatabase(userId: string | string[], email: 
   }
 }
 
-export async function getAllNotesFromDatabaseRecycle(userId: any, email: any) {
+export async function getAllNotesFromDatabaseRecycle(userId: string[] | string, email: string[] | string) {
   try {
     const query = userId && email ? { userId, email } : {};
     const collection = await getCollection({
@@ -45,6 +42,7 @@ export async function getAllNotesFromDatabaseRecycle(userId: any, email: any) {
     }); // создаем или подключаемся к коллекции
     const data = await collection.find(query).toArray();
     return data;
+   
   } catch (error) {
     const client = await getClient();
     client.close();
@@ -61,7 +59,7 @@ export async function createDatabase(data: any) {
   return result;
 }
 
-export async function deleteDataRecycle(_id: any, userId: any) {
+export async function deleteDataRecycle(_id: string, userId: string) {
   try {
     const id = new ObjectId(_id);
     const collection = await getCollection({
@@ -82,7 +80,7 @@ export async function deleteDataRecycle(_id: any, userId: any) {
   }
 }
 
-export async function restoreDataRecycle(_id: any, userId: any) {
+export async function restoreDataRecycle(_id: string, userId: string) {
   try{
     const id = new ObjectId(_id);
     const collectionDel = await getCollection({
@@ -105,7 +103,7 @@ export async function restoreDataRecycle(_id: any, userId: any) {
   }
 }
 
-export async function deleteData(_id: any, userId: any) {
+export async function deleteData(_id: string, userId: string) {
   try {
     const id = new ObjectId(_id);
     const collection = await getCollection({
@@ -120,7 +118,7 @@ export async function deleteData(_id: any, userId: any) {
   }
 }
 
-export async function deleteAllData(userId: any) {
+export async function deleteAllData(userId: string) {
   try {
     const collection = await getCollection({
       collectionName: `delete_user_${userId}`,
@@ -217,9 +215,37 @@ export async function getNoteBookMainMenu(userId:string | string[] | undefined, 
 }
 
 
+export async function getActionSorting(userId:string | string[] | undefined, email:string | string[] | undefined) {
+  try {
+    const query = userId && email ? { userId, email } : {};
+    const collection = await getCollection({
+      collectionName: `user_actionSorting_${userId}`,
+      db: "notes",
+    }); // создаем или подключаемся к коллекции
+    const data = await collection.find(query).toArray();
+    return data;
+  } catch (error) {}
+}
+
+
 export async function createNoteBookMainMenu(data: any) {
   const collection = await getCollection({
     collectionName: `user_nooteBook_${data.userId}`,
+    db: "notes",
+  });
+
+  const existingDocument = await collection.findOne({});
+  if (!existingDocument) {
+  await collection.insertOne(data);
+  }
+  else {
+    console.log('Document already exists.');
+  }
+}
+
+export async function createSortingDocument(data: any) {
+  const collection = await getCollection({
+    collectionName: `user_actionSorting_${data.userId}`,
     db: "notes",
   });
 
@@ -253,4 +279,26 @@ export async function updateNoteBookMainMenu(data: any) {
     client.close();
   }
 }
+
+
+export async function updateActionSorting(data: any) {
+  try {
+    const collection = await getCollection({
+      collectionName: `user_actionSorting_${data.userId}`,
+      db: "notes",
+    });
+    await collection.updateOne(
+      { userId: data.userId },
+      {
+        $set: {
+          sorting: data.sorting,
+        },
+      } // то обновляем тело. $set оператор обновления поля или может добавить его.
+    );
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
+
 

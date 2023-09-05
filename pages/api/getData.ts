@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { GetAction, get_action } from "./actios";
 import {
+  getActionSorting,
   getAllNotesFromDatabase,
   getAllNotesFromDatabaseRecycle,
   getNoteBookMainMenu,
@@ -23,6 +24,9 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
           break;
         case get_action.data_note_main_menu:
           res.status(200).json(await getNoteBookMainMenu(userId, email));
+          break;
+          case get_action.action_sorting:
+          res.status(200).json(await getActionSorting(userId, email));
           break;
         default:
           res.status(400).send("Invalid action");

@@ -1,5 +1,6 @@
 import { UpdateAction, update_action } from "./actios";
 import {
+  updateActionSorting,
   updateBlockLink,
   updateDataInDatabase,
   updateDataTitle,
@@ -27,6 +28,10 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
       case update_action.block_link:
         await updateBlockLink(data);
         res.status(200).send("note hide");
+        break;
+        case update_action.action_sorting:
+        await updateActionSorting(data);
+        res.status(200).send("update sorting action");
         break;
       default:
         res.status(400).send("Invalid action");

@@ -9,7 +9,7 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { NOTES } from "../api/paths";
-import { get_action } from "../api/actios";
+import { create_data, get_action, update_action } from "../api/actios";
 const notes = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -32,6 +32,7 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   );
 
+  
   function sortBody(body: any) {
     try {
       const sortBody = body.sort((a: any, b: any) => {
@@ -72,6 +73,34 @@ const notes = ({ data }: any) => {
    
   }, [checkTitle, data]);
 
+
+  const updateData1 = useCallback(
+    async (sorting: any, userId: any, email: any) => {
+      try {
+        const response = await fetch(
+          `/api/updateData?action=${update_action.action_sorting}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId,
+              email,
+              sorting: sorting,
+            }),
+          }
+        );
+      } catch (error) {
+        console.log(
+          "🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:",
+          error
+        );
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     if (loadingDelete) {
       getData();
@@ -87,6 +116,8 @@ const notes = ({ data }: any) => {
   useEffect(() => {
     const sort = localStorage.getItem("sorting");
     setSort(sort);
+    updateData1(sort,userId,email);
+    
   }, [sort]);
 
   useEffect(() => {

@@ -1,21 +1,23 @@
 // update actions
-export type UpdateAction = "editor" | "editor_title" | "book_main_menu" | "block_link";
+export type UpdateAction = "editor" | "editor_title" | "book_main_menu" | "block_link" | "action_sorting";
 
 export const update_action = {
     editor:'editor',
     editor_title:'editor_title',
     book_main_menu:'book_main_menu',
-    block_link:'block_link'
+    block_link:'block_link',
+    action_sorting:'action_sorting'
 }
 
 
 // get actions
-export type GetAction = "editor" | "editor_title" | "book_main_menu";
+export type GetAction = "editor" | "editor_title" | "book_main_menu" | 'action_sorting';
 
 export const get_action = {
     data_editor:'data_editor',
     data_recycle:'data_recycle',
-    data_note_main_menu:'data_note_main_menu'
+    data_note_main_menu:'data_note_main_menu',
+    action_sorting:'action_sorting'
 }
 
 // delete and restore actions
@@ -30,10 +32,11 @@ export const delete_restore_action = {
 
 
 // create actions
-export type CreateAction = "create_data" | "create_data_main_menu";
+export type CreateAction = "create_data" | "create_data_main_menu" | 'create_data_sorting';
 
 export const create_data = {
     create_data: "create_data",
     create_data_main_menu: "create_data_main_menu",
+    create_data_sorting:'create_data_sorting'
 
 }

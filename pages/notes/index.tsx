@@ -34,7 +34,14 @@ export async function getServerSideProps(context: any) {
   const res = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
   );
+  const actionSorting = await fetch(
+    `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userId}&email=${email}`
+  );
+
+  const sort = await actionSorting.json();
   const data = await res.json();
+  console.log(sort[0].sorting);
+  
   if(!session){
     return {
       redirect: {
@@ -43,14 +50,21 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-  if (session && data[0] != undefined) {
+  if (session && data[0] != undefined && sort[0].sorting === 'no-date') {
     return {
       redirect: {
         destination: `/${NOTES}/${data[0]._id}`,
         permanent: false,
       },
     };
-  } 
+  } else {
+    return {
+      redirect: {
+        destination: `/${NOTES}/${data[data.length - 1]._id}`,
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: { data},
