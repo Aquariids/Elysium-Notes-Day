@@ -23,6 +23,7 @@ const notes = ({ data }: any) => {
   const session = useSession();
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
+  const [animationOne, setAnimationOne] = useState(true);
   // это наш path по сути текущий url = _id человека
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
@@ -34,6 +35,8 @@ const notes = ({ data }: any) => {
   );
 
   
+
+
   function sortBody(body: any) {
     try {
       const sortBody = body.sort((a: any, b: any) => {
@@ -130,10 +133,11 @@ const notes = ({ data }: any) => {
   return (
     <AnimationContainer> 
     <div className={s.wrapper}>
-       
+     
       <div className={s.notes_list}>
         <HeaderNotes setSort={setSort} sort={sort} data={data} />
         <div className={s.container}>
+       
           <div className={s.list}>
             {data[0] && (
               <NotesList
@@ -146,8 +150,11 @@ const notes = ({ data }: any) => {
               />
             )}
           </div>
+         
         </div>
       </div>
+      
+      
       <div className={s.editor}>
         {selectedItem && (
           <CustomEditor
@@ -166,8 +173,8 @@ const notes = ({ data }: any) => {
       </div>
      
     </div>
+  
     </AnimationContainer> 
-    
   );
 };
 

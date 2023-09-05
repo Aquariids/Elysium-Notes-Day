@@ -1,16 +1,25 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 interface IAnimationContainer {
     children:ReactNode
 }
 
+
 const AnimationContainer = ({children}:IAnimationContainer):JSX.Element => {
+    const [animationOne, setAnimationOne] = useState(true);
+
+useEffect(() => {
+    setAnimationOne(true)
+    setTimeout(() => {
+        setAnimationOne(false)
+    }, 1000)
+},[])
     const router = useRouter();
     return (
         <>
-        <AnimatePresence>
+        {animationOne ? <AnimatePresence>
             <motion.div
                 transition={{ type: "spring", stiffness: 85 }}
                 key={router.asPath}
@@ -20,7 +29,7 @@ const AnimationContainer = ({children}:IAnimationContainer):JSX.Element => {
             >
                 {children}
             </motion.div>
-        </AnimatePresence>
+        </AnimatePresence>: <> {children} </>}
         </>
     );
 };
