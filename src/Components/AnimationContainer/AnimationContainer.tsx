@@ -14,7 +14,7 @@ useEffect(() => {
     setAnimationOne(true)
     setTimeout(() => {
         setAnimationOne(false)
-    }, 1000)
+    }, 500)
 },[])
     const router = useRouter();
     return (
