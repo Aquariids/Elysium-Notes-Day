@@ -7,8 +7,6 @@ import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import LoaderCreate from "./LoaderCreate";
 import { create_data } from "../../../pages/api/actios";
-import { format } from "date-fns";
-import { ru } from "date-fns/locale";
 interface IButton {
   alert?: "alert";
 }

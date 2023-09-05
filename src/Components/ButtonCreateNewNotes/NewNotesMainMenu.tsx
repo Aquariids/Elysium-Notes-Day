@@ -1,7 +1,6 @@
 import { emptyRawContentState } from "contenido";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import AddNotes from "./add_notes.svg";

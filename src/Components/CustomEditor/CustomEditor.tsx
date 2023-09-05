@@ -198,7 +198,6 @@ const CustomEditor = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       if (routerReclycle === false) {
-        console.log("100");
         updateTitle(session, _id, value);
         setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
       }

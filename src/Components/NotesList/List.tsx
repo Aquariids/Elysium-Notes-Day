@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ILinks } from "./NotesList.props";
 import s from "./NotesList.module.scss";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import cn from "classnames";
 import { NOTES } from "../../../pages/api/paths";
 import React from "react";
