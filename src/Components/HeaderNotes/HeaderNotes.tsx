@@ -41,19 +41,19 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
   };
 
  
-  function dateSort() {
-    switch (sort) {
-      case "dateDown":
-        setSort(localStorage.setItem("sorting", "dateUp"));
-        break;
-      case "dateUp":
-        setSort(localStorage.setItem("sorting", "dateDown"));
-        break;
-      default:
-        setSort(localStorage.setItem("sorting", "dateUp"));
-        break;
-    }
-  }
+  // function dateSort() {
+  //   switch (sort) {
+  //     case "dateDown":
+  //       setSort(localStorage.setItem("sorting", "dateUp"));
+  //       break;
+  //     case "dateUp":
+  //       setSort(localStorage.setItem("sorting", "dateDown"));
+  //       break;
+  //     default:
+  //       setSort(localStorage.setItem("sorting", "dateUp"));
+  //       break;
+  //   }
+  // }
 
   function declOfNum(number: number, titles: string[]) {
     // это не я такой умный, это не моя функция, ну простите..
@@ -124,7 +124,7 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
                 [s.active_btn_sortUp]: sort === "dateUp",
                 [s.active_btn_sortDown]: sort === "dateDown",
               })}
-              onClick={dateSort}
+              onClick={() => {}}
             >
               <Arrow /> <span>дате создания</span>
             </button>
