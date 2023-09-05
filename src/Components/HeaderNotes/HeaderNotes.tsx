@@ -7,12 +7,14 @@ import { useSession } from "next-auth/react";
 import { delete_restore_action } from "../../../pages/api/actios";
 import { RECYCLE } from "../../../pages/api/paths";
 import SortIcon from "./sort.svg";
-import cn from 'classnames';
+import cn from "classnames";
+import Arrow from "./arrow.svg";
 const HeaderNotes = ({ data, setSort, sort }: any) => {
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1] === RECYCLE;
   const session = useSession();
   const userId = session.data?.user.userId;
+  const [counterNotes, setCounterNotes] = useState(data.length);
   const refActiveMenu = useRef<HTMLDivElement>(null);
   const [sortMenuActive, setSortMenuActive] = useState(false);
   async function deleteAllDataRecycle() {
@@ -38,28 +40,20 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("click", handleOutsideClick, false);
-    return () => {
-      document.removeEventListener("click", handleOutsideClick, false);
-    };
-  }, []);
+ 
   function dateSort() {
-    const sort = localStorage.setItem("sorting", "date");
-    setSort(sort);
-    
+    switch (sort) {
+      case "dateDown":
+        setSort(localStorage.setItem("sorting", "dateUp"));
+        break;
+      case "dateUp":
+        setSort(localStorage.setItem("sorting", "dateDown"));
+        break;
+      default:
+        setSort(localStorage.setItem("sorting", "dateUp"));
+        break;
+    }
   }
-
-  function normSort() {
-    const sort = localStorage.setItem("sorting", "no-date");
-    setSort(sort);
-  }
-
-  const [counterNotes, setCounterNotes] = useState(data.length);
-
-  useEffect(() => {
-    setCounterNotes(data.length);
-  }, [router]);
 
   function declOfNum(number: number, titles: string[]) {
     // это не я такой умный, это не моя функция, ну простите..
@@ -70,6 +64,18 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
         : cases[number % 10 < 5 ? number % 10 : 5]
     ];
   }
+  
+  useEffect(() => {
+    setCounterNotes(data.length);
+  }, [router]);
+
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick, false);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick, false);
+    };
+  }, []);
+  
 
   const result = `${counterNotes} ${declOfNum(counterNotes, [
     "Заметка",
@@ -106,29 +112,21 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
             {" "}
             <SortIcon />
           </button>
-          <div id={s.myDropdown} className={cn(s.dropdown_content, {
-            [s.show] : sortMenuActive === true
-          })}>
-            <span>Сортировать по</span>
+          <div
+            id={s.myDropdown}
+            className={cn(s.dropdown_content, {
+              [s.show]: sortMenuActive === true,
+            })}
+          >
+            <span className={s.title_sort}>СОРТИРОВАТЬ ПО</span>
             <button
               className={cn(s.btn_sort, {
-                [s.active_btn_sort]: sort === 'date'
+                [s.active_btn_sortUp]: sort === "dateUp",
+                [s.active_btn_sortDown]: sort === "dateDown",
               })}
-              onClick={() => {
-                dateSort();
-              }}
+              onClick={dateSort}
             >
-              дате создания вверх
-            </button>
-            <button
-              className={cn(s.btn_sort, {
-                [s.active_btn_sort]: sort === 'no-date'
-              })}
-              onClick={() => {
-                normSort();
-              }}
-            >
-                дате создания вниз
+              <Arrow /> <span>дате создания</span>
             </button>
           </div>
         </div>

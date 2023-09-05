@@ -71,7 +71,7 @@ export async function deleteDataRecycle(_id: string, userId: string) {
       db: "deleted_notes",
     });
     const data = await collection.find(id).toArray();
-    collectionDel.insertOne({ ...data[0] });
+    collectionDel.insertOne({ ...data[0], deletionDate: new Date() });
     const result = await collection.deleteOne({ _id: id });
     return result;
   } catch (error) {
@@ -111,6 +111,7 @@ export async function deleteData(_id: string, userId: string) {
       db: "deleted_notes",
     });
     const result = await collection.deleteOne({ _id: id });
+
     return result;
   } catch (error) {
     const client = await getClient();

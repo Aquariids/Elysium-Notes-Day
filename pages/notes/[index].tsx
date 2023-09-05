@@ -39,8 +39,8 @@ const notes = ({ data }: any) => {
         const dateA = Date.parse(a.date);
         const dateB = Date.parse(b.date);
   
-        if (sort === "date") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
-        if (sort === "no-date") return dateA - dateB;
+        if (sort === "dateUp") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
+        if (sort === "dateDown") return dateA - dateB;
         else {
           return body;
         }
@@ -74,7 +74,7 @@ const notes = ({ data }: any) => {
   }, [checkTitle, data]);
 
 
-  const updateData1 = useCallback(
+  const updateActiveSortingAction= useCallback(
     async (sorting: any, userId: any, email: any) => {
       try {
         const response = await fetch(
@@ -116,7 +116,7 @@ const notes = ({ data }: any) => {
   useEffect(() => {
     const sort = localStorage.getItem("sorting");
     setSort(sort);
-    updateData1(sort,userId,email);
+    updateActiveSortingAction(sort,userId,email);
     
   }, [sort]);
 

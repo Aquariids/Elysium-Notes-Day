@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { withLayout } from "../../layout/Layout";
 import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { useRouter } from "next/router";
@@ -9,14 +9,16 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { RECYCLE } from "../api/paths";
 import { useSession } from "next-auth/react";
 import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
-import { get_action } from "../api/actios";
+import { get_action, update_action } from "../api/actios";
 const notes = ({ data }: any) => {
+  const [sort, setSort] = useState<any>("no-sort");
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const router = useRouter();
   const selectedId = router.query.index;
   const session = useSession();
   const userId = session.data?.user.userId;
+  const email = session.data?.user.email;
   // это наш path по сути текущий url = _id человека
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
@@ -27,9 +29,60 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   );
 
+  function sortBody(body: any) {
+    try {
+      const sortBody = body.sort((a: any, b: any) => {
+        const dateA = Date.parse(a.date);
+        const dateB = Date.parse(b.date);
+  
+        if (sort === "dateUp") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
+        if (sort === "dateDown") return dateA - dateB;
+        else {
+          return body;
+        }
+      });
+  
+      return sortBody;
+    }
 
+    catch (err) {
+      console.log(err);
+      
+    }
 
-
+  }
+  const updateActiveSortingAction = useCallback(
+    async (sorting: any, userId: any, email: any) => {
+      try {
+        const response = await fetch(
+          `/api/updateData?action=${update_action.action_sorting}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId,
+              email,
+              sorting: sorting,
+            }),
+          }
+        );
+      } catch (error) {
+        console.log(
+          "🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:",
+          error
+        );
+      }
+    },
+    []
+  );
+  useEffect(() => {
+    const sort = localStorage.getItem("sorting");
+    setSort(sort);
+    updateActiveSortingAction(sort,userId,email);
+    
+  }, [sort]);
   useEffect(() => {
     if (!selectedItem) {
       router.push(`/${RECYCLE}`);
@@ -41,14 +94,14 @@ const notes = ({ data }: any) => {
 
     <div className={s.wrapper}>
       <div className={s.notes_list}>
-        <HeaderNotes data={data} />
+      <HeaderNotes setSort={setSort} sort={sort} data={data} />
         <div className={s.container}>
           <div className={s.list}>
             {data[0] && (
               <NotesList
                 recycle={true}
                 checkTitle={checkTitle}
-                body={data}
+                body={sortBody(data)}
                 userId={userId}
               />
             )}

@@ -50,7 +50,7 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-  if (session && data[0] != undefined && sort[0].sorting === 'no-date') {
+  if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
     return {
       redirect: {
         destination: `/${NOTES}/${data[0]._id}`,
@@ -66,9 +66,6 @@ export async function getServerSideProps(context: any) {
     };
   }
 
-  return {
-    props: { data},
-  };
 
   
 }
