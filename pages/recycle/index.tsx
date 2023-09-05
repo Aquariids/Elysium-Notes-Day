@@ -54,6 +54,11 @@ export async function getServerSideProps(context: any) {
   const res = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_recycle}&userId=${userId}&email=${email}`
   );
+  const actionSorting = await fetch(
+    `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userId}&email=${email}`
+  );
+
+  const sort = await actionSorting.json();
   const data = await res.json();
   if (!session) {
     return {
@@ -63,18 +68,35 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-  if (session && data[0] != undefined) {
+  if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
     return {
       redirect: {
         destination: `/${RECYCLE}/${data[0]._id}`,
         permanent: false,
       },
     };
+  } if (session && data[0] != undefined && sort[0].sorting === 'dateUp') {
+    return {
+      redirect: {
+        destination: `/${RECYCLE}/${data[data.length - 1]._id}`,
+        permanent: false,
+      },
+    };
+  }  
+  else if(session && data[0] != undefined) {
+    return {
+      redirect: {
+        destination: `/${RECYCLE}/${data[0]._id}`,
+        permanent: false,
+      },
+       props:{ data}
+    };
+  }  
+  
+  return {
+    props:{ data}
   }
 
-  return {
-    props: { data },
-  };
 }
 
 export default withLayout(MainPage);

@@ -40,8 +40,7 @@ export async function getServerSideProps(context: any) {
 
   const sort = await actionSorting.json();
   const data = await res.json();
-  console.log(sort[0].sorting);
-  
+
   if(!session){
     return {
       redirect: {
@@ -57,15 +56,28 @@ export async function getServerSideProps(context: any) {
         permanent: false,
       },
     };
-  } else {
+  } if (session && data[0] != undefined && sort[0].sorting === 'dateUp') {
     return {
       redirect: {
         destination: `/${NOTES}/${data[data.length - 1]._id}`,
         permanent: false,
       },
     };
-  }
+  }  
 
+  else if(session && data[0] != undefined) {
+    return {
+      redirect: {
+        destination: `/${NOTES}/${data[0]._id}`,
+        permanent: false,
+      },
+       props:{ data}
+    };
+  }  
+  
+  return {
+    props:{ data}
+  }
 
   
 }
