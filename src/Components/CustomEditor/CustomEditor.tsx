@@ -272,7 +272,9 @@ const CustomEditor = ({
             <TextareaAutosize
               placeholder="Заголовок"
               value={value}
-              className={s.title}
+              className={cn(s.title, {
+                [s.hideNote]: hideNotes ||  linkToToggle.block === true && routerReclycle
+              })}
               onChange={(e) => setValue(e.target.value)}
             />
 

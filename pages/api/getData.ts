@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { GetAction, get_action } from "./actios";
 import {
   getActionSorting,

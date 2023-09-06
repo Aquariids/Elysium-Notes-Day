@@ -25,20 +25,12 @@
  
 }
 
-
-
 .body {
     padding: 0 5px;
     line-height: 1.5;
     height:  90vh;
     overflow: auto;
-    
-   
-   
 }
-
-
-
 
 .test {
     visibility: hidden;
@@ -58,8 +50,6 @@
     }
    }
 
-   
-    
 }
 
     .btn svg {
@@ -205,8 +195,9 @@
     .hideNote { 
         user-select:none;
         pointer-events: none;
-        filter:blur(4.8px);
+        filter:blur(5px);
         text-decoration: line-through;
+        color:#525151;
     }
 
     .hideNoteRecycle {
