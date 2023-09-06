@@ -1,0 +1,92 @@
+.dropbtn {
+    background-color: #FFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover svg {
+    fill: #b11f1f;
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    
+}
+
+.dropdown_content {
+    display: flex;
+    flex-direction: column;
+    width: 195px;
+    opacity: 0; /* Начальное значение нулевой прозрачности */
+    transition: all .2s; /* Добавлена анимация только для opacity */
+    position: absolute;
+    left: 0;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    padding: 10px;
+    min-height: 125px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    visibility: hidden;
+}
+
+/* Убраны display и visibility из .dropdown_content */
+
+.dropdown_content a {
+    opacity: 1;
+    transition: background-color 0.5s; /* Добавлена анимация только для background-color */
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    visibility: visible;
+}
+
+.dropdown_content a:hover {
+    background-color: #ddd;
+}
+
+
+
+
+
+.btn_sort {
+    margin-top: 10px;
+    margin-left: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border:none;
+}
+
+
+
+.active_btn_sortDown {
+    color: red;
+   svg {
+    transform: rotate(180deg);
+   }
+}
+
+.active_btn_sortUp {
+    color: red;
+}
+
+.title_sort  {
+    font-weight: bold;
+    color: #7a7979;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+
+.show {
+    opacity: 1;
+    visibility: visible;
+    
+}
+

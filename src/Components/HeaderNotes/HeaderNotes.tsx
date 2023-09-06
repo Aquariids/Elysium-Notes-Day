@@ -6,17 +6,16 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { delete_restore_action } from "../../../pages/api/actios";
 import { RECYCLE } from "../../../pages/api/paths";
-import SortIcon from "./sort.svg";
-import cn from "classnames";
-import Arrow from "./arrow.svg";
+import SortingMenu from "../SortingMenu/SortingMenu";
+
 const HeaderNotes = ({ data, setSort, sort }: any) => {
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1] === RECYCLE;
   const session = useSession();
   const userId = session.data?.user.userId;
   const [counterNotes, setCounterNotes] = useState(data.length);
-  const refActiveMenu = useRef<HTMLDivElement>(null);
-  const [sortMenuActive, setSortMenuActive] = useState(false);
+
+
   async function deleteAllDataRecycle() {
     let result = confirm(
       "Уверены, что хотите очистить корзину? Данные будут окончательно удалены без возможности восстановления."
@@ -31,33 +30,9 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
     }
   }
 
-  const handleOutsideClick = (event: any) => {
-    if (
-      refActiveMenu.current &&
-      !refActiveMenu.current.contains(event.target)
-    ) {
-      setSortMenuActive(false);
-    }
-  };
 
  
-  function dateSort() {
-    let newSort;
-    switch (sort) {
-      case "dateDown":
-        newSort = "dateUp";
-        break;
-      case "dateUp":
-        newSort = "dateDown";
-        break;
-      default:
-        newSort = "dateUp";
-        break;
-    }
-    localStorage.setItem("sorting", newSort);
-    setSort(newSort);
-  }
-
+ 
   function declOfNum(number: number, titles: string[]) {
     // это не я такой умный, это не моя функция, ну простите..
     const cases = [2, 0, 1, 1, 1, 2];
@@ -72,12 +47,7 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
     setCounterNotes(data.length);
   }, [router]);
 
-  useEffect(() => {
-    document.addEventListener("click", handleOutsideClick, false);
-    return () => {
-      document.removeEventListener("click", handleOutsideClick, false);
-    };
-  }, []);
+
   
 
   const result = `${counterNotes} ${declOfNum(counterNotes, [
@@ -105,34 +75,7 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
       </div>
       <div className={s.header__foter}>
         <div className={s.allNotesCounter}>{result}</div>
-        <div ref={refActiveMenu} className={s.dropdown}>
-          <button
-            onClick={(e) => {
-              setSortMenuActive(!sortMenuActive);
-            }}
-            className={s.dropbtn}
-          >
-            {" "}
-            <SortIcon />
-          </button>
-          <div
-            id={s.myDropdown}
-            className={cn(s.dropdown_content, {
-              [s.show]: sortMenuActive === true,
-            })}
-          >
-            <span className={s.title_sort}>СОРТИРОВАТЬ ПО</span>
-            <button
-              className={cn(s.btn_sort, {
-                [s.active_btn_sortUp]: sort === "dateUp",
-                [s.active_btn_sortDown]: sort === "dateDown",
-              })}
-              onClick={dateSort}
-            >
-              <Arrow /> <span>дате создания</span>
-            </button>
-          </div>
-        </div>
+        <SortingMenu sort={sort} setSort={setSort}/>
       </div>
     </div>
   );
