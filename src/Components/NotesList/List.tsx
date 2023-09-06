@@ -100,9 +100,9 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
             return (
               <div
                 key={item._id}
-                className={cn(s.block_link, {
+                className={cn(s.wrapper_link, {
                   [s.active]: selectedId === item._id,
-                  [s.mainMenu]: router.asPath === "/",
+                  [s.mainMenuLink]: router.asPath === "/",
                   [s.lock]: item.block === true,
                   [s.showBlock]: item.block === true,
                   [s.lockMainMenu]:
@@ -118,7 +118,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                   rel="preload"
                   className={cn(s.link, {
                     [s.blockLink]: selectedId === item._id,
-                    [s.mainMenu]: router.asPath === "/",
+                    [s.mainMenuLink]: router.asPath === "/",
                     [s.block_item]: item.block === true,
                   })}
                   href={`/${routerRecycle ? routerRecycle : NOTES}/${item._id}`}
