@@ -40,7 +40,7 @@ export async function getAllNotesFromDatabaseRecycle(userId: string[] | string, 
       collectionName: `delete_user_${userId}`,
       db: "deleted_notes",
     }); // создаем или подключаемся к коллекции
-    const data = await collection.find(query).toArray();
+    const data = await collection.find(query).sort({date:1}).toArray();
     return data;
    
   } catch (error) {
