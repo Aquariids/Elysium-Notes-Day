@@ -11,7 +11,6 @@ import { format } from "date-fns";
 import ru from "date-fns/locale/ru";
 
 const List = ({ body, loadingDelete, deleteElement }: any) => {
-  
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1];
   const selectedId = router.query.index;
@@ -19,31 +18,25 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
     return str.replace(/\n/g, "");
   };
 
-
-  const dateManipulation = (date:string,action:string) => {
+  const dateManipulation = (date: string, action: string) => {
     try {
       const dateMillisecond = Date.parse(date);
-      const newDate  = format(dateMillisecond, "EEEE, d MMMM yyyy HH:mm ss",{ locale: ru });
-      switch(action) {
-        case 'short':
-        const short = newDate.split(" ").slice(1, 3);
-        const day = short[0];
-        const month = short[1].slice(0,3)
-        return `${day} ${month}.`
-        case 'long': 
-        return newDate.slice(0, newDate.length - 2);
+      const newDate = format(dateMillisecond, "EEEE, d MMMM yyyy HH:mm ss", {
+        locale: ru,
+      });
+      switch (action) {
+        case "short":
+          const short = newDate.split(" ").slice(1, 3);
+          const day = short[0];
+          const month = short[1].slice(0, 3);
+          return `${day} ${month}.`;
+        case "long":
+          return newDate.slice(0, newDate.length - 2);
       }
-    } catch(er) {
+    } catch (er) {
       console.log(er);
-      
     }
-   
-   
-   
-
-  }
-
-
+  };
 
   const DraftJsObjectInText = (body: string) => {
     const contentState = convertFromRaw(JSON.parse(body));
@@ -97,7 +90,6 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
     [TitleTextsCache]
   );
 
-
   return (
     <>
       {body &&
@@ -113,7 +105,8 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                   [s.mainMenu]: router.asPath === "/",
                   [s.lock]: item.block === true,
                   [s.showBlock]: item.block === true,
-                  [s.lockMainMenu]:item.block === true && router.asPath === "/",
+                  [s.lockMainMenu]:
+                    item.block === true && router.asPath === "/",
                 })}
               >
                 <div
@@ -142,10 +135,19 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                   <p className={s.body_link}> {getCachedText(item.body)}</p>
                 </Link>
 
-                <span title={item.block === true ? '':dateManipulation(item.date,'long')} className={cn(s.date, {
-                   [s.block_item]: item.block === true,
-                   [s.date_mainMenu]: router.asPath===  '/',
-                })}>{dateManipulation(item.date,'short')}</span>
+                <span
+                  title={
+                    item.block === true
+                      ? ""
+                      : dateManipulation(item.date, "long")
+                  }
+                  className={cn(s.date, {
+                    [s.block_item]: item.block === true,
+                    [s.date_mainMenu]: router.asPath === "/",
+                  })}
+                >
+                  {dateManipulation(item.date, "short")}
+                </span>
               </div>
             );
           }

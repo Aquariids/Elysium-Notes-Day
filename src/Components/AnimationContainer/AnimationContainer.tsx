@@ -6,7 +6,6 @@ interface IAnimationContainer {
     children:ReactNode
 }
 
-
 const AnimationContainer = ({children}:IAnimationContainer):JSX.Element => {
     const [animationOne, setAnimationOne] = useState(true);
 
