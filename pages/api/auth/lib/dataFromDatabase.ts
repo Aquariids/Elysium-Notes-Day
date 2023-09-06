@@ -24,8 +24,8 @@ export async function getAllNotesFromDatabase(userId: string | string[], email: 
     const collection = await getCollection({
       collectionName: `user_${userId}`,
       db: "notes",
-    }); // создаем или подключаемся к коллекции
-    const data = await collection.find(query).toArray();
+    }) // создаем или подключаемся к коллекции
+    const data = await collection.find(query).sort({date:1}).toArray();
     return data 
   } catch (error) {
     const client = await getClient();
