@@ -142,7 +142,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                   <p className={s.body_link}> {getCachedText(item.body)}</p>
                 </Link>
 
-                <span title={dateManipulation(item.date,'long')} className={cn(s.date, {
+                <span title={item.block === true ? '':dateManipulation(item.date,'long')} className={cn(s.date, {
                    [s.block_item]: item.block === true,
                    [s.date_mainMenu]: router.asPath===  '/',
                 })}>{dateManipulation(item.date,'short')}</span>
