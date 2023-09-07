@@ -23,7 +23,7 @@ const notes = ({ data }: any) => {
   const session = useSession();
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
-  const [animationOne, setAnimationOne] = useState(true);
+  
   // это наш path по сути текущий url = _id человека
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
@@ -35,28 +35,28 @@ const notes = ({ data }: any) => {
   );
 
   
-  function sortBody(body: any) {
-    try {
-      const sortBody = body.sort((a: any, b: any) => {
-        const dateA = Date.parse(a.date);
-        const dateB = Date.parse(b.date);
+  // function sortBody(body: any) {
+  //   try {
+  //     const sortBody = body.sort((a: any, b: any) => {
+  //       const dateA = Date.parse(a.date);
+  //       const dateB = Date.parse(b.date);
   
-        if (sort === "dateUp") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
-        if (sort === "dateDown") return dateA - dateB;
-        else {
-          return body;
-        }
-      });
+  //       if (sort === "dateUp") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
+  //       if (sort === "dateDown") return dateA - dateB;
+  //       else {
+  //         return body;
+  //       }
+  //     });
   
-      return sortBody;
-    }
+  //     return sortBody;
+  //   }
 
-    catch (err) {
-      console.log(err);
+  //   catch (err) {
+  //     console.log(err);
       
-    }
+  //   }
 
-  }
+  // }
  
   const getData = useCallback(async () => {
 
@@ -129,7 +129,7 @@ const notes = ({ data }: any) => {
   }, [router]);
 
   return (
-    <AnimationContainer> 
+    // <AnimationContainer> 
     <div className={s.wrapper}>
      
       <div className={s.notes_list}>
@@ -142,8 +142,8 @@ const notes = ({ data }: any) => {
                 deleteElement={deleteElement}
                 loadingDelete={loadingDelete}
                 checkTitle={checkTitle}
-                data={links && sortBody(links)}
-                body={sortBody(data)}
+                data={links}
+                body={data}
                 userId={userId}
               />
             )}
@@ -172,7 +172,7 @@ const notes = ({ data }: any) => {
      
     </div>
   
-    </AnimationContainer> 
+    // </AnimationContainer> 
   );
 };
 
