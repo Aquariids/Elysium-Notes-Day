@@ -45,26 +45,12 @@ function Home({ data_editor, data_note_main_menu }: any) {
 
 
   
-    const createActionSorting = async (sort:any) => {
-      const response = await fetch(`/api/createData?action=${create_data.create_data_sorting}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sort),
-      });
-}
 
 
   useEffect(() => {
-    const sort = {
-      userId,
-      email,
-      sorting: localStorage.getItem('sorting'),
-    };
+  
     if (userId && email) {
       createNotesBook();
-      createActionSorting(sort);
     }
   }, [userId, email]);
 
