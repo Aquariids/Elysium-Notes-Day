@@ -44,11 +44,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
   };
 
 
-  
-
-
   useEffect(() => {
-  
     if (userId && email) {
       createNotesBook();
     }
@@ -103,7 +99,6 @@ function Home({ data_editor, data_note_main_menu }: any) {
         <div className={s.date_bg}>{formattedDate}</div>
           <video className={cn(s.video, s.anim)} autoPlay muted loop  src="/bg.mp4"></video>
         </div>
-        <AnimationContainer> 
         <div className={s.wrapp2}>
           <div className={s.link_container}>
           <Link className={s.link_notes} href={`${NOTES}`}>
@@ -115,8 +110,6 @@ function Home({ data_editor, data_note_main_menu }: any) {
             <NewNotesMainMenu />
           </div>
         </div>
-        </AnimationContainer> 
-        <AnimationContainer> 
         <div className={s.notes}>
           <p>ЗАПИСНАЯ КНИЖКА</p>
           <TextareaAutosize
@@ -128,7 +121,6 @@ function Home({ data_editor, data_note_main_menu }: any) {
             }}
           />
         </div>
-        </AnimationContainer> 
       </div>
      
     </>

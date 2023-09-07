@@ -129,7 +129,7 @@ const notes = ({ data }: any) => {
   }, [router]);
 
   return (
-    <AnimationContainer> 
+
     <div className={s.wrapper}>
      
       <div className={s.notes_list}>
@@ -172,7 +172,6 @@ const notes = ({ data }: any) => {
      
     </div>
   
-    </AnimationContainer> 
   );
 };
 
