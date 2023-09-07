@@ -60,7 +60,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
     const sort = {
       userId,
       email,
-      sorting: localStorage.getItem('sorting') ?? localStorage.setItem('sorting', 'no-sort'),
+      sorting: localStorage.getItem('sorting'),
     };
     if (userId && email) {
       createNotesBook();

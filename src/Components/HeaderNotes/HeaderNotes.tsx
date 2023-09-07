@@ -4,7 +4,7 @@ import Notes from "./notes.svg";
 import Recycle from "./recycle.svg";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { delete_restore_action } from "../../../pages/api/actios";
+import { create_data, delete_restore_action } from "../../../pages/api/actios";
 import { RECYCLE } from "../../../pages/api/paths";
 import SortingMenu from "../SortingMenu/SortingMenu";
 
@@ -14,7 +14,6 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
   const session = useSession();
   const userId = session.data?.user.userId;
   const [counterNotes, setCounterNotes] = useState(data.length);
-
 
   async function deleteAllDataRecycle() {
     let result = confirm(
@@ -31,7 +30,7 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
   }
 
 
- 
+
  
   function declOfNum(number: number, titles: string[]) {
     // это не я такой умный, это не моя функция, ну простите..
