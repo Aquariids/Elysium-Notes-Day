@@ -3,32 +3,13 @@ import cn from "classnames";
 import Arrow from "./arrow.svg";
 import { useEffect, useRef, useState } from "react";
 import s from "./SortintMenu.module.scss";
-import { create_data } from "../../../pages/api/actios";
 import { useSession } from "next-auth/react";
 
 const SortingMenu = ({ sort, setSort }: any) => {
   const [sortMenuActive, setSortMenuActive] = useState(false);
   const refActiveMenu = useRef<HTMLDivElement>(null);
   const session = useSession();
-  const userId = session.data?.user.userId;
-  const email = session.data?.user.userId;
-  const createActionSorting = async (sort:any) => {
 
-
-    const sortData = {
-      userId,
-      email,
-      sorting: sort,
-    };
-      const response = await fetch(`/api/createData?action=${create_data.create_data_sorting}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sortData),
-      });
-  }
-  
   const handleOutsideClick = (event: any) => {
     if (
       refActiveMenu.current &&
@@ -52,7 +33,6 @@ const SortingMenu = ({ sort, setSort }: any) => {
     }
     localStorage.setItem("sorting", newSort);
     setSort(newSort);
-    createActionSorting(newSort)
   }
 
   useEffect(() => {
