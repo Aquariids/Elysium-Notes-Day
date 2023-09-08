@@ -92,6 +92,7 @@ const notes = ({ data }: any) => {
 
   return (
     // ну и паередаем его в наш редактор.
+    <AnimationContainer> 
     <div className={s.wrapper}>
    
       <div className={s.notes_list}>
@@ -124,6 +125,7 @@ const notes = ({ data }: any) => {
       </div>
      
     </div>
+    </AnimationContainer> 
   );
 };
 

@@ -14,7 +14,8 @@ import AnimationContainer from "@/Components/AnimationContainer/AnimationContain
 const notes = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
-  const [sort, setSort] = useState<any>("no-sort");
+  const [sort, setSort] = useState<any>();
+  
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [deleteElement, setDeleteElement] = useState<any>();
   const router = useRouter();
@@ -34,7 +35,6 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   );
 
-  
   function sortBody(body: any) {
     try {
       const sortBody = body.sort((a: any, b: any) => {
@@ -43,9 +43,7 @@ const notes = ({ data }: any) => {
   
         if (sort === "dateUp") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
         if (sort === "dateDown") return dateA - dateB;
-        else {
-          return body;
-        }
+        if(sort=== 'no-sorting')  return body;
       });
   
       return sortBody;
@@ -100,7 +98,7 @@ const notes = ({ data }: any) => {
         );
       }
     },
-    []
+    [sort]
   );
 
   useEffect(() => {
@@ -116,11 +114,13 @@ const notes = ({ data }: any) => {
   }, [checkTitle, data, loadingDelete]);
 
   useEffect(() => {
-    const sort = localStorage.getItem("sorting");
+    const sort = localStorage.getItem("sorting") || "no-sorting";
     setSort(sort);
     updateActiveSortingAction(sort,userId,email);
     
   }, [sort]);
+
+ 
 
   useEffect(() => {
     if (!selectedItem) {
@@ -129,7 +129,7 @@ const notes = ({ data }: any) => {
   }, [router]);
 
   return (
-
+    <AnimationContainer> 
     <div className={s.wrapper}>
      
       <div className={s.notes_list}>
@@ -142,8 +142,8 @@ const notes = ({ data }: any) => {
                 deleteElement={deleteElement}
                 loadingDelete={loadingDelete}
                 checkTitle={checkTitle}
-                data={sortBody(links)}
-                body={sortBody(data)}
+                data={links ? sortBody(links): links}
+                body={data ? sortBody(data): data}
                 userId={userId}
               />
             )}
@@ -172,6 +172,7 @@ const notes = ({ data }: any) => {
      
     </div>
   
+    </AnimationContainer> 
   );
 };
 
