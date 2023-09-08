@@ -153,7 +153,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
           </Link>
           </div>
           <div className={s.container}>
-            {/* <List className={s.link} body={data_editor} /> */}
+            <List className={s.link} body={data_editor} />
             <NewNotesMainMenu />
           </div>
         </div>
