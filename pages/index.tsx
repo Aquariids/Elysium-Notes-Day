@@ -16,21 +16,21 @@ import cn from 'classnames';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale'; // Импортируйте локаль для русского языка
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
-
 function Home({ data_editor, data_note_main_menu }: any) {
-  const currentDate = new Date();
-  const formattedDate = format(currentDate, "EEEE, d MMMM yyyy 'г.'", { locale: ru }).toLocaleUpperCase();
   const [value, setValue] = useState<string>(data_note_main_menu[0] === undefined ? '' :data_note_main_menu[0].body  );
+  const [currentDate, setCurrentDate] = useState<string>();
   const session = useSession();
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
-  const [sort, setSort] = useState<any>();
-
-
+  const [sort, setSort] = useState<any>("");
   useEffect(() => {
-    const sort = localStorage.getItem("sorting") || "no-sorting";
+  const formattedDate = format(new Date(), "EEEE, d MMMM yyyy 'г.'", { locale: ru }).toLocaleUpperCase();
+    const sort = localStorage.getItem("sorting") || "";
     setSort(sort);    
+    setCurrentDate(formattedDate)
   }, []);
+
+
 
   function sortBody(body: any) {
     try {
@@ -40,7 +40,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
   
         if (sort === "dateUp") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
         if (sort === "dateDown") return dateA - dateB;
-        if(sort=== 'no-sorting')  return body;
+        if(!sort) return body;
       });
   
       return sortBody;
@@ -52,16 +52,13 @@ function Home({ data_editor, data_note_main_menu }: any) {
     }
 
   }
-
-
-  const dataNoteBook = {
-    userId,
-    email,
-    body: "",
-  };
-
   
   const createNotesBook = async () => {
+    const dataNoteBook = {
+      userId,
+      email,
+      body: "",
+    };
     const response = await fetch(`/api/createData?action=${create_data.create_data_main_menu}`, {
       method: "POST",
       headers: {
@@ -72,13 +69,13 @@ function Home({ data_editor, data_note_main_menu }: any) {
   };
 
   
-  const createActionSorting = async (sort:any) => {
+  const createActionSorting = async () => {
 
 
     const sortData = {
       userId,
       email,
-      sorting: sort,
+      sorting: '',
     };
       const response = await fetch(`/api/createData?action=${create_data.create_data_sorting}`, {
         method: "POST",
@@ -91,10 +88,9 @@ function Home({ data_editor, data_note_main_menu }: any) {
   
 
   useEffect(() => {
-    let sort = 'no-sorting'
     if (userId && email) {
       createNotesBook();
-      createActionSorting(sort)
+      createActionSorting()
     }
   }, [userId, email]);
 
@@ -144,18 +140,20 @@ function Home({ data_editor, data_note_main_menu }: any) {
       
       <div className={s.wrapper}>
         <div className={s.bg}>
-        <div className={s.date_bg}>{formattedDate}</div>
+        <div className={s.date_bg}>{currentDate}</div>
           <video className={cn(s.video, s.anim)} autoPlay muted loop  src="/bg.mp4"></video>
         </div>
+        
         <AnimationContainer> 
         <div className={s.wrapp2}>
           <div className={s.link_container}>
-          <Link className={s.link_notes} href={`${NOTES}`}>
+            
+           <Link className={s.link_notes} href={`${NOTES}`}>
             <span>ЗАМЕТКИ</span> <Arrow/>
           </Link>
           </div>
           <div className={s.container}>
-            <List className={s.link} body={sortBody(data_editor)} />
+            {/* <List className={s.link} body={data_editor} /> */}
             <NewNotesMainMenu />
           </div>
         </div>
@@ -188,7 +186,6 @@ export async function getServerSideProps(context: any) {
   const responseEditorData = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
   );
-  
   const responseNoteMainMenuData = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_note_main_menu}&userId=${userId}&email=${email}`
   );
