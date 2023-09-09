@@ -11,6 +11,7 @@ import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { NOTES } from "../api/paths";
 import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
+import {sorting} from "../../utils/sorting";
 const notes = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -35,26 +36,6 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   );
 
-  function sortBody(body: any) {
-    try {
-      const sortBody = body.sort((a: any, b: any) => {
-        const dateA = Date.parse(a.date);
-        const dateB = Date.parse(b.date);
-  
-        if (sort === "dateUp") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
-        if (sort === "dateDown") return dateA - dateB;
-        if(sort=== 'no-sorting')  return body;
-      });
-  
-      return sortBody;
-    }
-
-    catch (err) {
-      console.log(err);
-      
-    }
-
-  }
  
   const getData = useCallback(async () => {
 
@@ -142,8 +123,8 @@ const notes = ({ data }: any) => {
                 deleteElement={deleteElement}
                 loadingDelete={loadingDelete}
                 checkTitle={checkTitle}
-                data={links ? sortBody(links): links}
-                body={data ? sortBody(data): data}
+                data={links ? sorting(links,sort): ''}
+                body={data ? sorting(data,sort): ''}
                 userId={userId}
               />
             )}

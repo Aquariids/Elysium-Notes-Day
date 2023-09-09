@@ -16,6 +16,7 @@ import cn from 'classnames';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale'; // Импортируйте локаль для русского языка
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
+import { sorting } from "../utils/sorting";
 function Home({ data_editor, data_note_main_menu }: any) {
   const [value, setValue] = useState<string>(data_note_main_menu[0] === undefined ? '' :data_note_main_menu[0].body  );
   const [currentDate, setCurrentDate] = useState<string>();
@@ -30,28 +31,6 @@ function Home({ data_editor, data_note_main_menu }: any) {
     setCurrentDate(formattedDate)
   }, []);
 
-
-
-  function sortBody(body: any) {
-    try {
-      const sortBody = body.sort((a: any, b: any) => {
-        const dateA = Date.parse(a.date);
-        const dateB = Date.parse(b.date);
-  
-        if (sort === "dateUp") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
-        if (sort === "dateDown") return dateA - dateB;
-        if(!sort) return body;
-      });
-  
-      return sortBody;
-    }
-
-    catch (err) {
-      console.log(err);
-      
-    }
-
-  }
   
   const createNotesBook = async () => {
     const dataNoteBook = {
@@ -153,7 +132,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
           </Link>
           </div>
           <div className={s.container}>
-            <List className={s.link} body={data_editor} />
+            <List className={s.link} body={data_editor ? sorting(data_editor, sort): '' } />
             <NewNotesMainMenu />
           </div>
         </div>
