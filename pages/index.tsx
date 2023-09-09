@@ -17,6 +17,10 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale'; // Импортируйте локаль для русского языка
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../utils/sorting";
+import { DateTime } from 'luxon';
+import { Settings } from 'luxon';
+Settings.defaultLocale = 'ru';
+DateTime.local().setLocale('ru');
 function Home({ data_editor, data_note_main_menu }: any) {
   const [value, setValue] = useState<string>(data_note_main_menu[0] === undefined ? '' :data_note_main_menu[0].body  );
   const [currentDate, setCurrentDate] = useState<string>();
@@ -25,10 +29,12 @@ function Home({ data_editor, data_note_main_menu }: any) {
   const email = session.data?.user.email;
   const [sort, setSort] = useState<any>("");
   useEffect(() => {
-  const formattedDate = format(new Date(), "EEEE, d MMMM yyyy 'г.'", { locale: ru }).toLocaleUpperCase();
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const userDate = DateTime.now().setZone(userTimeZone);
+  const formattedDate = userDate.toFormat("EEEE, d MMMM yyyy").toLocaleUpperCase();
     const sort = localStorage.getItem("sorting") || "";
     setSort(sort);    
-    setCurrentDate(formattedDate)
+    setCurrentDate(formattedDate + ' г.')
   }, []);
 
   

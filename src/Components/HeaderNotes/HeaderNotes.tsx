@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./HeaderNotes.module.scss";
 import Notes from "./notes.svg";
 import Recycle from "./recycle.svg";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { create_data, delete_restore_action } from "../../../pages/api/actios";
+import { delete_restore_action } from "../../../pages/api/actios";
 import { RECYCLE } from "../../../pages/api/paths";
 import SortingMenu from "../SortingMenu/SortingMenu";
 

@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
+import { sorting } from "../../utils/sorting";
 const notes = ({ data }: any) => {
   const [sort, setSort] = useState<any>("no-sort");
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
@@ -30,28 +31,7 @@ const notes = ({ data }: any) => {
     [data, selectedId]
   );
 
-  function sortBody(body: any) {
-    try {
-      const sortBody = body.sort((a: any, b: any) => {
-        const dateA = Date.parse(a.date);
-        const dateB = Date.parse(b.date);
-  
-        if (sort === "dateUp") return dateB - dateA; // Сравниваем в обратном порядке для сортировки от новых к старым
-        if (sort === "dateDown") return dateA - dateB;
-        else {
-          return body;
-        }
-      });
-  
-      return sortBody;
-    }
 
-    catch (err) {
-      console.log(err);
-      
-    }
-
-  }
   const updateActiveSortingAction = useCallback(
     async (sorting: any, userId: any, email: any) => {
       try {
@@ -103,7 +83,7 @@ const notes = ({ data }: any) => {
               <NotesList
                 recycle={true}
                 checkTitle={checkTitle}
-                body={sortBody(data)}
+                body={data ? sorting(data, sort): ''}
                 userId={userId}
               />
             )}

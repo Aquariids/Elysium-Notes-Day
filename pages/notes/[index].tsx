@@ -48,7 +48,8 @@ const notes = ({ data }: any) => {
         setLinks(data);
       }
     } catch(err) {
-      alert(err)
+     console.log(err);
+     
       
     }
    
