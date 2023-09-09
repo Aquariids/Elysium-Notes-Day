@@ -5,7 +5,8 @@ export interface ILinks {
     body:string,
     userId:string,
     block: boolean,
-    dateFull:string
+    dateFull:string,
+    dateShort:string
 }
 
 

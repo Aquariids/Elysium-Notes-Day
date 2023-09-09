@@ -18,22 +18,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
     return str.replace(/\n/g, "");
   };
 
-  const dateManipulation = (date: string, action: string) => { // короче ошибка тут диман
-    try {
-    ;
-      switch (action) {
-        case "short":
-          const short = date.split(" ").slice(1, 3);
-          const day = short[0];
-          const month = short[1].slice(0, 3);
-          return `${day} ${month}.`;
-        case "long":
-          return date.slice(0, date.length - 2);
-      }
-    } catch (er) {
-      console.log(er);
-    }
-  };
+
 
   const DraftJsObjectInText = (body: string) => {
     const contentState = convertFromRaw(JSON.parse(body));
@@ -133,17 +118,13 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                 </Link>
 
                 <span
-                  title={
-                    item.block === true
-                      ? ""
-                      :dateManipulation(item.dateFull ? item.dateFull: '', 'long')
-                  }
+                  title={item.dateFull}
                   className={cn(s.date, {
                     [s.block_item]: item.block === true,
                     [s.date_mainMenu]: router.asPath === "/",
                   })}
                 >
-                  {dateManipulation(item.dateFull ? item.dateFull: '', 'short')}
+                  {item.dateShort}
                 </span>
               </div>
             );

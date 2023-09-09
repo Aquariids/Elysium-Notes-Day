@@ -27,6 +27,7 @@
     "draftjs-to-html": "^0.9.1",
     "eslint-config-next": "^13.4.13",
     "framer-motion": "^10.16.4",
+    "luxon": "^3.4.3",
     "mongodb": "^4.15.0",
     "next": "^13.4.13",
     "next-auth": "^4.22.0",
@@ -44,6 +45,7 @@
     "@types/draft-convert": "^2.1.4",
     "@types/draft-js": "^0.11.12",
     "@types/draftjs-to-html": "^0.8.1",
+    "@types/luxon": "^3.3.2",
     "@types/react-window": "^1.8.5",
     "sass": "^1.61.0"
   }

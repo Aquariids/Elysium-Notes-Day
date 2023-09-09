@@ -1,8 +1,9 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "./mongodb";
-import { format } from "date-fns";
-import { ru } from "date-fns/locale";
-
+import { DateTime } from 'luxon';
+import { Settings } from 'luxon';
+Settings.defaultLocale = 'ru';
+DateTime.local().setLocale('ru');
 interface dbPros {
   collectionName: string;
   db: string;
@@ -55,12 +56,15 @@ export async function createDatabase(data: any) {
     collectionName: `user_${data.userId}`,
     db: "notes",
   });
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const userDate = DateTime.now().setZone(userTimeZone);
+  data.userTimeZone = userTimeZone;
+  data.date = userDate.toJSDate(); // Преобразуйте DateTime в объект JavaScript Date
+  data.dateFull = userDate.toFormat("EEEE, d MMMM yyyy HH:mm");
+  data.dateShort = userDate.toFormat("d MMMM").slice(0, 5) + '.'
 
-  data.date = new Date();
-  data.dateFull = format(new Date().getTime(), "EEEE, d MMMM yyyy HH:mm ss", {
-    locale: ru,
-  });
-  const result = collection.insertOne(data); // Этот метод позволяет вставить документ в коллекцию
+
+  const result = await collection.insertOne(data); // Этот метод позволяет вставить документ в коллекцию
   return result;
 }
 
