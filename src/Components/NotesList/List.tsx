@@ -132,13 +132,13 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                 </Link>
 
                 <span
-                  title={formatteLongdDate}
+                  title={''}
                   className={cn(s.date, {
                     [s.block_item]: item.block === true,
                     [s.date_mainMenu]: router.asPath === "/",
                   })}
                 >
-                  {formattedDate}
+                  {/* {formattedDate} */}
                 </span>
               </div>
             );
