@@ -11,18 +11,19 @@ import { format } from "date-fns";
 import ru from "date-fns/locale/ru";
 
 const List = ({ body, loadingDelete, deleteElement }: any) => {
+  const [formattedDate, setFormattedDate] = useState<any>("");
+    const [formattedDateFull, setFormattedDateFull] = useState<any>("");
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1];
   const selectedId = router.query.index;
   const remove_line_break = (str: string) => {
     return str.replace(/\n/g, "");
   };
-  const dateManipulation = (date: string, action: string) => {
+
+  const dateManipulation = (date: string, action: string) => { // короче ошибка тут диман
     try {
+     
       const dateMillisecond = Date.parse(date);
-      if (isNaN(dateMillisecond)) {
-        throw new Error("Invalid date format");
-      }
       const newDate = format(dateMillisecond, "EEEE, d MMMM yyyy HH:mm ss", {
         locale: ru,
       });
@@ -34,26 +35,10 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
           return `${day} ${month}.`;
         case "long":
           return newDate.slice(0, newDate.length - 2);
-        default:
-          return "";
       }
     } catch (er) {
       console.log(er);
-      return ""; 
     }
-  };
-  const getCachedDate = (date: string) => {
-    if (!date) return "";
-    return dateManipulation(date, "short");
-  };
-  const getCachedDateLong = (date: string) => {
-    if (!date) return "";
-    return dateManipulation(date, "long");
-  };
-
-  const getCachedTitle = (title: string) => {
-    if (!title) return "Без названия";
-    return sliceTitle(title);
   };
 
   const DraftJsObjectInText = (body: string) => {
@@ -84,17 +69,46 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
     }
   };
 
+  const bodyTextsCache = useMemo(() => new Map(), []);
+  const TitleTextsCache = useMemo(() => new Map(), []);
+  const getCachedText = useCallback(
+    (body: string) => {
+      if (!bodyTextsCache.has(body)) {
+        const text = DraftJsObjectInText(body);
+        bodyTextsCache.set(body, text);
+      }
+      return bodyTextsCache.get(body);
+    },
+    [bodyTextsCache]
+  );
+
+  const getCachedTextTitle = useCallback(
+    (title: string) => {
+      if (!TitleTextsCache.has(title)) {
+        const text = sliceTitle(title);
+        TitleTextsCache.set(title, text);
+      }
+      return TitleTextsCache.get(title);
+    },
+    [TitleTextsCache]
+  );
+
   return (
     <>
       {body &&
         body.map((item: ILinks) => {
+
+          useEffect(() => {
+            if (item.date) {
+            const formatted = dateManipulation(item.date, "short");
+              setFormattedDate(formatted);
+              const formattedFull = dateManipulation(item.date, "long");
+              setFormattedDateFull(formattedFull);
+  }
+          },[item.date])
           if (loadingDelete && deleteElement === item._id) {
             return <React.Fragment key={item._id}> </React.Fragment>;
           } else {
-            const formattedDate = item.block ? "" : getCachedDate(item.date);
-            const formatteLongdDate = item.block ? "" : getCachedDateLong(item.date);
-            const formattedTitle = getCachedTitle(item.title);
-
             return (
               <div
                 key={item._id}
@@ -126,19 +140,25 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                       [s.boldTitle]: router.asPath === "/",
                     })}
                   >
-                    {formattedTitle}
+                    {item.title
+                      ? getCachedTextTitle(item.title)
+                      : "Без названия"}
                   </p>
-                  <p className={s.body_link}>{DraftJsObjectInText(item.body)}</p>
+                  <p className={s.body_link}> {getCachedText(item.body)}</p>
                 </Link>
 
                 <span
-                  title={''}
+                  title={
+                    item.block === true
+                      ? ""
+                      : formattedDateFull
+                  }
                   className={cn(s.date, {
                     [s.block_item]: item.block === true,
                     [s.date_mainMenu]: router.asPath === "/",
                   })}
                 >
-                  {/* {formattedDate} */}
+                  {formattedDate}
                 </span>
               </div>
             );
