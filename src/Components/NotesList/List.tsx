@@ -11,8 +11,6 @@ import { format } from "date-fns";
 import ru from "date-fns/locale/ru";
 
 const List = ({ body, loadingDelete, deleteElement }: any) => {
-  const [formattedDate, setFormattedDate] = useState<any>("");
-    const [formattedDateFull, setFormattedDateFull] = useState<any>("");
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1];
   const selectedId = router.query.index;
@@ -22,19 +20,15 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
 
   const dateManipulation = (date: string, action: string) => { // короче ошибка тут диман
     try {
-     
-      const dateMillisecond = Date.parse(date);
-      const newDate = format(dateMillisecond, "EEEE, d MMMM yyyy HH:mm ss", {
-        locale: ru,
-      });
+    ;
       switch (action) {
         case "short":
-          const short = newDate.split(" ").slice(1, 3);
+          const short = date.split(" ").slice(1, 3);
           const day = short[0];
           const month = short[1].slice(0, 3);
           return `${day} ${month}.`;
         case "long":
-          return newDate.slice(0, newDate.length - 2);
+          return date.slice(0, date.length - 2);
       }
     } catch (er) {
       console.log(er);
@@ -96,16 +90,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
   return (
     <>
       {body &&
-        body.map((item: ILinks) => {
-
-          useEffect(() => {
-            if (item.date) {
-            const formatted = dateManipulation(item.date, "short");
-              setFormattedDate(formatted);
-              const formattedFull = dateManipulation(item.date, "long");
-              setFormattedDateFull(formattedFull);
-  }
-          },[item.date])
+        body.map((item: ILinks) => {    
           if (loadingDelete && deleteElement === item._id) {
             return <React.Fragment key={item._id}> </React.Fragment>;
           } else {
@@ -151,14 +136,14 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                   title={
                     item.block === true
                       ? ""
-                      : formattedDateFull
+                      :dateManipulation(item.dateFull ? item.dateFull: '', 'long')
                   }
                   className={cn(s.date, {
                     [s.block_item]: item.block === true,
                     [s.date_mainMenu]: router.asPath === "/",
                   })}
                 >
-                  {formattedDate}
+                  {dateManipulation(item.dateFull ? item.dateFull: '', 'short')}
                 </span>
               </div>
             );

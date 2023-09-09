@@ -1,5 +1,7 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "./mongodb";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
 
 interface dbPros {
   collectionName: string;
@@ -55,6 +57,9 @@ export async function createDatabase(data: any) {
   });
 
   data.date = new Date();
+  data.dateFull = format(new Date().getTime(), "EEEE, d MMMM yyyy HH:mm ss", {
+    locale: ru,
+  });
   const result = collection.insertOne(data); // Этот метод позволяет вставить документ в коллекцию
   return result;
 }
