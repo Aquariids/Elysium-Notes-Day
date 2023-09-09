@@ -13,8 +13,6 @@ import { create_data, get_action, update_action } from "./api/actios";
 import Arrow from './arr.svg';
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from 'classnames';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale'; // Импортируйте локаль для русского языка
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../utils/sorting";
 import { DateTime } from 'luxon';
