@@ -17,32 +17,44 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
   const remove_line_break = (str: string) => {
     return str.replace(/\n/g, "");
   };
+  const dateManipulation = (date: string, action: string) => {
+    try {
+      const dateMillisecond = Date.parse(date);
+      if (isNaN(dateMillisecond)) {
+        throw new Error("Invalid date format");
+      }
+      const newDate = format(dateMillisecond, "EEEE, d MMMM yyyy HH:mm ss", {
+        locale: ru,
+      });
+      switch (action) {
+        case "short":
+          const short = newDate.split(" ").slice(1, 3);
+          const day = short[0];
+          const month = short[1].slice(0, 3);
+          return `${day} ${month}.`;
+        case "long":
+          return newDate.slice(0, newDate.length - 2);
+        default:
+          return "";
+      }
+    } catch (er) {
+      console.log(er);
+      return ""; 
+    }
+  };
+  const getCachedDate = (date: string) => {
+    if (!date) return "";
+    return dateManipulation(date, "short");
+  };
+  const getCachedDateLong = (date: string) => {
+    if (!date) return "";
+    return dateManipulation(date, "long");
+  };
 
-const dateManipulation = (date: string, action: string) => {
-  try {
-    const dateMillisecond = Date.parse(date);
-    if (isNaN(dateMillisecond)) {
-      throw new Error("Invalid date format");
-    }
-    const newDate = format(dateMillisecond, "EEEE, d MMMM yyyy HH:mm ss", {
-      locale: ru,
-    });
-    switch (action) {
-      case "short":
-        const short = newDate.split(" ").slice(1, 3);
-        const day = short[0];
-        const month = short[1].slice(0, 3);
-        return `${day} ${month}.`;
-      case "long":
-        return newDate.slice(0, newDate.length - 2);
-      default:
-        return "";
-    }
-  } catch (er) {
-    console.log(er);
-    return ""; 
-  }
-};
+  const getCachedTitle = (title: string) => {
+    if (!title) return "Без названия";
+    return sliceTitle(title);
+  };
 
   const DraftJsObjectInText = (body: string) => {
     const contentState = convertFromRaw(JSON.parse(body));
@@ -72,30 +84,6 @@ const dateManipulation = (date: string, action: string) => {
     }
   };
 
-  const bodyTextsCache = useMemo(() => new Map(), []);
-  const TitleTextsCache = useMemo(() => new Map(), []);
-  const getCachedText = useCallback(
-    (body: string) => {
-      if (!bodyTextsCache.has(body)) {
-        const text = DraftJsObjectInText(body);
-        bodyTextsCache.set(body, text);
-      }
-      return bodyTextsCache.get(body);
-    },
-    [bodyTextsCache]
-  );
-
-  const getCachedTextTitle = useCallback(
-    (title: string) => {
-      if (!TitleTextsCache.has(title)) {
-        const text = sliceTitle(title);
-        TitleTextsCache.set(title, text);
-      }
-      return TitleTextsCache.get(title);
-    },
-    [TitleTextsCache]
-  );
-
   return (
     <>
       {body &&
@@ -103,6 +91,10 @@ const dateManipulation = (date: string, action: string) => {
           if (loadingDelete && deleteElement === item._id) {
             return <React.Fragment key={item._id}> </React.Fragment>;
           } else {
+            const formattedDate = item.block ? "" : getCachedDate(item.date);
+            const formatteLongdDate = item.block ? "" : getCachedDateLong(item.date);
+            const formattedTitle = getCachedTitle(item.title);
+
             return (
               <div
                 key={item._id}
@@ -134,25 +126,19 @@ const dateManipulation = (date: string, action: string) => {
                       [s.boldTitle]: router.asPath === "/",
                     })}
                   >
-                    {item.title
-                      ? getCachedTextTitle(item.title)
-                      : "Без названия"}
+                    {formattedTitle}
                   </p>
-                  <p className={s.body_link}> {getCachedText(item.body)}</p>
+                  <p className={s.body_link}>{DraftJsObjectInText(item.body)}</p>
                 </Link>
 
                 <span
-                  title={
-                    item.block === true
-                      ? ""
-                      : dateManipulation(item.date, "long")
-                  }
+                  title={formatteLongdDate}
                   className={cn(s.date, {
                     [s.block_item]: item.block === true,
                     [s.date_mainMenu]: router.asPath === "/",
                   })}
                 >
-                  {dateManipulation(item.date, "short")}
+                  {formattedDate}
                 </span>
               </div>
             );
