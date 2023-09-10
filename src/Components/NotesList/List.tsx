@@ -116,7 +116,7 @@ const List = ({ body, loadingDelete, deleteElement }: any) => {
                 </Link>
 
                 <span
-                  title={item.dateFull}
+                  title={item.block ? '' : item.dateFull}
                   className={cn(s.date, {
                     [s.block_item]: item.block === true,
                     [s.date_mainMenu]: router.asPath === "/",

@@ -20,6 +20,8 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   const [load, setLoad] = useState(true);
   const router = useRouter();
   const create = async () => {
+
+    
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const userDate = DateTime.now().setZone(userTimeZone);
     const content = JSON.stringify(emptyRawContentState);
@@ -31,9 +33,11 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
       block: false,
       date:userDate.toJSDate(),
       dateFull:userDate.toFormat("EEEE, d MMMM yyyy HH:mm"),
-      dateShort:userDate.toFormat("d MMMM").slice(0, 5) + '.',
+      dateShort:userDate.toFormat("d MMMM").length === 11 ? userDate.toFormat("d MMMM").slice(0,6) : userDate.toFormat("d MMMM").slice(0,5) + '.',
     };
 
+
+    
     try {
       setLoad(false);
       const response = await fetch(`/api/createData?action=${create_data.create_data}`, {
