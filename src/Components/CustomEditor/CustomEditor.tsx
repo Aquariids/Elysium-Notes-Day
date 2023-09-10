@@ -25,6 +25,10 @@ import { styleMap } from "./styleMap";
 import WrapperEditorRecycle from "./WrapperEditorRecycle";
 import { update_action } from "../../../pages/api/actios";
 import { RECYCLE } from "../../../pages/api/paths";
+import hljs from 'highlight.js';
+import javascript from 'highlight.js/lib/languages/javascript';
+hljs.registerLanguage('javascript', javascript);
+import 'highlight.js/styles/default.css';
 const CustomEditor = ({
   id,
   body,
@@ -37,11 +41,14 @@ const CustomEditor = ({
 }: any) => {
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
+  const [code, setCode] = useState(false);
   const { data: session } = useSession();
   const _id = id;
   const router = useRouter();
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
-
+  useEffect(() => {
+    hljs.initHighlighting();
+},[code]);
   const refActiveMenu = useRef<HTMLDivElement>(null);
   const [op, setOp] = useState();
   const btn_hide = hideNotes ? <>Показать заметку</> : <>Скрыть заметку</>;
@@ -205,15 +212,26 @@ const CustomEditor = ({
 
     return () => clearTimeout(timer);
   }, [value, updateTitle]);
+  const DraftJsObjectInText = (body: string) => {
+    const contentState = convertFromRaw(JSON.parse(body));
+    const editorState = EditorState.createWithContent(contentState);
+    const plainText = editorState
+      .getCurrentContent()
+      .getPlainText()
+      .toLowerCase();
 
+  return plainText
+  };
   return (
     <>
+    <button onClick={()=> {setCode(!code)}}>надикм</button>
       <div className={s.toolbar}>
         <div
           className={cn({
             [s.hide]: router.asPath.split("/")[1] === `${RECYCLE}`,
           })}
         >
+        
           <ToolbarButtons
             editorState={editorState}
             setEditorState={setEditorState}
@@ -277,8 +295,11 @@ const CustomEditor = ({
               })}
               onChange={(e) => setValue(e.target.value)}
             />
-
-            <Editor
+            { code ? <div className={s.cide}><pre className={cn('js',s.code_block)}>
+          <code className={s.code}>
+            {DraftJsObjectInText(body)}
+            </code>
+            </pre> </div> :  <Editor
               placeholder="Введите текст"
               editorKey="editor"
               editorState={editorState}
@@ -287,8 +308,10 @@ const CustomEditor = ({
               keyBindingFn={getDefaultKeyBindingFn}
               blockStyleFn={blockStyleFn}
               customStyleMap={styleMap}
-            />
+            />}
           </div>
+
+         
         </div>
       </WrapperEditorRecycle>
     </>

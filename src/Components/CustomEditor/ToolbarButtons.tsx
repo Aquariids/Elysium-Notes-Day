@@ -25,14 +25,19 @@ import { EditorStateProps } from "./CustomEditor.props";
 import cn from "classnames";
 import s from "./CustomEditor.module.scss";
 import * as Icons from "./icons";
-
+import { RichUtils } from "draft-js";
+import { useEffect } from "react";
 const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
-
+  const toggleCodeBlock = () => {
+    // Используйте RichUtils.toggleBlockType для переключения типа блока
+    const newEditorState = RichUtils.toggleBlockType(editorState, 'code-block');
+    setEditorState(newEditorState);
+  };
   const HIGHLIGHTER = "HIGHLIGHTER";
   const toggleHighlighter = () =>
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER);
   const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
-
+  
   const toolbarButtons = [
     {
       name: "bold",
@@ -138,6 +143,7 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
           {btn.children}
         </button>
       ))}
+      <button onClick={toggleCodeBlock}>Добавить/удалить блок с кодом</button>
       <div className={s.alignmentBtns}>
         {alignmentButtons.map((btn) => (
           <button
