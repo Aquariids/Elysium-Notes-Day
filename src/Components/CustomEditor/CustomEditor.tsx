@@ -13,6 +13,7 @@ import {
   Editor,
   blockStyleFn,
 } from "contenido";
+
 import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
 import s from "./CustomEditor.module.scss";
@@ -28,7 +29,9 @@ import { RECYCLE } from "../../../pages/api/paths";
 import hljs from 'highlight.js';
 import javascript from 'highlight.js/lib/languages/javascript';
 hljs.registerLanguage('javascript', javascript);
-import 'highlight.js/styles/default.css';
+import 'highlight.js/styles/a11y-dark.css';
+
+import DraftTextForCode from "./DraftTextForCode";
 const CustomEditor = ({
   id,
   body,
@@ -100,6 +103,7 @@ const CustomEditor = ({
   }, [body]);
   useEffect(() => {
     if (body) {
+      
       setEditorState(editorStateMemo);
     }
   }, [body]);
@@ -107,6 +111,7 @@ const CustomEditor = ({
   const handleEditorChange = useCallback(
     (editorState: SetStateAction<EditorState>) => {
       setEditorState(editorState);
+      
     },
     []
   );
@@ -212,16 +217,8 @@ const CustomEditor = ({
 
     return () => clearTimeout(timer);
   }, [value, updateTitle]);
-  const DraftJsObjectInText = (body: string) => {
-    const contentState = convertFromRaw(JSON.parse(body));
-    const editorState = EditorState.createWithContent(contentState);
-    const plainText = editorState
-      .getCurrentContent()
-      .getPlainText()
-      .toLowerCase();
 
-  return plainText
-  };
+
   return (
     <>
     <button onClick={()=> {setCode(!code)}}>надикм</button>
@@ -295,11 +292,11 @@ const CustomEditor = ({
               })}
               onChange={(e) => setValue(e.target.value)}
             />
-            { code ? <div className={s.cide}><pre className={cn('js',s.code_block)}>
+            { code ? <pre className={cn('js',s.code_block)}>
           <code className={s.code}>
-            {DraftJsObjectInText(body)}
+            <DraftTextForCode editorState={editorState}/>
             </code>
-            </pre> </div> :  <Editor
+            </pre> : <Editor
               placeholder="Введите текст"
               editorKey="editor"
               editorState={editorState}

@@ -27,8 +27,8 @@
 
 .body {
     padding: 0 5px;
-    line-height: 1.5;
-    height:  90vh;
+    line-height: 1.8;
+    height:  85vh;
     overflow: auto;
 }
 
@@ -216,12 +216,7 @@
     
 
 
-    .cide {
-        display: flex;
-        flex-direction: column;
-        word-wrap: break-word;
-    }
-
+    
     .code_block {
         white-space: pre-wrap;
         background: #ffeff0;
@@ -236,7 +231,6 @@
 
 
     .code {
-
         white-space: pre-wrap;
         background: #ffeff0;
         word-wrap: break-word;
