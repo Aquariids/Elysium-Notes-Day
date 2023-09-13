@@ -147,7 +147,8 @@ export async function updateDataInDatabase(data: any) {
       { $and: [{ userId: data.userId }, { email: data.email }, { _id: id }] }, // фильтрация - проверяем если email равен data.email и userId равен data.userId
       {
         $set: {
-          body: data.body
+          body: data.body,
+          code: data.code
         },
       } // то обновляем тело. $set оператор обновления поля или может добавить его.
     );

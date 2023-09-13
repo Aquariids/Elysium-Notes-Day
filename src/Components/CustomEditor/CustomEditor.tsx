@@ -45,6 +45,7 @@ const CustomEditor = ({
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
   const [code, setCode] = useState(false);
+
   const { data: session } = useSession();
   const _id = id;
   const router = useRouter();
@@ -53,13 +54,12 @@ const CustomEditor = ({
     hljs.initHighlighting();
 },[code]);
   const refActiveMenu = useRef<HTMLDivElement>(null);
-  const [op, setOp] = useState();
   const btn_hide = hideNotes ? <>Показать заметку</> : <>Скрыть заметку</>;
   const linkToToggle = data.find((item: any) => item._id === id);
   async function hideLink(currentLink: any) {
     const linkToToggle = data.find((item: any) => item._id === currentLink);
     if (linkToToggle) {
-      const updatedLink = { ...linkToToggle, block: !linkToToggle.block }; 
+      const updatedLink = { ...linkToToggle, block: !linkToToggle.block, code: code }; 
       try {
         const updateRes = await fetch(
           `/api/updateData?action=${update_action.block_link}`,
@@ -71,7 +71,6 @@ const CustomEditor = ({
         );
 
         if (updateRes.ok) {
-          setOp(updatedLink);
           router.push(currentLink);
         } else {
           console.error("Ошибка при обновлении данных");
