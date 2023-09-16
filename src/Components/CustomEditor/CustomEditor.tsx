@@ -47,6 +47,7 @@ const CustomEditor = ({
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
   const [code, setCode] = useState(selectedItem.code || false)
+  console.log("🚀 ~ file: CustomEditor.tsx:50 ~ code:", code)
   const { data: session } = useSession();
   const _id = id;
   const router = useRouter();
@@ -84,7 +85,7 @@ const CustomEditor = ({
 
   async function modeCode() {
     if (selectedItem) {
-      const updatedLink = { ...selectedItem, code: !selectedItem.code }; 
+      const updatedLink = { ...selectedItem, code: !code}; 
       try {
         const updateRes = await fetch(
           `/api/updateData?action=${update_action.mode_code}`,
