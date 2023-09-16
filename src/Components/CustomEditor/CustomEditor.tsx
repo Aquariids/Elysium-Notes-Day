@@ -32,6 +32,7 @@ hljs.registerLanguage('javascript', javascript);
 import 'highlight.js/styles/a11y-dark.css';
 
 import DraftTextForCode from "./DraftTextForCode";
+import { Code } from "./icons";
 const CustomEditor = ({
   id,
   body,
@@ -220,7 +221,8 @@ const CustomEditor = ({
 
   return (
     <>
-    <button onClick={()=> {setCode(!code)}}>надикм</button>
+    <div className={s.header_toolbar}><button title="Режим для просмотра кода в заметке" className={s.btn} onClick={()=> {setCode(!code)}}><Code/></button></div>
+   
       <div className={s.toolbar}>
         <div
           className={cn({

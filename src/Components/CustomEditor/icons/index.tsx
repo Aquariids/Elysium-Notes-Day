@@ -10,8 +10,10 @@ import ListOl from './list-ol.svg';
 import BlockQuote from './blockQuote.svg';
 import Highlighter from './highlighter.svg';
 import Strikethrough from './strikethrough.svg';
+import Code from './code.svg';
 
 
 
 
-export  {Bold, Italic,Underline,AlignCenter,AlignLeft,AlignRight,ListUl,ListOl,BlockQuote,Highlighter,AlignJustify,Strikethrough};
+
+export  {Bold, Italic,Underline,AlignCenter,AlignLeft,AlignRight,ListUl,ListOl,BlockQuote,Highlighter,AlignJustify,Strikethrough,Code};
