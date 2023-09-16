@@ -4,6 +4,7 @@ import {
   updateBlockLink,
   updateDataInDatabase,
   updateDataTitle,
+  updateModeCode,
   updateNoteBookMainMenu,
 } from "./auth/lib/dataFromDatabase";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -28,6 +29,10 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
       case update_action.block_link:
         await updateBlockLink(data);
         res.status(200).send("note hide");
+        break;
+        case update_action.mode_code:
+        await updateModeCode(data);
+        res.status(200).send("mode code");
         break;
         case update_action.action_sorting:
         await updateActionSorting(data);

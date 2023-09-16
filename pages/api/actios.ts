@@ -1,12 +1,13 @@
 // update actions
-export type UpdateAction = "editor" | "editor_title" | "book_main_menu" | "block_link" | "action_sorting";
+export type UpdateAction = "editor" | "editor_title" | "book_main_menu" | "block_link" | "action_sorting" | 'mode_code';
 
 export const update_action = {
     editor:'editor',
     editor_title:'editor_title',
     book_main_menu:'book_main_menu',
     block_link:'block_link',
-    action_sorting:'action_sorting'
+    action_sorting:'action_sorting',
+    mode_code:'mode_code'
 }
 
 

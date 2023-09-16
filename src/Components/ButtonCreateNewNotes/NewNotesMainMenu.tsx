@@ -23,6 +23,7 @@ const ButtonCreateNewNotes = () => {
       body: content, // данные редактора
       title: "",
       block: false,
+      code:false,
       date:userDate.toJSDate(),
       dateFull:userDate.toFormat("EEEE, d MMMM yyyy HH:mm"),
       dateShort:userDate.toFormat("d MMMM").slice(0, 5) + '.',

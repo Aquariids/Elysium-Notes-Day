@@ -48,6 +48,7 @@ export async function getAllNotesFromDatabaseRecycle(userId: string[] | string, 
   }
 }
 export async function createDatabase(data: any) {
+  console.log("🚀 ~ file: dataFromDatabase.ts:51 ~ createDatabase ~ data:", data)
   const collection = await getCollection({
     collectionName: `user_${data.userId}`,
     db: "notes",
@@ -148,7 +149,6 @@ export async function updateDataInDatabase(data: any) {
       {
         $set: {
           body: data.body,
-          code: data.code
         },
       } // то обновляем тело. $set оператор обновления поля или может добавить его.
     );
@@ -193,7 +193,30 @@ export async function updateBlockLink(data: any) {
         $set: {
           block: data.block,
         },
-      } // то обновляем тело. $set оператор обновления поля или может добавить его.
+      } 
+    );
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
+
+export async function updateModeCode(data: any) {  
+  console.log("🚀 ~ file: dataFromDatabase.ts:205 ~ updateModeCode ~ data:", data)
+  try {
+    
+    const id = new ObjectId(data._id);
+    const collection = await getCollection({
+      collectionName: `user_${data.userId}`,
+      db: "notes",
+    });
+    await collection.updateOne(
+      { _id: id },
+      {
+        $set: {
+          code: data.code,
+        },
+      } 
     );
   } catch (error) {
     const client = await getClient();

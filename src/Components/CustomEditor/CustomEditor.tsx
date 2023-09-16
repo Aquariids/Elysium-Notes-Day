@@ -29,7 +29,7 @@ import { RECYCLE } from "../../../pages/api/paths";
 import hljs from 'highlight.js';
 import javascript from 'highlight.js/lib/languages/javascript';
 hljs.registerLanguage('javascript', javascript);
-import 'highlight.js/styles/a11y-dark.css';
+import 'highlight.js/styles/school-book.css';
 
 import DraftTextForCode from "./DraftTextForCode";
 import { Code } from "./icons";
@@ -42,11 +42,11 @@ const CustomEditor = ({
   setDeleteElement,
   setLoadingDelete,
   hideNotes,
+  selectedItem
 }: any) => {
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
-  const [code, setCode] = useState(false);
-
+  const [code, setCode] = useState(selectedItem.code || false)
   const { data: session } = useSession();
   const _id = id;
   const router = useRouter();
@@ -55,12 +55,10 @@ const CustomEditor = ({
     hljs.initHighlighting();
 },[code]);
   const refActiveMenu = useRef<HTMLDivElement>(null);
-  const btn_hide = hideNotes ? <>Показать заметку</> : <>Скрыть заметку</>;
-  const linkToToggle = data.find((item: any) => item._id === id);
+  const btn_hide = hideNotes ? <>Показать заметку</> : <>Скрыть заметку</>;    
   async function hideLink(currentLink: any) {
-    const linkToToggle = data.find((item: any) => item._id === currentLink);
-    if (linkToToggle) {
-      const updatedLink = { ...linkToToggle, block: !linkToToggle.block, code: code }; 
+    if (selectedItem) {
+      const updatedLink = { ...selectedItem, block: !selectedItem.block }; 
       try {
         const updateRes = await fetch(
           `/api/updateData?action=${update_action.block_link}`,
@@ -76,6 +74,27 @@ const CustomEditor = ({
         } else {
           console.error("Ошибка при обновлении данных");
         }
+      } catch (error) {
+        console.error("Ошибка при обновлении данных:", error);
+      }
+    } else {
+      console.error("Ссылка не найдена");
+    }
+  }
+
+  async function modeCode() {
+    if (selectedItem) {
+      const updatedLink = { ...selectedItem, code: !selectedItem.code }; 
+      try {
+        const updateRes = await fetch(
+          `/api/updateData?action=${update_action.mode_code}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedLink),
+          }
+        );
+
       } catch (error) {
         console.error("Ошибка при обновлении данных:", error);
       }
@@ -103,7 +122,6 @@ const CustomEditor = ({
   }, [body]);
   useEffect(() => {
     if (body) {
-      
       setEditorState(editorStateMemo);
     }
   }, [body]);
@@ -221,7 +239,12 @@ const CustomEditor = ({
 
   return (
     <>
-    <div className={s.header_toolbar}><button title="Режим для просмотра кода в заметке" className={s.btn} onClick={()=> {setCode(!code)}}><Code/></button></div>
+    <div className={s.header_toolbar}><button title="Режим для просмотра кода в заметке" className={cn(s.btn, {
+      [s.btn_active]: code === true
+    })} onClick={()=> {
+      setCode(!code)
+      modeCode()
+    }}><Code/></button></div>
    
       <div className={s.toolbar}>
         <div
@@ -262,7 +285,7 @@ const CustomEditor = ({
             <div
               className={s.hide_btn}
               onClick={() => {
-                hideLink(id);
+                hideLink(_id);
               }}
             >
               {" "}
@@ -282,14 +305,14 @@ const CustomEditor = ({
           <div
             className={cn(s.body, {
               [s.block]: routerReclycle,
-              [s.hideNote]: hideNotes ||  linkToToggle.block === true && routerReclycle
+              [s.hideNote]: hideNotes ||  selectedItem.block === true && routerReclycle
             })}
           >
             <TextareaAutosize
               placeholder="Заголовок"
               value={value}
               className={cn(s.title, {
-                [s.hideNote]: hideNotes ||  linkToToggle.block === true && routerReclycle
+                [s.hideNote]: hideNotes ||  selectedItem.block === true && routerReclycle
               })}
               onChange={(e) => setValue(e.target.value)}
             />
