@@ -47,7 +47,6 @@ const CustomEditor = ({
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
   const [code, setCode] = useState(selectedItem.code || false)
-  console.log("🚀 ~ file: CustomEditor.tsx:50 ~ code:", code)
   const { data: session } = useSession();
   const _id = id;
   const router = useRouter();
@@ -240,6 +239,9 @@ const CustomEditor = ({
 
   return (
     <>
+    <div  className={cn({
+            [s.hide]: router.asPath.split("/")[1] === `${RECYCLE}`,
+          })}>
     <div className={s.header_toolbar}><button title="Режим для просмотра кода в заметке" className={cn(s.btn, {
       [s.btn_active]: code === true
     })} onClick={()=> {
@@ -248,11 +250,7 @@ const CustomEditor = ({
     }}><Code/></button></div>
    
       <div className={s.toolbar}>
-        <div
-          className={cn({
-            [s.hide]: router.asPath.split("/")[1] === `${RECYCLE}`,
-          })}
-        >
+        <div>
         
           <ToolbarButtons
             editorState={editorState}
@@ -300,7 +298,7 @@ const CustomEditor = ({
           </div>
         </div>
       </div>
-
+</div>
       <WrapperEditorRecycle routerReclycle={routerReclycle}>
         <div>
           <div
