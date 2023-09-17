@@ -1,27 +1,22 @@
-import { useEffect, useRef } from "react";
-
+import s from "./CustomEditor.module.scss";
+import cn from "classnames";
 const DraftTextForCode = ({
   editorState,
   setShowToolbar,
   routerReclycle,
 }: any) => {
-  const refActiveMenu = useRef<HTMLDivElement>(null);
 
-  const handleOutsideClick = (event: any) => {
-    if (
-      refActiveMenu.current &&
-      !refActiveMenu.current.contains(event.target)
-    ) {
-      routerReclycle === false && setShowToolbar(true);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleOutsideClick, false);
-  }, [editorState]);
 
   const plainText = editorState.getCurrentContent().getPlainText();
-  return <div ref={refActiveMenu}>{plainText}</div>;
+  return (
+    <pre onClick={()=> {
+      routerReclycle === false && setShowToolbar(true);
+    }} className={cn("js", s.code_block)}>
+      <code className={s.code}>
+        {plainText}
+      </code>
+    </pre>
+  );
 };
 
 export default DraftTextForCode;

@@ -333,15 +333,13 @@ const CustomEditor = ({
               onChange={(e) => setValue(e.target.value)}
             />
             {code ? (
-              <pre className={cn("js", s.code_block)}>
-                <code className={s.code}>
+              
                   <DraftTextForCode
                     editorState={editorState}
                     setShowToolbar={setShowToolbar}
                     routerReclycle={routerReclycle}
                   />
-                </code>
-              </pre>
+                
             ) : (
               <div className={cn({ [s.block]: routerReclycle })}>
                 <Editor
