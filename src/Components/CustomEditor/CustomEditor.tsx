@@ -242,12 +242,13 @@ const CustomEditor = ({
     <div  className={cn({
             [s.hide]: router.asPath.split("/")[1] === `${RECYCLE}`,
           })}>
-    <div className={s.header_toolbar}><button title="Режим для просмотра кода в заметке" className={cn(s.btn, {
+    <div className={s.header_toolbar}>
+      <div className={cn(s.toolbar_header_btns, s.toolbar)}><button title="Режим для просмотра кода в заметке" className={cn(s.btn, s.btn_header, {
       [s.btn_active]: code === true
     })} onClick={()=> {
       setCode(!code)
       modeCode()
-    }}><Code/></button></div>
+    }}><Code/></button></div></div>
    
       <div className={s.toolbar}>
         <div>
