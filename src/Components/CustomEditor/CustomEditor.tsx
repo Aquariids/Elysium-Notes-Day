@@ -42,6 +42,8 @@ const CustomEditor = ({
   hideNotes,
   selectedItem
 }: any) => {
+  const [previousEditorState, setPreviousEditorState] = useState<EditorState | null>(null);
+  const [editorChanged, setEditorChanged] = useState(false);
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState(title);
   const [code, setCode] = useState(selectedItem.code || false)
@@ -54,7 +56,7 @@ const CustomEditor = ({
 },[code]);
   const refActiveMenu = useRef<HTMLDivElement>(null);
   const btn_hide = hideNotes ? <>Показать заметку</> : <>Скрыть заметку</>;    
-  async function hideLink(currentLink: any) {
+  async function hideLink(currentLink: string) {
     if (selectedItem) {
       const updatedLink = { ...selectedItem, block: !selectedItem.block }; 
       try {
@@ -124,13 +126,28 @@ const CustomEditor = ({
     }
   }, [body]);
 
+ 
   const handleEditorChange = useCallback(
-    (editorState: SetStateAction<EditorState>) => {
+    (editorState: SetStateAction<EditorState | any>) => {
+      // Сравниваем текущее состояние с предыдущим состоянием
+      if (!previousEditorState || !editorState.getCurrentContent().equals(previousEditorState.getCurrentContent())) {
+        // Здесь регистрируем изменение
+        if (editorChanged) {
+          console.log('Текст был изменен');
+        } else {
+          // Редактор был изменен после инициализации
+          setEditorChanged(true);
+        }
+      }
+  
+      //  текущее состояние в предыдущее состояние
+      setPreviousEditorState(editorState);
+      //  текущее состояние редактора
       setEditorState(editorState);
-      
     },
-    []
+    [previousEditorState, editorChanged]
   );
+  
 
   const handleOutsideClick = (event: any) => {
     if (
@@ -153,7 +170,7 @@ const CustomEditor = ({
   }, [title]);
 
   const updateData = useCallback(
-    async (editorState: any, session: any, _id: string) => {
+    async (editorState: EditorState, session: any, _id: string) => {
       const content = JSON.stringify(
         convertToRaw(editorState.getCurrentContent())
       );
