@@ -30,7 +30,7 @@ import { useRouter } from "next/router";
 interface codeProps {
   code: boolean;
   setCode: any;
-  test: boolean;
+  showToolbar: boolean;
   modeCode: () => {};
 }
 const ToolbarButtons = ({
@@ -39,7 +39,7 @@ const ToolbarButtons = ({
   code,
   setCode,
   modeCode,
-  test,
+  showToolbar,
 }: EditorStateProps & codeProps) => {
 const router = useRouter()
 
@@ -137,7 +137,7 @@ const router = useRouter()
   return (
     <div className={s.toolbarHeader}>
       <div className={cn(s.last_date_update, {
-        [s.showDate]: test === false
+        [s.showDate]: showToolbar === false
       })}>
 
         {router.asPath.split("/")[1] === `${RECYCLE}` ? <span>Тут будет дата удаления заметки </span>:<span>Тут будет дата последнего изменения заметки</span>}
@@ -146,7 +146,7 @@ const router = useRouter()
 
       <div
         className={cn(s.hideBtns,{
-          [s.show]: test === true,
+          [s.show]: showToolbar === true,
         })}
       >
         <div className={s.basic_btns}>

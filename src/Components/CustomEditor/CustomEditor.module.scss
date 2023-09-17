@@ -73,6 +73,7 @@
 
 
 .toolbarHeader {
+    overflow: hidden;
     border-left: 1px solid rgba(122, 122, 122, 0.452);
     height: 32px;
     margin-bottom: 5px;
@@ -199,9 +200,12 @@
 }
 
 .hideBtns {
-    transition: all 1.5s;
+
+    transition: all 1.2s;
     opacity: 0;
     visibility: hidden;
+    transform: translateX(-50%);
+
 }
 
 
@@ -280,6 +284,7 @@
 .show {
     opacity: 1;
     visibility: visible;
+    transform: translateX(0px);
 
 }
 

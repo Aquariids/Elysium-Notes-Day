@@ -49,7 +49,7 @@ const CustomEditor = ({
   const [value, setValue] = useState(title);
   const [code, setCode] = useState(selectedItem.code || false);
   const { data: session } = useSession();
-  const [test, setTest] = useState(false);
+  const [showToolbar, setShowToolbar] = useState(false);
   const _id = id;
   const router = useRouter();
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
@@ -140,7 +140,7 @@ const CustomEditor = ({
           .equals(previousEditorState.getCurrentContent())
       ) {
         // Здесь регистрируем изменение
-        setTest(true);
+        setShowToolbar(true);
 
         if (editorChanged) {
           console.log("Текст был изменен");
@@ -265,7 +265,7 @@ const CustomEditor = ({
       <div>
         <div className={s.toolbar}>
           <ToolbarButtons
-            test={test}
+            showToolbar={showToolbar}
             code={code}
             setCode={setCode}
             modeCode={modeCode}
@@ -337,7 +337,7 @@ const CustomEditor = ({
                 <code className={s.code}>
                   <DraftTextForCode
                     editorState={editorState}
-                    setTest={setTest}
+                    setShowToolbar={setShowToolbar}
                     routerReclycle={routerReclycle}
                   />
                 </code>
