@@ -25,6 +25,8 @@ import { EditorStateProps } from "./CustomEditor.props";
 import cn from "classnames";
 import s from "./CustomEditor.module.scss";
 import * as Icons from "./icons";
+import { RECYCLE } from "../../../pages/api/paths";
+import { useRouter } from "next/router";
 interface codeProps {
   code: boolean;
   setCode: any;
@@ -39,10 +41,7 @@ const ToolbarButtons = ({
   modeCode,
   test,
 }: EditorStateProps & codeProps) => {
-  console.log(
-    "🚀 ~ file: ToolbarButtons.tsx:35 ~ ToolbarButtons ~ test:",
-    test
-  );
+const router = useRouter()
 
   const HIGHLIGHTER = "HIGHLIGHTER";
   const toggleHighlighter = () =>
@@ -140,7 +139,9 @@ const ToolbarButtons = ({
       <div className={cn(s.last_date_update, {
         [s.showDate]: test === false
       })}>
-        <span>Тут будет дата последнего изменения заметки</span>
+
+        {router.asPath.split("/")[1] === `${RECYCLE}` ? <span>Тут будет дата удаления заметки </span>:<span>Тут будет дата последнего изменения заметки</span>}
+  
       </div>
 
       <div

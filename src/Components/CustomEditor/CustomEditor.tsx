@@ -265,14 +265,8 @@ const CustomEditor = ({
 
   return (
     <>
-    <div 
-      className={cn({
-            [s.hide]: router.asPath.split("/")[1] === `${RECYCLE}`,
-          })}>
-    
-   
+    <div >
       <div className={s.toolbar}>
-         
 
           <ToolbarButtons
             test ={test}
