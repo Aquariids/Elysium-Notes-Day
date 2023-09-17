@@ -48,6 +48,7 @@ const CustomEditor = ({
   const [value, setValue] = useState(title);
   const [code, setCode] = useState(selectedItem.code || false)
   const { data: session } = useSession();
+  const [test, setTest] = useState(false);
   const _id = id;
   const router = useRouter();
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
@@ -55,6 +56,7 @@ const CustomEditor = ({
     hljs.initHighlighting();
 },[code]);
   const refActiveMenu = useRef<HTMLDivElement>(null);
+
   const btn_hide = hideNotes ? <>Показать заметку</> : <>Скрыть заметку</>;    
   async function hideLink(currentLink: string) {
     if (selectedItem) {
@@ -130,8 +132,12 @@ const CustomEditor = ({
   const handleEditorChange = useCallback(
     (editorState: SetStateAction<EditorState | any>) => {
       // Сравниваем текущее состояние с предыдущим состоянием
+      // equals сравнивает contentState
+    
+   
       if (!previousEditorState || !editorState.getCurrentContent().equals(previousEditorState.getCurrentContent())) {
         // Здесь регистрируем изменение
+        setTest(true)
         if (editorChanged) {
           console.log('Текст был изменен');
         } else {
@@ -148,6 +154,7 @@ const CustomEditor = ({
     [previousEditorState, editorChanged]
   );
   
+ 
 
   const handleOutsideClick = (event: any) => {
     if (
@@ -165,6 +172,10 @@ const CustomEditor = ({
     };
   }, []);
 
+
+  
+
+ 
   useEffect(() => {
     setValue(title);
   }, [title]);
@@ -254,16 +265,17 @@ const CustomEditor = ({
 
   return (
     <>
-    <div  className={cn({
+    <div 
+      className={cn({
             [s.hide]: router.asPath.split("/")[1] === `${RECYCLE}`,
           })}>
-    <div className={s.header_toolbar}>
-      <div className={cn(s.toolbar_header_btns, s.toolbar)}></div></div>
+    
    
       <div className={s.toolbar}>
-     
-        
+         
+
           <ToolbarButtons
+            test ={test}
             code={code}
             setCode={setCode}
             modeCode={modeCode}
@@ -312,6 +324,7 @@ const CustomEditor = ({
           </div>
         </div>
       </div>
+
 </div>
       <WrapperEditorRecycle routerReclycle={routerReclycle}>
         <div>
@@ -334,6 +347,7 @@ const CustomEditor = ({
             <DraftTextForCode editorState={editorState}/>
             </code>
             </pre> : <Editor
+            
               placeholder="Введите текст"
               editorKey="editor"
               editorState={editorState}
