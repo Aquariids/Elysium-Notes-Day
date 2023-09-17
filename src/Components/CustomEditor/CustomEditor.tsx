@@ -324,7 +324,6 @@ const CustomEditor = ({
         <div>
           <div
             className={cn(s.body, {
-              [s.block]: routerReclycle,
               [s.hideNote]: hideNotes ||  selectedItem.block === true && routerReclycle
             })}
           >
@@ -332,6 +331,7 @@ const CustomEditor = ({
               placeholder="Заголовок"
               value={value}
               className={cn(s.title, {
+                [s.block]: routerReclycle,
                 [s.hideNote]: hideNotes ||  selectedItem.block === true && routerReclycle
               })}
               onChange={(e) => setValue(e.target.value)}
@@ -340,7 +340,9 @@ const CustomEditor = ({
           <code className={s.code}>
             <DraftTextForCode editorState={editorState} setTest ={setTest}/>
             </code>
-            </pre> : <Editor
+            </pre> : <div className={cn(
+              {[s.block]: routerReclycle,}
+            )}><Editor
             
               placeholder="Введите текст"
               editorKey="editor"
@@ -350,7 +352,7 @@ const CustomEditor = ({
               keyBindingFn={getDefaultKeyBindingFn}
               blockStyleFn={blockStyleFn}
               customStyleMap={styleMap}
-            />}
+            /></div>}
           </div>
         </div>
       </WrapperEditorRecycle>
