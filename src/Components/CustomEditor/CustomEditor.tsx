@@ -344,7 +344,7 @@ const CustomEditor = ({
             />
             { code ? <pre className={cn('js',s.code_block)}>
           <code className={s.code}>
-            <DraftTextForCode editorState={editorState}/>
+            <DraftTextForCode editorState={editorState} setTest ={setTest}/>
             </code>
             </pre> : <Editor
             
