@@ -25,7 +25,12 @@ import { EditorStateProps } from "./CustomEditor.props";
 import cn from "classnames";
 import s from "./CustomEditor.module.scss";
 import * as Icons from "./icons";
-const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
+interface codeProps {
+  code:boolean,
+  setCode: any,
+  modeCode: () => {}
+}
+const ToolbarButtons = ({ editorState, setEditorState,code,setCode,modeCode }: EditorStateProps & codeProps) => {
 
   const HIGHLIGHTER = "HIGHLIGHTER";
   const toggleHighlighter = () =>
@@ -121,11 +126,12 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
   ];
   return (
     <div className={s.toolbarHeader}>
+      <div className={s.basic_btns}>
       {toolbarButtons.map((btn) => (
         <button
           title={btn.title}
           className={cn(s.btn, {
-            [s.btn_active]: btn.detector(editorState),
+            [s.btn_active]: btn.detector(editorState) && code != true,
           })}
           name={btn.name}
           key={btn.name}
@@ -137,13 +143,14 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
           {btn.children}
         </button>
       ))}
+      </div>
       <div className={s.alignmentBtns}>
         {alignmentButtons.map((btn) => (
           <button
             title={btn.title}
             key={btn.name}
             className={cn(s.btn, {
-              [s.btn_active]: btn.detector(editorState),
+              [s.btn_active]: btn.detector(editorState) && code != true,
             })}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -158,6 +165,13 @@ const ToolbarButtons = ({ editorState, setEditorState }: EditorStateProps) => {
           </button>
         ))}
       </div>
+
+      <button title="Режим для просмотра кода" className={cn(s.btn, {
+      [s.btn_active_code]: code === true
+    })} onClick={()=> {
+      setCode(!code)
+      modeCode()
+    }}><Icons.Code/></button>
     </div>
   );
 };

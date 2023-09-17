@@ -202,7 +202,6 @@ export async function updateBlockLink(data: any) {
 }
 
 export async function updateModeCode(data: any) {  
-  console.log("🚀 ~ file: dataFromDatabase.ts:205 ~ updateModeCode ~ data:", data)
   try {
     
     const id = new ObjectId(data._id);

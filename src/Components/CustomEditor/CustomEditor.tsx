@@ -30,9 +30,7 @@ import hljs from 'highlight.js';
 import javascript from 'highlight.js/lib/languages/javascript';
 hljs.registerLanguage('javascript', javascript);
 import 'highlight.js/styles/school-book.css';
-
 import DraftTextForCode from "./DraftTextForCode";
-import { Code } from "./icons";
 const CustomEditor = ({
   id,
   body,
@@ -243,21 +241,19 @@ const CustomEditor = ({
             [s.hide]: router.asPath.split("/")[1] === `${RECYCLE}`,
           })}>
     <div className={s.header_toolbar}>
-      <div className={cn(s.toolbar_header_btns, s.toolbar)}><button title="Режим для просмотра кода в заметке" className={cn(s.btn, s.btn_header, {
-      [s.btn_active]: code === true
-    })} onClick={()=> {
-      setCode(!code)
-      modeCode()
-    }}><Code/></button></div></div>
+      <div className={cn(s.toolbar_header_btns, s.toolbar)}></div></div>
    
       <div className={s.toolbar}>
-        <div>
+     
         
           <ToolbarButtons
+            code={code}
+            setCode={setCode}
+            modeCode={modeCode}
             editorState={editorState}
             setEditorState={setEditorState}
           />
-        </div>
+       
 
         <div
           ref={refActiveMenu}
@@ -331,8 +327,6 @@ const CustomEditor = ({
               customStyleMap={styleMap}
             />}
           </div>
-
-         
         </div>
       </WrapperEditorRecycle>
     </>

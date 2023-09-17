@@ -66,10 +66,8 @@
 
 
 .toolbarHeader {
-    padding-bottom: 5px;
-    padding-left: 10px;
     border-left: 1px solid rgba(122, 122, 122, 0.452);
-
+    margin-bottom: 5px;
 
 }
 
@@ -84,15 +82,19 @@
 
 
 .alignmentBtns {
-    &:last-child {
-        padding-right: 10px;
-    }
-
     padding-left: 10px;
+    padding-right: 10px;
     border-left: 1px solid rgba(122, 122, 122, 0.452);
+    border-right: 1px solid rgba(122, 122, 122, 0.452);
     display: inline-block;
 }
 
+
+.basic_btns {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
 .block {
 
@@ -252,7 +254,7 @@
 
 
 .header_toolbar {
-    align-items: center;
+   align-items: center;
     padding-left: 0px;
     display: flex;
     height: 55px;
@@ -270,4 +272,11 @@
 .btn_header {
     padding: 0px;
     padding-left: 12px;
+}
+
+
+.btn_active_code {
+    svg {
+        fill:#1613e0;
+    }
 }
