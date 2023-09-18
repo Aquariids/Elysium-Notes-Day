@@ -48,7 +48,7 @@ const notes = ({ data }: any) => {
         setLinks(data);
       }
     } catch(err) {
-     console.log(err);
+      console.error(err);
      
       
     }
@@ -73,11 +73,9 @@ const notes = ({ data }: any) => {
             }),
           }
         );
-      } catch (error) {
-        console.log(
-          "🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:",
-          error
-        );
+      } catch (err) {
+       console.error(err);
+       
       }
     },
     [sort]
@@ -161,6 +159,10 @@ const notes = ({ data }: any) => {
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
+
+  try {
+
+  
   if (!session) {
     return {
       redirect: {
@@ -180,6 +182,12 @@ export async function getServerSideProps(context: any) {
   return {
     props: { data },
   };
+}
+
+catch(err) {
+  console.error(err);
+  
+}
 }
 
 export default withLayout(notes);

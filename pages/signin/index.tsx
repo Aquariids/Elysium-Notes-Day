@@ -46,6 +46,7 @@ export default Login;
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
+  try {
   if (session) {
     return {
       redirect: {
@@ -57,4 +58,8 @@ export async function getServerSideProps(context: any) {
   return {
     props: {},
   };
+
+} catch(err) {
+  alert(err)
+}
 }

@@ -75,13 +75,14 @@ const CustomEditor = ({
         if (updateRes.ok) {
           router.push(currentLink);
         } else {
-          console.error("Ошибка при обновлении данных");
+          console.error("Failed to update");
         }
       } catch (error) {
-        console.error("Ошибка при обновлении данных:", error);
+        alert("Failed to update note")
+        console.error(error);
       }
     } else {
-      console.error("Ссылка не найдена");
+      console.error("Link does not exist");
     }
   }
 
@@ -98,10 +99,11 @@ const CustomEditor = ({
           }
         );
       } catch (error) {
-        console.error("Ошибка при обновлении данных:", error);
+        alert("Failed to update")
+        console.error(error);
       }
     } else {
-      console.error("Ссылка не найдена");
+      console.error("Link does not exist");
     }
   }
   useEffect(() => {
@@ -202,10 +204,8 @@ const CustomEditor = ({
           }
         );
       } catch (error) {
-        console.log(
-          "🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:",
-          error
-        );
+        alert("Failed to update note")
+        console.error(error);
       }
     },
     []
@@ -232,7 +232,9 @@ const CustomEditor = ({
           }
         );
       } catch (error) {
-        alert(error);
+        alert("Failed to update note")
+        console.error(error);
+        
       }
     },
     []

@@ -20,25 +20,25 @@ export default async function handler(req: IRequest, res: NextApiResponse) {
   const userId = req.query.userId;
   const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(_id); // проверка на то, что _id mongodb в корректном формате
   const action:DeleteRestoreAction = req.query.action as DeleteRestoreAction;
-  if(!userId) res.status(500).send("Несуществующий userId. Пожалуйста авторизуйтесь.");
+  if(!userId) res.status(500).send("Non-existent userId. Please log in.");
   else {
     try {
       switch (action) {
         case "delete_one_notes_recycle":
           isValidObjectId && (await deleteDataRecycle(_id, userId));
-          res.status(200).send("Запись перенесена в корзину");
+          res.status(200).send("note moved to recycle bin");
           break;
         case "delete_one_notes":
           isValidObjectId && (await deleteData(_id, userId));
-          res.status(200).send("Запись из корзины удалена ");
+          res.status(200).send("The note has been deleted from the recycle bin");
           break;
         case "delete_all_notes_recycle":
           userId && (await deleteAllData(userId));
-          res.status(200).send("Все записи удалены");
+          res.status(200).send("All notes deleted");
           break;
         case "restore_data":
           await restoreDataRecycle(_id, userId);
-          res.status(200).send('Запись восстановлена');
+          res.status(200).send('Note restored');
           break;
   
       }
@@ -46,7 +46,7 @@ export default async function handler(req: IRequest, res: NextApiResponse) {
       res
         .status(500)
         .send(
-          "Недопустимый формат идентификатора _id"
+          "Invalid _id format"
         );
     }
   }

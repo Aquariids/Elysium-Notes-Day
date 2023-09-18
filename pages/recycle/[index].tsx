@@ -112,6 +112,8 @@ const notes = ({ data }: any) => {
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
+
+  try {
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(
@@ -131,6 +133,11 @@ export async function getServerSideProps(context: any) {
   return {
     props: { data },
   };
+
+} catch(err) {
+  console.error(err);
+  
+}
 }
 
 export default withLayout(notes);
