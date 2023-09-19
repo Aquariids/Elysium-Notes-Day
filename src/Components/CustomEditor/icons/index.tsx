@@ -11,9 +11,9 @@ import BlockQuote from './blockQuote.svg';
 import Highlighter from './highlighter.svg';
 import Strikethrough from './strikethrough.svg';
 import Code from './code.svg';
+import Heading from './heading.svg';
 
 
 
 
-
-export  {Bold, Italic,Underline,AlignCenter,AlignLeft,AlignRight,ListUl,ListOl,BlockQuote,Highlighter,AlignJustify,Strikethrough,Code};
+export  {Bold, Italic,Underline,AlignCenter,AlignLeft,AlignRight,ListUl,ListOl,BlockQuote,Highlighter,AlignJustify,Strikethrough,Code,Heading};

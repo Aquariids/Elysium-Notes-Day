@@ -23,10 +23,11 @@ import {
 } from "contenido";
 import { EditorStateProps } from "./CustomEditor.props";
 import cn from "classnames";
-import s from "./CustomEditor.module.scss";
+import s from "./ToolbarButtons.module.scss";
 import * as Icons from "./icons";
 import { RECYCLE } from "../../../pages/api/paths";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 interface codeProps {
   code: boolean;
   setCode: any;
@@ -41,13 +42,66 @@ const ToolbarButtons = ({
   modeCode,
   showToolbar,
 }: EditorStateProps & codeProps) => {
-const router = useRouter()
-
+  const [showHeadingButtons, setShowHeadingButtons] = useState(false)
+  const router = useRouter();
   const HIGHLIGHTER = "HIGHLIGHTER";
   const toggleHighlighter = () =>
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER);
   const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
+const [visibleShow, setVisibleShow] = useState(false);
 
+useEffect(()=>{
+
+  if(showToolbar) { // короче дял того, что бы бар выезжал мне нужен overflow: hidden 
+    setTimeout(() => { // анимация идет 1.2s. Поэтому я через  1.2 секунду делаю  overflow: visible 
+      setVisibleShow(true) // overflow: visible  нужен в свою очередь, что бы я нормально отображал выпадающие меню. Пока у меня только heading
+    }, 1200)
+  }
+},[showToolbar])
+  const headingButtons = [
+    {
+      name: "bol2d",
+      handler: toggleBold,
+      detector: isBold,
+      children: <Icons.Bold />,
+      title: "Жирный",
+    },
+    {
+      name: "bol3d",
+      handler: toggleBold,
+      detector: isBold,
+      children: <Icons.Bold />,
+      title: "Жирный",
+    },
+    {
+      name: "bo4ld",
+      handler: toggleBold,
+      detector: isBold,
+      children: <Icons.Bold />,
+      title: "Жирный",
+    },
+    {
+      name: "bol5d",
+      handler: toggleBold,
+      detector: isBold,
+      children: <Icons.Bold />,
+      title: "Жирный",
+    },
+    {
+      name: "bo11ld",
+      handler: toggleBold,
+      detector: isBold,
+      children: <Icons.Bold />,
+      title: "Жирный",
+    },
+    {
+      name: "bo243ld",
+      handler: toggleBold,
+      detector: isBold,
+      children: <Icons.Bold />,
+      title: "Жирный",
+    },
+  ];
   const toolbarButtons = [
     {
       name: "bold",
@@ -135,17 +189,23 @@ const router = useRouter()
     },
   ];
   return (
-    <div className={s.toolbarHeader}>
-      <div className={cn(s.last_date_update, {
-        [s.showDate]: showToolbar === false
-      })}>
-
-        {router.asPath.split("/")[1] === `${RECYCLE}` ? <span>Тут будет дата удаления заметки </span>:<span>Тут будет дата последнего изменения заметки</span>}
-  
+    <div className={cn(s.toolbarHeader, {
+      [s.visibleShow]: visibleShow === true
+    })}>
+      <div
+        className={cn(s.last_date_update, {
+          [s.showDate]: showToolbar === false,
+        })}
+      >
+        {router.asPath.split("/")[1] === `${RECYCLE}` ? (
+          <span>Тут будет дата удаления заметки </span>
+        ) : (
+          <span>Тут будет дата последнего изменения заметки</span>
+        )}
       </div>
 
       <div
-        className={cn(s.hideBtns,{
+        className={cn(s.hideBtns, {
           [s.show]: showToolbar === true,
         })}
       >
@@ -166,7 +226,41 @@ const router = useRouter()
               {btn.children}
             </button>
           ))}
+          <div className={s.dropdown}>
+            <button 
+             onClick={(e) => {
+              setShowHeadingButtons(!showHeadingButtons);
+            }}
+            className={cn(s.dropbtn, {
+              [s.activeDots]: showHeadingButtons === true,
+            })}
+             >
+              <Icons.Heading/>
+            </button>
+            <div 
+              className={cn(s.dropdown_content, {
+                [s.show]: showHeadingButtons,
+              })}>
+              {headingButtons.map((btn) => (
+                <button
+                  title={btn.title}
+                  className={cn(s.btn, {
+                    [s.btn_active]: btn.detector(editorState) && code != true,
+                  })}
+                  name={btn.name}
+                  key={btn.name}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    btn.handler(editorState, setEditorState);
+                  }}
+                >
+                  {btn.children}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
+
         <div className={s.alignmentBtns}>
           {alignmentButtons.map((btn) => (
             <button

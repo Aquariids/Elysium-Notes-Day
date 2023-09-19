@@ -4,6 +4,12 @@ import { useState } from "react";
 const page = () => {
 const [isButtonClicked, setButtonClicked] = useState(false);
 const router = useRouter()
+
+
+
+
+
+
     const handleButtonClick = () => {
         // Вы можете добавить здесь логику для проверки разрешения.
         // Например, если пользователь авторизован и имеет право на доступ,
@@ -34,7 +40,7 @@ const router = useRouter()
       ) : (
         <p>Динамический путь создан, вы можете перейти на <a href="/book/1">/book/1</a></p>
       )}
-    </div>
+    </div> 
         </div>
 
         
