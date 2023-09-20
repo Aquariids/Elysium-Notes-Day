@@ -104,6 +104,9 @@ cursor: pointer;
 
 
 .add_notes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   cursor: pointer;
   background-color: transparent;
