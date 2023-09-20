@@ -32,35 +32,38 @@ hljs.registerLanguage("javascript", javascript);
 import "highlight.js/styles/school-book.css";
 import DraftTextForCode from "./DraftTextForCode/DraftTextForCode";
 import Toolbar from "./Toolbar/Toolbar";
+import { DateTime } from "luxon";
 const CustomEditor = ({
-  _id,
-  body,
-  title,
   setCheckTitle,
   data,
   setDeleteElement,
   setLoadingDelete,
-  hideNotes,
   selectedItem,
+  
 }: any) => {
   const router = useRouter();
   const [previousEditorState, setPreviousEditorState] =
     useState<EditorState | null>(null);
   const [editorChanged, setEditorChanged] = useState<boolean>(false);
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
-  const [value, setValue] = useState<string>(title);
+  const [value, setValue] = useState<string>(selectedItem.title);
   const [code, setCode] = useState<boolean>(selectedItem.code || false);
+  const [updateDate, setUpdateDate] = useState<string>( selectedItem.updateDate ? ` Последние изменения: ${selectedItem.updateDate}`: `Заметка создана: ${selectedItem.dateFull}`);
   const { data: session } = useSession();
   const [showToolbar, setShowToolbar] = useState<boolean>(false);
   const [routerReclycle, setRouterReclycle] = useState<boolean>(false);
   useEffect(() => {
     hljs.highlightAll();
   }, [code]);
+
+
   const refActiveMenu = useRef<HTMLDivElement>(null);
 
-  const btn_hide = hideNotes ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;
+  const btn_hide = selectedItem.block ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;
 
-
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const userDate = DateTime.now().setZone(userTimeZone);
+  
   async function hideLink(currentLink: string) {
     if (selectedItem) {
       const updatedLink = { ...selectedItem, block: !selectedItem.block };
@@ -118,19 +121,19 @@ const CustomEditor = ({
   // });
   // convertFromRaw - с помощью этого метода мы наш пустой объект превращаем в спец объект для draft js
   const [editorState, setEditorState] = useState(() => {
-    const contentState = convertFromRaw(JSON.parse(body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
+    const contentState = convertFromRaw(JSON.parse(selectedItem.body)); // и теперь на основе нашего спец объекта мы создаем состояние редактора. Изначально оно пустое.
     return EditorState.createWithContent(contentState);
   });
 
   const editorStateMemo = useMemo(() => {
-    const contentState = convertFromRaw(JSON.parse(body)); // тут мы парсим данные с базы в спец объект draft js
+    const contentState = convertFromRaw(JSON.parse(selectedItem.body)); // тут мы парсим данные с базы в спец объект draft js
     return EditorState.createWithContent(contentState); // и на его основе меняем состояние редактора
-  }, [body]);
+  }, [selectedItem.body]);
   useEffect(() => {
-    if (body) {
+    if (selectedItem.body) {
       setEditorState(editorStateMemo);
     }
-  }, [body]);
+  }, [selectedItem.body]);
 
   const handleEditorChange = useCallback(
     (editorState: SetStateAction<EditorState | any>) => {
@@ -148,7 +151,20 @@ const CustomEditor = ({
         
 
         if (editorChanged) {
-          console.log("Текст был изменен");
+          try {
+            const updatedLink = { ...selectedItem, updateDate:userDate.toFormat("EEEE, d MMMM yyyy HH:mm") };
+            const res = fetch(`/api/updateData?action=${update_action.update_date_last_changes}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(updatedLink),
+            });
+          }
+           catch(err) {
+            console.log(err);
+            
+           }
+         
+
         } else {
           // Редактор был изменен после инициализации
           setEditorChanged(true);
@@ -180,8 +196,8 @@ const CustomEditor = ({
   }, []);
 
   useEffect(() => {
-    setValue(title);
-  }, [title]);
+    setValue(selectedItem.title);
+  }, [selectedItem.title]);
 
   const updateData = useCallback(
     async (editorState: EditorState, session: any, _id: string) => {
@@ -246,18 +262,18 @@ const CustomEditor = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       if (routerReclycle === false) {
-        updateData(editorState, session, _id);
+        updateData(editorState, session, selectedItem._id);
         setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
       }
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [editorState, _id, session, updateData]);
+  }, [editorState, selectedItem._id, session, updateData]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (routerReclycle === false) {
-        updateTitle(session, _id, value);
+        updateTitle(session, selectedItem._id, value);
         setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
       }
     }, 300);
@@ -270,6 +286,7 @@ const CustomEditor = ({
       <div>
         <div className={s.toolbar}>
           <Toolbar
+            updateDate = {updateDate}
             showToolbar={showToolbar}
             code={code}
             setCode={setCode}
@@ -304,7 +321,7 @@ const CustomEditor = ({
               <div
                 className={s.hide_btn}
                 onClick={() => {
-                  hideLink(_id);
+                  hideLink(selectedItem._id);
                 }}
               >
                 {" "}
@@ -324,7 +341,7 @@ const CustomEditor = ({
           <div
             className={cn(s.body, {
               [s.hideNote]:
-                hideNotes || (selectedItem.block === true && routerReclycle),
+              selectedItem.block || (selectedItem.block === true && routerReclycle),
             })}
           >
             <TextareaAutosize
@@ -333,7 +350,7 @@ const CustomEditor = ({
               className={cn(s.title, {
                 [s.block]: routerReclycle,
                 [s.hideNote]:
-                  hideNotes || (selectedItem.block === true && routerReclycle),
+                selectedItem.block || (selectedItem.block === true && routerReclycle),
               })}
               onChange={(e) => setValue(e.target.value)}
             />

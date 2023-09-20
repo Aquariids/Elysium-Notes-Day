@@ -4,6 +4,7 @@ import {
   updateBlockLink,
   updateDataInDatabase,
   updateDataTitle,
+  updateLastDate,
   updateModeCode,
   updateNoteBookMainMenu,
 } from "./auth/lib/dataFromDatabase";
@@ -38,6 +39,11 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
         await updateActionSorting(data);
         res.status(200).send("update sorting action");
         break;
+        case update_action.update_date_last_changes:
+          await updateLastDate(data);
+          res.status(200).send("update date last changes");
+          break;
+        
       default:
         res.status(400).send("Invalid action");
         return;

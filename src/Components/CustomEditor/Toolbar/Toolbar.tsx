@@ -21,6 +21,7 @@ const ToolbarButtons = ({
   setCode,
   modeCode,
   showToolbar,
+  updateDate
 }: EditorStateProps & codeProps) => {
   const refActiveMenu = useRef<HTMLDivElement>(null);
   const [headingButtonActive, setHeadingButtonActive] = useState(false)
@@ -29,6 +30,7 @@ const ToolbarButtons = ({
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER);
   const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
 const [visibleShow, setVisibleShow] = useState(false);
+
 
 
 useEffect(() => {
@@ -75,7 +77,7 @@ const myButtons: buttonProps[] = [
         {router.asPath.split("/")[1] === `${RECYCLE}` ? (
           <span>Тут будет дата удаления заметки </span>
         ) : (
-          <span>Тут будет дата последнего изменения заметки</span>
+          <span>{updateDate}</span>
         )}
       </div>
       <div

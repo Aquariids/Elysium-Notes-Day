@@ -223,6 +223,32 @@ export async function updateModeCode(data: any) {
   }
 }
 
+
+export async function updateLastDate(data: any) {  
+  try {
+    
+    const id = new ObjectId(data._id);
+    const collection = await getCollection({
+      collectionName: `user_${data.userId}`,
+      db: "notes",
+    });
+    await collection.updateOne(
+      { _id: id },
+      {
+        $set: {
+          updateDate: data.updateDate,
+        },
+      } 
+    );
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
+
+
+
+
 export async function getNoteBookMainMenu(userId:string | string[] | undefined, email:string | string[] | undefined) {
   try {
     const query = userId && email ? { userId, email } : {};

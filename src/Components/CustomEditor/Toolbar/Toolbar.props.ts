@@ -1,5 +1,5 @@
 import { EditorState } from "draft-js";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 
 export const HIGHLIGHTER:string = "HIGHLIGHTER";
@@ -16,4 +16,5 @@ export interface codeProps {
     setCode: any;
     showToolbar: boolean;
     modeCode: () => {};
+    updateDate: string
   }

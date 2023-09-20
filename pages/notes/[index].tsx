@@ -141,12 +141,8 @@ const notes = ({ data }: any) => {
             data={data}
             checkTitle={checkTitle}
             setCheckTitle={setCheckTitle}
-            title={selectedItem.title}
-            body={selectedItem.body}
             key={selectedItem._id}
-            _id={selectedItem._id}
             selectedItem={selectedItem}
-            hideNotes={selectedItem.block}
           />
         )}
       </div>
