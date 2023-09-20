@@ -15,7 +15,6 @@ import {
 
 } from "contenido";
 
-import ToolbarButtons from "./ToolbarButtons";
 import { useSession } from "next-auth/react";
 import s from "./CustomEditor.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
@@ -32,6 +31,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 hljs.registerLanguage("javascript", javascript);
 import "highlight.js/styles/school-book.css";
 import DraftTextForCode from "./DraftTextForCode";
+import Toolbar from "./Toolbar/Toolbar";
 const CustomEditor = ({
   id,
   body,
@@ -55,7 +55,7 @@ const CustomEditor = ({
   const router = useRouter();
   const [routerReclycle, setRouterReclycle] = useState<boolean>();
   useEffect(() => {
-    hljs.initHighlighting();
+    hljs.highlightAll();
   }, [code]);
   const refActiveMenu = useRef<HTMLDivElement>(null);
 
@@ -270,7 +270,7 @@ const CustomEditor = ({
     <>
       <div>
         <div className={s.toolbar}>
-          <ToolbarButtons
+          <Toolbar
             showToolbar={showToolbar}
             code={code}
             setCode={setCode}
