@@ -65,6 +65,17 @@ const [visibleShow, setVisibleShow] = useState(false);
 
 
 
+useEffect(() => {
+  const buttons = document.querySelectorAll(`.${s.btn_active1}`).length;
+  
+  if(buttons > 0) {
+    setHeadingButtonActive(true)
+  } else {
+    setHeadingButtonActive(false)
+  }
+
+},[editorState])
+
 useEffect(()=>{
 
   if(showToolbar) { // короче дял того, что бы бар выезжал мне нужен overflow: hidden 
@@ -262,15 +273,14 @@ useEffect(()=>{
               {headingButtons.map((btn) => (
                 <button
                   title={btn.title}
-                  className={cn(s.btn, {
-                    [s.btn_active]: btn.detector(editorState) && code != true,
+                  className={cn(s.btn, s.heading_btn, {
+                    [s.btn_active1]: btn.detector(editorState) && code != true,
                   })}
                   name={btn.name}
                   key={btn.name}
                   onMouseDown={(e) => {
                     e.preventDefault();
                     btn.handler(editorState, setEditorState);
-                    setHeadingButtonActive(true)
                   }}
                 >
                   {btn.children}
