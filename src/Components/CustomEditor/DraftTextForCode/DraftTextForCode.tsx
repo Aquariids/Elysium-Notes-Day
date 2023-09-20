@@ -1,10 +1,17 @@
-import s from "./CustomEditor.module.scss";
+import { EditorState } from "draft-js";
+import s from "../CustomEditor.module.scss";
 import cn from "classnames";
+
+interface props {
+  editorState:EditorState,
+  setShowToolbar: (value: boolean) => void
+  routerReclycle: boolean
+}
 const DraftTextForCode = ({
   editorState,
   setShowToolbar,
   routerReclycle,
-}: any) => {
+}: props) => {
 
 
   const plainText = editorState.getCurrentContent().getPlainText();

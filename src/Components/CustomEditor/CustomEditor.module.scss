@@ -53,40 +53,6 @@
 }
 
 
-
-@keyframes fade {
-    from {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    to {
-        opacity: 0;
-        visibility: hidden;
-    }
-}
-
-.animated {
-    transition: all .2s;
-    animation: fade 3s ease-in-out forwards;
-}
-
-.modal {
-    z-index: 11111;
-    border-radius: 3px;
-    transition: all .2s;
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    height: 25px;
-    pointer-events: none;
-    background-color: rgba(255, 0, 0, 0.863);
-
-}
-
-
 .dropbtn {
     background-color: #FFF;
     color: white;

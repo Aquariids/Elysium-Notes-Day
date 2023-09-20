@@ -23,17 +23,17 @@ import cn from "classnames";
 import DotsMenu from "./dots.svg";
 import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
 import { styleMap } from "./styleMap";
-import WrapperEditorRecycle from "./WrapperEditorRecycle";
+import WrapperEditorRecycle from "./WrapperEditorRecycle/WrapperEditorRecycle";
 import { update_action } from "../../../pages/api/actios";
 import { RECYCLE } from "../../../pages/api/paths";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 hljs.registerLanguage("javascript", javascript);
 import "highlight.js/styles/school-book.css";
-import DraftTextForCode from "./DraftTextForCode";
+import DraftTextForCode from "./DraftTextForCode/DraftTextForCode";
 import Toolbar from "./Toolbar/Toolbar";
 const CustomEditor = ({
-  id,
+  _id,
   body,
   title,
   setCheckTitle,
@@ -43,17 +43,16 @@ const CustomEditor = ({
   hideNotes,
   selectedItem,
 }: any) => {
+  const router = useRouter();
   const [previousEditorState, setPreviousEditorState] =
     useState<EditorState | null>(null);
-  const [editorChanged, setEditorChanged] = useState(false);
+  const [editorChanged, setEditorChanged] = useState<boolean>(false);
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
-  const [value, setValue] = useState(title);
-  const [code, setCode] = useState(selectedItem.code || false);
+  const [value, setValue] = useState<string>(title);
+  const [code, setCode] = useState<boolean>(selectedItem.code || false);
   const { data: session } = useSession();
-  const [showToolbar, setShowToolbar] = useState(false);
-  const _id = id;
-  const router = useRouter();
-  const [routerReclycle, setRouterReclycle] = useState<boolean>();
+  const [showToolbar, setShowToolbar] = useState<boolean>(false);
+  const [routerReclycle, setRouterReclycle] = useState<boolean>(false);
   useEffect(() => {
     hljs.highlightAll();
   }, [code]);

@@ -1,8 +1,11 @@
-import { ReactNode, useState } from "react";
-import s from "./CustomEditor.module.scss";
-import Modal from "./ModalRecycle";
-import { WrapperEditorRecycleProps } from "./CustomEditor.props";
-
+import { DetailedHTMLProps, HTMLAttributes, ReactNode, useState } from "react";
+import s from "./WrapperEditorRecycle.module.scss";
+import ModalRecycle from "./ModalRecycle/ModalRecycle";
+export interface WrapperEditorRecycleProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  children: ReactNode;
+  routerReclycle:boolean
+  
+  }
 const WrapperEditorRecycle = ({ routerReclycle, children }: WrapperEditorRecycleProps) => {
   const [display, setDisplay] = useState("none");
   const [isAnimating, setIsAnimating] = useState(false);
@@ -30,7 +33,7 @@ const WrapperEditorRecycle = ({ routerReclycle, children }: WrapperEditorRecycle
       }}
     >
       {routerReclycle && (
-        <Modal
+        <ModalRecycle
           className={`${s.modal} ${isAnimating ? `${s.animated}` : ""}`}
           style={{
             display: display,

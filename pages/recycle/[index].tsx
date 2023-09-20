@@ -99,7 +99,7 @@ const notes = ({ data }: any) => {
             title={selectedItem.title}
             body={selectedItem.body}
             key={selectedItem._id}
-            id={selectedItem._id}
+            _id={selectedItem._id}
             selectedItem={selectedItem}
           />
         )}
