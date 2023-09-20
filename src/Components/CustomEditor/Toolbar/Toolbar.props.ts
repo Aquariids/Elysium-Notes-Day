@@ -23,4 +23,5 @@ export interface codeProps {
     showToolbar: boolean;
     modeCode: () => {};
     updateDate: string
+    hideNotes: boolean
   }

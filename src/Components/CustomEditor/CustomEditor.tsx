@@ -152,7 +152,7 @@ const CustomEditor = ({
 
         if (editorChanged) {
           try {
-            const updatedLink = { ...selectedItem, updateDate:userDate.toFormat("EEEE, d MMMM yyyy HH:mm") };
+            const updatedLink = { ...selectedItem, updateDate:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm") };
             const res = fetch(`/api/updateData?action=${update_action.update_date_last_changes}`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -286,6 +286,7 @@ const CustomEditor = ({
       <div>
         <div className={s.toolbar}>
           <Toolbar
+          hideNotes ={selectedItem.block}
             updateDate = {updateDate}
             showToolbar={showToolbar}
             code={code}
