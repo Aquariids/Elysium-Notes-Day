@@ -4,6 +4,7 @@
 
 
 .login {
+  margin-top: 20px;
     padding-left: 18px;
     display: flex;
     flex-direction: column;
@@ -11,6 +12,7 @@
     width: 200px;
 
     &_btn {
+      margin-top: 15px;
         color: #FFF;
         width: 100px;
         background-color: transparent; 
