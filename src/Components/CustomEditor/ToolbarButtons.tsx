@@ -55,32 +55,16 @@ const ToolbarButtons = ({
   showToolbar,
 }: EditorStateProps & codeProps) => {
   const refActiveMenu = useRef<HTMLDivElement>(null);
-  const [showHeadingButtons, setShowHeadingButtons] = useState(false)
+  const [headingButtonActive, setHeadingButtonActive] = useState(false)
   const router = useRouter();
   const HIGHLIGHTER = "HIGHLIGHTER";
   const toggleHighlighter = () =>
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER);
   const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
 const [visibleShow, setVisibleShow] = useState(false);
-const handleOutsideClick = (event: any) => {
-  if (
-    refActiveMenu.current &&
-    !refActiveMenu.current.contains(event.target)
-  ) {
-    setShowHeadingButtons(false);
-    
-
-  }
-};
 
 
 
-useEffect(() => {
-  document.addEventListener("click", handleOutsideClick, false);
-  return () => {
-    document.removeEventListener("click", handleOutsideClick, false);
-  };
-}, []);
 useEffect(()=>{
 
   if(showToolbar) { // короче дял того, что бы бар выезжал мне нужен overflow: hidden 
@@ -265,19 +249,15 @@ useEffect(()=>{
           ))}
           <div ref={refActiveMenu} className={s.dropdown}>
             <button 
-             onClick={(e) => {
-              setShowHeadingButtons(!showHeadingButtons);
-            
-            }}
             className={cn(s.dropbtn, {
-              [s.activeDots]: showHeadingButtons === true,
+              [s.btn_active]: headingButtonActive === true,
             })}
              >
               <Icons.Heading/>
             </button>
             <div 
               className={cn(s.dropdown_content, {
-                [s.show]: showHeadingButtons,
+             
               })}>
               {headingButtons.map((btn) => (
                 <button
@@ -290,7 +270,7 @@ useEffect(()=>{
                   onMouseDown={(e) => {
                     e.preventDefault();
                     btn.handler(editorState, setEditorState);
-                    
+                    setHeadingButtonActive(true)
                   }}
                 >
                   {btn.children}
@@ -309,6 +289,7 @@ useEffect(()=>{
                 [s.btn_active]: btn.detector(editorState) && code != true,
               })}
               onMouseDown={(e) => {
+             
                 e.preventDefault();
                 toggleTextAlign(
                   editorState,
