@@ -11,7 +11,7 @@ import * as Icons from "./icons";
 import { RECYCLE } from "../../../../pages/api/paths";
 import { useRouter } from "next/router";
 import {useEffect, useRef, useState } from "react";
-import {alignmentButtons, basicButtons, headingButtons} from './buttons'
+import {alignmentButtons, basicButtons, headingButtons} from './Buttons'
 import { HIGHLIGHTER, buttonProps, codeProps } from "./Toolbar.props";
 
 const ToolbarButtons = ({

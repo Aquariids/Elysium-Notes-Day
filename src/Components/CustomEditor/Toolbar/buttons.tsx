@@ -1,6 +1,6 @@
 import { isBlockquote, isBold, isH1, isH2, isH3, isH4, isH5, isH6,  isItalic, isLineThrough, isOL, isTextCenterAligned, isTextJustifyAligned, isTextLeftAligned, isTextRightAligned, isUL, isUnderline, toggleBlockquote, toggleBold, toggleH1, toggleH2, toggleH3, toggleH4, toggleH5, toggleH6, toggleHighlighter, toggleItalic, toggleLineThrough, toggleOL, toggleUL, toggleUnderline } from "contenido";
 import * as Icons from "./icons";
-import { buttonProps } from "./Toolbar.props";
+import { alignmentButtonProps, buttonProps } from "./Toolbar.props";
 
 
 
@@ -51,7 +51,7 @@ export const headingButtons:buttonProps[] = [
   ];
 
 
-export const alignmentButtons:buttonProps[] = [
+export const alignmentButtons:alignmentButtonProps[] = [
     {
       name: "left",
       detector: isTextLeftAligned,

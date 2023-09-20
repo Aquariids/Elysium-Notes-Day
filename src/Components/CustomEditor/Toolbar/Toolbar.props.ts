@@ -11,6 +11,12 @@ export interface buttonProps {
         title: string;
 }
 
+export interface alignmentButtonProps {
+    name: string;
+    detector: (editorState: any) => boolean;
+    children: React.ReactNode;
+    title: string;
+}
 export interface codeProps {
     code: boolean;
     setCode: any;
