@@ -43,7 +43,6 @@ const CustomEditor = ({
   hideNotes,
   selectedItem,
 }: any) => {
-  const [placeholder, setPlaceholder] = useState<any>(<span className={s.placeholder_editor}>...Введите текст</span>);
   const [previousEditorState, setPreviousEditorState] =
     useState<EditorState | null>(null);
   const [editorChanged, setEditorChanged] = useState(false);
@@ -272,7 +271,6 @@ const CustomEditor = ({
       <div>
         <div className={s.toolbar}>
           <ToolbarButtons
-            setPlaceholder ={setPlaceholder}
             showToolbar={showToolbar}
             code={code}
             setCode={setCode}
@@ -351,7 +349,7 @@ const CustomEditor = ({
             ) : (
               <div className={cn({ [s.block]: routerReclycle })}>
                 <Editor
-                  placeholder={placeholder}
+                  placeholder='...Введите текст'
                   editorKey="editor"
                   editorState={editorState}
                   onChange={handleEditorChange}

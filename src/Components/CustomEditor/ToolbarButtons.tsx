@@ -45,7 +45,6 @@ interface codeProps {
   setCode: any;
   showToolbar: boolean;
   modeCode: () => {};
-  setPlaceholder: any
 }
 const ToolbarButtons = ({
   editorState,
@@ -54,7 +53,6 @@ const ToolbarButtons = ({
   setCode,
   modeCode,
   showToolbar,
-  setPlaceholder
 }: EditorStateProps & codeProps) => {
   const refActiveMenu = useRef<HTMLDivElement>(null);
   const [showHeadingButtons, setShowHeadingButtons] = useState(false)
@@ -96,43 +94,43 @@ useEffect(()=>{
       name: "h1",
       handler: toggleH1,
       detector: isH1,
-      children: <Icons.Bold />,
-      title: "Жирный",
+      children: <Icons.H1 />,
+      title: "Заголовок 1",
     },
     {
       name: "h2",
       handler: toggleH2,
       detector: isH2,
-      children: <Icons.Bold />,
-      title: "Жирный",
+      children: <Icons.H2 />,
+      title: "Заголовок 2",
     },
     {
       name: "h3",
       handler: toggleH3,
       detector: isH3,
-      children: <Icons.Bold />,
-      title: "Жирный",
+      children: <Icons.H3 />,
+      title: "Заголовок 3",
     },
     {
       name: "h4",
       handler: toggleH4,
       detector: isH4,
-      children: <Icons.Bold />,
-      title: "Жирный",
+      children: <Icons.H4 />,
+      title: "Заголовок 4",
     },
     {
       name: "h5",
       handler: toggleH5,
       detector: isH5,
-      children: <Icons.Bold />,
-      title: "Жирный",
+      children: <Icons.H5 />,
+      title: "Заголовок 5",
     },
     {
       name: "h6",
       handler: toggleH6,
       detector: isH6,
-      children: <Icons.Bold />,
-      title: "Жирный",
+      children: <Icons.H6 />,
+      title: "Заголовк 6",
     },
   ];
   const toolbarButtons = [
