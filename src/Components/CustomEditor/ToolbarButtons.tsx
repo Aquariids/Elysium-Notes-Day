@@ -20,6 +20,18 @@ import {
   isTextJustifyAligned,
   isLineThrough,
   toggleLineThrough,
+  isH1,
+  toggleH1,
+  isH2,
+  toggleH2,
+  isH3,
+  toggleH3,
+  isH4,
+  toggleH4,
+  isH5,
+  toggleH5,
+  isH6,
+  toggleH6,
 } from "contenido";
 import { EditorStateProps } from "./CustomEditor.props";
 import cn from "classnames";
@@ -27,12 +39,13 @@ import s from "./ToolbarButtons.module.scss";
 import * as Icons from "./icons";
 import { RECYCLE } from "../../../pages/api/paths";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 interface codeProps {
   code: boolean;
   setCode: any;
   showToolbar: boolean;
   modeCode: () => {};
+  setPlaceholder: any
 }
 const ToolbarButtons = ({
   editorState,
@@ -41,7 +54,9 @@ const ToolbarButtons = ({
   setCode,
   modeCode,
   showToolbar,
+  setPlaceholder
 }: EditorStateProps & codeProps) => {
+  const refActiveMenu = useRef<HTMLDivElement>(null);
   const [showHeadingButtons, setShowHeadingButtons] = useState(false)
   const router = useRouter();
   const HIGHLIGHTER = "HIGHLIGHTER";
@@ -49,7 +64,25 @@ const ToolbarButtons = ({
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER);
   const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
 const [visibleShow, setVisibleShow] = useState(false);
+const handleOutsideClick = (event: any) => {
+  if (
+    refActiveMenu.current &&
+    !refActiveMenu.current.contains(event.target)
+  ) {
+    setShowHeadingButtons(false);
+    
 
+  }
+};
+
+
+
+useEffect(() => {
+  document.addEventListener("click", handleOutsideClick, false);
+  return () => {
+    document.removeEventListener("click", handleOutsideClick, false);
+  };
+}, []);
 useEffect(()=>{
 
   if(showToolbar) { // короче дял того, что бы бар выезжал мне нужен overflow: hidden 
@@ -60,44 +93,44 @@ useEffect(()=>{
 },[showToolbar])
   const headingButtons = [
     {
-      name: "bol2d",
-      handler: toggleBold,
-      detector: isBold,
+      name: "h1",
+      handler: toggleH1,
+      detector: isH1,
       children: <Icons.Bold />,
       title: "Жирный",
     },
     {
-      name: "bol3d",
-      handler: toggleBold,
-      detector: isBold,
+      name: "h2",
+      handler: toggleH2,
+      detector: isH2,
       children: <Icons.Bold />,
       title: "Жирный",
     },
     {
-      name: "bo4ld",
-      handler: toggleBold,
-      detector: isBold,
+      name: "h3",
+      handler: toggleH3,
+      detector: isH3,
       children: <Icons.Bold />,
       title: "Жирный",
     },
     {
-      name: "bol5d",
-      handler: toggleBold,
-      detector: isBold,
+      name: "h4",
+      handler: toggleH4,
+      detector: isH4,
       children: <Icons.Bold />,
       title: "Жирный",
     },
     {
-      name: "bo11ld",
-      handler: toggleBold,
-      detector: isBold,
+      name: "h5",
+      handler: toggleH5,
+      detector: isH5,
       children: <Icons.Bold />,
       title: "Жирный",
     },
     {
-      name: "bo243ld",
-      handler: toggleBold,
-      detector: isBold,
+      name: "h6",
+      handler: toggleH6,
+      detector: isH6,
       children: <Icons.Bold />,
       title: "Жирный",
     },
@@ -188,6 +221,10 @@ useEffect(()=>{
       title: "Выравнивание по ширине",
     },
   ];
+
+ 
+
+  
   return (
     <div className={cn(s.toolbarHeader, {
       [s.visibleShow]: visibleShow === true
@@ -212,6 +249,7 @@ useEffect(()=>{
         <div className={s.basic_btns}>
           {toolbarButtons.map((btn) => (
             <button
+          
               title={btn.title}
               className={cn(s.btn, {
                 [s.btn_active]: btn.detector(editorState) && code != true,
@@ -219,6 +257,7 @@ useEffect(()=>{
               name={btn.name}
               key={btn.name}
               onMouseDown={(e) => {
+               
                 e.preventDefault();
                 btn.handler(editorState, setEditorState);
               }}
@@ -226,10 +265,11 @@ useEffect(()=>{
               {btn.children}
             </button>
           ))}
-          <div className={s.dropdown}>
+          <div ref={refActiveMenu} className={s.dropdown}>
             <button 
              onClick={(e) => {
               setShowHeadingButtons(!showHeadingButtons);
+            
             }}
             className={cn(s.dropbtn, {
               [s.activeDots]: showHeadingButtons === true,
@@ -252,6 +292,7 @@ useEffect(()=>{
                   onMouseDown={(e) => {
                     e.preventDefault();
                     btn.handler(editorState, setEditorState);
+                    
                   }}
                 >
                   {btn.children}

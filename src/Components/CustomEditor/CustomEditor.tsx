@@ -12,6 +12,7 @@ import {
   shortcutHandler,
   Editor,
   blockStyleFn,
+
 } from "contenido";
 
 import ToolbarButtons from "./ToolbarButtons";
@@ -42,6 +43,7 @@ const CustomEditor = ({
   hideNotes,
   selectedItem,
 }: any) => {
+  const [placeholder, setPlaceholder] = useState<any>(<span className={s.placeholder_editor}>...Введите текст</span>);
   const [previousEditorState, setPreviousEditorState] =
     useState<EditorState | null>(null);
   const [editorChanged, setEditorChanged] = useState(false);
@@ -59,6 +61,8 @@ const CustomEditor = ({
   const refActiveMenu = useRef<HTMLDivElement>(null);
 
   const btn_hide = hideNotes ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;
+
+
   async function hideLink(currentLink: string) {
     if (selectedItem) {
       const updatedLink = { ...selectedItem, block: !selectedItem.block };
@@ -134,7 +138,7 @@ const CustomEditor = ({
     (editorState: SetStateAction<EditorState | any>) => {
       // Сравниваем текущее состояние с предыдущим состоянием
       // equals сравнивает contentState
-
+  
       if (
         !previousEditorState ||
         !editorState
@@ -143,6 +147,7 @@ const CustomEditor = ({
       ) {
         // Здесь регистрируем изменение
         setShowToolbar(true);
+        
 
         if (editorChanged) {
           console.log("Текст был изменен");
@@ -159,7 +164,7 @@ const CustomEditor = ({
     },
     [previousEditorState, editorChanged]
   );
-
+ 
   const handleOutsideClick = (event: any) => {
     if (
       refActiveMenu.current &&
@@ -267,6 +272,7 @@ const CustomEditor = ({
       <div>
         <div className={s.toolbar}>
           <ToolbarButtons
+            setPlaceholder ={setPlaceholder}
             showToolbar={showToolbar}
             code={code}
             setCode={setCode}
@@ -345,7 +351,7 @@ const CustomEditor = ({
             ) : (
               <div className={cn({ [s.block]: routerReclycle })}>
                 <Editor
-                  placeholder="Введите текст"
+                  placeholder={placeholder}
                   editorKey="editor"
                   editorState={editorState}
                   onChange={handleEditorChange}
