@@ -236,7 +236,7 @@ export async function updateLastDate(data: any) {
       { _id: id },
       {
         $set: {
-          updateDate: data.updateDate,
+          updateDate: data.updateDate ?? '',
         },
       } 
     );

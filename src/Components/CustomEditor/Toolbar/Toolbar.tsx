@@ -11,7 +11,7 @@ import { RECYCLE } from "../../../../pages/api/paths";
 import { useRouter } from "next/router";
 import {useEffect, useRef, useState } from "react";
 import { HIGHLIGHTER, buttonProps, codeProps,alignmentButtonProps } from "./Toolbar.props";
-import { isBlockquote, isBold, isH1, isH2, isH3, isH4, isH5, isH6,  isItalic, isLineThrough, isOL, isTextCenterAligned, isTextJustifyAligned, isTextLeftAligned, isTextRightAligned, isUL, isUnderline, toggleBlockquote, toggleBold, toggleH1, toggleH2, toggleH3, toggleH4, toggleH5, toggleH6, toggleHighlighter, toggleItalic, toggleLineThrough, toggleOL, toggleUL, toggleUnderline } from "contenido";
+import { isBlockquote, isBold, isH1, isH2, isH3, isH4, isH5, isH6,  isItalic, isLineThrough, isOL, isTextCenterAligned, isTextJustifyAligned, isTextLeftAligned, isTextRightAligned, isUL, isUnderline, toggleBlockquote, toggleBold, toggleH1, toggleH2, toggleH3, toggleH4, toggleH5, toggleH6, toggleItalic, toggleLineThrough, toggleOL, toggleUL, toggleUnderline } from "contenido";
 import * as Icons from "./icons";
 
 
