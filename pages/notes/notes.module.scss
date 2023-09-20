@@ -9,9 +9,14 @@
 
 .alert {
     padding: 15px;
+
     
 }
 
+.recycle_alert {
+    height: 100vh;
+    border-right: 1px solid black;
+}
 .list {
     margin-right: 5px;
     margin-left: 3px;
@@ -23,9 +28,9 @@
     display: inline-block;
 }
 .container {
+max-height: calc(100vh - 110px);
 overflow-y: scroll;
 overflow-x: hidden;
-max-height: 100%;
 width: 308px; 
 
 }
@@ -61,9 +66,6 @@ width: 308px;
 }
 
 
-.notes_list {
-    height: 90vh;
-}
 
 .editor {
 

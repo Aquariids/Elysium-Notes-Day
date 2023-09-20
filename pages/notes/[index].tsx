@@ -112,7 +112,7 @@ const notes = ({ data }: any) => {
     <AnimationContainer> 
     <div className={s.wrapper}>
      
-      <div className={s.notes_list}>
+      <div>
         <HeaderNotes setSort={setSort} sort={sort} data={data} />
         <div className={s.container}>
        

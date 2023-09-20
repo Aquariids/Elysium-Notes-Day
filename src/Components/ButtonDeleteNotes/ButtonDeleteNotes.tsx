@@ -84,7 +84,7 @@ const ButtonDeleteNotes = ({
             }
             className={s.delete}
           >
-            <p>Восстановить запись</p>
+            <p className={s.text}>Восстановить запись</p>
           </div>
           <div
             onClick={() =>
@@ -92,7 +92,7 @@ const ButtonDeleteNotes = ({
             }
             className={s.delete}
           >
-            <p>Окончательно удалить</p>
+            <p className={s.text}>Окончательно удалить</p>
           </div>
         </>
       ) : (
@@ -101,7 +101,7 @@ const ButtonDeleteNotes = ({
           onClick={() => handleDeleteLink({ linkId: selectedId })}
           {...props}
         >
-          <p>Переместить в корзину</p>
+          <p className={s.text}>Переместить в корзину</p>
         </div>
       )}
     </>

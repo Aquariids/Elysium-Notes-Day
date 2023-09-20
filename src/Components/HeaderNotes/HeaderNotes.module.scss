@@ -34,12 +34,10 @@
         color: black;
     }
     cursor: pointer;
-    padding: 5px;
     width: 100px;
     border-radius: 3px;
     border: 1px solid rgb(131, 130, 130);
     color: rgb(89, 90, 90);
-
 }
 
 .recycle {
@@ -50,10 +48,11 @@
 }
 
 .header__foter {
-
     height: 32px;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 5px;
+    margin-top: 10px;
 }
 
 

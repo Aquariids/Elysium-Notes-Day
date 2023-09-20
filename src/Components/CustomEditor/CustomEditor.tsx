@@ -58,7 +58,7 @@ const CustomEditor = ({
   }, [code]);
   const refActiveMenu = useRef<HTMLDivElement>(null);
 
-  const btn_hide = hideNotes ? <>Показать заметку</> : <>Скрыть заметку</>;
+  const btn_hide = hideNotes ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;
   async function hideLink(currentLink: string) {
     if (selectedItem) {
       const updatedLink = { ...selectedItem, block: !selectedItem.block };

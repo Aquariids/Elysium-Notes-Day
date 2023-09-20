@@ -119,9 +119,9 @@
     position: absolute;
     right: 25px;
     background-color: #f1f1f1;
-    min-width: 160px;
+    min-width: 180px;
     padding: 10px;
-    min-height: 125px;
+    min-height: 100%;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     visibility: hidden;
@@ -130,7 +130,6 @@
 
 
 .dropdown_content a {
-
     opacity: 1;
     transition: background-color 0.5s;
     color: black;
@@ -218,3 +217,7 @@
 
 
 
+.text {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
