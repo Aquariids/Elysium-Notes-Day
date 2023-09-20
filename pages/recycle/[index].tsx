@@ -93,15 +93,12 @@ const notes = ({ data }: any) => {
       <div className={s.editor}>
         {selectedItem && (
           <CustomEditor
-            data={data}
-            checkTitle={checkTitle}
-            setCheckTitle={setCheckTitle}
-            title={selectedItem.title}
-            body={selectedItem.body}
-            key={selectedItem._id}
-            _id={selectedItem._id}
-            selectedItem={selectedItem}
-          />
+          data={data}
+          checkTitle={checkTitle}
+          setCheckTitle={setCheckTitle}
+          key={selectedItem._id}
+          selectedItem={selectedItem}
+        />
         )}
       </div>
      
