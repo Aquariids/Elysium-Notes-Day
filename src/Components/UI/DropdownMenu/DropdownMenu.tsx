@@ -32,8 +32,8 @@ const DropdownMenuEditor = ({children,icon,routerReclycle = false, style,toolbar
             setActiveMenu(!activeMenu);
           }}
           className={cn(style ? style.dropbtn: s.dropbtn, {
-            [style ? style.active : s.active]: activeMenu === true,
-            [s.active]: toolbar === true
+            [style ? style.active : s.active]: activeMenu,
+            [s.activeToolbar]: toolbar === true
           })}
         >
           {" "}
