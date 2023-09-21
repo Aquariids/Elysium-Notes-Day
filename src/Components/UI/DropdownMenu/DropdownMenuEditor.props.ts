@@ -5,6 +5,7 @@ export interface DropdownMenuEditorProps {
     icon: JSX.Element
     routerReclycle?:boolean
     toolbar?:boolean
+    highlighterButtons?:boolean
     style?: {
         dropdown:string
         dropdown_content:string

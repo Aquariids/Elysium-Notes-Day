@@ -9,7 +9,16 @@ import s from "./Toolbar.module.scss";
 import { RECYCLE } from "../../../../pages/api/paths";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { HIGHLIGHTER_YELLOW, buttonProps, codeProps } from "./Toolbar.props";
+import {
+  HIGHLIGHTER_BLUE,
+  HIGHLIGHTER_BROWN,
+  HIGHLIGHTER_GREEN,
+  HIGHLIGHTER_PINK,
+  HIGHLIGHTER_VIOLET,
+  HIGHLIGHTER_YELLOW,
+  buttonProps,
+  codeProps,
+} from "./Toolbar.props";
 import * as Icons from "./icons";
 import { alignmentButtons, basicButtons, headingButtons } from "./Buttons";
 import DropdownMenu from "@/Components/UI/DropdownMenu/DropdownMenu";
@@ -26,11 +35,37 @@ const ToolbarButtons = ({
 }: EditorStateProps & codeProps) => {
   const [headingButtonActive, setHeadingButtonActive] = useState(false);
   const [highlighterButtonActive, setHighlighterButtonActive] = useState(false);
+  const [visibleShow, setVisibleShow] = useState(false);
   const router = useRouter();
   const toggleHighlighterYellow = () =>
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER_YELLOW);
-  const isHighlighterYellow = () => hasInlineStyleOf(editorState, HIGHLIGHTER_YELLOW);
-  const [visibleShow, setVisibleShow] = useState(false);
+  const isHighlighterYellow = () =>
+    hasInlineStyleOf(editorState, HIGHLIGHTER_YELLOW);
+
+  const toggleHighlighterPink = () =>
+    toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER_PINK);
+  const isHighlighterPink = () =>
+    hasInlineStyleOf(editorState, HIGHLIGHTER_PINK);
+
+  const toggleHighlighterGreen = () =>
+    toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER_GREEN);
+  const isHighlighterGreen = () =>
+    hasInlineStyleOf(editorState, HIGHLIGHTER_GREEN);
+
+  const toggleHighlighterBlue = () =>
+    toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER_BLUE);
+  const isHighlighterBlue = () =>
+    hasInlineStyleOf(editorState, HIGHLIGHTER_BLUE);
+
+  const toggleHighlighterViolet = () =>
+    toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER_VIOLET);
+  const isHighlighterViolet = () =>
+    hasInlineStyleOf(editorState, HIGHLIGHTER_VIOLET);
+
+  const toggleHighlighterBrown = () =>
+    toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER_BROWN);
+  const isHighlighterBrown = () =>
+    hasInlineStyleOf(editorState, HIGHLIGHTER_BROWN);
 
   useEffect(() => {
     const buttons_heading = document.querySelectorAll(
@@ -66,11 +101,46 @@ const ToolbarButtons = ({
 
   const highlighterButtons: buttonProps[] = [
     {
-      name: "highlighter",
+      name: "HIGHLIGHTER_YELLOW",
       handler: toggleHighlighterYellow,
       detector: isHighlighterYellow,
-      children: <Icons.SquareYellow />,
-      title: "Выделение",
+      children: <Icons.Square className = {s.highlighter_yellow} />,
+      title: "Выделение желтым",
+    },
+    {
+      name: "HIGHLIGHTER_PINK",
+      handler: toggleHighlighterPink,
+      detector: isHighlighterPink,
+      children: <Icons.Square className = {s.highlighter_pink} />,
+      title: "Выделение розовым",
+    },
+    {
+      name: "HIGHLIGHTER_GREEN",
+      handler: toggleHighlighterGreen,
+      detector: isHighlighterGreen,
+      children: <Icons.Square className = {s.highlighter_green} />,
+      title: "Выделение зеленым",
+    },
+    {
+      name: "HIGHLIGHTER_BLUE",
+      handler: toggleHighlighterBlue,
+      detector: isHighlighterBlue,
+      children: <Icons.Square className = {s.highlighter_blue} />,
+      title: "Выделение синим",
+    },
+    {
+      name: "HIGHLIGHTER_VIOLET",
+      handler: toggleHighlighterViolet,
+      detector: isHighlighterViolet,
+      children: <Icons.Square className = {s.highlighter_violet} />,
+      title: "Выделение фиолетовым",
+    },
+    {
+      name: "HIGHLIGHTER_BROWN",
+      handler: toggleHighlighterBrown,
+      detector: isHighlighterBrown,
+      children: <Icons.Square className = {s.highlighter_brown} />,
+      title: "Выделение коричневым",
     },
   ];
 
@@ -127,6 +197,7 @@ const ToolbarButtons = ({
             </button>
           ))}
           <DropdownMenu
+            
             icon={<Icons.Highlighter />}
             style={dropdownStyle}
             toolbar={highlighterButtonActive}
@@ -134,10 +205,8 @@ const ToolbarButtons = ({
             {highlighterButtons.map((btn) => (
               <button
                 title={btn.title}
-                className={cn(s.btn, s.heading_btn, {
-                  [s.btn_active]: btn.detector(editorState) && code != true,
-                  [s.btn_active_highlighter]:
-                    btn.detector(editorState) && code != true,
+                className={cn(s.btn_highlighter, s.heading_btn, {
+                  [s.btn_active_highlighter]:btn.detector(editorState) && code != true,
                 })}
                 name={btn.name}
                 key={btn.name}

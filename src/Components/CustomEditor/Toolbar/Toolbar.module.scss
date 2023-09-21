@@ -73,13 +73,42 @@
 
 }
 
+
+.btn_highlighter {
+    
+    background-color: #FFF;
+    min-width: 32px;
+    padding: 8px;
+
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-transform: "capitalize";
+   
+ 
+}
+
+
 .btn svg {
-    transition: all .2s;
+    
     display: flex;
     align-items: center;
     justify-content: center;
 
 }
+
+.btn_highlighter svg {
+    &:hover {
+        transition: all .3s;
+        transform: scale(1.4);
+    }
+
+    transition: all .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 
 .alignmentBtns {
@@ -105,12 +134,38 @@
 
 
 .btn_active_highlighter svg {
-    fill: #b11f1f;
+    box-shadow: 0 0 2px 1.5px  rgba(167, 166, 166, 0.671);
+    transform: scale(1.4);
+
+   
+  
+
+   
 }
+
 .hideNote {
     user-select: none;
     pointer-events: none;
     filter: blur(5px);
     text-decoration: line-through;
     color: #525151;
+}
+
+.highlighter_yellow {
+fill: #ffef9e;
+}
+.highlighter_pink {
+fill: #fec1d0;
+}
+.highlighter_green {
+fill: #b7f7d1;
+}
+.highlighter_blue {
+fill: #adecf4;
+}
+.highlighter_violet {
+fill: #cbcaff;
+}
+.highlighter_brown {
+fill: #ffd1b0;
 }

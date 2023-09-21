@@ -3,6 +3,11 @@ import { Dispatch,  SetStateAction } from "react";
 
 
 export const HIGHLIGHTER_YELLOW:string = "HIGHLIGHTER_YELLOW";
+export const HIGHLIGHTER_PINK:string = "HIGHLIGHTER_PINK";
+export const HIGHLIGHTER_GREEN:string = "HIGHLIGHTER_GREEN";
+export const HIGHLIGHTER_BLUE:string = "HIGHLIGHTER_BLUE";
+export const HIGHLIGHTER_VIOLET:string = "HIGHLIGHTER_VIOLET";
+export const HIGHLIGHTER_BROWN:string = "HIGHLIGHTER_BROWN";
 export interface buttonProps {
         name: string;
         handler: (editorState: EditorState , setEditorState: Dispatch<SetStateAction<EditorState>>) => void;

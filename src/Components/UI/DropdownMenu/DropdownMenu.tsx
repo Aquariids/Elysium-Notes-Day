@@ -33,7 +33,7 @@ const DropdownMenuEditor = ({children,icon,routerReclycle = false, style,toolbar
           }}
           className={cn(style ? style.dropbtn: s.dropbtn, {
             [style ? style.active : s.active]: activeMenu,
-            [s.activeToolbar]: toolbar === true
+            [s.activeToolbar ]: toolbar === true,
           })}
         >
           {" "}
