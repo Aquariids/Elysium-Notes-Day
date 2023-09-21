@@ -2,7 +2,7 @@ import { EditorState } from "draft-js";
 import { Dispatch,  SetStateAction } from "react";
 
 
-export const HIGHLIGHTER:string = "HIGHLIGHTER";
+export const HIGHLIGHTER_YELLOW:string = "HIGHLIGHTER_YELLOW";
 export interface buttonProps {
         name: string;
         handler: (editorState: EditorState , setEditorState: Dispatch<SetStateAction<EditorState>>) => void;
