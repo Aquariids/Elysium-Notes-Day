@@ -55,11 +55,8 @@
 
 
 .btn {
-    
     background-color: #FFF;
     min-width: 32px;
-    padding: 8px;
-
     border-radius: 8px;
     border: none;
     cursor: pointer;
@@ -75,15 +72,12 @@
 
 
 .btn_highlighter {
-    
+    margin: 0 auto;
     background-color: #FFF;
     min-width: 32px;
-    padding: 8px;
-
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    text-transform: "capitalize";
    
  
 }
@@ -107,6 +101,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
 }
 
 
@@ -147,7 +142,7 @@
     color: #525151;
 }
 
-.highlighter_yellow {
+.highlighter_yellow  {
 fill: #ffef9e;
 }
 .highlighter_pink {

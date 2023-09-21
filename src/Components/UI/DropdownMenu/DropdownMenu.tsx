@@ -2,8 +2,8 @@ import { DropdownMenuEditorProps } from "./DropdownMenuEditor.props";
 import s from './DropdownMenuEditor.module.scss';
 import cn from 'classnames';
 import { useEffect, useRef, useState } from "react";
-const DropdownMenuEditor = ({children,icon,routerReclycle = false, style,toolbarMainButton = false,colorHighlighter, tollbarActive}:DropdownMenuEditorProps) => {
-  
+const DropdownMenuEditor = ({children,icon,  style,toolbarMainButton = false, tollbarActive}:DropdownMenuEditorProps) => {
+
     const [activeMenu, setActiveMenu] = useState<boolean>(false);
     const refActiveMenu = useRef<HTMLDivElement>(null);
     const handleOutsideClick = (event: any) => {
@@ -14,7 +14,6 @@ const DropdownMenuEditor = ({children,icon,routerReclycle = false, style,toolbar
             setActiveMenu(false);
         }
       };
-    
       useEffect(() => {
         document.addEventListener("click", handleOutsideClick, false);
         return () => {
@@ -24,9 +23,7 @@ const DropdownMenuEditor = ({children,icon,routerReclycle = false, style,toolbar
     return(
         <div
         ref={refActiveMenu}
-        className={cn(style ? style.dropdown : s.dropdown, {
-          [s.recycleDots]: routerReclycle,
-        })}
+        className={style ? style.dropdown : s.dropdown}
       >
       {
         tollbarActive ? <button

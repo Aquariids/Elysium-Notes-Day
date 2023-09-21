@@ -3,7 +3,6 @@ import { ReactNode } from "react"
 export interface DropdownMenuEditorProps {
     children: ReactNode
     icon: JSX.Element
-    routerReclycle?:boolean
     toolbarMainButton?:boolean
     highlighterButtons?:boolean
     tollbarActive?: boolean
