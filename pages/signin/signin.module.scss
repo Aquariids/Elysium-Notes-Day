@@ -2,7 +2,6 @@
     
 }
 
-
 .login {
   margin-top: 20px;
     padding-left: 18px;
@@ -20,7 +19,6 @@
     }
 }
 
-
 .container {
     display: flex;
     width: 100vw;
@@ -30,11 +28,7 @@
 
 }
 
-
-
-
 .loading {
-  
     transition: all .2s;
     position: absolute;
     z-index: 20;
@@ -43,7 +37,6 @@
     -webkit-filter: blur(1px);
     background-color: rgb(255, 255, 255);
 }
-
 
 .login_btn {
     cursor: pointer;
@@ -165,26 +158,28 @@
   }
 
   
-
-
   .user_name {
     color: #FFF;
+    padding-left: 5px;
   }
 
   .wrapper_user {
-    padding-top: 6px;
-    padding-left: 18px;
-    display: flex;
-    
+    padding-top: 10px;
+    display: flex;    
     justify-content: flex-start;
     align-items: center;
   }
 
   .container_arr {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     align-items: center;
 
+    img {
+      margin-left: 18px;
+      width: 30px;
+      border-radius: 50px;
+    }
   }
 
   .container_arr svg {

@@ -32,7 +32,7 @@ const Login: React.FunctionComponent = (): JSX.Element => {
           {session && (
             <div className={s.wrapper_user}>
               {/* <div className ={s.user_name}>{session.user.name}</div> */}
-            <DropdownMenuEditor style={style} icon={<Array user ={session.user.name}/>}>
+            <DropdownMenuEditor style={style} icon={<Array user ={session.user.name} avatar={session.user.image}/>}>
             <div className={s.login}>
               <p style={{ color: "#3d3d3d" }}>{session.user.email}</p>
               <button className={s.login_btn} onClick={() => signOut()}>

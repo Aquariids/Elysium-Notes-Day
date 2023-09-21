@@ -1,11 +1,12 @@
 import Arr from '../arr.svg';
 import s from './signin.module.scss'
 
-const Array = ({user}:any) => {
+const Array = ({user,avatar}:any) => {
     return(
 
         <div className={s.container_arr}>
-          <Arr/> {`${user} `} 
+          <img src={avatar}/>
+           <span className={s.user_name}>{user}  </span><Arr/>
         </div>
     )
 

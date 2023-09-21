@@ -7,15 +7,17 @@
 }
 
 .dropdown_content {
+    margin-top: 12px;
+    border-radius: 3px;
     opacity: 0;
     transition: all .2s;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 180px;
+    min-width: 250px;
     padding: 10px;
-    min-height: 100%;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    min-height: 200px;
+    box-shadow: 5px 8px 6px 0px rgba(0, 0, 0, 0.39);
+    z-index: 1; 
     visibility: hidden;
 }
 
@@ -33,15 +35,18 @@
     background-color: #ddd;
 }
 
-
 .dropbtn:hover svg {
-    fill: #b11f1f;
+    fill: #797979;
 }
 
+.dropbtn:hover {
+    color: #797979;
+}
 .highlighter svg {
     fill: transparent;
 }
 .dropbtn {
+    padding: 0;
     background-color: transparent;  
     color: white;
     border: none;
@@ -53,12 +58,9 @@
 .dropbtn svg {
     transform: rotate(90deg);
     fill: #fff;
-  
 }
 
 .show {
     opacity: 1;
     visibility: visible;
-   
-
 }
