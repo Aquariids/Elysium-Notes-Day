@@ -9,7 +9,6 @@
     fill: #b11f1f;
 }
 
-
 .dropdown {
     margin: auto 0;
     position: relative;
@@ -36,7 +35,7 @@
 
 .dropdown_content a {
     opacity: 1;
-    transition: background-color 0.5s; /* Добавлена анимация только для background-color */
+    transition: background-color 0.5s;
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -46,7 +45,6 @@
 .dropdown_content a:hover {
     background-color: #ddd;
 }
-
 
 .show {
     opacity: 1;

@@ -36,16 +36,17 @@ const ToolbarButtons = ({
   const [headingButtonActive, setHeadingButtonActive] = useState(false);
   const [highlighterButtonActive, setHighlighterButtonActive] = useState(false);
   const [visibleShow, setVisibleShow] = useState(false);
-  // const [colorHighlighter, setColorHighlighter] = useState('');
   const router = useRouter();
   
   const toggleHighlighterYellow = () => 
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER_YELLOW);
-  const isHighlighterYellow = () =>
-    hasInlineStyleOf(editorState, HIGHLIGHTER_YELLOW);
 
-  const toggleHighlighterPink = () =>
+  const isHighlighterYellow = () => 
+    hasInlineStyleOf(editorState, HIGHLIGHTER_YELLOW);
+  
+  const toggleHighlighterPink = () => 
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER_PINK);
+
   const isHighlighterPink = () =>
     hasInlineStyleOf(editorState, HIGHLIGHTER_PINK);
 
@@ -199,7 +200,6 @@ const ToolbarButtons = ({
             </button>
           ))}
           <DropdownMenu
-            // colorHighlighter = {colorHighlighter}
             icon={<Icons.Highlighter />}
             style={dropdownStyle}
             toolbarMainButton={highlighterButtonActive}
@@ -215,6 +215,7 @@ const ToolbarButtons = ({
                 key={btn.name}
                 onMouseDown={(e) => {
                   e.preventDefault();
+                  
                   btn.handler(editorState, setEditorState);
                   
                 }}

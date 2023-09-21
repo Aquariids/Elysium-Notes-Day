@@ -6,7 +6,6 @@ export interface DropdownMenuEditorProps {
     routerReclycle?:boolean
     toolbarMainButton?:boolean
     highlighterButtons?:boolean
-    colorHighlighter?:string
     tollbarActive?: boolean
     style?: {
         dropdown:string
