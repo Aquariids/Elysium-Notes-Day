@@ -33,6 +33,7 @@ import "highlight.js/styles/school-book.css";
 import DraftTextForCode from "./DraftTextForCode/DraftTextForCode";
 import Toolbar from "./Toolbar/Toolbar";
 import { DateTime } from "luxon";
+import { updateDateProps } from "./CustomEditor.props";
 const CustomEditor = ({
   setCheckTitle,
   data,
@@ -48,7 +49,11 @@ const CustomEditor = ({
   const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState<string>(selectedItem.title);
   const [code, setCode] = useState<boolean>(selectedItem.code || false);
-  const [updateDate, setUpdateDate] = useState<string>( selectedItem.updateDate ? ` Последние изменения: ${selectedItem.updateDate}`: `Заметка создана: ${selectedItem.dateFull}`);
+  const [updateDate, setUpdateDate] = useState<updateDateProps>( {
+    updateDate: selectedItem.updateDate,
+    dateFull:selectedItem.dateFull
+    }
+  );
   const { data: session } = useSession();
   const [showToolbar, setShowToolbar] = useState<boolean>(false);
   const [routerReclycle, setRouterReclycle] = useState<boolean>(false);

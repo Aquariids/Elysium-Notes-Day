@@ -5,3 +5,5 @@ export interface EditorStateProps {
     setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
 }
 
+
+export type updateDateProps = {updateDate:string, dateFull:string}

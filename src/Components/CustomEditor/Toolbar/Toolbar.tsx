@@ -14,8 +14,6 @@ import { HIGHLIGHTER, buttonProps, codeProps } from "./Toolbar.props";
 import * as Icons from "./icons";
 import { alignmentButtons, basicButtons, headingButtons } from "./Buttons";
 
-
-
 const ToolbarButtons = ({
   editorState,
   setEditorState,
@@ -81,9 +79,9 @@ const myButtons: buttonProps[] = [
         {router.asPath.split("/")[1] === `${RECYCLE}` ? (
           <span>Тут будет дата удаления заметки </span>
         ) : (
-          <span className={cn({
+          <span title={!updateDate.updateDate ? ``:`Дата создания: ${updateDate.dateFull}`} className={cn({
             [s.hideNote] : hideNotes === true
-          })}>{updateDate}</span>
+          })}>{ updateDate.updateDate ? `Последние изменения: ${updateDate.updateDate}`:`Дата создания: ${updateDate.dateFull}` }</span>
         )}
       </div>
       <div

@@ -22,6 +22,9 @@ export interface codeProps {
     setCode: any;
     showToolbar: boolean;
     modeCode: () => {};
-    updateDate: string
+    updateDate: {
+        updateDate:string,
+        dateFull:string
+    }
     hideNotes: boolean
   }
