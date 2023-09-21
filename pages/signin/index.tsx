@@ -5,7 +5,9 @@ import Loader from "./Loader";
 import s from "./signin.module.scss";
 import GoogleButton from "@/Components/signInBtns/GoogleButton/GoogleButton";
 import GithubButton from "@/Components/signInBtns/GithubButton/GithubButton";
-
+import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
+import style from  './DropdownLogin.module.scss';
+import Array from "./Array";
 const Login: React.FunctionComponent = (): JSX.Element => {
   const { data: session, status: loading } = useSession();
 
@@ -28,12 +30,17 @@ const Login: React.FunctionComponent = (): JSX.Element => {
           )}
 
           {session && (
+            <div className={s.wrapper_user}>
+              {/* <div className ={s.user_name}>{session.user.name}</div> */}
+            <DropdownMenuEditor style={style} icon={<Array user ={session.user.name}/>}>
             <div className={s.login}>
-              <p style={{ color: "#fff" }}>{session.user.email}</p>
+              <p style={{ color: "#3d3d3d" }}>{session.user.email}</p>
               <button className={s.login_btn} onClick={() => signOut()}>
                 {" "}
                 Выйти{" "}
               </button>
+            </div>
+            </DropdownMenuEditor>
             </div>
           )}
         </main>

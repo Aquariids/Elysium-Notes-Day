@@ -13,7 +13,7 @@
 
     &_btn {
       margin-top: 15px;
-        color: #FFF;
+        color: #3d3d3d;
         width: 100px;
         background-color: transparent; 
         border: 1px solid rgb(255, 255, 255);
@@ -31,6 +31,8 @@
 }
 
 
+
+
 .loading {
   
     transition: all .2s;
@@ -45,7 +47,6 @@
 
 .login_btn {
     cursor: pointer;
-
     &:hover {
         background-color: rgba(97, 96, 96, 0.719);
     }
@@ -164,3 +165,28 @@
   }
 
   
+
+
+  .user_name {
+    color: #FFF;
+  }
+
+  .wrapper_user {
+    padding-top: 6px;
+    padding-left: 18px;
+    display: flex;
+    
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .container_arr {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+
+  }
+
+  .container_arr svg {
+    margin-left: 5px;
+  }

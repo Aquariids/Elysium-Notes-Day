@@ -1,17 +1,12 @@
-
-
 .dropdown {
     margin: auto 0;
     position: relative;
     display: inline-block;
-
 }
 
 .dropdown_content {
     opacity: 0;
-    /* Начальное значение нулевой прозрачности */
     transition: all .2s;
-    /* Добавлена анимация только для opacity */
     position: absolute;
     right:-6px;
     background-color: #f1f1f1;
@@ -25,7 +20,7 @@
 }
 
 .dropdown_content button {
-    margin: 8px auto; /* Применяем margin вместо padding и выравниваем по центру горизонтально */
+    margin: 8px auto; 
     opacity: 1;
     transition: background-color 0.5s;
     color: black;

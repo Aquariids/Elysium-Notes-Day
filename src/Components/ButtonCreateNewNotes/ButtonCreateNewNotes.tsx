@@ -21,7 +21,6 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   const router = useRouter();
   const create = async () => {
 
-    
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const userDate = DateTime.now().setZone(userTimeZone);
     const content = JSON.stringify(emptyRawContentState);
