@@ -13,7 +13,7 @@ import { HIGHLIGHTER_YELLOW, buttonProps, codeProps } from "./Toolbar.props";
 import * as Icons from "./icons";
 import { alignmentButtons, basicButtons, headingButtons } from "./Buttons";
 import DropdownMenu from "@/Components/UI/DropdownMenu/DropdownMenu";
-import dropdownStyle from "./dropdownMenuToolbar.module.scss";
+import dropdownStyle from "./DropdownMenuToolbar.module.scss";
 const ToolbarButtons = ({
   editorState,
   setEditorState,
