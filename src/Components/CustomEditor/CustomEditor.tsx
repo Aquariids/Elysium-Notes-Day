@@ -287,7 +287,7 @@ const CustomEditor = ({
             setEditorState={setEditorState}
           />
 
-          <DropdownMenuEditor  icon={<DotsMenu />} routerReclycle={routerReclycle} >
+          <DropdownMenuEditor  icon={<DotsMenu />}  >
           <div
                 className={s.hide_btn}
                 onClick={() => {
