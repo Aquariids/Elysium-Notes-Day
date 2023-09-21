@@ -4,8 +4,10 @@ export interface DropdownMenuEditorProps {
     children: ReactNode
     icon: JSX.Element
     routerReclycle?:boolean
-    toolbar?:boolean
+    toolbarMainButton?:boolean
     highlighterButtons?:boolean
+    colorHighlighter?:string
+    tollbarActive?: boolean
     style?: {
         dropdown:string
         dropdown_content:string

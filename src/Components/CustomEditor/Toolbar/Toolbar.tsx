@@ -36,8 +36,10 @@ const ToolbarButtons = ({
   const [headingButtonActive, setHeadingButtonActive] = useState(false);
   const [highlighterButtonActive, setHighlighterButtonActive] = useState(false);
   const [visibleShow, setVisibleShow] = useState(false);
+  // const [colorHighlighter, setColorHighlighter] = useState('');
   const router = useRouter();
-  const toggleHighlighterYellow = () =>
+  
+  const toggleHighlighterYellow = () => 
     toggleInlineStyle(editorState, setEditorState, HIGHLIGHTER_YELLOW);
   const isHighlighterYellow = () =>
     hasInlineStyleOf(editorState, HIGHLIGHTER_YELLOW);
@@ -197,22 +199,24 @@ const ToolbarButtons = ({
             </button>
           ))}
           <DropdownMenu
-            
+            // colorHighlighter = {colorHighlighter}
             icon={<Icons.Highlighter />}
             style={dropdownStyle}
-            toolbar={highlighterButtonActive}
+            toolbarMainButton={highlighterButtonActive}
+            tollbarActive = {true}
           >
-            {highlighterButtons.map((btn) => (
+            {highlighterButtons.map((btn) => (        
               <button
                 title={btn.title}
                 className={cn(s.btn_highlighter, s.heading_btn, {
-                  [s.btn_active_highlighter]:btn.detector(editorState) && code != true,
+                  [s.btn_active_highlighter]:btn.detector(editorState) && code != true
                 })}
                 name={btn.name}
                 key={btn.name}
                 onMouseDown={(e) => {
                   e.preventDefault();
                   btn.handler(editorState, setEditorState);
+                  
                 }}
               >
                 {btn.children}
@@ -222,7 +226,8 @@ const ToolbarButtons = ({
           <DropdownMenu
             icon={<Icons.Heading />}
             style={dropdownStyle}
-            toolbar={headingButtonActive}
+            toolbarMainButton={headingButtonActive}
+            tollbarActive = {true}
           >
             {headingButtons.map((btn) => (
               <button

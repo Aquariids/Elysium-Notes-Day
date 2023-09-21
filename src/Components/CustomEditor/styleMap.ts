@@ -20,4 +20,6 @@ export const styleMap = {
       backgroundColor: "#ffd1b0",
     },
     
+
+    
   };

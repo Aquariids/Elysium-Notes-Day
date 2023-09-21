@@ -2,13 +2,14 @@ import { DropdownMenuEditorProps } from "./DropdownMenuEditor.props";
 import s from './DropdownMenuEditor.module.scss';
 import cn from 'classnames';
 import { useEffect, useRef, useState } from "react";
-const DropdownMenuEditor = ({children,icon,routerReclycle = false, style,toolbar = false}:DropdownMenuEditorProps) => {
+const DropdownMenuEditor = ({children,icon,routerReclycle = false, style,toolbarMainButton = false,colorHighlighter, tollbarActive}:DropdownMenuEditorProps) => {
+  
     const [activeMenu, setActiveMenu] = useState<boolean>(false);
     const refActiveMenu = useRef<HTMLDivElement>(null);
     const handleOutsideClick = (event: any) => {
         if (
           refActiveMenu.current &&
-          !refActiveMenu.current.contains(event.target)
+          !refActiveMenu.current.contains(event.target) 
         ) {
             setActiveMenu(false);
         }
@@ -27,18 +28,28 @@ const DropdownMenuEditor = ({children,icon,routerReclycle = false, style,toolbar
           [s.recycleDots]: routerReclycle,
         })}
       >
-        <button
+      {
+        tollbarActive ? <button
+        className={cn(style ? style.dropbtn: s.dropbtn, {
+          [style ? style.active : s.active]: activeMenu,
+          [s.activeToolbar ]: toolbarMainButton === true,
+          // [s.hello]: colorHighlighter === 'HIGHLIGHTER_YELLOW'
+        })}
+      >
+        {" "}
+        {icon}
+      </button>:   <button
           onClick={(e) => {
             setActiveMenu(!activeMenu);
           }}
           className={cn(style ? style.dropbtn: s.dropbtn, {
             [style ? style.active : s.active]: activeMenu,
-            [s.activeToolbar ]: toolbar === true,
           })}
         >
           {" "}
           {icon}
         </button>
+      }
         <div
           className={cn(style ? style.dropdown_content : s.dropdown_content, {
             [style ? style.show : s.show]: activeMenu,
