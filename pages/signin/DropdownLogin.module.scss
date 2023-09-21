@@ -1,9 +1,7 @@
-
 .dropdown {
     margin: auto 0;
     position: relative;
     display: inline-block;
-
 }
 
 .dropdown_content {
@@ -30,7 +28,6 @@
     display: block;
 }
 
-
 .dropdown_content a:hover {
     background-color: #ddd;
 }
@@ -41,6 +38,10 @@
 
 .dropbtn:hover {
     color: #797979;
+
+    span {
+        color: #797979;
+    }
 }
 .highlighter svg {
     fill: transparent;

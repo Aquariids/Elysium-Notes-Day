@@ -10,7 +10,6 @@ const Array = ({user,avatar}:any) => {
         </div>
     )
 
-
 }
 
 export default Array;
