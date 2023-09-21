@@ -34,6 +34,7 @@ import DraftTextForCode from "./DraftTextForCode/DraftTextForCode";
 import Toolbar from "./Toolbar/Toolbar";
 import { DateTime } from "luxon";
 import { updateDateProps } from "./CustomEditor.props";
+import DropdownMenuEditor from "../UI/DropdownMenu/DropdownMenu";
 const CustomEditor = ({
   setCheckTitle,
   data,
@@ -46,7 +47,6 @@ const CustomEditor = ({
   const [previousEditorState, setPreviousEditorState] =
     useState<EditorState | null>(null);
   const [editorChanged, setEditorChanged] = useState<boolean>(false);
-  const [dotsMenuActive, setDotsMenuActive] = useState<boolean>(false);
   const [value, setValue] = useState<string>(selectedItem.title);
   const [code, setCode] = useState<boolean>(selectedItem.code || false);
   const [updateDate, setUpdateDate] = useState<updateDateProps>( {
@@ -62,7 +62,7 @@ const CustomEditor = ({
   }, [code]);
 
 
-  const refActiveMenu = useRef<HTMLDivElement>(null);
+ 
 
   const btn_hide = selectedItem.block ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;
 
@@ -184,21 +184,7 @@ const CustomEditor = ({
     [previousEditorState, editorChanged]
   );
  
-  const handleOutsideClick = (event: any) => {
-    if (
-      refActiveMenu.current &&
-      !refActiveMenu.current.contains(event.target)
-    ) {
-      setDotsMenuActive(false);
-    }
-  };
 
-  useEffect(() => {
-    document.addEventListener("click", handleOutsideClick, false);
-    return () => {
-      document.removeEventListener("click", handleOutsideClick, false);
-    };
-  }, []);
 
   useEffect(() => {
     setValue(selectedItem.title);
@@ -291,7 +277,7 @@ const CustomEditor = ({
       <div>
         <div className={s.toolbar}>
           <Toolbar
-          hideNotes ={selectedItem.block}
+            hideNotes ={selectedItem.block}
             updateDate = {updateDate}
             showToolbar={showToolbar}
             code={code}
@@ -301,30 +287,8 @@ const CustomEditor = ({
             setEditorState={setEditorState}
           />
 
+          <DropdownMenuEditor  icon={<DotsMenu />} routerReclycle={routerReclycle} >
           <div
-            ref={refActiveMenu}
-            className={cn(s.dropdown, {
-              [s.recycleDots]: routerReclycle,
-            })}
-          >
-            <button
-              onClick={(e) => {
-                setDotsMenuActive(!dotsMenuActive);
-              }}
-              className={cn(s.dropbtn, {
-                [s.activeDots]: dotsMenuActive === true,
-              })}
-            >
-              {" "}
-              <DotsMenu />
-            </button>
-            <div
-              id={s.myDropdown}
-              className={cn(s.dropdown_content, {
-                [s.show]: dotsMenuActive,
-              })}
-            >
-              <div
                 className={s.hide_btn}
                 onClick={() => {
                   hideLink(selectedItem._id);
@@ -338,8 +302,7 @@ const CustomEditor = ({
                 setLoadingDelete={setLoadingDelete}
                 body={data}
               />
-            </div>
-          </div>
+          </DropdownMenuEditor>
         </div>
       </div>
       <WrapperEditorRecycle routerReclycle={routerReclycle}>

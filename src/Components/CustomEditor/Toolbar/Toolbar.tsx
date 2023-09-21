@@ -13,7 +13,8 @@ import {useEffect, useRef, useState } from "react";
 import { HIGHLIGHTER, buttonProps, codeProps } from "./Toolbar.props";
 import * as Icons from "./icons";
 import { alignmentButtons, basicButtons, headingButtons } from "./Buttons";
-
+import DropdownMenu from "@/Components/UI/DropdownMenu/DropdownMenu";
+import dropdownStyle from './dropdownMenuToolbar.module.scss';
 const ToolbarButtons = ({
   editorState,
   setEditorState,
@@ -24,7 +25,6 @@ const ToolbarButtons = ({
   updateDate,
   hideNotes
 }: EditorStateProps & codeProps) => {
-  const refActiveMenu = useRef<HTMLDivElement>(null);
   const [headingButtonActive, setHeadingButtonActive] = useState(false)
   const router = useRouter();
   const toggleHighlighter = () =>
@@ -32,10 +32,8 @@ const ToolbarButtons = ({
   const isHighlighter = () => hasInlineStyleOf(editorState, HIGHLIGHTER);
 const [visibleShow, setVisibleShow] = useState(false);
 
-
-
 useEffect(() => {
-  const buttons = document.querySelectorAll(`.${s.btn_active1}`).length;
+  const buttons = document.querySelectorAll(`.${s.btn_active_heading}`).length;
   
   if(buttons > 0) {
     setHeadingButtonActive(true)
@@ -126,22 +124,13 @@ const myButtons: buttonProps[] = [
             </button>
             
           ))}
-          <div ref={refActiveMenu} className={s.dropdown}>
-            <button 
-            className={cn(s.dropbtn, {
-              [s.btn_active]: headingButtonActive === true,
-            })}
-             >
-              <Icons.Heading/>
-            </button>
-            <div 
-              className={cn(s.dropdown_content, {
-              })}>
-              {headingButtons.map((btn) => (
+             <DropdownMenu icon={<Icons.Heading/>} style={dropdownStyle} toolbar={headingButtonActive}>
+          {headingButtons.map((btn) => (
                 <button
                   title={btn.title}
                   className={cn(s.btn, s.heading_btn, {
-                    [s.btn_active1]: btn.detector(editorState) && code != true,
+                    [s.btn_active]: btn.detector(editorState) && code != true,
+                    [s.btn_active_heading]: btn.detector(editorState) && code != true,
                   })}
                   name={btn.name}
                   key={btn.name}
@@ -153,8 +142,7 @@ const myButtons: buttonProps[] = [
                   {btn.children}
                 </button>
               ))}
-            </div>
-          </div>
+          </DropdownMenu>
         </div>
 
         <div className={s.alignmentBtns}>

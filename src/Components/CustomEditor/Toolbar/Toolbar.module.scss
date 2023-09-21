@@ -47,65 +47,6 @@
 
 
 
-.dropdown {
-    margin: auto 0;
-    position: relative;
-    display: inline-block;
-   
-  
-
-}
-
-.dropdown_content {
-    opacity: 0;
-    /* Начальное значение нулевой прозрачности */
-    transition: all .2s;
-    /* Добавлена анимация только для opacity */
-    position: absolute;
-    right: -10px;
-    background-color: #f1f1f1;
-    width: 42px;
-    min-height: 100%;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    visibility: hidden;
-
-   
-}
-
-
-.dropdown_content button {
-    margin: 0 auto;
-    opacity: 1;
-    transition: background-color 0.5s;
-    color: black;
-    padding: 12px;
-    text-decoration: none;
-    display: block;
-  
-}
-
-.dropbtn {
-    background-color: #FFF;
-    color: white;
-    border: none;
-    cursor: pointer;
-
-    &:hover svg {
-        fill: #b11f1f;
-    }
-}
-
-/* Изменение цвета выпадающих ссылок при наведении курсора */
-
-/* Показать выпадающее меню при наведении курсора */
-.dropdown:hover .dropdown_content {
-    opacity: 1;
-    visibility: visible;
-    
-}
-
-
-
 
 
 .btn_active svg {
@@ -148,9 +89,6 @@
     border-right: 1px solid rgba(122, 122, 122, 0.452);
     display: inline-block;
 }
-.activeDots svg {
-    fill: #b11f1f;
-}
 
 .show {
     display: block;
@@ -161,11 +99,7 @@
 }
 
 
-
-
-
-
-.btn_active1 svg {
+.btn_active_heading svg {
     fill: #b11f1f;
 }
 

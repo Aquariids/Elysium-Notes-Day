@@ -1,5 +1,5 @@
 import { EditorState } from "draft-js";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Dispatch,  SetStateAction } from "react";
 
 
 export const HIGHLIGHTER:string = "HIGHLIGHTER";
