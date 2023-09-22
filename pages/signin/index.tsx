@@ -10,7 +10,7 @@ import style from  './DropdownLogin.module.scss';
 import Array from "./Array";
 const Login: React.FunctionComponent = (): JSX.Element => {
   const { data: session, status: loading } = useSession();
-
+  
   if (loading == "loading") {
     return <Loader />;
   } else {

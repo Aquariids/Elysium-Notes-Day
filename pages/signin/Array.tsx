@@ -1,12 +1,21 @@
-import Arr from '../arr.svg';
+import Arr from './arr.svg';
 import s from './signin.module.scss'
 
 const Array = ({user,avatar}:any) => {
+
+    const sliceUser = (str: string) => {
+    if (str.length > 20) {
+      const text = str.slice(0, 20) + "...";
+      return text
+    } else {
+      return str
+    }
+  };
     return(
 
         <div className={s.container_arr}>
           <img src={avatar}/>
-           <span className={s.user_name}>{user}  </span><Arr/>
+           <span className={s.user_name}>{sliceUser(user)}  </span><Arr/>
         </div>
     )
 
