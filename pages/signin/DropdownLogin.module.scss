@@ -2,18 +2,19 @@
     margin: auto 0;
     position: relative;
     display: inline-block;
+ 
 }
 
 .dropdown_content {
+    overflow: auto;
     margin-top: 12px;
     border-radius: 3px;
     opacity: 0;
     transition: all .2s;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 250px;
-    padding: 10px;
-    min-height: 200px;
+    min-width: 280px;
+    height: 180px;
     box-shadow: 5px 8px 6px 0px rgba(0, 0, 0, 0.39);
     z-index: 1; 
     visibility: hidden;

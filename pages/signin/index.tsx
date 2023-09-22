@@ -31,15 +31,23 @@ const Login: React.FunctionComponent = (): JSX.Element => {
 
           {session && (
             <div className={s.wrapper_user}>
-              {/* <div className ={s.user_name}>{session.user.name}</div> */}
             <DropdownMenuEditor style={style} icon={<Array user ={session.user.name} avatar={session.user.image}/>}>
             <div className={s.login}>
-              <p style={{ color: "#3d3d3d" }}>{session.user.email}</p>
-              <button className={s.login_btn} onClick={() => signOut()}>
-                {" "}
-                Выйти{" "}
-              </button>
+              <div className={s.login_content}>
+              <h2 className={s.account}>АККАУНТ</h2>
+              <div className={s.user}>
+              <img src={session.user.image}/>
+              <p className={s.email}>{session.user.email}</p>
+              </div>
+              </div>
+            
             </div>
+            <div className={s.footer}>
+            <span className={s.login_btn} onClick={() => signOut()}>
+                {" "}
+                Завершить сеанс{" "}
+              </span>
+              </div>
             </DropdownMenuEditor>
             </div>
           )}
