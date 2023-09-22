@@ -15,7 +15,7 @@ const Array = ({user,avatar}:any) => {
 
         <div className={s.container_arr}>
           <img src={avatar}/>
-           <span className={s.user_name}>{sliceUser(user)}  </span><Arr/>
+           <span title={user} className={s.user_name}>{sliceUser(user || 'none user')}  </span><Arr/>
         </div>
     )
 

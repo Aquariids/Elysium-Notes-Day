@@ -18,7 +18,7 @@ const DraftTextForCode = ({
   return (
     <pre onClick={()=> {
       routerReclycle === false && setShowToolbar(true);
-    }} className={cn("js", s.code_block)}>
+    }} className="js">
       <code className={s.code}>
         {plainText}
       </code>

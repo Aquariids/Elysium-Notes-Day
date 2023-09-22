@@ -79,26 +79,15 @@
 
 
 
-.code_block {
-    white-space: pre-wrap;
-    background: #ffeff0;
-    word-wrap: break-word;
-    box-decoration-break: clone;
-    padding: .1rem .3rem .2rem;
-    border-radius: .2rem;
-    display: flex;
-    flex-direction: column;
 
-}
 
 
 .code {
     white-space: pre-wrap;
-    background: #ffeff0;
     word-wrap: break-word;
     box-decoration-break: clone;
-    padding: .1rem .3rem .2rem;
-    border-radius: .2rem;
+    padding: 1px 3px 2px;
+    border-radius: 15px;
 }
 
 
