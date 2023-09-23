@@ -1,8 +1,12 @@
 .dropbtn {
+    display: flex;
     background-color: #FFF;
-    color: white;
+    min-width: 32px;
+    border-radius: 8px;
     border: none;
     cursor: pointer;
+    text-transform: "capitalize";
+
 }
 
 .dropbtn:hover svg {
