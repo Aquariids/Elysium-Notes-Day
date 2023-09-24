@@ -10,17 +10,19 @@ import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
 import { useSession } from "next-auth/react";
 import { create_data, get_action, update_action } from "./api/actios";
-import Arrow from './arr.svg';
+import Arrow from "./arr.svg";
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
-import cn from 'classnames';
+import cn from "classnames";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../utils/sorting";
-import { DateTime } from 'luxon';
-import { Settings } from 'luxon';
-Settings.defaultLocale = 'ru';
-DateTime.local().setLocale('ru');
+import { DateTime } from "luxon";
+import { Settings } from "luxon";
+Settings.defaultLocale = "ru";
+DateTime.local().setLocale("ru");
 function Home({ data_editor, data_note_main_menu }: any) {
-  const [value, setValue] = useState<string>(data_note_main_menu[0] === undefined ? '' :data_note_main_menu[0].body  );
+  const [value, setValue] = useState<string>(
+    data_note_main_menu[0] === undefined ? "" : data_note_main_menu[0].body
+  );
   const [currentDate, setCurrentDate] = useState<string>();
   const session = useSession();
   const userId = session.data?.user.userId;
@@ -29,10 +31,12 @@ function Home({ data_editor, data_note_main_menu }: any) {
   useEffect(() => {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const userDate = DateTime.now().setZone(userTimeZone);
-  const formattedDate = userDate.toFormat("EEEE, d MMMM yyyy").toLocaleUpperCase();
+    const formattedDate = userDate
+      .toFormat("EEEE, d MMMM yyyy")
+      .toLocaleUpperCase();
     const sort = localStorage.getItem("sorting") || "";
-    setSort(sort);    
-    setCurrentDate(formattedDate + ' г.')
+    setSort(sort);
+    setCurrentDate(formattedDate + " г.");
   }, []);
 
   const monika = `Цвета, они не
@@ -61,45 +65,47 @@ function Home({ data_editor, data_note_main_menu }: any) {
 
 Б с мы ли ы
 Удали её
-  `
+  `;
   const createNotesBook = async () => {
     const dataNoteBook = {
       userId,
       email,
-      body: monika
+      body: monika,
     };
-    const response = await fetch(`/api/createData?action=${create_data.create_data_main_menu}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataNoteBook),
-    });
+    const response = await fetch(
+      `/api/createData?action=${create_data.create_data_main_menu}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataNoteBook),
+      }
+    );
   };
 
-  
   const createActionSorting = async () => {
-
-
     const sortData = {
       userId,
       email,
-      sorting: '',
+      sorting: "",
     };
-      const response = await fetch(`/api/createData?action=${create_data.create_data_sorting}`, {
+    const response = await fetch(
+      `/api/createData?action=${create_data.create_data_sorting}`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(sortData),
-      });
-  }
-  
+      }
+    );
+  };
 
   useEffect(() => {
     if (userId && email) {
       createNotesBook();
-      createActionSorting()
+      createActionSorting();
     }
   }, [userId, email]);
 
@@ -146,42 +152,49 @@ function Home({ data_editor, data_note_main_menu }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <div className={s.wrapper}>
         <div className={s.bg}>
-        <div className={s.date_bg}>{currentDate}</div>
-          <video className={cn(s.video, s.anim)} autoPlay muted loop  src="/bg.mp4"></video>
+          <div className={s.date_bg}>{currentDate}</div>
+          <video
+            className={cn(s.video, s.anim)}
+            autoPlay
+            muted
+            loop
+            src="/bg.mp4"
+          ></video>
         </div>
-        
-        <AnimationContainer> 
-        <div className={s.wrapp2}>
-          <div className={s.link_container}>
-            
-           <Link className={s.link_notes} href={`${NOTES}`}>
-            <span>ЗАМЕТКИ</span> <Arrow/>
-          </Link>
+
+        <AnimationContainer>
+          <div className={s.wrapp2}>
+            <div className={s.link_container}>
+              <Link className={s.link_notes} href={`${NOTES}`}>
+                <span>ЗАМЕТКИ</span> <Arrow />
+              </Link>
+            </div>
+            <div className={s.container}>
+              <List
+                className={s.link}
+                body={data_editor ? sorting(data_editor, sort) : ""}
+              />
+              <NewNotesMainMenu />
+            </div>
           </div>
-          <div className={s.container}>
-            <List className={s.link} body={data_editor ? sorting(data_editor, sort): '' } />
-            <NewNotesMainMenu />
+        </AnimationContainer>
+        <AnimationContainer>
+          <div className={s.notes}>
+            <p>ЗАПИСНАЯ КНИЖКА</p>
+            <TextareaAutosize
+              placeholder="Запишите что-нибудь..."
+              className={s.textArea}
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+            />
           </div>
-        </div>
-        </AnimationContainer> 
-        <AnimationContainer> 
-        <div className={s.notes}>
-          <p>ЗАПИСНАЯ КНИЖКА</p>
-          <TextareaAutosize
-            placeholder="Запишите что-нибудь..."
-            className={s.textArea}
-            value={value}
-            onChange={(e) => {
-              setValue(e.target.value);
-            }}
-          />
-        </div>
-        </AnimationContainer> 
+        </AnimationContainer>
       </div>
-     
     </>
   );
 }
