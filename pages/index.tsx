@@ -35,12 +35,38 @@ function Home({ data_editor, data_note_main_menu }: any) {
     setCurrentDate(formattedDate + ' г.')
   }, []);
 
-  
+  const monika = `Цвета, они не
+Яркие, пре ра ные цв т
+М рцают, вз ыва тся, пр нз ют
+Красный, зеленый, синий
+Бес онечная
+
+КАКОФОНИЯ
+Бессмысленного
+шума
+
+Шум, он не ПРЕКРАЩАЕТСЯ.
+
+Безу ные, грох чу ие во ны
+Пи ат, в зжат, пр нза ют
+
+СИНУС, КОСИНУС, ТАНГЕНС
+
+Как игр ть с пл сти кой на д дже ве туш е.
+
+Как играть с НОЖОМ на ДЫЩАЩЕЙ ГРУДИ.
+
+ес он чн й
+с и
+
+Б с мы ли ы
+Удали её
+  `
   const createNotesBook = async () => {
     const dataNoteBook = {
       userId,
       email,
-      body: "",
+      body: monika
     };
     const response = await fetch(`/api/createData?action=${create_data.create_data_main_menu}`, {
       method: "POST",
