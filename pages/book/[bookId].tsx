@@ -1,4 +1,3 @@
-
 import { useRouter } from 'next/router';
 
 function BookPage() {
@@ -7,10 +6,9 @@ function BookPage() {
 
   // Здесь вы можете использовать значение bookId для отображения контента, связанного с этим параметром.
 
+
   return (
     <div>
-      <h1>Страница книги</h1>
-      <p>Динамический параметр (bookId): {bookId}</p>
     </div>
   );
 }
@@ -18,10 +16,7 @@ function BookPage() {
 export default BookPage;
 
 
-
-
-
 // getServerSideProps
-// fetch 
+// fetch
 // если не создан путь
 // перенаправляю на book

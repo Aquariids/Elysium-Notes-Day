@@ -274,6 +274,20 @@ export async function getActionSorting(userId:string | string[] | undefined, ema
   } catch (error) {}
 }
 
+export async function getIdPageBook(userId:string | string[] | undefined, email:string | string[] | undefined) {
+  try {
+    const query = userId && email ? { userId, email } : {};
+    const collection = await getCollection({
+      collectionName: `user_createBook_${userId}`,
+      db: "notes",
+    }); // создаем или подключаемся к коллекции
+    const data = await collection.find(query).toArray();
+    console.log("🚀 ~ file: dataFromDatabase.ts:285 ~ getIdPageBook ~ data:", data)
+    return data;
+  } catch (error) {}
+}
+
+
 
 export async function createNoteBookMainMenu(data: any) {
   const collection = await getCollection({
@@ -304,6 +318,17 @@ export async function createSortingDocument(data: any) {
     console.log('Document already exists.');
   }
 }
+export async function createBook(data: any) {
+  const collection = await getCollection({
+    collectionName: `user_createBook_${data.userId}`,
+    db: "notes",
+  });
+
+  const result = await collection.insertOne({...data}); // Этот метод позволяет вставить документ в коллекцию
+  return result;
+}
+
+
 
 
 

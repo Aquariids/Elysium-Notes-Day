@@ -3,6 +3,7 @@ import {
   getActionSorting,
   getAllNotesFromDatabase,
   getAllNotesFromDatabaseRecycle,
+  getIdPageBook,
   getNoteBookMainMenu,
 } from "./auth/lib/dataFromDatabase";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -11,6 +12,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   const userId = req.query.userId;
   const email = req.query.email;
+  console.log("🚀 ~ file: getData.ts:15 ~ GET ~ email:", email)
   const action: GetAction = req.query.action as GetAction;
   try {
     if (userId && email) {
@@ -26,6 +28,9 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
           break;
           case get_action.action_sorting:
           res.status(200).json(await getActionSorting(userId, email));
+          break;
+          case get_action.id_page_book:
+          res.status(200).json(await getIdPageBook(userId, email));
           break;
         default:
           res.status(400).send("Invalid action");
