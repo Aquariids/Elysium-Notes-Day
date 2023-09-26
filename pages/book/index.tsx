@@ -112,17 +112,6 @@ export async function getServerSideProps(context: any) {
   }
 
 
-  if(data.length - 1 > data[data.length -1].idPage) {
-    return {
-      redirect: {
-        destination: `/`
-      }
-    }
-  }
-  // console.log(data.length - 1 > data[data.length] );
-  console.log(data[data.length - 1]);
-  
-
   return {
     props: {
       data,
