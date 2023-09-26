@@ -48,7 +48,6 @@ export async function getAllNotesFromDatabaseRecycle(userId: string[] | string, 
   }
 }
 export async function createDatabase(data: any) {
-  console.log("🚀 ~ file: dataFromDatabase.ts:51 ~ createDatabase ~ data:", data)
   const collection = await getCollection({
     collectionName: `user_${data.userId}`,
     db: "notes",
@@ -282,7 +281,6 @@ export async function getIdPageBook(userId:string | string[] | undefined, email:
       db: "notes",
     }); // создаем или подключаемся к коллекции
     const data = await collection.find(query).toArray();
-    console.log("🚀 ~ file: dataFromDatabase.ts:285 ~ getIdPageBook ~ data:", data)
     return data;
   } catch (error) {}
 }

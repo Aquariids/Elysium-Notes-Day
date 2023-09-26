@@ -7,14 +7,13 @@ import { withLayout } from "../../layout/Layout";
 import { redirect } from "next/dist/server/api-utils";
 import { SIGNIN } from "../api/paths";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const page = ({ data }: any) => {
   const [isButtonClicked, setButtonClicked] = useState(false);
   const [dataBook, setDataBook] = useState<any>();
-  console.log("🚀 ~ file: index.tsx:14 ~ page ~ dataBook:", dataBook);
-  const [dataBookName, setDataBookName] = useState<any>();
   const router = useRouter();
-  const [bookName, setBookName] = useState<string>();
+  const [bookName, setBookName] = useState<string>('');
   const session = useSession();
   const email = session.data?.user.email;
   const userId = session.data?.user.userId;
@@ -55,7 +54,8 @@ const page = ({ data }: any) => {
 
   useEffect(() => {
     getDatabook();
-  }, [userId, email]);
+  }, [userId, email,bookName]);
+
   // const handleButtonClick = () => {
   //     // Вы можете добавить здесь логику для проверки разрешения.
   //     // Например, если пользователь авторизован и имеет право на доступ,
@@ -70,20 +70,21 @@ const page = ({ data }: any) => {
     <div>
       <input
         onChange={(e) => setBookName(e.target.value)}
-        placeholder="создать блокнот"
+        placeholder="создать блокнот" value={bookName}
       />
       <button
         onClick={() => {
           buttonCreateNewBook(
-            bookName === undefined ? "Без названия" : bookName
+            bookName
           );
+          setBookName('')
         }}
       >
         Создать блокнот
       </button>
       {dataBook &&
-        dataBook.map((item) => {
-          return <div key={item.name}> {item.name} </div>;
+        dataBook.map((item:any, id:number) => {
+          return <div key={id}><Link href={`book/${item.idPage}`} key={item.name}> {item.name} </Link></div>
         })}
     </div>
   );
@@ -100,6 +101,7 @@ export async function getServerSideProps(context: any) {
     `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
   );
   const data = await res.json();
+
   if (!session) {
     return {
       redirect: {
@@ -108,6 +110,18 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
+
+
+  if(data.length - 1 > data[data.length -1].idPage) {
+    return {
+      redirect: {
+        destination: `/`
+      }
+    }
+  }
+  // console.log(data.length - 1 > data[data.length] );
+  console.log(data[data.length - 1]);
+  
 
   return {
     props: {
