@@ -4,13 +4,11 @@ import { get_action } from '../api/actios';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 
-function BookPage({data}) {
-  console.log("🚀 ~ file: [bookId].tsx:8 ~ BookPage ~ data:", data)
+function BookPage({data}:any) {
   const router = useRouter();
   const { bookId } = router.query;
 
   // Здесь вы можете использовать значение bookId для отображения контента, связанного с этим параметром.
-
 
   return (
     <div>
@@ -42,9 +40,8 @@ export async function getServerSideProps(context: any) {
     );
     const dataBook = await resBook.json();
   
-  
-  const sort = await actionSorting.json();
-  const data = await res.json();
+    const sort = await actionSorting.json();
+    const data = await res.json();
     
   if(!session){
     return {
@@ -62,31 +59,31 @@ export async function getServerSideProps(context: any) {
     }
   }
 
-  // if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
-  //   return {
-  //     redirect: {
-  //       destination: `/book/${data[0]._id}`,
-  //       permanent: false,
-  //     },
-  //   };
-  // } if (session && data[0] != undefined && sort[0].sorting === 'dateUp') {
-  //   return {
-  //     redirect: {
-  //       destination: `/book/${data[data.length - 1]._id}`,
-  //       permanent: false,
-  //     },
-  //   };
-  // }  
+  if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
+    return {
+      redirect: {
+        destination: `/book/${data[0]._id}`,
+        permanent: false,
+      },
+    };
+  } if (session && data[0] != undefined && sort[0].sorting === 'dateUp') {
+    return {
+      redirect: {
+        destination: `/book/${data[data.length - 1]._id}`,
+        permanent: false,
+      },
+    };
+  }  
 
-  // else if(session && data[0] != undefined) {
-  //   return {
-  //     redirect: {
-  //       destination: `/book/${data[0]._id}`,
-  //       permanent: false,
-  //     },
-  //      props:{ data}
-  //   };
-  // }  
+  if(session && data[0] != undefined) {
+    return {
+      redirect: {
+        destination: `/book/${bookId}/${data[0]._id}`,
+        permanent: false,
+      },
+       props:{ data}
+    };
+  }  
   
   return {
     props:{ data}
@@ -97,11 +94,5 @@ export async function getServerSideProps(context: any) {
     console.error(err);
     
   }
-
-
-
-
-
-  
 
 }

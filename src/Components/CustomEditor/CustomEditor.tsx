@@ -62,8 +62,6 @@ const CustomEditor = ({
   }, [code]);
 
 
- 
-
   const btn_hide = selectedItem.block ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;
 
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -244,7 +242,6 @@ const CustomEditor = ({
       } catch (error) {
         alert("Failed to update note")
         console.error(error);
-        
       }
     },
     []

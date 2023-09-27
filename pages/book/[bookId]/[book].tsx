@@ -12,15 +12,14 @@ import { NOTES } from "../../api/paths";
 import { sorting } from "../../../utils/sorting";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { withLayout } from "../../../layout/Layout";
-const notes = ({ data }: any) => {
+const notes = ({ data, idforpage }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
-  
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [deleteElement, setDeleteElement] = useState<any>();
   const router = useRouter();
-  const selectedId = router.query.index;
+  const selectedId = router.query.book;
   const [links, setLinks] = useState<any>();
   const session = useSession();
   const userId = session.data?.user.userId;
@@ -35,6 +34,7 @@ const notes = ({ data }: any) => {
       }),
     [data, selectedId]
   );
+  // console.log("🚀 ~ file: [book].tsx:37 ~ notes ~ selectedItem:", selectedItem)
 
  
   const getData = useCallback(async () => {
@@ -101,7 +101,6 @@ const notes = ({ data }: any) => {
   }, [sort]);
 
  
-
   useEffect(() => {
     if (!selectedItem) {
       router.push(`/${NOTES}`);
@@ -125,6 +124,8 @@ const notes = ({ data }: any) => {
                 data={links ? sorting(links,sort): ''}
                 body={data ? sorting(data,sort): ''}
                 userId={userId}
+                idPage = {idforpage}
+                
               />
             )}
           </div>
@@ -143,6 +144,7 @@ const notes = ({ data }: any) => {
             setCheckTitle={setCheckTitle}
             key={selectedItem._id}
             selectedItem={selectedItem}
+            idPage = {idforpage}
           />
         )}
       </div>
@@ -155,10 +157,11 @@ const notes = ({ data }: any) => {
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
-
+  const userId = session?.user.userId; 
+  const { bookId } = context.query;  
+  const email = session?.user.email;
   try {
 
-  
   if (!session) {
     return {
       redirect: {
@@ -168,15 +171,17 @@ export async function getServerSideProps(context: any) {
     };
   }
 
-  const userId = session?.user.userId; // айди авторизованного человека
-  const email = session?.user.email;
   const res = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
   );
   const data = await res.json();
-
+  const resBook = await fetch(
+    `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
+  );
+  const dataBook = await resBook.json();
+  const idforpage = dataBook[bookId].idPage;
   return {
-    props: { data },
+    props: { data, idforpage },
   };
 }
 

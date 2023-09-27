@@ -7,10 +7,12 @@ const NotesList = ({
   email,
   deleteElement,
   loadingDelete,
+  idPage
 }: any) => {
+  console.log("🚀 ~ file: NotesList.tsx:12 ~ idPage:", idPage)
 
   if (!data) {
-    return <List body={body} userId={userId} email={email} />;
+    return <List body={body} userId={userId} email={email}   idPage={  idPage} />;
   } else {
     return (
       <List
@@ -19,6 +21,7 @@ const NotesList = ({
         body={data}
         userId={userId}
         email={email}
+        idPage={idPage}
       />
     );
   }

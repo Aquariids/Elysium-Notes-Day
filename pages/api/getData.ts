@@ -12,7 +12,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   const userId = req.query.userId;
   const email = req.query.email;
-  console.log("🚀 ~ file: getData.ts:15 ~ GET ~ email:", email)
   const action: GetAction = req.query.action as GetAction;
   try {
     if (userId && email) {
