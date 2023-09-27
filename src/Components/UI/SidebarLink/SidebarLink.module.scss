@@ -40,6 +40,9 @@
     }
 
 
+    .bookLink {
+        padding-left: 0;
+    }
 }
 
 .active {
@@ -55,3 +58,21 @@
     }
 
 }
+
+.hide {
+    visibility: hidden;
+    display: none;
+}
+.show {
+    background-color: transparent;
+    border: none;
+    opacity: none;
+    width: 18px;
+    visibility: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+
