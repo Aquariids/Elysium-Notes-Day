@@ -25,8 +25,7 @@ export async function getServerSideProps(context: any) {
   const { bookId } = context.query;  
   const email = session?.user.email;
   const userId = session?.user.userId;
-
-
+  
   try {
     const res = await fetch(
       `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
@@ -62,14 +61,14 @@ export async function getServerSideProps(context: any) {
   if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
     return {
       redirect: {
-        destination: `/book/${data[0]._id}`,
+        destination: `/book/${bookId}/${data[0]._id}`,
         permanent: false,
       },
     };
   } if (session && data[0] != undefined && sort[0].sorting === 'dateUp') {
     return {
       redirect: {
-        destination: `/book/${data[data.length - 1]._id}`,
+        destination: `/book/${bookId}/${data[data.length - 1]._id}`,
         permanent: false,
       },
     };

@@ -9,10 +9,9 @@ const NotesList = ({
   loadingDelete,
   idPage
 }: any) => {
-  console.log("🚀 ~ file: NotesList.tsx:12 ~ idPage:", idPage)
 
   if (!data) {
-    return <List body={body} userId={userId} email={email}   idPage={  idPage} />;
+    return <List body={body} userId={userId} email={email} idPage={  idPage} />;
   } else {
     return (
       <List
