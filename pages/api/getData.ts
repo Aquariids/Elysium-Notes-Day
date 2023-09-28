@@ -1,12 +1,6 @@
 import { GetAction, get_action } from "./actios";
-import {
-  getActionSorting,
-  getAllNotesFromDatabase,
-  getAllNotesFromDatabaseRecycle,
-  getIdPageBook,
-  getNoteBookMainMenu,
-} from "./auth/lib/dataFromDatabase";
 import { NextApiRequest, NextApiResponse } from "next";
+import { getActionSorting, getAllNotesFromDatabase, getAllNotesFromDatabaseRecycle, getIdPageBook, getNoteBookMainMenu } from "./auth/lib/Get";
 
 
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {

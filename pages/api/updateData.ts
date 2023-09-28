@@ -1,14 +1,6 @@
 import { UpdateAction, update_action } from "./actios";
-import {
-  updateActionSorting,
-  updateBlockLink,
-  updateDataInDatabase,
-  updateDataTitle,
-  updateLastDate,
-  updateModeCode,
-  updateNoteBookMainMenu,
-} from "./auth/lib/dataFromDatabase";
 import { NextApiRequest, NextApiResponse } from "next";
+import { updateActionSorting, updateBlockLink, updateDataInDatabase, updateDataTitle, updateLastDate, updateModeCode, updateNoteBookMainMenu } from "./auth/lib/Update";
 
 export default async function POST(req: NextApiRequest, res: NextApiResponse) {
   const action: UpdateAction = req.query.action as UpdateAction;

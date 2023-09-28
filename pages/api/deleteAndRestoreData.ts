@@ -1,11 +1,7 @@
 import { DeleteRestoreAction } from "./actios";
-import {
-  deleteAllData,
-  deleteData,
-  deleteDataRecycle,
-  restoreDataRecycle,
-} from "./auth/lib/dataFromDatabase";
+
 import { NextApiRequest, NextApiResponse } from "next";
+import { deleteAllData, deleteData, deleteDataRecycle, restoreDataRecycle } from "./auth/lib/Delete_Restore";
 interface IRequest {
   req: NextApiRequest;
   query: {

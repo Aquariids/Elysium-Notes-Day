@@ -16,7 +16,6 @@ const notes = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
-  
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [deleteElement, setDeleteElement] = useState<any>();
   const router = useRouter();

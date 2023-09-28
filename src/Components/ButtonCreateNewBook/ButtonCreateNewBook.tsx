@@ -5,62 +5,46 @@ import { useEffect, useState } from "react";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewBook.module.scss";
 import { create_data } from "../../../pages/api/actios";
-import { DateTime } from 'luxon';
-import { Settings } from 'luxon';
-Settings.defaultLocale = 'ru';
-DateTime.local().setLocale('ru');
+import cn from 'classnames';
 interface IButton {
   alert?: "alert";
 }
-const ButtonCreateNewBook = ({ alert }: IButton) => {
-  const { data: session } = useSession();
-  // emptyRawContentState - пустой объект содержимого draft js. Превращаем его в JSON и отправляем в базу
-  const [load, setLoad] = useState(true);
-  const router = useRouter();
-  const create = async () => {
-
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const userDate = DateTime.now().setZone(userTimeZone);
-    const content = JSON.stringify(emptyRawContentState);
-   const data = {
-      userId: session?.user.userId,
-      email: session?.user.email,
-      body: content, // данные редактора
-      title: "",
-      block: false,
-      code:false,
-      date:userDate.toJSDate(),
-      dateFull:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"),
-      dateShort:userDate.toFormat("d MMMM").length === 11 ? userDate.toFormat("d MMMM").slice(0,6) : userDate.toFormat("d MMMM").slice(0,5) + '.',
-    };
-
-
-    
+const ButtonCreateNewBook = ({ dataBook, nameBook,setActiveModalMenu }: any) => {
+  const session = useSession();
+  const email = session.data?.user.email;
+  const userId = session.data?.user.userId;
+ async function buttonCreateNewBook(nameBook: string) {
     try {
-      setLoad(false);
-      const response = await fetch(`/api/createData?action=${create_data.create_data}`, {
+      const res = fetch(`/api/createData?action=${create_data.create_book}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+
+        body: JSON.stringify({
+          name: nameBook,
+          idPage: dataBook.length,
+          email: email,
+          userId: userId,
+        }),
       });
-      const responseData = await response.json();
-      router.push(`/${NOTES}/${responseData._id}`);
-    } catch (error) {
-      console.error("Failed to create note");
-      console.error(error);
+
+
+    } catch (err) {
+      console.error(err);
     }
-  };
-
-  useEffect(() => {
-    setLoad(true);
-  }, [router]);
-
+  }
     return  (
-      <button className={s.btn} onClick={create}>
+      <>
+      <button onClick={
+        ()=> {
+          setActiveModalMenu(true)
+        }
+      } className={s.btn} >
         +
       </button>
+
+      </>
     ) 
 };
 

@@ -25,7 +25,6 @@ const page = ({ data }: any) => {
         headers: {
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify({
           name: nameBook,
           idPage: dataBook.length,
@@ -33,6 +32,7 @@ const page = ({ data }: any) => {
           userId: userId,
         }),
       });
+      
     } catch (err) {
       console.error(err);
     }
@@ -56,15 +56,6 @@ const page = ({ data }: any) => {
     getDatabook();
   }, [userId, email,bookName]);
 
-  // const handleButtonClick = () => {
-  //     // Вы можете добавить здесь логику для проверки разрешения.
-  //     // Например, если пользователь авторизован и имеет право на доступ,
-  //     // вы можете установить isButtonClicked в true.
-
-  //     // В данном примере просто устанавливаем isButtonClicked в true:
-  //     setButtonClicked(true);
-  //     router.push('/book/1'); // Перенаправление на динамический путь после нажатия кнопки.
-  //   };
 
   return (
     <div>

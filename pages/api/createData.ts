@@ -1,6 +1,6 @@
 import { CreateAction } from './actios';
-import { createBook, createDatabase, createNoteBookMainMenu, createSortingDocument } from './auth/lib/dataFromDatabase';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { createBook, createDatabase, createNoteBookMainMenu, createSortingDocument } from './auth/lib/Create';
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const action:CreateAction = req.query.action as CreateAction;
     const data = req.body;
