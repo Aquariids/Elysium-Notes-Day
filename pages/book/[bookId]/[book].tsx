@@ -12,7 +12,7 @@ import { NOTES } from "../../api/paths";
 import { sorting } from "../../../utils/sorting";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { withLayout } from "../../../layout/Layout";
-const notes = ({ data, idforpage }: any) => {
+const notes = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -24,7 +24,7 @@ const notes = ({ data, idforpage }: any) => {
   const session = useSession();
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
-  
+  const idforpage = router.query.bookId;
   // это наш path по сути текущий url = _id человека
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
@@ -181,14 +181,16 @@ export async function getServerSideProps(context: any) {
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${bookId}`
   );
   const data = await res.json();
-  const idforpage = data[bookId] ?  dataBook[bookId].idPage: '' ; 
-   if(!data[bookId]) {
-    return {
-      redirect: {
-        destination: `/book`
-      }
-    }
-  }
+  const idforpage = data[bookId] ? dataBook[bookId].idPage: '' ; 
+
+  
+  //  if(!data[bookId]) {
+  //   return {
+  //     redirect: {
+  //       destination: `/book`
+  //     }
+  //   }
+  // }
 
   
  

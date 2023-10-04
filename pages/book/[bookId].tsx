@@ -23,6 +23,7 @@ export default BookPage;
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const { bookId } = context.query;  
+  console.log("🚀 ~ file: [bookId].tsx:26 ~ getServerSideProps ~ bookId:", bookId)
   const email = session?.user.email;
   const userId = session?.user.userId;
   try {
