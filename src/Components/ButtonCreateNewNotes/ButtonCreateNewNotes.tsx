@@ -36,8 +36,6 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
       dateShort:userDate.toFormat("d MMMM").length === 11 ? userDate.toFormat("d MMMM").slice(0,6) : userDate.toFormat("d MMMM").slice(0,5) + '.',
     };
 
-
-    
     try {
       setLoad(false);
       const response = await fetch(`/api/createData?action=${create_data.create_data}`, {

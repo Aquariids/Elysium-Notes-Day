@@ -20,19 +20,29 @@ const page = ({ data }: any) => {
 
   async function buttonCreateNewBook(nameBook: string) {
     try {
-      const res = fetch(`/api/createData?action=${create_data.create_book}`, {
+      // const newIdPage = dataBook.length + 1; 
+      const res = await fetch(`/api/createData?action=${create_data.create_book}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: nameBook,
-          idPage: dataBook.length,
+          idPage: dataBook.length ,
           email: email,
           userId: userId,
         }),
       });
       
+
+
+      if (res.ok) {
+        // Если запрос успешен, добавляем новый элемент в dataBook и обновляем состояние
+        const newDataBook = [...dataBook, { name: nameBook, idPage: dataBook.length  }];
+        setDataBook(newDataBook);
+      } else {
+        console.error(`Ошибка при создании: ${res.status} ${res.statusText}`);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -54,8 +64,7 @@ const page = ({ data }: any) => {
 
   useEffect(() => {
     getDatabook();
-  }, [userId, email,bookName]);
-
+  }, [userId]);
 
   return (
     <div>
@@ -75,6 +84,7 @@ const page = ({ data }: any) => {
       </button>
       {dataBook &&
         dataBook.map((item:any, id:number) => {
+          
           return <div key={id}><Link href={`book/${item.idPage}`} key={item.name}> {item.name} </Link></div>
         })}
     </div>
@@ -85,9 +95,10 @@ export default withLayout(page);
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
-
+  const { bookId } = context.query;  
   const email = session?.user.email;
   const userId = session?.user.userId;
+  const test = bookId ? bookId: 0;
   const res = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
   );
@@ -102,6 +113,15 @@ export async function getServerSideProps(context: any) {
     };
   }
 
+  // if(session && data[0] != undefined) {
+  //   return {
+  //     redirect: {
+  //       destination: `/book/${test}/${data[0]._id}`,
+  //       permanent: false,
+  //     },
+  //      props:{ data}
+  //   };
+  // }  
 
   return {
     props: {

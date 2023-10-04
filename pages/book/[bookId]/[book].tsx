@@ -34,7 +34,8 @@ const notes = ({ data, idforpage }: any) => {
       }),
     [data, selectedId]
   );
-  // console.log("🚀 ~ file: [book].tsx:37 ~ notes ~ selectedItem:", selectedItem)
+
+
 
  
   const getData = useCallback(async () => {
@@ -42,7 +43,7 @@ const notes = ({ data, idforpage }: any) => {
     try {
       if (session.status === "authenticated") {
         const res = await fetch(
-          `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+          `/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idforpage}`
         );
         const data = await res.json();
         setLinks(data);
@@ -103,7 +104,7 @@ const notes = ({ data, idforpage }: any) => {
  
   useEffect(() => {
     if (!selectedItem) {
-      router.push(`/${NOTES}`);
+      router.push(`/book/${idforpage}`);
     }
   }, [router]);
 
@@ -159,6 +160,8 @@ export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const userId = session?.user.userId; 
   const { bookId } = context.query;  
+
+
   const email = session?.user.email;
   try {
 
@@ -169,19 +172,28 @@ export async function getServerSideProps(context: any) {
         permanent: false,
       },
     };
-  }
-
-  const res = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
-  );
-  const data = await res.json();
-  const resBook = await fetch(
+  } const resBook = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
   );
   const dataBook = await resBook.json();
-  const idforpage = dataBook[bookId].idPage;
+ 
+  const res = await fetch(
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${bookId}`
+  );
+  const data = await res.json();
+  const idforpage = data[bookId] ?  dataBook[bookId].idPage: '' ; 
+   if(!data[bookId]) {
+    return {
+      redirect: {
+        destination: `/book`
+      }
+    }
+  }
+
+  
+ 
   return {
-    props: { data, idforpage },
+    props: { data,idforpage },
   };
 }
 

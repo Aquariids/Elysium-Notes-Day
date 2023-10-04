@@ -13,14 +13,15 @@ export const update_action = {
 }
 
 // get actions
-export type GetAction = "editor" | "editor_title" | "book_main_menu" | 'action_sorting' | 'id_page_book';
+export type GetAction = "editor" | "editor_title" | "book_main_menu" | 'action_sorting' | 'id_page_book' | 'data_editorBook';
 
 export const get_action = {
     data_editor:'data_editor',
     data_recycle:'data_recycle',
     data_note_main_menu:'data_note_main_menu',
     action_sorting:'action_sorting',
-    id_page_book: 'id_page_book'
+    id_page_book: 'id_page_book',
+    data_editorBook: 'data_editorBook'
 }
 
 // delete and restore actions

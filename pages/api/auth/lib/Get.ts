@@ -34,6 +34,22 @@ async function getCollection({ db, collectionName }: dbPros) {
     }
   }
 
+  export async function getNotesFromBook(userId: string | string[], email: string | string[], idPage: any) {
+    try {
+      const query = userId && email ? { userId, email, idPage: idPage } : { idPage: idPage };
+      const collection = await getCollection({
+        collectionName: `user_${userId}`,
+        db: "notes",
+      }) // создаем или подключаемся к коллекции
+      const data = await collection.find(query).sort({date:1}).toArray();
+      return data 
+    } catch (error) {
+      const client = await getClient();
+      client.close();
+    }
+  }
+
+
 
   export async function getAllNotesFromDatabaseRecycle(userId: string[] | string, email: string[] | string) {
     try {

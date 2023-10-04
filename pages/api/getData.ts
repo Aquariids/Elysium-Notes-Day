@@ -1,11 +1,12 @@
 import { GetAction, get_action } from "./actios";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getActionSorting, getAllNotesFromDatabase, getAllNotesFromDatabaseRecycle, getIdPageBook, getNoteBookMainMenu } from "./auth/lib/Get";
+import { getActionSorting, getAllNotesFromDatabase, getAllNotesFromDatabaseRecycle, getIdPageBook, getNoteBookMainMenu, getNotesFromBook } from "./auth/lib/Get";
 
 
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   const userId = req.query.userId;
   const email = req.query.email;
+  const idPage = req.query.idPage;
   const action: GetAction = req.query.action as GetAction;
   try {
     if (userId && email) {
@@ -13,6 +14,9 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
         case get_action.data_editor:
           res.status(200).json(await getAllNotesFromDatabase(userId, email));
           break;
+          case get_action.data_editorBook:
+            res.status(200).json(await getNotesFromBook(userId, email, idPage));
+            break;
         case get_action.data_recycle:
           res.status(200).json(await getAllNotesFromDatabaseRecycle(userId, email));
           break;

@@ -25,20 +25,15 @@ export async function getServerSideProps(context: any) {
   const { bookId } = context.query;  
   const email = session?.user.email;
   const userId = session?.user.userId;
-  
   try {
     const res = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${bookId}`
     );
     const actionSorting = await fetch(
       `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userId}&email=${email}`
     );
 
-    const resBook = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
-    );
-    const dataBook = await resBook.json();
-  
+ 
     const sort = await actionSorting.json();
     const data = await res.json();
     
@@ -50,13 +45,9 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-  if(!dataBook[bookId]) {
-    return {
-      redirect: {
-        destination: `/book`
-      }
-    }
-  }
+
+  
+
 
   if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
     return {
@@ -80,7 +71,7 @@ export async function getServerSideProps(context: any) {
         destination: `/book/${bookId}/${data[0]._id}`,
         permanent: false,
       },
-       props:{ data}
+       props:{data}
     };
   }  
   
@@ -93,5 +84,6 @@ export async function getServerSideProps(context: any) {
     console.error(err);
     
   }
+
 
 }
