@@ -34,9 +34,14 @@ export async function getServerSideProps(context: any) {
       `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userId}&email=${email}`
     );
 
+    const resBook = await fetch(
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
+    );
+    const dataBook = await resBook.json();
  
     const sort = await actionSorting.json();
     const data = await res.json();
+    const idforpage = data[bookId] ? dataBook[bookId].idPage: undefined ; 
     
   if(!session){
     return {
@@ -74,7 +79,10 @@ export async function getServerSideProps(context: any) {
       },
        props:{data}
     };
-  }  else {
+  }  
+  
+  
+  if(data[0] === undefined && idforpage === undefined) {
     return {
       redirect: {
         destination: `/book`,
@@ -82,7 +90,7 @@ export async function getServerSideProps(context: any) {
       },
        props:{data}
     };
-  }
+  }  
   
  
   
