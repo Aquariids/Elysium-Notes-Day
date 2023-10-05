@@ -4,17 +4,30 @@ import { get_action } from '../api/actios';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 
-function BookPage({data}:any) {
+function BookPage({data, idforpage}:any) {
   const router = useRouter();
   const { bookId } = router.query;
+  console.log("🚀 ~ file: [bookId].tsx:10 ~ BookPage ~ bookId:", bookId)
 
   // Здесь вы можете использовать значение bookId для отображения контента, связанного с этим параметром.
 
-  return (
-    <div>
-      создать заметку +
-    </div>
-  );
+  
+  if(idforpage != null && String(idforpage) === bookId) {
+    return (
+      <div>
+        создать заметку +
+      </div>
+    )
+  } else {
+    return (
+      <>
+
+      НЕт такокооо
+      </>
+    )
+  }
+
+ 
 }
 
 export default BookPage;
@@ -23,7 +36,6 @@ export default BookPage;
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const { bookId } = context.query;  
-  console.log("🚀 ~ file: [bookId].tsx:26 ~ getServerSideProps ~ bookId:", bookId)
   const email = session?.user.email;
   const userId = session?.user.userId;
   try {
@@ -33,16 +45,16 @@ export async function getServerSideProps(context: any) {
     const actionSorting = await fetch(
       `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userId}&email=${email}`
     );
-
     const resBook = await fetch(
       `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
     );
     const dataBook = await resBook.json();
- 
     const sort = await actionSorting.json();
     const data = await res.json();
-    const idforpage = data[bookId] ? dataBook[bookId].idPage: undefined ; 
-    
+    const idforpage = dataBook[bookId] ? dataBook[bookId].idPage: null; 
+  
+  
+  
   if(!session){
     return {
       redirect: {
@@ -51,9 +63,6 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-
-  
-
 
   if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
     return {
@@ -82,20 +91,8 @@ export async function getServerSideProps(context: any) {
   }  
   
   
-  if(data[0] === undefined && idforpage === undefined) {
-    return {
-      redirect: {
-        destination: `/book`,
-        permanent: false,
-      },
-       props:{data}
-    };
-  }  
-  
- 
-  
   return {
-    props:{ data}
+    props:{ data, idforpage}
   }
   }
 
