@@ -74,7 +74,17 @@ export async function getServerSideProps(context: any) {
       },
        props:{data}
     };
-  }  
+  }  else {
+    return {
+      redirect: {
+        destination: `/book`,
+        permanent: false,
+      },
+       props:{data}
+    };
+  }
+  
+ 
   
   return {
     props:{ data}
