@@ -41,6 +41,7 @@ const CustomEditor = ({
   setDeleteElement,
   setLoadingDelete,
   selectedItem,
+  books,
   
 }: any) => {
   const router = useRouter();
@@ -283,7 +284,6 @@ const CustomEditor = ({
             editorState={editorState}
             setEditorState={setEditorState}
           />
-
           <DropdownMenuEditor  icon={<DotsMenu />}  >
           <div
                 className={s.hide_btn}
@@ -294,11 +294,15 @@ const CustomEditor = ({
                 {" "}
                 {!routerReclycle && btn_hide}{" "}
               </div>
+              
               <ButtonDeleteNotes
                 setDeleteElement={setDeleteElement}
                 setLoadingDelete={setLoadingDelete}
                 body={data}
               />
+              {/* <div className={s.books}>{books.map((item) => {
+                return <span>{item.name}</span>
+              })}</div> */}
           </DropdownMenuEditor>
         </div>
       </div>

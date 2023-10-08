@@ -75,12 +75,6 @@ margin-top: 5px;
     }
 }
 
-
-
-
-
-
-
 .code {
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -88,8 +82,6 @@ margin-top: 5px;
     padding: 1px 3px 2px;
     border-radius: 15px;
 }
-
-
 
 
 .show {
@@ -103,12 +95,14 @@ margin-top: 5px;
     opacity: 0;
     visibility: none;
     pointer-events: none;
-
 }
-
-
 
 .text {
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.books {
+    display: flex;
+    flex-direction: column;
 }

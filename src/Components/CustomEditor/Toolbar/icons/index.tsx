@@ -19,8 +19,9 @@ import H4 from './h4.svg';
 import H5 from './h5.svg';
 import H6 from './h6.svg';
 import Square from './square.svg';
+import Blur from './blur.svg';
 
 
 
 
-export  {Bold, Italic,Underline,AlignCenter,AlignLeft,AlignRight,ListUl,ListOl,BlockQuote,Highlighter,AlignJustify,Strikethrough,Code,Heading,H1,H2,H3,H4,H5,H6,Square};
+export  {Bold, Italic,Underline,AlignCenter,AlignLeft,AlignRight,ListUl,ListOl,BlockQuote,Highlighter,AlignJustify,Strikethrough,Code,Heading,H1,H2,H3,H4,H5,H6,Square, Blur};

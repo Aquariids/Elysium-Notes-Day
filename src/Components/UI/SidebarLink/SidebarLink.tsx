@@ -24,24 +24,24 @@ const SidebarLink = ({children,href,btn,}:IsidebarLink) => {
     const router = useRouter();
     const [activeModalMenu, setActiveModalMenu] = useState<boolean>(false);
 
-    async function getDatabook() {
-        try {
-          const res = await fetch(
-            `/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
-          );
-          if (!res.ok) {
-            throw new Error(`Ошибка при запросе: ${res.status} ${res.statusText}`);
-          }
-          const data = await res.json();
-          setDataBook(data); // Обновляем состояние dataBook
-        } catch (err) {
-          console.error(err);
-        }
-      }
+    // async function getDatabook() {
+    //     try {
+    //       const res = await fetch(
+    //         `/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
+    //       );
+    //       if (!res.ok) {
+    //         throw new Error(`Ошибка при запросе: ${res.status} ${res.statusText}`);
+    //       }
+    //       const data = await res.json();
+    //       setDataBook(data); // Обновляем состояние dataBook
+    //     } catch (err) {
+    //       console.error(err);
+    //     }
+    //   }
 
-      useEffect(() => {
-        getDatabook();
-      }, [userId, email]);
+    //   useEffect(() => {
+    //     getDatabook();
+    //   }, [userId, email]);
     return(
         <>
         <li className={cn(s.container, {

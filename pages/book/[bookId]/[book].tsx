@@ -12,7 +12,7 @@ import { NOTES } from "../../api/paths";
 import { sorting } from "../../../utils/sorting";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { withLayout } from "../../../layout/Layout";
-const notes = ({ data }: any) => {
+const notes = ({ data, databook }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -146,6 +146,7 @@ const notes = ({ data }: any) => {
             key={selectedItem._id}
             selectedItem={selectedItem}
             idPage = {idforpage}
+            books = {databook}
           />
         )}
       </div>
@@ -175,13 +176,13 @@ export async function getServerSideProps(context: any) {
   } const resBook = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
   );
-  const dataBook = await resBook.json();
+  const databook = await resBook.json();
  
   const res = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${bookId}`
   );
   const data = await res.json();
-  const idforpage = data[bookId] ? dataBook[bookId].idPage: '' ; 
+  // const idforpage = data[bookId] ? dataBook[bookId].idPage: '' ; 
 
   
   //  if(!data[bookId]) {
@@ -195,7 +196,7 @@ export async function getServerSideProps(context: any) {
   
  
   return {
-    props: { data,idforpage },
+    props: { data,databook },
   };
 }
 

@@ -7,11 +7,7 @@ import { getServerSession } from 'next-auth';
 function BookPage({data, idforpage}:any) {
   const router = useRouter();
   const { bookId } = router.query;
-  console.log("🚀 ~ file: [bookId].tsx:10 ~ BookPage ~ bookId:", bookId)
-
   // Здесь вы можете использовать значение bookId для отображения контента, связанного с этим параметром.
-
-  
   if(idforpage != null && String(idforpage) === bookId) {
     return (
       <div>
@@ -27,7 +23,6 @@ function BookPage({data, idforpage}:any) {
     )
   }
 
- 
 }
 
 export default BookPage;
@@ -35,7 +30,7 @@ export default BookPage;
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const { bookId } = context.query;  
+  const { bookId } = context.query;
   const email = session?.user.email;
   const userId = session?.user.userId;
   try {

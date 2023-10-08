@@ -9,16 +9,23 @@ export const styleMap = {
     },
     HIGHLIGHTER_GREEN: {
       backgroundColor: "#b7f7d1",
+
     },
     HIGHLIGHTER_BLUE: {
       backgroundColor: "#adecf4",
     },
     HIGHLIGHTER_VIOLET: {
+      
       backgroundColor: "#cbcaff",
     },
     HIGHLIGHTER_BROWN: {
       backgroundColor: "#ffd1b0",
     },
+    BLUR: {
+      filter: 'blur(2.5px)',
+      textDecoration: 'line-through',
+      color: 'gray',
+    }
     
 
     

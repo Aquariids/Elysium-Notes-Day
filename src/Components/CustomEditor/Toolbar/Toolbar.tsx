@@ -10,6 +10,7 @@ import { RECYCLE } from "../../../../pages/api/paths";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
+  BLUR,
   HIGHLIGHTER_BLUE,
   HIGHLIGHTER_BROWN,
   HIGHLIGHTER_GREEN,
@@ -70,6 +71,21 @@ const ToolbarButtons = ({
   const isHighlighterBrown = () =>
     hasInlineStyleOf(editorState, HIGHLIGHTER_BROWN);
 
+    const toggleBlur = () =>
+    toggleInlineStyle(editorState, setEditorState, BLUR);
+  const isBlur = () =>
+    hasInlineStyleOf(editorState, BLUR);
+
+    const blur =  {
+      name: "BLUR",
+      handler: toggleBlur,
+      detector: isBlur,
+      children: <Icons.Blur/>,
+      title: "Скрыть строку",
+    }
+
+
+  const allBasicButtons = [...basicButtons, blur];
   useEffect(() => {
     const buttons_heading = document.querySelectorAll(
       `.${s.btn_active_heading}`
@@ -147,6 +163,8 @@ const ToolbarButtons = ({
     },
   ];
 
+ 
+
   return (
     <div
       className={cn(s.toolbarHeader, {
@@ -183,7 +201,7 @@ const ToolbarButtons = ({
         })}
       >
         <div className={s.basic_btns}>
-          {basicButtons.map((btn) => (
+          {allBasicButtons.map((btn) => (
             <button
               title={btn.title}
               className={cn(s.btn, {
@@ -199,6 +217,9 @@ const ToolbarButtons = ({
               {btn.children}
             </button>
           ))}
+          {
+            
+          }
           <DropdownMenu
             icon={<Icons.Highlighter />}
             style={dropdownStyle}

@@ -9,7 +9,6 @@ import React from "react";
 import { EditorState, convertFromRaw } from "draft-js";
 
 const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
-  console.log("🚀 ~ file: List.tsx:12 ~ List ~ idPage:", idPage)
   const router = useRouter();
   const hrefBook = `book/${idPage}`;
 

@@ -12,7 +12,7 @@ import { NOTES } from "../api/paths";
 import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import {sorting} from "../../utils/sorting";
-const notes = ({ data }: any) => {
+const notes = ({ data,databook }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -142,6 +142,7 @@ const notes = ({ data }: any) => {
             setCheckTitle={setCheckTitle}
             key={selectedItem._id}
             selectedItem={selectedItem}
+            books = {databook}
           />
         )}
       </div>
@@ -173,9 +174,13 @@ export async function getServerSideProps(context: any) {
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
   );
   const data = await res.json();
+  const resBook = await fetch(
+    `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
+  );
+  const databook = await resBook.json();
 
   return {
-    props: { data },
+    props: { data,databook },
   };
 }
 

@@ -19,6 +19,8 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   // emptyRawContentState - пустой объект содержимого draft js. Превращаем его в JSON и отправляем в базу
   const [load, setLoad] = useState(true);
   const router = useRouter();
+  const bookpage = router.asPath === '/book';
+  const idPageForBook = router.asPath
   const create = async () => {
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -34,6 +36,7 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
       date:userDate.toJSDate(),
       dateFull:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"),
       dateShort:userDate.toFormat("d MMMM").length === 11 ? userDate.toFormat("d MMMM").slice(0,6) : userDate.toFormat("d MMMM").slice(0,5) + '.',
+      // idPage: bookpage ? 
     };
 
     try {
@@ -46,7 +49,7 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
         body: JSON.stringify(data),
       });
       const responseData = await response.json();
-      router.push(`/${NOTES}/${responseData._id}`);
+      // router.push(`/${NOTES}/${responseData._id}`);
     } catch (error) {
       console.error("Failed to create note");
       console.error(error);

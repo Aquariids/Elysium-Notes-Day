@@ -48,6 +48,7 @@ export const headingButtons:buttonProps[] = [
       children: <Icons.H6 />,
       title: "Заголовк 6",
     },
+  
   ];
 
 
