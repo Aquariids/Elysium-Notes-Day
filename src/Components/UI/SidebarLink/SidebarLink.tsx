@@ -58,7 +58,7 @@ const SidebarLink = ({children,href,btn,}:IsidebarLink) => {
                 
                 [s.show]: btn === 'add_book',
                 [s.caretDown]:  activeMenu === true
-            })}><Caret/></button>
+            })}></button>
             {/* <div className={cn(sDrop.dropdown_content, {
                 [sDrop.show]: activeMenu === true
             })}>
@@ -75,7 +75,6 @@ const SidebarLink = ({children,href,btn,}:IsidebarLink) => {
          <div className={s.btn}>{btn === 'add' ? <ButtonCreateNewNotes/>: ''}</div>
         {/* <div className={s.btn}>{btn === 'add_book' ? <ButtonCreateNewBook setActiveModalMenu={setActiveModalMenu}/>: ''}</div> */}
         </li>
-
 
         {/* <ModalMenuNewBook activeModalMenu={activeModalMenu} /> */}
         </>
