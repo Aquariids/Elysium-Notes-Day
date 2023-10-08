@@ -4,7 +4,7 @@ const ModalAddNotesInBook = ({ books, active, setActive }: any) => {
   return (
     <div className={cn(
         s.modal, {
-            [s.modal__active]: active
+            [s.modal__active]: active === true
         }
     )} onClick={() => setActive(false)}>
       <div className={s.modal__content} onClick={(e) => e.stopPropagation() }>

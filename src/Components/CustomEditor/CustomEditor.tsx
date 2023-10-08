@@ -302,7 +302,7 @@ const CustomEditor = ({
                 setLoadingDelete={setLoadingDelete}
                 body={data}
               />
-              <div onClick={() => {setActiveModal(true)}}> Открыть окно </div>
+              <span onClick={() => {setActiveModal(true)}}> Открыть окно </span>
               <ModalAddNotesInBook books={books} active={activeModal} setActive={setActiveModal}/>
           </DropdownMenuEditor>
         </div>
