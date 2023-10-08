@@ -1,0 +1,10 @@
+
+
+.btn {
+
+}
+
+.btn:disabled {
+    transition: all .2s;
+    cursor: not-allowed;
+  }

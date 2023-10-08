@@ -1,5 +1,5 @@
 // update actions
-export type UpdateAction = "editor" | "editor_title" | "book_main_menu" | "block_link" | "action_sorting" | 'mode_code'|'update_date_last_changes';
+export type UpdateAction = "editor" | "editor_title" | "book_main_menu" | "block_link" | "action_sorting" | 'mode_code'|'update_date_last_changes' | 'update_id_page';
 
 // update action
 export const update_action = {
@@ -9,7 +9,8 @@ export const update_action = {
     block_link:'block_link',
     action_sorting:'action_sorting',
     mode_code:'mode_code',
-    update_date_last_changes: 'update_date_last_changes'
+    update_date_last_changes: 'update_date_last_changes',
+    update_id_page: 'update_id_page'
 }
 
 // get actions

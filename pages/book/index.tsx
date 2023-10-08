@@ -8,7 +8,8 @@ import { redirect } from "next/dist/server/api-utils";
 import { SIGNIN } from "../api/paths";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-
+import cn from 'classnames';
+import s from './book.module.scss';
 const page = ({ data }: any) => {
   const [isButtonClicked, setButtonClicked] = useState(false);
   const [dataBook, setDataBook] = useState<any>();
@@ -72,7 +73,9 @@ const page = ({ data }: any) => {
         onChange={(e) => setBookName(e.target.value)}
         placeholder="создать блокнот" value={bookName}
       />
-      <button
+      <button disabled={!bookName && true } className={cn(s.btn, {
+        
+      })}
         onClick={() => {
           buttonCreateNewBook(
             bookName

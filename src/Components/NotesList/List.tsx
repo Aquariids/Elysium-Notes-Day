@@ -30,7 +30,7 @@ const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
 
     if (plainText.length >= sizeText) {
       const text = plainText.slice(0, sizeText) + "...";
-      return remove_line_break(text);
+      return text;
     } else {
       return remove_line_break(plainText);
     }
