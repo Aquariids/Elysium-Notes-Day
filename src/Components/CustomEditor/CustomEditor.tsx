@@ -35,6 +35,7 @@ import Toolbar from "./Toolbar/Toolbar";
 import { DateTime } from "luxon";
 import { updateDateProps } from "./CustomEditor.props";
 import DropdownMenuEditor from "../UI/DropdownMenu/DropdownMenu";
+import ModalAddNotesInBook from "./ModalAddNotesInBook/ModalAddNotesInBook";
 const CustomEditor = ({
   setCheckTitle,
   data,
@@ -58,6 +59,7 @@ const CustomEditor = ({
   const { data: session } = useSession();
   const [showToolbar, setShowToolbar] = useState<boolean>(false);
   const [routerReclycle, setRouterReclycle] = useState<boolean>(false);
+  const [activeModal, setActiveModal] = useState(false);
   useEffect(() => {
     hljs.highlightAll();
   }, [code]);
@@ -300,9 +302,8 @@ const CustomEditor = ({
                 setLoadingDelete={setLoadingDelete}
                 body={data}
               />
-              {/* <div className={s.books}>{books.map((item) => {
-                return <span>{item.name}</span>
-              })}</div> */}
+              <div onClick={() => {setActiveModal(true)}}> Открыть окно </div>
+              <ModalAddNotesInBook books={books} active={activeModal} setActive={setActiveModal}/>
           </DropdownMenuEditor>
         </div>
       </div>

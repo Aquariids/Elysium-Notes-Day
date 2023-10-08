@@ -1,0 +1,31 @@
+.books {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.349);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    transform: scale(0);
+} 
+
+.modal__active {
+    transform: scale(1);
+}
+.modal__content { 
+    top: 30%;
+    position: absolute;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #b90909;
+    height: 200px;
+    width: 200px;
+}
