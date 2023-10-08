@@ -101,7 +101,7 @@ const ButtonDeleteNotes = ({
           onClick={() => handleDeleteLink({ linkId: selectedId })}
           {...props}
         >
-          <p className={s.text}>Переместить в корзину</p>
+          <p className={s.text}>Удалить</p>
         </div>
       )}
     </>

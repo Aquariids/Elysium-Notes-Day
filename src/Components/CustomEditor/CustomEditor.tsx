@@ -286,7 +286,7 @@ const CustomEditor = ({
             editorState={editorState}
             setEditorState={setEditorState}
           />
-          <DropdownMenuEditor  icon={<DotsMenu />}  >
+          <DropdownMenuEditor activeModal={activeModal}  icon={<DotsMenu />}  >
           <div
                 className={s.hide_btn}
                 onClick={() => {
@@ -302,9 +302,10 @@ const CustomEditor = ({
                 setLoadingDelete={setLoadingDelete}
                 body={data}
               />
-              <span onClick={() => {setActiveModal(true)}}> Открыть окно </span>
-              <ModalAddNotesInBook books={books} active={activeModal} setActive={setActiveModal}/>
+             {!routerReclycle && <p className={cn(s.text, s.hide_btn)} onClick={() => {setActiveModal(true)}}> Переместить.. </p>} 
           </DropdownMenuEditor>
+          <ModalAddNotesInBook books={books} active={activeModal} setActive={setActiveModal}/>
+
         </div>
       </div>
       <WrapperEditorRecycle routerReclycle={routerReclycle}>
