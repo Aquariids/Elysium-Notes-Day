@@ -8,3 +8,13 @@
     transition: all .2s;
     cursor: not-allowed;
   }
+
+  .bookLink {
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .wrapper {
+    padding: 50px;
+  }

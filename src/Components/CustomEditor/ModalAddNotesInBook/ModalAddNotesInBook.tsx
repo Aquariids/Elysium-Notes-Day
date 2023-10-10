@@ -1,44 +1,93 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { update_action } from "../../../../pages/api/actios";
 import s from "./ModalAddNotesInBook.module.scss";
-import cn from 'classnames';
+import cn from "classnames";
 import { useRouter } from "next/router";
-const ModalAddNotesInBook = ({ books = [], active, setActive, currentNote,session }: any) => {
-  const router = useRouter()
-const [currentIpPage, setCurrentIdPage] = useState('')
+import Xmark from "./xmark.svg";
+const ModalAddNotesInBook = ({
+  books = [],
+  active,
+  setActive,
+  currentNote,
+  session,
+}: any) => {
+  const router = useRouter();
+  const [currentIdPage, setCurrentIdPage] = useState<string>("");
+  const [activeLink, setActiveLink] = useState<any>(false);
+
+  function close () {
+    setActive(false)
+    setTimeout(() => {
+      setActiveLink('')
+    },1000)
+
+  }
   const addIdPageForNote = async () => {
     const data = {
-        email: session?.user.email,
-        userId: session?.user.userId,
-        _id: currentNote._id,
-        idPage: currentIpPage,
-    }
-    const res   = await fetch(`/api/updateData?action=${update_action.update_id_page}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    } );
+      email: session?.user.email,
+      userId: session?.user.userId,
+      _id: currentNote._id,
+      idPage: currentIdPage,
+    };
+    const res = await fetch(
+      `/api/updateData?action=${update_action.update_id_page}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
-    if(res.ok) router.push(router.asPath)
+    if (res.ok) router.push(router.asPath);
+  };
 
-  } 
   return (
-    <div className={cn(
-        s.modal, {
-            [s.modal__active]: active
-        }
-    )} onClick={() => setActive(false)}>
-      <div className={cn(s.modal__content, {
-        [s.modal__active]: active
-      })} onClick={(e) => e.stopPropagation() }>
-        <div className={s.books}>
-          {books.map((item: any) => {
-            return <span onClick={()=> {setCurrentIdPage(String(item.idPage))}} key={item.name}>{item.name}</span>;
-          })}
+    <div
+      className={cn(s.modal, {
+        [s.modal__active]: active,
+      })}
+    >
+      <div
+        className={cn(s.modal__content, {
+          [s.modal__active]: active,
+        })}
+      >
+        <span className={s.header__content}>
+          <h1>Переместить заметку в...</h1>
+          <Xmark onClick={close} />
+        </span>
+        <div className={s.body__content}>
+          <div className={s.books}>
+            {books.map((item: any) => {
+              return (
+                <span
+                className={cn({
+                  [s.test]: activeLink._id === item._id,
+                  [s.test2]: currentNote.idPage === String(item.idPage) && !activeLink,
+                 
+                })}
+                  onClick={(e) => {
+                    setCurrentIdPage(String(item.idPage));
+                    setActiveLink(item)
+                  }}
+                  
+                  key={item.name}
+                >
+                  {item.name}
+                </span>
+              );
+            })}
+          </div>
+          <div className={s.footer__buttons}>
+            <button onClick={close}>Отмена</button>
+            <button className={s.btn__confirm} disabled={activeLink._id && String(activeLink.idPage) !== currentNote.idPage ? false : true} onClick={()=> {
+              addIdPageForNote()
+              setActive(false)
+            }}>Готово</button>
+          </div>
         </div>
-        <button onClick={addIdPageForNote}>нажми</button>
       </div>
     </div>
   );

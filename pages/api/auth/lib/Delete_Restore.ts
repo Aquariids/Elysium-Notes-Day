@@ -63,7 +63,6 @@ export async function deleteDataRecycle(_id: string, userId: string) {
       client.close();
     }
   }
-  
   export async function deleteData(_id: string, userId: string) {
     try {
       const id = new ObjectId(_id);
@@ -79,7 +78,22 @@ export async function deleteDataRecycle(_id: string, userId: string) {
       client.close();
     }
   }
+  export async function deleteIdPageBook(_id: string, userId: string) {
+    try {
+      const id = new ObjectId(_id);
+      const collection = await getCollection({
+        collectionName: `user_createBook_${userId}`,
+        db: "notes",
+      });
+      const result = await collection.deleteOne({ _id: id });
   
+      return result;
+    } catch (error) {
+      const client = await getClient();
+      client.close();
+    }
+  }
+
   export async function deleteAllData(userId: string) {
     try {
       const collection = await getCollection({

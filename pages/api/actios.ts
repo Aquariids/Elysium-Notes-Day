@@ -26,13 +26,14 @@ export const get_action = {
 }
 
 // delete and restore actions
-export type DeleteRestoreAction = "delete_one_notes_recycle" | "delete_one_notes" | "delete_all_notes_recycle" | "restore_data";
+export type DeleteRestoreAction = "delete_one_notes_recycle" | "delete_one_notes" | "delete_all_notes_recycle" | "restore_data" | 'delete_id_page_book';
 
 export const delete_restore_action = {
     delete_one_notes_recycle: "delete_one_notes_recycle",
     delete_one_notes: "delete_one_notes",
     delete_all_notes_recycle: "delete_all_notes_recycle",
-    restore_data:"restore_data"
+    restore_data:"restore_data",
+    delete_id_page_book: 'delete_id_page_book'
 }
 
 // create actions

@@ -5,8 +5,10 @@ import { authOptions } from '../api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 
 function BookPage({data, idforpage}:any) {
+  console.log("🚀 ~ file: [bookId].tsx:8 ~ BookPage ~ idforpage:", idforpage)
   const router = useRouter();
   const { bookId } = router.query;
+  console.log("🚀 ~ file: [bookId].tsx:10 ~ BookPage ~ bookId:", bookId)
   // Здесь вы можете использовать значение bookId для отображения контента, связанного с этим параметром.
   if(idforpage != null && String(idforpage) === bookId) {
     return (
@@ -31,6 +33,7 @@ export default BookPage;
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const { bookId } = context.query;
+  console.log("🚀 ~ file: [bookId].tsx:36 ~ getServerSideProps ~ bookId:", bookId)
   const email = session?.user.email;
   const userId = session?.user.userId;
   try {
@@ -46,10 +49,8 @@ export async function getServerSideProps(context: any) {
     const dataBook = await resBook.json();
     const sort = await actionSorting.json();
     const data = await res.json();
-    const idforpage = dataBook[bookId] ? dataBook[bookId].idPage: null; 
-  
-  
-  
+    const idforpage = dataBook[bookId]  ? dataBook[bookId].idPage: null; 
+      
   if(!session){
     return {
       redirect: {

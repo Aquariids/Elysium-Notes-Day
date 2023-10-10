@@ -1,16 +1,18 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { create_data, get_action } from "../api/actios";
+import { create_data, delete_restore_action, get_action } from "../api/actios";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { withLayout } from "../../layout/Layout";
-import { redirect } from "next/dist/server/api-utils";
 import { SIGNIN } from "../api/paths";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import cn from 'classnames';
 import s from './book.module.scss';
-const page = ({ data }: any) => {
+import DotsMenu from './dots.svg';
+import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
+const index = ({ data }: any) => {
+  console.log("🚀 ~ file: index.tsx:15 ~ index ~ data:", data)
   const [isButtonClicked, setButtonClicked] = useState(false);
   const [dataBook, setDataBook] = useState<any>();
   const router = useRouter();
@@ -18,6 +20,7 @@ const page = ({ data }: any) => {
   const session = useSession();
   const email = session.data?.user.email;
   const userId = session.data?.user.userId;
+  const [activeModal, setActiveModal] = useState(false);
 
   async function buttonCreateNewBook(nameBook: string) {
     try {
@@ -48,6 +51,12 @@ const page = ({ data }: any) => {
       console.error(err);
     }
   }
+
+
+  async function deleteBook (_id:any) {
+    const res = await fetch(`/api/deleteAndRestoreData?action=${delete_restore_action.delete_id_page_book}&userId=${userId}&_id=${_id}`)
+    
+  }
   async function getDatabook() {
     try {
       const res = await fetch(
@@ -68,7 +77,7 @@ const page = ({ data }: any) => {
   }, [userId]);
 
   return (
-    <div>
+    <div className={s.wrapper}>
       <input
         onChange={(e) => setBookName(e.target.value)}
         placeholder="создать блокнот" value={bookName}
@@ -88,13 +97,16 @@ const page = ({ data }: any) => {
       {dataBook &&
         dataBook.map((item:any, id:number) => {
           
-          return <div key={id}><Link href={`book/${item.idPage}`} key={item.name}> {item.name} </Link></div>
+          return <div className={s.bookLink} key={id}><Link href={`book/${item.idPage}`} key={item.name}> {item.name} </Link>  <DropdownMenuEditor activeModal={activeModal}  icon={<DotsMenu />}  >
+        <div onClick={() => deleteBook(item._id)}>Удалить блокнот</div>
+            
+          </DropdownMenuEditor></div>
         })}
     </div>
   );
 };
 
-export default withLayout(page);
+export default withLayout(index);
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
