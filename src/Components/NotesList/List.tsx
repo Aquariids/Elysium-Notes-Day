@@ -9,14 +9,17 @@ import React from "react";
 import { EditorState, convertFromRaw } from "draft-js";
 
 const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
+  
   const router = useRouter();
   const hrefBook = `book/${idPage}`;
 
   const routerRecycle = router.asPath.split("/")[1];
-  const selectedId = idPage || idPage === 0 ? router.query.book : router.query.index;
+  const selectedId = idPage || idPage == 0 ? router.query.book : router.query.index;
   const remove_line_break = (str: string) => {
     return str.replace(/\n/g, "");
   };
+
+  
 
   const DraftJsObjectInText = (body: string) => {
     const contentState = convertFromRaw(JSON.parse(body));
@@ -101,7 +104,7 @@ const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
                     [s.mainMenuLink]: router.asPath === "/",
                     [s.block_item]: item.block === true,
                   })}
-                  href={`/${idPage || idPage === 0 && hrefBook || routerRecycle && routerRecycle || NOTES }/${item._id}`}
+                  href={`/${(idPage || idPage == 0) && hrefBook || routerRecycle && routerRecycle || NOTES }/${item._id}`}
                 >
                   <p
                     className={cn(s.title_link, {
