@@ -30,7 +30,7 @@ const ModalAddNotesInBook = ({
       idPage: currentIdPage,
     };
     const res = await fetch(
-      `/api/updateData?action=${update_action.update_id_page}`,
+      `/api/updateData?action=${update_action.update_id_page_one_note}`,
       {
         method: "POST",
         headers: {

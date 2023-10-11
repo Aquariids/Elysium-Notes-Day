@@ -45,30 +45,71 @@ export async function updateDataInDatabase(data: any) {
 }
 
 export async function updateIdPageForNote(data: any) {
+  const dataConfirm = data[0] && data[0]
   try {
-    const id = new ObjectId(data._id);
     const collection = await getCollection({
-      collectionName: `user_${data.userId}`,
+      collectionName: `user_createBook_${dataConfirm.userId}`,
       db: "notes",
     });
-    // const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm:ss');
-    // Сохранение сырого содержимого в базе данных - это объект состояния редактора draft js
-    // Этот объект мы можем получить с помощью converToRaw который принимает объект ContentState и возвращает нам сырой объект.
-    // такой объект можно где то сохранить в базе данные или еще где то. В общем для хранения данные.
     await collection.findOneAndUpdate(
-      //$and - объеденяет выражение и возрвращает документы подходящие под условие. типо тоже самое что логическое &&
-      { $and: [{ userId: data.userId }, { email: data.email }, { _id: id }] }, // фильтрация - проверяем если email равен data.email и userId равен data.userId
+      { $and: [{ userId: dataConfirm.userId }, { email: dataConfirm.email }] }, 
       {
         $set: {
-          idPage: data.idPage,
+          idPage: dataConfirm.idPage,
         },
-      } // то обновляем тело. $set оператор обновления поля или может добавить его.
+      } 
     );
   } catch (error) {
     const client = await getClient();
     client.close();
   }
 }
+
+export async function updateIdPageForOneNote(data: any) {
+  console.log("🚀 ~ file: Update.ts:69 ~ updateIdPageForOneNote ~ data:", data.idPage)
+  try {
+    const id = new ObjectId(data._id);
+    const collection = await getCollection({
+      collectionName: `user_${data.userId}`,
+      db: "notes",
+    });
+    await collection.findOneAndUpdate(
+      { $and: [{ userId: data.userId }, { email: data.email }, {_id: id}] }, 
+      {
+        $set: {
+          idPage: data.idPage,
+        },
+      } 
+    );
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
+
+
+export async function deleteIdPageForNote(data: any) {
+  try {
+    const id = new ObjectId(data._id);
+    const collection = await getCollection({
+      collectionName: `user_${data.userId}`,
+      db: "notes",
+    });
+    await collection.findOneAndUpdate(
+      { $and: [{ userId: data.userId }, { email: data.email }, { idPage: data.idPage,}] }, 
+      {
+        $set: {
+          idPage: '',
+        },
+      } 
+    );
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
+
+
 export async function updateDataTitle(data: any) {
   try {
     const id = new ObjectId(data._id);

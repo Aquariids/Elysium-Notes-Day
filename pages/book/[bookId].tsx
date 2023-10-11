@@ -8,7 +8,6 @@ function BookPage({data, idforpage}:any) {
   console.log("🚀 ~ file: [bookId].tsx:8 ~ BookPage ~ idforpage:", idforpage)
   const router = useRouter();
   const { bookId } = router.query;
-  console.log("🚀 ~ file: [bookId].tsx:10 ~ BookPage ~ bookId:", bookId)
   // Здесь вы можете использовать значение bookId для отображения контента, связанного с этим параметром.
   if(idforpage != null && String(idforpage) === bookId) {
     return (
@@ -29,11 +28,9 @@ function BookPage({data, idforpage}:any) {
 
 export default BookPage;
 
-
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const { bookId } = context.query;
-  console.log("🚀 ~ file: [bookId].tsx:36 ~ getServerSideProps ~ bookId:", bookId)
   const email = session?.user.email;
   const userId = session?.user.userId;
   try {
@@ -47,9 +44,12 @@ export async function getServerSideProps(context: any) {
       `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
     );
     const dataBook = await resBook.json();
+
     const sort = await actionSorting.json();
     const data = await res.json();
-    const idforpage = dataBook[bookId]  ? dataBook[bookId].idPage: null; 
+    console.log("🚀 ~ file: [bookId].tsx:50 ~ getServerSideProps ~ data:", data)
+    
+    const idforpage = dataBook[bookId] ? dataBook[bookId].idPage: null; 
       
   if(!session){
     return {
@@ -63,39 +63,37 @@ export async function getServerSideProps(context: any) {
   if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
     return {
       redirect: {
-        destination: `/book/${bookId}/${data[0]._id}`,
+        destination: `/book/${idforpage}/${data[0]._id}`,
         permanent: false,
       },
     };
   } if (session && data[0] != undefined && sort[0].sorting === 'dateUp') {
     return {
       redirect: {
-        destination: `/book/${bookId}/${data[data.length - 1]._id}`,
+        destination: `/book/${idforpage}/${data[data.length - 1]._id}`,
         permanent: false,
       },
     };
   }  
 
+
   if(session && data[0] != undefined) {
     return {
       redirect: {
-        destination: `/book/${bookId}/${data[0]._id}`,
+        destination: `/book/${idforpage}/${data[0]._id}`,
         permanent: false,
       },
        props:{data}
     };
   }  
-  
-  
+
+
   return {
     props:{ data, idforpage}
-  }
+    }
   }
 
   catch(err) {
     console.error(err);
-    
   }
-
-
 }

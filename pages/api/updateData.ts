@@ -1,11 +1,13 @@
 import { UpdateAction, update_action } from "./actios";
 import { NextApiRequest, NextApiResponse } from "next";
 import {
+  deleteIdPageForNote,
   updateActionSorting,
   updateBlockLink,
   updateDataInDatabase,
   updateDataTitle,
   updateIdPageForNote,
+  updateIdPageForOneNote,
   updateLastDate,
   updateModeCode,
   updateNoteBookMainMenu,
@@ -46,6 +48,14 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
         break;
       case update_action.update_id_page:
         await updateIdPageForNote(data);
+        res.status(200).send("Data editor updated successfully");
+        break;
+        case update_action.update_id_page_one_note:
+          await updateIdPageForOneNote(data);
+          res.status(200).send("Data editor updated successfully");
+          break;
+      case update_action.delete_id_page:
+        await deleteIdPageForNote(data);
         res.status(200).send("Data editor updated successfully");
         break;
 
