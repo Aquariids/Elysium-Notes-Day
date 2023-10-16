@@ -45,6 +45,21 @@ export async function createNoteBookMainMenu(data: any) {
     }
   }
 
+  export async function createBookForAllNotes(data: any) {
+    const collection = await getCollection({
+      collectionName: `main_book_${data.userId}`,
+      db: "notes",
+    });
+  
+    const existingDocument = await collection.findOne({});
+    if (!existingDocument) {
+    await collection.insertOne(data);
+    }
+    else {
+      console.log('Document already exists.');
+    }
+  }
+
   export async function createSortingDocument(data: any) {
     const collection = await getCollection({
       collectionName: `user_actionSorting_${data.userId}`,

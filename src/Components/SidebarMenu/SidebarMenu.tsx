@@ -16,7 +16,7 @@ const SideBarMenu = () => {
         <SidebarLink href="/"><Home/><span className={s.content}> Главная </span></SidebarLink>
         <SidebarLink btn={"add"} href={`/${NOTES}`}> <Notes/> <span className={s.content}>Заметки</span> </SidebarLink>
         <SidebarLink href={`/${RECYCLE}`}> <Recycle/> <span className={s.content}>Корзина</span> </SidebarLink>
-        <SidebarLink btn={"add_book"} href={`/book`}> <Book/> <span className={s.content}>Блокноты</span> </SidebarLink>        
+        {/* <SidebarLink btn={"add_book"} href={`/book`}> <Book/> <span className={s.content}>Блокноты</span> </SidebarLink>         */}
       </ul>
     </div>
   );

@@ -1,6 +1,6 @@
 import { CreateAction } from './actios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createBook, createDatabase, createNoteBookMainMenu, createSortingDocument } from './auth/lib/Create';
+import { createBook, createBookForAllNotes, createDatabase, createNoteBookMainMenu, createSortingDocument } from './auth/lib/Create';
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const action:CreateAction = req.query.action as CreateAction;
     const data = req.body;
@@ -22,6 +22,10 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                 break;
                 case 'create_book':
                     await createBook(data);
+                    res.status(200).json(data);
+                break;
+                case 'create_book_for_notes':
+                    await createBookForAllNotes(data);
                     res.status(200).json(data);
                 break;
                 default:

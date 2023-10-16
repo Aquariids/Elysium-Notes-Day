@@ -1,5 +1,5 @@
 // update actions
-export type UpdateAction = "editor" | "editor_title" | "book_main_menu" | "block_link" | "action_sorting" | 'mode_code'|'update_date_last_changes' | 'update_id_page' | 'delete_id_page' | 'update_id_page_one_note';
+export type UpdateAction = "editor" | "editor_title" | "book_main_menu" | "block_link" | "action_sorting" | 'mode_code'|'update_date_last_changes' | 'update_id_page' | 'delete_id_page' | 'update_id_page_one_note' | 'update_id_page_all_note';
 
 // update action
 export const update_action = {
@@ -12,7 +12,8 @@ export const update_action = {
     update_date_last_changes: 'update_date_last_changes',
     update_id_page: 'update_id_page',
     delete_id_page: 'delete_id_page',
-    update_id_page_one_note: 'update_id_page_one_note'
+    update_id_page_one_note: 'update_id_page_one_note',
+    update_id_page_all_note: 'update_id_page_all_note'
 }
 
 // get actions
@@ -39,12 +40,13 @@ export const delete_restore_action = {
 }
 
 // create actions
-export type CreateAction = "create_data" | "create_data_main_menu" | 'create_data_sorting' | 'create_book' ;
+export type CreateAction = "create_data" | "create_data_main_menu" | 'create_data_sorting' | 'create_book' | 'create_book_for_notes' ;
 
 export const create_data = {
     create_data: "create_data",
     create_data_main_menu: "create_data_main_menu",
     create_data_sorting:'create_data_sorting',
-    create_book: 'create_book'
+    create_book: 'create_book',
+    create_book_for_notes: "create_book_for_notes",
 
 }

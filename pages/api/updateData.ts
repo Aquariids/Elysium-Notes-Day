@@ -6,6 +6,7 @@ import {
   updateBlockLink,
   updateDataInDatabase,
   updateDataTitle,
+  updateIdPageForAllNotes,
   updateIdPageForNote,
   updateIdPageForOneNote,
   updateLastDate,
@@ -58,6 +59,10 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
         await deleteIdPageForNote(data);
         res.status(200).send("Data editor updated successfully");
         break;
+        case update_action.update_id_page_all_note:
+          await updateIdPageForAllNotes(data);
+          res.status(200).send("Data editor updated successfully");
+          break;
 
       default:
         res.status(400).send("Invalid action");

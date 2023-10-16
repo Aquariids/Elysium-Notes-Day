@@ -173,10 +173,7 @@ export async function getServerSideProps(context: any) {
         permanent: false,
       },
     };
-  } const resBook = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
-  );
-  const databook = await resBook.json();
+  } 
  
   const res = await fetch(
     `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${bookId}`

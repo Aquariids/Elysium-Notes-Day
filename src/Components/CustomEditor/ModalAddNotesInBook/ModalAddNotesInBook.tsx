@@ -14,13 +14,11 @@ const ModalAddNotesInBook = ({
   const router = useRouter();
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
-
   function close () {
     setActive(false)
     setTimeout(() => {
       setActiveLink('')
     },1000)
-
   }
   const addIdPageForNote = async () => {
     const data = {
@@ -60,7 +58,8 @@ const ModalAddNotesInBook = ({
         </span>
         <div className={s.body__content}>
           <div className={s.books}>
-            {books.map((item: any) => {
+            {books.map((item: any, i:number) => {
+  
               return (
                 <span
                 className={cn({
@@ -73,7 +72,7 @@ const ModalAddNotesInBook = ({
                     setActiveLink(item)
                   }}
                   
-                  key={item.name}
+                  key={item._id}
                 >
                   {item.name}
                 </span>

@@ -12,6 +12,7 @@ import { NOTES } from "../api/paths";
 import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import {sorting} from "../../utils/sorting";
+import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 const notes = ({ data,databook }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -24,7 +25,7 @@ const notes = ({ data,databook }: any) => {
   const session = useSession();
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
-  
+  const [activeModal, setActiveModal] = useState(false);
   // это наш path по сути текущий url = _id человека
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
@@ -48,14 +49,12 @@ const notes = ({ data,databook }: any) => {
       }
     } catch(err) {
       console.error(err);
-     
-      
     }
    
   }, [checkTitle, data]);
 
 
-  const updateActiveSortingAction= useCallback(
+  const updateActiveSortingAction = useCallback(
     async (sorting: any, userId: any, email: any) => {
       try {
         const response = await fetch(
@@ -131,8 +130,9 @@ const notes = ({ data,databook }: any) => {
         </div>
       </div>
       
-      
       <div className={s.editor}>
+        <p onClick={() => setActiveModal(true)}>Привет</p>
+         <ModalBooks books={databook} active={activeModal} setActive={setActiveModal}/>
         {selectedItem && (
           <CustomEditor
             setDeleteElement={setDeleteElement}
@@ -152,6 +152,8 @@ const notes = ({ data,databook }: any) => {
     </AnimationContainer> 
   );
 };
+
+
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -179,6 +181,7 @@ export async function getServerSideProps(context: any) {
   );
   const databook = await resBook.json();
 
+  
   return {
     props: { data,databook },
   };

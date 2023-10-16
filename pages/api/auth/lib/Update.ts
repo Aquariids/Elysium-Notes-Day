@@ -65,6 +65,11 @@ export async function updateIdPageForNote(data: any) {
   }
 }
 
+
+
+
+
+
 export async function updateIdPageForOneNote(data: any) {
   try {
     const id = new ObjectId(data._id);

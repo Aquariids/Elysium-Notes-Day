@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 const Layout = ({ children, ...props }: LayoutProps) => {
   const session = useSession();
   // props из withLayout
+  
   return (
     <div className={s.wrapper}>
       {/* <Header className={s.header} /> */}
