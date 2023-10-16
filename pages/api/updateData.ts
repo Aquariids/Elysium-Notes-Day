@@ -4,9 +4,9 @@ import {
   deleteIdPageForNote,
   updateActionSorting,
   updateBlockLink,
+  updateBookForNotes,
   updateDataInDatabase,
   updateDataTitle,
-  updateIdPageForAllNotes,
   updateIdPageForNote,
   updateIdPageForOneNote,
   updateLastDate,
@@ -51,19 +51,18 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
         await updateIdPageForNote(data);
         res.status(200).send("Data editor updated successfully");
         break;
-        case update_action.update_id_page_one_note:
-          await updateIdPageForOneNote(data);
-          res.status(200).send("Data editor updated successfully");
-          break;
+      case update_action.update_id_page_one_note:
+        await updateIdPageForOneNote(data);
+        res.status(200).send("Data editor updated successfully");
+        break;
       case update_action.delete_id_page:
         await deleteIdPageForNote(data);
         res.status(200).send("Data editor updated successfully");
         break;
-        case update_action.update_id_page_all_note:
-          await updateIdPageForAllNotes(data);
-          res.status(200).send("Data editor updated successfully");
-          break;
-
+      case update_action.update_id_book_for_all_notes:
+        await updateBookForNotes(data);
+        res.status(200).send("Data editor updated successfully");
+        break;
       default:
         res.status(400).send("Invalid action");
         return;

@@ -245,3 +245,26 @@ export async function updateActionSorting(data: any) {
   }
 }
 
+
+
+export async function updateBookForNotes(data: any) {
+  try {
+    const collection = await getCollection({
+      collectionName: `main_book_${data.userId}`,
+      db: "notes",
+    });
+    await collection.updateOne(
+      { userId: data.userId, email:data.email },
+      {
+        $set: {
+          book: data.book,
+        },
+      } // то обновляем тело. $set оператор обновления поля или может добавить его.
+    );
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
+
+

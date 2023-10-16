@@ -92,6 +92,19 @@ async function getCollection({ db, collectionName }: dbPros) {
       return data;
     } catch (error) {}
   }
+
+  export async function getIdForAllBooks(userId:string | string[] | undefined, email:string | string[] | undefined) {
+    try {
+      const query = userId && email ? { userId, email } : {};
+      const collection = await getCollection({
+        collectionName: `main_book_${userId}`,
+        db: "notes",
+      }); // создаем или подключаемся к коллекции
+      const data = await collection.find(query).toArray();
+      console.log("🚀 ~ file: Get.ts:104 ~ getIdForAllBooks ~ data:", data)
+      return data[0].book;
+    } catch (error) {}
+  }
   
   export async function getIdPageBook(userId:string | string[] | undefined, email:string | string[] | undefined) {
     try {

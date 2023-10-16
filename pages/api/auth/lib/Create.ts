@@ -41,7 +41,7 @@ export async function createNoteBookMainMenu(data: any) {
     await collection.insertOne(data);
     }
     else {
-      console.log('Document already exists.');
+      console.log('Document note for main menu already exists.');
     }
   }
 
@@ -56,7 +56,7 @@ export async function createNoteBookMainMenu(data: any) {
     await collection.insertOne(data);
     }
     else {
-      console.log('Document already exists.');
+      console.log('Document Book already exists.');
     }
   }
 
@@ -71,7 +71,7 @@ export async function createNoteBookMainMenu(data: any) {
     await collection.insertOne(data);
     }
     else {
-      console.log('Document already exists.');
+      console.log('Document sorting already exists.');
     }
   }
   export async function createBook(data: any) {

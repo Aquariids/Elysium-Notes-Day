@@ -5,8 +5,10 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { NOTES } from "../api/paths";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import { get_action } from "../api/actios";
-const index = () => {
-
+import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
+import { useState } from "react";
+const index = ({databook}:any) => {
+  const [activeModal, setActiveModal] = useState(false);
   return (
     // ну и паередаем его в наш редактор.
     <div className={s.wrapper}>
@@ -21,7 +23,14 @@ const index = () => {
           </div>
         </div>
       </div>
+      
       <div className={s.editor}> 
+      <p onClick={() => setActiveModal(true)}>Привет</p>
+      <ModalBooks
+          
+            active={activeModal}
+            setActive={setActiveModal}
+          />
       </div>
     </div>
   );
@@ -32,16 +41,32 @@ export async function getServerSideProps(context: any) {
   const userId = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   try {
-    const res = await fetch(
+
+    const idPageForBooks = await fetch(
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
+    );
+    const answ = await idPageForBooks.json();
+    const res = answ === 'all' ? await fetch(
       `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+    ): await fetch(
+      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${answ}`
     );
     const actionSorting = await fetch(
       `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userId}&email=${email}`
+    ); 
+ 
+    const resBook = await fetch(
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
     );
+    const databook = await resBook.json();
+    // const datainbooks = await fetch(
+    //   `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${answ}`
+    // );
   
   const sort = await actionSorting.json();
   const data = await res.json();
-    
+
+  
   if(!session){
     return {
       redirect: {
@@ -77,7 +102,7 @@ export async function getServerSideProps(context: any) {
   }  
   
   return {
-    props:{ data}
+    props:{ data,databook}
   }
   }
 

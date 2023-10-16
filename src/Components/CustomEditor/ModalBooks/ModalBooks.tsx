@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { create_data, delete_restore_action, get_action, update_action } from "../../../../pages/api/actios";
 import s from "./ModalBooks.module.scss";
 import cn from "classnames";
@@ -6,18 +6,22 @@ import Xmark from "./xmark.svg";
 import { useSession } from "next-auth/react";
 import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
 import DotsMenu from './dots.svg';
-const ModalAddNotesInBook = ({
+import { useRouter } from "next/router";
+const ModalBooks = ({
   active,
   setActive,
 }: any) => {
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
+  console.log("🚀 ~ file: ModalBooks.tsx:15 ~ currentIdPage:", currentIdPage)
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
   const session = useSession()
   const email = session.data?.user.email;
   const userId = session.data?.user.userId;
   const [dataBook, setDataBook] = useState<any>();
+  const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);
+  const router = useRouter();
   let idPageCounter = dataBook && dataBook.length;
   function close () {
     setActive(false)
@@ -26,6 +30,33 @@ const ModalAddNotesInBook = ({
     },1000)
 
   }
+
+
+  const updateBookForNotes = useCallback(
+    async (idForBook: any,) => {
+      try {
+        const response = await fetch(
+          `/api/updateData?action=${update_action.update_id_book_for_all_notes}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId,
+              email,
+              book: idForBook,
+            }),
+          }
+        );
+
+        if(response.ok) router.push(router.asPath);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    []
+  );
 
   async function getDatabook() {
     try {
@@ -71,8 +102,17 @@ const ModalAddNotesInBook = ({
       console.error;
     }
   }
+
+  async function getIdForBookMain() {
+    const idPageForBooks = await fetch(
+      `/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
+    );
+    const answ = await idPageForBooks.json();
+    return answ;
+  }
   useEffect(() => {
     getDatabook();
+    getIdForBookMain
   }, [userId]);
   async function buttonCreateNewBook(nameBook: string) {
     try {
@@ -111,6 +151,10 @@ const ModalAddNotesInBook = ({
       console.error(err);
     }
   }
+
+
+
+  
   return (
     <div
       className={cn(s.modal, {
@@ -147,13 +191,18 @@ const ModalAddNotesInBook = ({
       
           <div className={s.books}>
           <div className={s.books__list}>
+            <span className={cn({
+                  [s.test]: idForBook === 'all'
+                 
+                })} onClick={(e) => {
+                    setCurrentIdPage('all');
+                  }}>Все</span>
             {dataBook && dataBook.map((item: any, i:number) => {
               return (
                 <div key={i} className={s.bookLink}>
                 <span 
                 className={cn({
-                  // [s.test]: activeLink._id === item._id,
-                 
+                  [s.test]: idForBook == item.idPage,
                 })}
                   onClick={(e) => {
                     setCurrentIdPage(String(item.idPage));
@@ -182,7 +231,10 @@ const ModalAddNotesInBook = ({
           <div className={s.footer__buttons}>
             <button onClick={close}>Отмена</button>
             <button className={s.btn__confirm} onClick={()=> {
+              updateBookForNotes(currentIdPage && currentIdPage)
               setActive(false)
+              
+              
             }}>Готово</button>
           </div>
         </div>
@@ -191,4 +243,4 @@ const ModalAddNotesInBook = ({
   );
 };
 
-export default ModalAddNotesInBook;
+export default ModalBooks;

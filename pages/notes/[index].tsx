@@ -11,9 +11,9 @@ import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { NOTES } from "../api/paths";
 import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
-import {sorting} from "../../utils/sorting";
+import { sorting } from "../../utils/sorting";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
-const notes = ({ data,databook }: any) => {
+const notes = ({ data, databook }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -30,29 +30,41 @@ const notes = ({ data,databook }: any) => {
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
     () =>
-      data.find((item: { _id: string }) => {
+    data && data.find((item: { _id: string }) => {
         return item._id === selectedId;
       }),
     [data, selectedId]
   );
 
- 
   const getData = useCallback(async () => {
-
     try {
       if (session.status === "authenticated") {
-        const res = await fetch(
-          `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+        const idPageForBooks = await fetch(
+          `/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
         );
-        const data = await res.json();
-        setLinks(data);
+        const answ = await idPageForBooks.json();
+        
+        
+        if(answ === 'all' ) {
+          const res = await fetch(
+            `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+          );
+          const data = await res.json(); 
+          setLinks(data);
+        } else {
+          const res2 = await fetch(
+            `/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${answ}`
+          );
+          const data2 = await res2.json();
+          setLinks(data2);
+        }
+         
+          
       }
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
-   
   }, [checkTitle, data]);
-
 
   const updateActiveSortingAction = useCallback(
     async (sorting: any, userId: any, email: any) => {
@@ -72,8 +84,7 @@ const notes = ({ data,databook }: any) => {
           }
         );
       } catch (err) {
-       console.error(err);
-       
+        console.error(err);
       }
     },
     [sort]
@@ -94,11 +105,8 @@ const notes = ({ data,databook }: any) => {
   useEffect(() => {
     const sort = localStorage.getItem("sorting") || "no-sorting";
     setSort(sort);
-    updateActiveSortingAction(sort,userId,email);
-    
+    updateActiveSortingAction(sort, userId, email);
   }, [sort]);
-
- 
 
   useEffect(() => {
     if (!selectedItem) {
@@ -107,90 +115,93 @@ const notes = ({ data,databook }: any) => {
   }, [router]);
 
   return (
-    <AnimationContainer> 
-    <div className={s.wrapper}>
-     
-      <div>
-        <HeaderNotes setSort={setSort} sort={sort} data={data} />
-        <div className={s.container}>
-       
-          <div className={s.list}>
-            {data[0] && (
-              <NotesList
-                deleteElement={deleteElement}
-                loadingDelete={loadingDelete}
-                checkTitle={checkTitle}
-                data={links ? sorting(links,sort): ''}
-                body={data ? sorting(data,sort): ''}
-                userId={userId}
-              />
-            )}
+    <AnimationContainer>
+      <div className={s.wrapper}>
+        <div>
+          <HeaderNotes setSort={setSort} sort={sort} data={data} />
+          <div className={s.container}>
+            <div className={s.list}>
+              {data[0] && (
+                <NotesList
+                  deleteElement={deleteElement}
+                  loadingDelete={loadingDelete}
+                  checkTitle={checkTitle}
+                  data={links ? sorting(links, sort) : ""}
+                  body={data ? sorting(data, sort) : ""}
+                  userId={userId}
+                />
+              )}
+            </div>
           </div>
-         
+        </div>
+
+        <div className={s.editor}>
+          <p onClick={() => setActiveModal(true)}>Привет</p>
+          <ModalBooks
+
+            active={activeModal}
+            setActive={setActiveModal}
+          />
+          {selectedItem && (
+            <CustomEditor
+              setDeleteElement={setDeleteElement}
+              setLoadingDelete={setLoadingDelete}
+              data={data}
+              checkTitle={checkTitle}
+              setCheckTitle={setCheckTitle}
+              key={selectedItem._id}
+              selectedItem={selectedItem}
+              books={databook}
+            />
+          )}
         </div>
       </div>
-      
-      <div className={s.editor}>
-        <p onClick={() => setActiveModal(true)}>Привет</p>
-         <ModalBooks books={databook} active={activeModal} setActive={setActiveModal}/>
-        {selectedItem && (
-          <CustomEditor
-            setDeleteElement={setDeleteElement}
-            setLoadingDelete={setLoadingDelete}
-            data={data}
-            checkTitle={checkTitle}
-            setCheckTitle={setCheckTitle}
-            key={selectedItem._id}
-            selectedItem={selectedItem}
-            books = {databook}
-          />
-        )}
-      </div>
-     
-    </div>
-  
-    </AnimationContainer> 
+    </AnimationContainer>
   );
 };
-
-
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
   try {
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+
+    const userId = session?.user.userId; // айди авторизованного человека
+    const email = session?.user.email;
+   
+    const idPageForBooks = await fetch(
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
+    );
+    const answ = await idPageForBooks.json();
+    const res = answ === 'all' ? await fetch(
+      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+    ): await fetch(
+      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${answ}`
+    );
+    const data = await res.json();
+    const resBook = await fetch(
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
+    );
+    const databook = await resBook.json();
+
 
   
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
+      return {
+        props: { data, databook },
+      };
+    
+   
+    
+  } catch (err) {
+    console.error(err);
   }
-
-  const userId = session?.user.userId; // айди авторизованного человека
-  const email = session?.user.email;
-  const res = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
-  );
-  const data = await res.json();
-  const resBook = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
-  );
-  const databook = await resBook.json();
-
-  
-  return {
-    props: { data,databook },
-  };
-}
-
-catch(err) {
-  console.error(err);
-  
-}
 }
 
 export default withLayout(notes);
