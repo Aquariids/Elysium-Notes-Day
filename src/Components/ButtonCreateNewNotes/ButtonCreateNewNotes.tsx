@@ -49,7 +49,7 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
         body: JSON.stringify(data),
       });
       const responseData = await response.json();
-      // router.push(`/${NOTES}/${responseData._id}`);
+      router.push(`/${NOTES}/${responseData._id}`);
     } catch (error) {
       console.error("Failed to create note");
       console.error(error);

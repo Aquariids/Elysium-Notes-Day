@@ -1,62 +1,59 @@
 import { useCallback, useEffect, useState } from "react";
-import { create_data, delete_restore_action, get_action, update_action } from "../../../../pages/api/actios";
+import {
+  create_data,
+  delete_restore_action,
+  get_action,
+  update_action,
+} from "../../../../pages/api/actios";
 import s from "./ModalBooks.module.scss";
 import cn from "classnames";
 import Xmark from "./xmark.svg";
 import { useSession } from "next-auth/react";
 import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
-import DotsMenu from './dots.svg';
+import DotsMenu from "./dots.svg";
 import { useRouter } from "next/router";
-const ModalBooks = ({
-  active,
-  setActive,
-}: any) => {
+const ModalBooks = ({ active, setActive }: any) => {
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
-  console.log("🚀 ~ file: ModalBooks.tsx:15 ~ currentIdPage:", currentIdPage)
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
-  const session = useSession()
+  const session = useSession();
   const email = session.data?.user.email;
   const userId = session.data?.user.userId;
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);
+
   const router = useRouter();
   let idPageCounter = dataBook && dataBook.length;
-  function close () {
-    setActive(false)
+  function close() {
+    setActive(false);
     setTimeout(() => {
-      setActiveLink('')
-    },1000)
-
+      setActiveLink("");
+    }, 1000);
   }
 
+  const updateBookForNotes = useCallback(async (idForBook: any) => {
+    try {
+      const response = await fetch(
+        `/api/updateData?action=${update_action.update_id_book_for_all_notes}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            email,
+            book: idForBook,
+          }),
+        }
+      );
 
-  const updateBookForNotes = useCallback(
-    async (idForBook: any,) => {
-      try {
-        const response = await fetch(
-          `/api/updateData?action=${update_action.update_id_book_for_all_notes}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userId,
-              email,
-              book: idForBook,
-            }),
-          }
-        );
-
-        if(response.ok) router.push(router.asPath);
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    []
-  );
+      if (response.ok) router.push(router.asPath);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
 
   async function getDatabook() {
     try {
@@ -82,7 +79,7 @@ const ModalBooks = ({
         userId: userId,
         email: email,
         idPage: data[0] ? data[0].idPage : "",
-      };    
+      };
       const deleteIdPage = await fetch(
         `/api/updateData?action=${update_action.delete_id_page}`,
         {
@@ -96,7 +93,6 @@ const ModalBooks = ({
         `/api/deleteAndRestoreData?action=${delete_restore_action.delete_id_page_book}&userId=${userId}&_id=${_id}`
       );
 
-    
       getDatabook();
     } catch (err) {
       console.error;
@@ -112,7 +108,7 @@ const ModalBooks = ({
   }
   useEffect(() => {
     getDatabook();
-    getIdForBookMain
+    getIdForBookMain;
   }, [userId]);
   async function buttonCreateNewBook(nameBook: string) {
     try {
@@ -152,16 +148,12 @@ const ModalBooks = ({
     }
   }
 
-
-
-  
   return (
     <div
       className={cn(s.modal, {
         [s.modal__active]: active,
       })}
     >
-      
       <div
         className={cn(s.modal__content, {
           [s.modal__active]: active,
@@ -172,70 +164,83 @@ const ModalBooks = ({
           <Xmark onClick={close} />
         </span>
         <div className={s.body__content}>
-        <div>
-        <input
-        onChange={(e) => setBookName(e.target.value)}
-        placeholder="создать блокнот"
-        value={bookName}
-      />
-        <button
-        disabled={!bookName && true}
-        className={cn(s.btn, {})}
-        onClick={() => {
-          buttonCreateNewBook(bookName);
-          setBookName("");
-        }}
-      >
-        Создать блокнот
-      </button>
-      
-          <div className={s.books}>
-          <div className={s.books__list}>
-            <span className={cn({
-                  [s.test]: idForBook === 'all'
-                 
-                })} onClick={(e) => {
-                    setCurrentIdPage('all');
-                  }}>Все</span>
-            {dataBook && dataBook.map((item: any, i:number) => {
-              return (
-                <div key={i} className={s.bookLink}>
-                <span 
-                className={cn({
-                  [s.test]: idForBook == item.idPage,
-                })}
+          <div>
+            <input
+              onChange={(e) => setBookName(e.target.value)}
+              placeholder="создать блокнот"
+              value={bookName}
+            />
+            <button
+              disabled={!bookName && true}
+              className={cn(s.btn, {})}
+              onClick={() => {
+                buttonCreateNewBook(bookName);
+                setBookName("");
+              }}
+            >
+              Создать блокнот
+            </button>
+
+            <div className={s.books}>
+              <div className={s.books__list}>
+                <span
+                  className={cn({
+                    [s.test]: idForBook === "all",
+                  })}
                   onClick={(e) => {
-                    setCurrentIdPage(String(item.idPage));
-                    setActiveLink(item)
+                    setCurrentIdPage("all");
                   }}
-              
                 >
-                  {item.name}
+                  Все
                 </span>
-                
-                <DropdownMenuEditor style={s} activeModal={activeModal} icon={<DotsMenu />}>
-                <div className={s.delete__btn} onClick={() => {
-                  deleteBook(item._id, item.idPage)
-                  setActiveModal(false)
-                }
-                  }>
-                  Удалить блокнот
-                </div>
-              </DropdownMenuEditor>
+                {dataBook &&
+                  dataBook.map((item: any, i: number) => {
+                    return (
+                      <div key={i} className={s.bookLink}>
+                        <span
+                          className={cn({
+                            [s.test]: idForBook == item.idPage,
+                          })}
+                          onClick={(e) => {
+                            setCurrentIdPage(String(item.idPage));
+                            setActiveLink(item);
+                          }}
+                        >
+                          {item.name}
+                        </span>
+
+                        <DropdownMenuEditor
+                          style={s}
+                          activeModal={activeModal}
+                          icon={<DotsMenu />}
+                        >
+                          <div
+                            className={s.delete__btn}
+                            onClick={() => {
+                              deleteBook(item._id, item.idPage);
+                              setActiveModal(false);
+                            }}
+                          >
+                            Удалить блокнот
+                          </div>
+                        </DropdownMenuEditor>
+                      </div>
+                    );
+                  })}
               </div>
-              );
-            })}
             </div>
-          </div>
           </div>
           <div className={s.footer__buttons}>
             <button onClick={close}>Отмена</button>
-            <button className={s.btn__confirm} onClick={()=> {
-              updateBookForNotes(currentIdPage && currentIdPage)
-              setActive(false)
-              
-              
-            }}>Готово</button>
+            <button
+              className={s.btn__confirm}
+              onClick={() => {
+                updateBookForNotes(currentIdPage && currentIdPage);
+                setActive(false);
+              }}
+            >
+              Готово
+            </button>
           </div>
         </div>
       </div>

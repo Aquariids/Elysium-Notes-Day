@@ -44,7 +44,6 @@ const notes = ({ data, databook }: any) => {
         );
         const answ = await idPageForBooks.json();
         
-        
         if(answ === 'all' ) {
           const res = await fetch(
             `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
