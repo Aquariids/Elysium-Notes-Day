@@ -65,7 +65,7 @@ const ButtonDeleteNotes = ({
     }
     const timer = setTimeout(() => {
       !recycleRouter && setLoadingDelete(false);
-    }, 700);
+    }, 600);
 
     return () => clearTimeout(timer);
   };
