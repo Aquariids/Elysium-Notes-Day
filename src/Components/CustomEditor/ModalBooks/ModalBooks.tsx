@@ -21,7 +21,6 @@ const ModalBooks = ({ active, setActive }: any) => {
   const userId = session.data?.user.userId;
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
-  console.log("🚀 ~ file: ModalBooks.tsx:24 ~ ModalBooks ~ idForBook:", idForBook)
   const [activeModal, setActiveModal] = useState(false);
 const [test, setTest] = useState(false);
 
@@ -98,8 +97,6 @@ const [test, setTest] = useState(false);
       if(res.ok)  {
         getDatabook();
         setActiveModal(false);
-        
-      
       }
       
     } catch (err) {
