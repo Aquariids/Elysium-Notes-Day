@@ -7,6 +7,7 @@
 
 .dropdown_content {
     opacity: 0;
+    visibility: hidden;
     transition: all .2s;
     position: absolute;
     top: 30px;

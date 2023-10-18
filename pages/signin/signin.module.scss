@@ -7,8 +7,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
     border-bottom: 1px solid rgb(201, 199, 199);
+}
+
+.text__content {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .login_btn {
@@ -170,7 +176,7 @@ img {
 }
 
   .login_form {
-    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.171);
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.205);
     background-color: #FFF;
     width: 400px; 
     padding: 25px;
