@@ -22,6 +22,7 @@ const ModalBooks = ({ active, setActive }: any) => {
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);
+const [test, setTest] = useState(false);
 
   const router = useRouter();
   let idPageCounter = dataBook && dataBook.length;
@@ -70,12 +71,13 @@ const ModalBooks = ({ active, setActive }: any) => {
     }
   }
   async function deleteBook(_id: any, idPage: any) {
+    
     try {
       const resIdPageNotes = await fetch(
         `/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idPage}`
       );
       const data = await resIdPageNotes.json();
-      const dataIdPage = {
+      const dataIdPage =  {
         userId: userId,
         email: email,
         idPage: data[0] ? data[0].idPage : "",
@@ -88,17 +90,22 @@ const ModalBooks = ({ active, setActive }: any) => {
           body: JSON.stringify(dataIdPage),
         }
       );
-
       const res = await fetch(
         `/api/deleteAndRestoreData?action=${delete_restore_action.delete_id_page_book}&userId=${userId}&_id=${_id}`
       );
 
-      getDatabook();
+      if(res.ok)  {
+        getDatabook();
+        
+        setActiveModal(false);
+        
+      
+      }
+      
     } catch (err) {
-      console.error;
+      console.error(err)
     }
   }
-
   async function getIdForBookMain() {
     const idPageForBooks = await fetch(
       `/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
@@ -108,9 +115,9 @@ const ModalBooks = ({ active, setActive }: any) => {
   }
   useEffect(() => {
     getDatabook();
-    getIdForBookMain;
   }, [userId]);
   async function buttonCreateNewBook(nameBook: string) {
+
     try {
       // const newIdPage = dataBook.length + 1;
       const res = await fetch(
@@ -129,20 +136,7 @@ const ModalBooks = ({ active, setActive }: any) => {
         }
       );
 
-      if (res.ok) {
-        const newDataBook = [
-          ...dataBook,
-          {
-            email: email,
-            userId: userId,
-            name: nameBook,
-            idPage: idPageCounter,
-          },
-        ];
-        setDataBook(newDataBook);
-      } else {
-        console.error(`Ошибка при создании: ${res.status} ${res.statusText}`);
-      }
+      getDatabook();
     } catch (err) {
       console.error(err);
     }
@@ -208,8 +202,8 @@ const ModalBooks = ({ active, setActive }: any) => {
                         >
                           {item.name}
                         </span>
-
                         <DropdownMenuEditor
+                          test = {test}
                           style={s}
                           activeModal={activeModal}
                           icon={<DotsMenu />}
@@ -217,8 +211,8 @@ const ModalBooks = ({ active, setActive }: any) => {
                           <div
                             className={s.delete__btn}
                             onClick={() => {
+                              setActiveModal(true)
                               deleteBook(item._id, item.idPage);
-                              setActiveModal(false);
                             }}
                           >
                             Удалить блокнот

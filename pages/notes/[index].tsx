@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { use, useCallback, useEffect, useMemo, useState } from "react";
 import { withLayout } from "../../layout/Layout";
 import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { useRouter } from "next/router";
@@ -19,6 +19,7 @@ const notes = ({ data, databook }: any) => {
   const [sort, setSort] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [deleteElement, setDeleteElement] = useState<string>();
+  const [updateBooks, setUpdateBooks] = useState();
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
@@ -137,7 +138,8 @@ const notes = ({ data, databook }: any) => {
         <div className={s.editor}>
           <p onClick={() => setActiveModal(true)}>Привет</p>
           <ModalBooks
-
+            
+            setUpdateBooks={setUpdateBooks}
             active={activeModal}
             setActive={setActiveModal}
           />
@@ -151,6 +153,7 @@ const notes = ({ data, databook }: any) => {
               key={selectedItem._id}
               selectedItem={selectedItem}
               books={databook}
+              updateBooks = {updateBooks}
             />
           )}
         </div>

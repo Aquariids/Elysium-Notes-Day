@@ -1,11 +1,12 @@
 .toolbarHeader {
+    
     height: 32px;
     margin-bottom: 5px;
     overflow: hidden;
     z-index: 1;
-  display: flex;
-  align-items: center;
-  border-left: 1px solid rgba(122, 122, 122, 0.452);
+    display: grid;
+    align-items: center;
+    border-left: 1px solid rgba(122, 122, 122, 0.452);
 
 }
 
@@ -27,8 +28,6 @@
 .last_date_update {
     display: none;  
 }
-
-
 .showDate {
     color: #525151;
     padding-left: 18px;

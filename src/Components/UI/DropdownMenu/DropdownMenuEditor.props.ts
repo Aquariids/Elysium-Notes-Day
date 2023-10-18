@@ -7,6 +7,7 @@ export interface DropdownMenuEditorProps {
     highlighterButtons?:boolean
     tollbarActive?: boolean
     activeModal?: boolean
+    test?: boolean
     style?: {
         dropdown?:string
         dropdown_content?:string

@@ -10,16 +10,20 @@ const ModalAddNotesInBook = ({
   setActive,
   currentNote,
   session,
+  updateBooks
 }: any) => {
   const router = useRouter();
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
+  const [allBooks, setAllBooks] = useState(books && books);
+
   function close () {
     setActive(false)
     setTimeout(() => {
       setActiveLink('')
     },1000)
   }
+
   const addIdPageForNote = async () => {
     const data = {
       email: session?.user.email,
@@ -40,7 +44,9 @@ const ModalAddNotesInBook = ({
 
     if (res.ok) router.push(router.asPath);
   };
-
+useEffect(() => {
+  setAllBooks(books)
+},[updateBooks])
   return (
     <div
       className={cn(s.modal, {
@@ -58,7 +64,7 @@ const ModalAddNotesInBook = ({
         </span>
         <div className={s.body__content}>
           <div className={s.books}>
-            {books.map((item: any, i:number) => {
+            {allBooks.map((item: any, i:number) => {
   
               return (
                 <span

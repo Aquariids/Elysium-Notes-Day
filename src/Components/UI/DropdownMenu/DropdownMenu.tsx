@@ -2,7 +2,7 @@ import { DropdownMenuEditorProps } from "./DropdownMenuEditor.props";
 import s from './DropdownMenuEditor.module.scss';
 import cn from 'classnames';
 import { useEffect, useRef, useState } from "react";
-const DropdownMenuEditor = ({children,icon,style,toolbarMainButton = false, tollbarActive, activeModal}:DropdownMenuEditorProps) => {
+const DropdownMenuEditor = ({children,icon,style,toolbarMainButton = false, tollbarActive, activeModal, test}:DropdownMenuEditorProps) => {
     const [activeMenu, setActiveMenu] = useState<boolean>(false);
     const refActiveMenu = useRef<HTMLDivElement>(null);
 
@@ -20,10 +20,10 @@ const DropdownMenuEditor = ({children,icon,style,toolbarMainButton = false, toll
           document.removeEventListener("click", handleOutsideClick, false);
         };
       }, []);
-
       useEffect(() => {
         if(activeModal === true) setActiveMenu(false)
       },[activeModal])
+    
     return(
         <div
         ref={refActiveMenu}
@@ -38,7 +38,7 @@ const DropdownMenuEditor = ({children,icon,style,toolbarMainButton = false, toll
       >
         {" "}
         {icon}
-      </button>:   <button
+      </button>:<button
           onClick={(e) => {
             setActiveMenu(!activeMenu);
           }}

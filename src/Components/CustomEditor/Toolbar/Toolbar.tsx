@@ -177,7 +177,7 @@ const ToolbarButtons = ({
         })}
       >
         {router.asPath.split("/")[1] === `${RECYCLE}` ? (
-          <span>Тут будет дата удаления заметки </span>
+          <span >Тут будет дата удаления заметки </span>
         ) : (
           <span
             title={
