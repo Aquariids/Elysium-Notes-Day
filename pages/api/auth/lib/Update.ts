@@ -125,7 +125,7 @@ export async function updateDataTitle(data: any) {
       { _id: id },
       {
         $set: {
-          title: data.title
+          title: data.title || ''
         }
       } // то обновляем тело. $set оператор обновления поля или может добавить его.
     );

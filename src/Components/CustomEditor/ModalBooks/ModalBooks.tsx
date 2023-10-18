@@ -21,6 +21,7 @@ const ModalBooks = ({ active, setActive }: any) => {
   const userId = session.data?.user.userId;
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
+  console.log("🚀 ~ file: ModalBooks.tsx:24 ~ ModalBooks ~ idForBook:", idForBook)
   const [activeModal, setActiveModal] = useState(false);
 const [test, setTest] = useState(false);
 
@@ -96,7 +97,6 @@ const [test, setTest] = useState(false);
 
       if(res.ok)  {
         getDatabook();
-        
         setActiveModal(false);
         
       
@@ -107,15 +107,27 @@ const [test, setTest] = useState(false);
     }
   }
   async function getIdForBookMain() {
-    const idPageForBooks = await fetch(
-      `/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
-    );
-    const answ = await idPageForBooks.json();
-    return answ;
+    try {
+      const idPageForBooks = await fetch(
+        `/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
+      );
+      const answ = await idPageForBooks.json();
+      setIdForBook(answ)
+    }
+
+    catch(err) {
+      console.error(err)
+    }
+   
+    
   }
   useEffect(() => {
     getDatabook();
+    getIdForBookMain();
+    
   }, [userId]);
+
+ 
   async function buttonCreateNewBook(nameBook: string) {
 
     try {
@@ -179,10 +191,11 @@ const [test, setTest] = useState(false);
               <div className={s.books__list}>
                 <span
                   className={cn({
-                    [s.test]: idForBook === "all",
+                    [s.test]: idForBook == 'all',
                   })}
                   onClick={(e) => {
                     setCurrentIdPage("all");
+                    setActiveLink("all");
                   }}
                 >
                   Все
@@ -225,12 +238,18 @@ const [test, setTest] = useState(false);
             </div>
           </div>
           <div className={s.footer__buttons}>
-            <button onClick={close}>Отмена</button>
+            <button onClick={() => {
+              close();
+              setActiveLink('');
+            }}>Отмена</button>
             <button
+              disabled = {!activeLink && true}
               className={s.btn__confirm}
               onClick={() => {
                 updateBookForNotes(currentIdPage && currentIdPage);
                 setActive(false);
+                setActiveLink('')
+                currentIdPage === 'all' && setIdForBook('all')
               }}
             >
               Готово

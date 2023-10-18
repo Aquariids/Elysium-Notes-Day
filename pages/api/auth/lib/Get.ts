@@ -25,7 +25,7 @@ async function getCollection({ db, collectionName }: dbPros) {
       const collection = await getCollection({
         collectionName: `user_${userId}`,
         db: "notes",
-      }) // создаем или подключаемся к коллекции
+      }) 
       const data = await collection.find(query).sort({date:1}).toArray();
       return data 
     } catch (error) {
@@ -40,7 +40,7 @@ async function getCollection({ db, collectionName }: dbPros) {
       const collection = await getCollection({
         collectionName: `user_${userId}`,
         db: "notes",
-      }) // создаем или подключаемся к коллекции
+      }) 
       const data = await collection.find(query).sort({date:1}).toArray();
       return data 
     } catch (error) {
@@ -57,7 +57,7 @@ async function getCollection({ db, collectionName }: dbPros) {
       const collection = await getCollection({
         collectionName: `delete_user_${userId}`,
         db: "deleted_notes",
-      }); // создаем или подключаемся к коллекции
+      });
       const data = await collection.find(query).sort({date:1}).toArray();
       return data;
      
@@ -74,7 +74,7 @@ async function getCollection({ db, collectionName }: dbPros) {
       const collection = await getCollection({
         collectionName: `user_nooteBook_${userId}`,
         db: "notes",
-      }); // создаем или подключаемся к коллекции
+      });
       const data = await collection.find(query).toArray();
       return data;
     } catch (error) {}
@@ -87,7 +87,7 @@ async function getCollection({ db, collectionName }: dbPros) {
       const collection = await getCollection({
         collectionName: `user_actionSorting_${userId}`,
         db: "notes",
-      }); // создаем или подключаемся к коллекции
+      }); 
       const data = await collection.find(query).toArray();
       return data;
     } catch (error) {}
@@ -99,9 +99,9 @@ async function getCollection({ db, collectionName }: dbPros) {
       const collection = await getCollection({
         collectionName: `main_book_${userId}`,
         db: "notes",
-      }); // создаем или подключаемся к коллекции
+      }); 
       const data = await collection.find(query).toArray();
-      return data[0].book;
+      return data[0]?.book || '';
     } catch (error) {}
   }
   
