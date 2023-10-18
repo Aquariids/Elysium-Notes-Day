@@ -101,7 +101,6 @@ async function getCollection({ db, collectionName }: dbPros) {
         db: "notes",
       }); // создаем или подключаемся к коллекции
       const data = await collection.find(query).toArray();
-      console.log("🚀 ~ file: Get.ts:104 ~ getIdForAllBooks ~ data:", data)
       return data[0].book;
     } catch (error) {}
   }

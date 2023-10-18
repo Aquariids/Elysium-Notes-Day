@@ -200,6 +200,7 @@ const ToolbarButtons = ({
           [s.show]: showToolbar === true,
         })}
       >
+        <div className={s.all__btns}>
         <div className={s.basic_btns}>
           {allBasicButtons.map((btn) => (
             <button
@@ -293,7 +294,7 @@ const ToolbarButtons = ({
             </button>
           ))}
         </div>
-
+              <div className={s.btn__code}>
         <button
           title="Режим для просмотра кода"
           className={cn(s.btn, {
@@ -306,6 +307,8 @@ const ToolbarButtons = ({
         >
           <Icons.Code />
         </button>
+        </div>
+      </div>
       </div>
     </div>
   );

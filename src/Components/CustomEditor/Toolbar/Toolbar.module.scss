@@ -3,9 +3,9 @@
     margin-bottom: 5px;
     overflow: hidden;
     z-index: 1;
-    display: flex;
   display: flex;
   align-items: center;
+  border-left: 1px solid rgba(122, 122, 122, 0.452);
 
 }
 
@@ -14,14 +14,18 @@
     overflow: visible;
 }
 
+.btn__code {
+    padding-left: 10px;
+    display: flex;
+}
 .basic_btns {
-    border-left: 1px solid rgba(122, 122, 122, 0.452);
-    display: inline-block;
+    
+    display: flex;
     padding-left: 10px;
     padding-right: 10px;
 }
 .last_date_update {
-    display: none;
+    display: none;  
 }
 
 
@@ -61,7 +65,6 @@
 .btn {
     background-color: #FFF;
     min-width: 32px;
-    border-radius: 8px;
     border: none;
     cursor: pointer;
     text-transform: "capitalize";
@@ -88,7 +91,6 @@
 
 
 .btn svg {
-    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -115,7 +117,8 @@
     padding-right: 10px;
     border-left: 1px solid rgba(122, 122, 122, 0.452);
     border-right: 1px solid rgba(122, 122, 122, 0.452);
-    display: inline-block;
+    display: flex;
+    
     
 }
 
@@ -164,4 +167,10 @@ fill: #cbcaff;
 }
 .highlighter_brown {
 fill: #ffd1b0;
+}
+
+.all__btns {
+    display: flex;
+    align-items: center;
+
 }
