@@ -10,7 +10,6 @@
 }
 
 .visibleShow {
-    
     overflow: visible;
 }
 
@@ -27,6 +26,7 @@
 .last_date_update {
     
     display: none;  
+    
 }
 .showDate {
     color: #525151;
@@ -34,6 +34,7 @@
     height: 32px;
     display: flex;
     align-items: center;
+    text-align: center;
 }
 
 .btn_active_code {
@@ -171,5 +172,5 @@ fill: #ffd1b0;
 .all__btns {
     display: flex;
     align-items: center;
-
+    
 }

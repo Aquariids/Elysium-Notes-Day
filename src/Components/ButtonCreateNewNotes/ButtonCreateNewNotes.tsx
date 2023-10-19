@@ -9,6 +9,7 @@ import LoaderCreate from "./LoaderCreate";
 import { create_data } from "../../../pages/api/actios";
 import { DateTime } from 'luxon';
 import { Settings } from 'luxon';
+import Plus from './plus.svg';
 Settings.defaultLocale = 'ru';
 DateTime.local().setLocale('ru');
 interface IButton {
@@ -63,14 +64,14 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   if (alert === "alert") {
     return (
       <Link className={s.alert} onClick={create} href={""}>
-        +
+         <Plus/>
       </Link>
     );
   }
    else {
     return load ? (
       <button className={s.btn} onClick={create}>
-        +
+        <Plus/>
       </button>
     ) :(
       <>

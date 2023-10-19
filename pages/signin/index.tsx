@@ -21,14 +21,15 @@ const Login: React.FunctionComponent = (): JSX.Element => {
             <div className={s.wrapper_login}>
             <div className={s.login_form}>
             <img className={s.logo} src="/logo.png" alt="Logo"/>
+              <div className={s.text__content}>
               <p className={s.title}>Elysium Notes Day</p>
               <p className={s.text}>Посвяти день заметкам в месте блаженства и вечной жизни.</p>
+              </div>
               <GoogleButton />
               <GithubButton />
             </div>
             </div>
           )}
-
           {session && (
             <div className={s.wrapper_user}>
             <DropdownMenuEditor style={style} icon={<Array user ={session.user.name} avatar={session.user.image}/>}>

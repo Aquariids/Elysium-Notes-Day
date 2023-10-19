@@ -2,7 +2,7 @@ import { DropdownMenuEditorProps } from "./DropdownMenuEditor.props";
 import s from './DropdownMenuEditor.module.scss';
 import cn from 'classnames';
 import { useEffect, useRef, useState } from "react";
-const DropdownMenuEditor = ({children,icon,style,toolbarMainButton = false, tollbarActive, activeModal, test}:DropdownMenuEditorProps) => {
+const DropdownMenuEditor = ({children,icon,style,toolbarMainButton = false, tollbarActive, activeModal}:DropdownMenuEditorProps) => {
     const [activeMenu, setActiveMenu] = useState<boolean>(false);
     const refActiveMenu = useRef<HTMLDivElement>(null);
 
