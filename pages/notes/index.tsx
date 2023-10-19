@@ -8,6 +8,7 @@ import { get_action } from "../api/actios";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import { useState } from "react";
 const index = ({databook}:any) => {
+  const [updateBooks, setUpdateBooks] = useState();
   const [activeModal, setActiveModal] = useState(false);
   return (
     // ну и паередаем его в наш редактор.
@@ -27,7 +28,7 @@ const index = ({databook}:any) => {
       <div className={s.editor}> 
       <p onClick={() => setActiveModal(true)}>Привет</p>
       <ModalBooks
-          
+            
             active={activeModal}
             setActive={setActiveModal}
           />

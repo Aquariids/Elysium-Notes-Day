@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { get_action, update_action } from "../../../../pages/api/actios";
 import s from "./ModalAddNotesInBook.module.scss";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import Xmark from "./xmark.svg";
-import { useSession } from "next-auth/react";
+
+
+
 const ModalAddNotesInBook = ({
-  books = [],
   active,
   setActive,
   currentNote,
@@ -15,25 +16,30 @@ const ModalAddNotesInBook = ({
   
 }: any) => {
 
+
   const router = useRouter();
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
-  const [allBooks, setAllBooks] = useState(books && books);
+  const [allBooks, setAllBooks] = useState([]);
   const email = session?.user.email;
   const userId =  session?.user.userId;
-  
-  async function getBook () {
+
+  const getBook = useCallback(async () => {
     const resBook = await fetch(
       `/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
     );
     const databook = await resBook.json();
     setAllBooks(databook)
-  }
+  },[allBooks])
 
+  useEffect(() => {
+    getBook();
+  }, [])
 
   useEffect(() => {
     getBook();
   }, [updateBooks])
+  
   function close () {
     setActive(false)
     setTimeout(() => {
@@ -43,7 +49,6 @@ const ModalAddNotesInBook = ({
 
   const addIdPageForNote = async () => {
     const data = {
-      
       _id: currentNote._id,
       idPage: currentIdPage,
     };
@@ -60,9 +65,7 @@ const ModalAddNotesInBook = ({
 
     if (res.ok) router.push(router.asPath);
   };
-useEffect(() => {
-  setAllBooks(books)
-},[updateBooks])
+
   return (
     <div
       className={cn(s.modal, {
@@ -80,20 +83,18 @@ useEffect(() => {
         </span>
         <div className={s.body__content}>
           <div className={s.books}>
-            {allBooks.map((item: any, i:number) => {
+             {allBooks && allBooks.map((item: any, i:number) => {
   
-              return (
+            return (
                 <span
                 className={cn({
                   [s.test]: activeLink._id === item._id,
                   [s.test2]: currentNote.idPage === String(item.idPage) && !activeLink,
-                 
                 })}
                   onClick={(e) => {
                     setCurrentIdPage(String(item.idPage));
                     setActiveLink(item)
                   }}
-                  
                   key={item._id}
                 >
                   {item.name}

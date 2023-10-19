@@ -13,7 +13,7 @@ import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
-const notes = ({ data, databook }: any) => {
+const notes = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -160,7 +160,6 @@ const notes = ({ data, databook }: any) => {
               key={selectedItem._id}
               selectedItem={selectedItem}
               updateBooks = {updateBooks}
-              books = {databook && databook}
             />
           )}
         </div>

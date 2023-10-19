@@ -22,10 +22,8 @@ const ModalBooks = ({ active, setActive, setUpdateBooks }: any) => {
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);
-
   const router = useRouter();
   let idPageCounter = dataBook && dataBook.length;
-
 
   const updateBookForNotes = useCallback(async (idForBook: any) => {
     try {
@@ -158,7 +156,7 @@ const ModalBooks = ({ active, setActive, setUpdateBooks }: any) => {
         <span className={s.header__content}>
           <h1>ВСЕ</h1>
           <Xmark onClick={() => {
-           
+           setUpdateBooks('Я жалкий');
             setActive(false)}} />
         </span>
         <div className={s.body__content}>
@@ -240,7 +238,7 @@ const ModalBooks = ({ active, setActive, setUpdateBooks }: any) => {
               setActiveLink('');
               setCurrentIdPage('')
               getIdForBookMain();
-              setUpdateBooks((hi:boolean)=> (!hi));
+              setUpdateBooks('Я даун');
             }}>Отмена</button>
             <button
               disabled = {!activeLink && true}

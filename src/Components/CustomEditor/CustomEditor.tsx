@@ -42,7 +42,6 @@ const CustomEditor = ({
   setDeleteElement,
   setLoadingDelete,
   selectedItem,
-  books,
   updateBooks
   
 }: any) => {
@@ -305,7 +304,7 @@ const CustomEditor = ({
               />
              {!routerReclycle && <p className={cn(s.text, s.hide_btn)} onClick={() => {setActiveModal(true)}}> Переместить.. </p>} 
           </DropdownMenuEditor>
-          <ModalAddNotesInBook updateBooks={updateBooks} session={session} currentNote={selectedItem} books={books} active={activeModal} setActive={setActiveModal}/>
+          <ModalAddNotesInBook updateBooks={updateBooks} session={session} currentNote={selectedItem} active={activeModal} setActive={setActiveModal}/>
 
         </div>
       </div>
