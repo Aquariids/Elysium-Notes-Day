@@ -213,7 +213,6 @@ const [test, setTest] = useState(false);
                           {item.name}
                         </span>
                         <DropdownMenuEditor
-                          test = {test}
                           style={s}
                           activeModal={activeModal}
                           icon={<DotsMenu />}
@@ -238,6 +237,7 @@ const [test, setTest] = useState(false);
             <button onClick={() => {
               close();
               setActiveLink('');
+             
             }}>Отмена</button>
             <button
               disabled = {!activeLink && true}
@@ -247,6 +247,7 @@ const [test, setTest] = useState(false);
                 setActive(false);
                 setActiveLink('')
                 currentIdPage === 'all' && setIdForBook('all')
+             
               }}
             >
               Готово
