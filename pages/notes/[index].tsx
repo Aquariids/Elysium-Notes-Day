@@ -145,7 +145,7 @@ const notes = ({ data }: any) => {
         <div className={s.editor}>
           <p onClick={() => setActiveModal(true)}>Привет</p>
           <ModalBooks
-            
+            session = {session}
             setUpdateBooks={setUpdateBooks}
             active={activeModal}
             setActive={setActiveModal}

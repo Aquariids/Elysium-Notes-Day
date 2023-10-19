@@ -7,8 +7,12 @@ import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreate
 import { get_action } from "../api/actios";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 const index = ({databook}:any) => {
   const [updateBooks, setUpdateBooks] = useState();
+  const session = useSession();
+  const userId = session.data?.user.userId;
+  const email = session.data?.user.email;
   const [activeModal, setActiveModal] = useState(false);
   return (
     // ну и паередаем его в наш редактор.
@@ -28,7 +32,7 @@ const index = ({databook}:any) => {
       <div className={s.editor}> 
       <p onClick={() => setActiveModal(true)}>Привет</p>
       <ModalBooks
-            
+            session={session}
             active={activeModal}
             setActive={setActiveModal}
           />

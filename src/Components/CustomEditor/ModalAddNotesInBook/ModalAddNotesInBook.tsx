@@ -5,8 +5,6 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 import Xmark from "./xmark.svg";
 
-
-
 const ModalAddNotesInBook = ({
   active,
   setActive,
@@ -16,9 +14,9 @@ const ModalAddNotesInBook = ({
   
 }: any) => {
 
-
   const router = useRouter();
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
+  console.log("🚀 ~ file: ModalAddNotesInBook.tsx:19 ~ currentIdPage:", currentIdPage)
   const [activeLink, setActiveLink] = useState<any>(false);
   const [allBooks, setAllBooks] = useState([]);
   const email = session?.user.email;
@@ -48,7 +46,11 @@ const ModalAddNotesInBook = ({
   }
 
   const addIdPageForNote = async () => {
+    
+    
     const data = {
+      email: email,
+      userId:userId,
       _id: currentNote._id,
       idPage: currentIdPage,
     };

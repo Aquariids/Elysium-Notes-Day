@@ -12,13 +12,14 @@ import { useSession } from "next-auth/react";
 import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
 import DotsMenu from "./dots.svg";
 import { useRouter } from "next/router";
-const ModalBooks = ({ active, setActive, setUpdateBooks }: any) => {
+const ModalBooks = ({ active, setActive, setUpdateBooks, session }: any) => {
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
-  const session = useSession();
   const email = session.data?.user.email;
+  console.log("🚀 ~ file: ModalBooks.tsx:20 ~ ModalBooks ~ email:", email)
   const userId = session.data?.user.userId;
+  console.log("🚀 ~ file: ModalBooks.tsx:22 ~ ModalBooks ~ userId:", userId)
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);

@@ -71,6 +71,7 @@ export async function updateIdPageForNote(data: any) {
 
 
 export async function updateIdPageForOneNote(data: any) {
+  console.log("🚀 ~ file: Update.ts:74 ~ updateIdPageForOneNote ~ data:", data)
   try {
     const id = new ObjectId(data._id);
     const collection = await getCollection({
