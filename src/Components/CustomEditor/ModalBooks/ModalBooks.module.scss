@@ -25,7 +25,7 @@
         cursor: pointer;
 
         &:hover {
-            background-color: aqua;
+            color: #b11f1f;
         }
 
        
@@ -109,15 +109,6 @@ transform: scale(1);
     justify-content: space-between;
   }
 
-.test {
-    background-color: red;
-}
-
-
-.test2 {
-  
-    background-color: red;
-}
 
 
 
@@ -221,4 +212,8 @@ transform: scale(1);
 
 .test {
     background-color:#1fb13f;
+}
+
+.test2 {
+    color: rgb(218, 89, 89);
 }

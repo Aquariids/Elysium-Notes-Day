@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
 import DotsMenu from "./dots.svg";
 import { useRouter } from "next/router";
-const ModalBooks = ({ active, setActive }: any) => {
+const ModalBooks = ({ active, setActive, setUpdateBooks }: any) => {
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
@@ -22,16 +22,10 @@ const ModalBooks = ({ active, setActive }: any) => {
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);
-const [test, setTest] = useState(false);
 
   const router = useRouter();
   let idPageCounter = dataBook && dataBook.length;
-  function close() {
-    setActive(false);
-    setTimeout(() => {
-      setActiveLink("");
-    }, 1000);
-  }
+
 
   const updateBookForNotes = useCallback(async (idForBook: any) => {
     try {
@@ -128,7 +122,6 @@ const [test, setTest] = useState(false);
   async function buttonCreateNewBook(nameBook: string) {
 
     try {
-      // const newIdPage = dataBook.length + 1;
       const res = await fetch(
         `/api/createData?action=${create_data.create_book}`,
         {
@@ -164,7 +157,9 @@ const [test, setTest] = useState(false);
       >
         <span className={s.header__content}>
           <h1>ВСЕ</h1>
-          <Xmark onClick={close} />
+          <Xmark onClick={() => {
+           
+            setActive(false)}} />
         </span>
         <div className={s.body__content}>
           <div>
@@ -177,8 +172,10 @@ const [test, setTest] = useState(false);
               disabled={!bookName && true}
               className={cn(s.btn, {})}
               onClick={() => {
+                setUpdateBooks('Создал запись');
                 buttonCreateNewBook(bookName);
                 setBookName("");
+                
               }}
             >
               Создать блокнот
@@ -189,10 +186,12 @@ const [test, setTest] = useState(false);
                 <span
                   className={cn({
                     [s.test]: idForBook == 'all',
+                    [s.test2]: currentIdPage == 'all'
                   })}
                   onClick={(e) => {
                     setCurrentIdPage("all");
                     setActiveLink("all");
+                    
                   }}
                 >
                   Все
@@ -204,6 +203,7 @@ const [test, setTest] = useState(false);
                         <span
                           className={cn({
                             [s.test]: idForBook == item.idPage,
+                            [s.test2]: currentIdPage === String(item.idPage),
                           })}
                           onClick={(e) => {
                             setCurrentIdPage(String(item.idPage));
@@ -222,6 +222,7 @@ const [test, setTest] = useState(false);
                             onClick={() => {
                               setActiveModal(true)
                               deleteBook(item._id, item.idPage);
+                              setUpdateBooks('Удалил запись');
                             }}
                           >
                             Удалить блокнот
@@ -235,9 +236,11 @@ const [test, setTest] = useState(false);
           </div>
           <div className={s.footer__buttons}>
             <button onClick={() => {
-              close();
+              setActive(false);
               setActiveLink('');
-             
+              setCurrentIdPage('')
+              getIdForBookMain();
+              setUpdateBooks((hi:boolean)=> (!hi));
             }}>Отмена</button>
             <button
               disabled = {!activeLink && true}
@@ -247,7 +250,9 @@ const [test, setTest] = useState(false);
                 setActive(false);
                 setActiveLink('')
                 currentIdPage === 'all' && setIdForBook('all')
-             
+                setCurrentIdPage('')
+                getIdForBookMain();
+                
               }}
             >
               Готово

@@ -37,6 +37,10 @@ const notes = ({ data, databook }: any) => {
     [data, selectedId]
   );
 
+ 
+
+
+
   const getData = useCallback(async () => {
     try {
       if (session.status === "authenticated") {
@@ -102,6 +106,9 @@ const notes = ({ data, databook }: any) => {
     }
   }, [checkTitle, data, loadingDelete]);
 
+
+
+  
   useEffect(() => {
     const sort = localStorage.getItem("sorting") || "no-sorting";
     setSort(sort);
@@ -152,8 +159,8 @@ const notes = ({ data, databook }: any) => {
               setCheckTitle={setCheckTitle}
               key={selectedItem._id}
               selectedItem={selectedItem}
-              books={databook}
               updateBooks = {updateBooks}
+              books = {databook && databook}
             />
           )}
         </div>
