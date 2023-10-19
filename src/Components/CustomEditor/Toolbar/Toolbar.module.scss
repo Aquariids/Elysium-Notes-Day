@@ -1,5 +1,4 @@
 .toolbarHeader {
-    
     height: 32px;
     margin-bottom: 5px;
     overflow: hidden;
@@ -26,12 +25,13 @@
     padding-right: 10px;
 }
 .last_date_update {
+    
     display: none;  
 }
 .showDate {
     color: #525151;
     padding-left: 18px;
-    height: 100%;
+    height: 32px;
     display: flex;
     align-items: center;
 }

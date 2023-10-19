@@ -117,7 +117,7 @@ const notes = ({ data, databook }: any) => {
   return (
     <AnimationContainer>
       <div className={s.wrapper}>
-        <div>
+        <div className= {s.notes_list}>
           <HeaderNotes setSort={setSort} sort={sort} data={data} />
           <div className={s.container}>
             <div className={s.list}>

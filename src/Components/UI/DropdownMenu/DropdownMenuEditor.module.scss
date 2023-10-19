@@ -70,3 +70,10 @@
 .hello svg {
  fill: #1fb13f;
 }
+
+
+@media only screen and (max-width: 1300px) {
+    .dropdown_content {
+        right: 95px;
+    }
+  }
