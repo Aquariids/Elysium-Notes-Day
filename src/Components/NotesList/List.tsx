@@ -29,7 +29,7 @@ const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
       .getPlainText()
       .toLowerCase();
 
-    const sizeText = router.asPath === "/" ? 100 : 77;
+    const sizeText = router.asPath === "/" ? 100 : 85;
 
     if (plainText.length >= sizeText) {
       const text = plainText.slice(0, sizeText) + "...";
