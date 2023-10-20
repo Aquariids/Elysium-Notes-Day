@@ -8,12 +8,15 @@ import { get_action } from "../api/actios";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-const index = ({databook}:any) => {
+const index = ({databook,idpage,namebook}:any) => {
   const [updateBooks, setUpdateBooks] = useState();
   const session = useSession();
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
   const [activeModal, setActiveModal] = useState(false);
+
+  console.log(databook);
+  
   return (
     // ну и паередаем его в наш редактор.
     <div className={s.wrapper}>
@@ -30,7 +33,7 @@ const index = ({databook}:any) => {
       </div>
       
       <div className={s.editor}> 
-      <p onClick={() => setActiveModal(true)}>Привет</p>
+      <p onClick={() => setActiveModal(true)}>{idpage === 'all' ? 'Все': namebook}</p>
       <ModalBooks
             session={session}
             active={activeModal}
@@ -50,11 +53,11 @@ export async function getServerSideProps(context: any) {
     const idPageForBooks = await fetch(
       `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
     );
-    const answ = await idPageForBooks.json();
-    const res = answ === 'all' ? await fetch(
+    const [idpage, namebook] = await idPageForBooks.json();
+    const res = idpage === 'all' ? await fetch(
       `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
     ): await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${answ}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idpage}`
     );
     const actionSorting = await fetch(
       `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userId}&email=${email}`
@@ -107,7 +110,7 @@ export async function getServerSideProps(context: any) {
   }  
   
   return {
-    props:{ data,databook}
+    props:{ data,databook,idpage,namebook}
   }
   }
 

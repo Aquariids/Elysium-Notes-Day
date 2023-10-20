@@ -20,12 +20,12 @@
     display: flex;
     flex-direction: column;
     width: 560px;
-
+    
     span {
         cursor: pointer;
 
         &:hover {
-            color: #b11f1f;
+            color: #7e7d7d;
         }
 
        
@@ -39,6 +39,7 @@
 }
 
 .body__content { 
+    padding-top: 10px;
 height: 400px;
 display: flex;
 flex-direction: column;
@@ -90,9 +91,13 @@ transform: scale(1);
 
     h1 {
         font-weight: 500;
-        font-size: 18px;
+        font-size: 20px;
     }
 
+    p {
+        font-size: 14px;
+        color: #7e7d7d;
+    }
     svg {
         transition: all .2s;
         fill: rgb(116, 115, 115);
@@ -109,14 +114,47 @@ transform: scale(1);
     justify-content: space-between;
   }
 
-
-
-
-.btn__confirm:disabled {
-    cursor: not-allowed;
+.btn {
+    transition: all .3s;
+    padding: 5px;
+    color: #7e7d7d;
+    background-color: transparent;
+outline: none;
+border: 1px solid #7e7d7d;
+border-radius: 4px;
+    &:hover {
+        transition: all .3s;
+        cursor: pointer;
+        color: black;
+    }
 }
 
+.btn:disabled {
+    color: #fcfbfb;
+    cursor: not-allowed;
+    background-color: #cccccc;
+}
 
+.body__input {
+   padding-top: 2px;
+   padding-bottom: 2px;
+   padding-left: 5px;
+   padding-right: 3px;
+    width: 250px;
+    font-style: italic;
+    outline: 1px solid #929292c0;
+   border: none;
+   border-radius: 2px;
+   transition: outline .3s;
+    &:focus {
+        transition: outline .3s;
+        outline: 1px solid #1f7bb1;
+    }
+}
+.btn__input {
+    margin-top: 10px;
+    width: 150px;
+}
 
 .delete__btn {
     cursor: pointer;
@@ -125,7 +163,6 @@ transform: scale(1);
         color: rgb(116, 115, 115);
     }
 }
-
 
 
 
@@ -177,7 +214,11 @@ transform: scale(1);
 }
 
 .hide {
-    display: none;
+    padding-left: 10px;
+    transition: all .2s;
+    opacity: 0;
+    visibility: hidden;
+   
 }
 .active svg {
     fill: #b11f1f;
@@ -198,22 +239,57 @@ transform: scale(1);
 
 
 .show {
+    transition: all .2s;
     opacity: 1;
     visibility: visible;
+    fill: #1f7bb1;
+    
+
+}
+
+.activeBook {
+    background-color:#1f7bb13a;
+    transition: all .2s;
+
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+
+.currentActiveBook {
+    background-color:#1f7bb13a;
+    transition: all .2s;
+
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+.text {
+    transition: all .2s;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    padding-left: 15px;
+
    
-
 }
 
-
-.hello svg {
- fill: #1fb13f;
+.title_books {
+    font-size: 16px;
+    color: #838181;
+    padding-bottom: 5px;
 }
-
-
-.test {
-    background-color:#1fb13f;
+.block {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    display: flex;
+    width: 100%;
 }
-
-.test2 {
-    color: rgb(218, 89, 89);
+.content_link {
+    display: flex;
+    width: 100%;
+    align-items: center;
 }

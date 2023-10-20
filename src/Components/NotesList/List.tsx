@@ -7,19 +7,42 @@ import cn from "classnames";
 import { NOTES } from "../../../pages/api/paths";
 import React from "react";
 import { EditorState, convertFromRaw } from "draft-js";
+import { update_action } from "../../../pages/api/actios";
+import { useSession } from "next-auth/react";
 
 const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
   
   const router = useRouter();
   const hrefBook = `book/${idPage}`;
-
+const session = useSession()
   const routerRecycle = router.asPath.split("/")[1];
   const selectedId = idPage || idPage == 0 ? router.query.book : router.query.index;
   const remove_line_break = (str: string) => {
     return str.replace(/\n/g, "");
   };
 
-  
+  const updateBookForNotes = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `/api/updateData?action=${update_action.update_id_book_for_all_notes}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId:session.data?.user.userId,
+            email:session.data?.user.email,
+            book: 'all',
+          }),
+        }
+      );
+
+      
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
 
   const DraftJsObjectInText = (body: string) => {
     const contentState = convertFromRaw(JSON.parse(body));
@@ -98,6 +121,13 @@ const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
                   })}
                 ></div>
                 <Link
+                  onClick={() => {
+                 if(router.asPath === '/') {
+                  updateBookForNotes()
+                  
+                 }
+                  
+                }}
                   rel="preload"
                   className={cn(s.link, {
                     [s.blockLink]: selectedId === item._id,

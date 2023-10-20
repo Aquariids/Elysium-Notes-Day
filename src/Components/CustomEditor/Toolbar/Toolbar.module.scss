@@ -6,7 +6,6 @@
     display: grid;
     align-items: center;
     border-left: 1px solid rgba(122, 122, 122, 0.452);
-
 }
 
 .visibleShow {
@@ -18,15 +17,14 @@
     display: flex;
 }
 .basic_btns {
-    
     display: flex;
     padding-left: 10px;
     padding-right: 10px;
 }
+
+
 .last_date_update {
-    
     display: none;  
-    
 }
 .showDate {
     color: #525151;
@@ -44,23 +42,16 @@
 }
 
 .hideBtns {
-
     transition: all 1.2s;
     opacity: 0;
     visibility: hidden;
     transform: translateX(-50%);
-
 }
-
-
-
-
 
 
 .btn_active svg {
     fill: #b11f1f;
 }
-
 
 .btn {
     background-color: #FFF;
@@ -68,7 +59,6 @@
     border: none;
     cursor: pointer;
     text-transform: "capitalize";
-
     &:hover {
         svg {
             fill: #b11f1f;
@@ -85,22 +75,18 @@
     border-radius: 8px;
     border: none;
     cursor: pointer;
-   
- 
 }
-
 
 .btn svg {
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .btn_highlighter svg {
     &:hover {
         transition: all .3s;
-        transform: scale(1.4);
+        transform: scale(1.5);
     }
 
     transition: all .3s;
@@ -135,11 +121,9 @@
     fill: #b11f1f;
 }
 
-
 .btn_active_highlighter svg {
     box-shadow: 0 0 2px 1.5px  rgba(167, 166, 166, 0.671);
     transform: scale(1.4);
-   
 }
 
 .hideNote {

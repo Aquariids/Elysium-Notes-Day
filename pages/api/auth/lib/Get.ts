@@ -93,7 +93,7 @@ async function getCollection({ db, collectionName }: dbPros) {
     } catch (error) {}
   }
 
-  export async function getIdForAllBooks(userId:string | string[] | undefined, email:string | string[] | undefined) {
+  export async function getIdForAllBooks(userId:string | string[] | undefined, email:string | string[] | undefined,) {
     try {
       const query = userId && email ? { userId, email } : {};
       const collection = await getCollection({
@@ -101,7 +101,7 @@ async function getCollection({ db, collectionName }: dbPros) {
         db: "notes",
       }); 
       const data = await collection.find(query).toArray();
-      return data[0]?.book || '';
+      return [data[0]?.book || '', data[0]?.name || ''];
     } catch (error) {}
   }
   

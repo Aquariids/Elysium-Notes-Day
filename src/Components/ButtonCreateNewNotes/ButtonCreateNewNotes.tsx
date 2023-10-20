@@ -37,7 +37,7 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
       date:userDate.toJSDate(),
       dateFull:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"),
       dateShort:userDate.toFormat("d MMMM").length === 11 ? userDate.toFormat("d MMMM").slice(0,6) : userDate.toFormat("d MMMM").slice(0,5) + '.',
-      // idPage: bookpage ? 
+      idPage: '0'
     };
 
     try {

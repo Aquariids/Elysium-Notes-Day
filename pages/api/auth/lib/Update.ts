@@ -71,7 +71,6 @@ export async function updateIdPageForNote(data: any) {
 
 
 export async function updateIdPageForOneNote(data: any) {
-  console.log("🚀 ~ file: Update.ts:74 ~ updateIdPageForOneNote ~ data:", data)
   try {
     const id = new ObjectId(data._id);
     const collection = await getCollection({
@@ -249,19 +248,36 @@ export async function updateActionSorting(data: any) {
 
 
 export async function updateBookForNotes(data: any) {
+ 
   try {
     const collection = await getCollection({
       collectionName: `main_book_${data.userId}`,
       db: "notes",
     });
-    await collection.updateOne(
-      { userId: data.userId, email:data.email },
-      {
-        $set: {
+
+    if(data.book) {
+      await collection.updateOne(
+        { userId: data.userId, email:data.email },
+        {
+          $set: {
           book: data.book,
-        },
-      } // то обновляем тело. $set оператор обновления поля или может добавить его.
-    );
+           
+          
+          },
+        } 
+      );
+    }
+    if(data.name) {
+        await collection.updateOne(
+          { userId: data.userId, email:data.email },
+          {
+            $set: {
+              name: data.name,
+            },
+          } 
+        );
+    }
+    
   } catch (error) {
     const client = await getClient();
     client.close();
