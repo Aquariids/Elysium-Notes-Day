@@ -15,7 +15,7 @@ const index = ({userid, email, idpage, databook}:any) => {
   
   const name = useMemo(() => {
     if (databook) {
-      const matchingItem = databook.find((item) => {
+      const matchingItem = databook.find((item:any) => {
         return item.idPage == idpage
       })
       if (matchingItem) {
