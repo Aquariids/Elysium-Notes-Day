@@ -9,6 +9,7 @@ export const HIGHLIGHTER_BLUE:string = "HIGHLIGHTER_BLUE";
 export const HIGHLIGHTER_VIOLET:string = "HIGHLIGHTER_VIOLET";
 export const HIGHLIGHTER_BROWN:string = "HIGHLIGHTER_BROWN";
 export const HIGHLIGHTER_2N:string = "HIGHLIGHTER_2";
+export const BLUR:string = 'BLUR';
 export interface buttonProps {
         name: string;
         handler: (editorState: EditorState , setEditorState: Dispatch<SetStateAction<EditorState>>) => void;

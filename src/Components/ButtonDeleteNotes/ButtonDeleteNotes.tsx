@@ -65,7 +65,7 @@ const ButtonDeleteNotes = ({
     }
     const timer = setTimeout(() => {
       !recycleRouter && setLoadingDelete(false);
-    }, 300);
+    }, 600);
 
     return () => clearTimeout(timer);
   };
@@ -101,7 +101,7 @@ const ButtonDeleteNotes = ({
           onClick={() => handleDeleteLink({ linkId: selectedId })}
           {...props}
         >
-          <p className={s.text}>Переместить в корзину</p>
+          <p className={s.text}>Удалить</p>
         </div>
       )}
     </>

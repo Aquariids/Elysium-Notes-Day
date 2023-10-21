@@ -9,6 +9,7 @@ import LoaderCreate from "./LoaderCreate";
 import { create_data } from "../../../pages/api/actios";
 import { DateTime } from 'luxon';
 import { Settings } from 'luxon';
+import Plus from './plus.svg';
 Settings.defaultLocale = 'ru';
 DateTime.local().setLocale('ru');
 interface IButton {
@@ -19,6 +20,8 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   // emptyRawContentState - пустой объект содержимого draft js. Превращаем его в JSON и отправляем в базу
   const [load, setLoad] = useState(true);
   const router = useRouter();
+  const bookpage = router.asPath === '/book';
+  const idPageForBook = router.asPath
   const create = async () => {
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -34,10 +37,9 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
       date:userDate.toJSDate(),
       dateFull:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"),
       dateShort:userDate.toFormat("d MMMM").length === 11 ? userDate.toFormat("d MMMM").slice(0,6) : userDate.toFormat("d MMMM").slice(0,5) + '.',
+      idPage: '0'
     };
 
-
-    
     try {
       setLoad(false);
       const response = await fetch(`/api/createData?action=${create_data.create_data}`, {
@@ -62,14 +64,14 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   if (alert === "alert") {
     return (
       <Link className={s.alert} onClick={create} href={""}>
-        +
+         <Plus/>
       </Link>
     );
   }
    else {
     return load ? (
       <button className={s.btn} onClick={create}>
-        +
+        <Plus/>
       </button>
     ) :(
       <>

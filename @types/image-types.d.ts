@@ -3,9 +3,6 @@ declare module "*.svg" {
     export default content;
 }
 
-// this file is conditionally added/removed to next-env.d.ts
-// if the static image import handling is enabled
-
 declare module '*.png' {
     const content: import('../dist/client/image').StaticImageData
   

@@ -84,6 +84,25 @@ function Home({ data_editor, data_note_main_menu }: any) {
     );
   };
 
+  const createBookForNotes = async () => {
+    const dataNoteBook = {
+      userId,
+      email,
+      book: 'all',
+    };
+    const response = await fetch(
+      `/api/createData?action=${create_data.create_book_for_notes}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataNoteBook),
+      }
+    );
+  };
+
+
   const createActionSorting = async () => {
     const sortData = {
       userId,
@@ -105,6 +124,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
   useEffect(() => {
     if (userId && email) {
       createNotesBook();
+      createBookForNotes();
       createActionSorting();
     }
   }, [userId, email]);

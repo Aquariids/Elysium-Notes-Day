@@ -1,0 +1,295 @@
+.modal {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.349);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    transition: all .4s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+} 
+
+
+.books {
+    display: flex;
+    flex-direction: column;
+    width: 560px;
+    
+    span {
+        cursor: pointer;
+
+        &:hover {
+            color: #7e7d7d;
+        }
+
+       
+    }
+}
+
+.books__list {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.body__content { 
+    padding-top: 10px;
+height: 400px;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+justify-content: space-between;
+}
+
+
+.footer__buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-end;
+    button {
+      
+
+        &:first-child {
+            margin-right: 10px;
+        }
+    }
+}
+.modal__active {
+    opacity: 1;
+    pointer-events: all;
+}
+.modal__content { 
+    position: absolute;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    height: 500px;
+    width: 600px;
+    transform: scale(0.5);
+    transition: 0.5s all;
+    
+    
+}
+
+.modal__content.modal__active {
+transform: scale(1);
+}
+
+.header__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    width: 100%;
+    border-bottom:  1px solid rgba(20, 20, 20, 0.151);
+
+    h1 {
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 14px;
+        color: #7e7d7d;
+    }
+    svg {
+        transition: all .2s;
+        fill: rgb(116, 115, 115);
+
+        &:hover {
+            cursor: pointer;
+            fill: rgb(51, 51, 51);
+        }
+    }
+}
+
+.bookLink {
+    display: flex;
+    justify-content: space-between;
+  }
+
+.btn {
+    transition: all .3s;
+    padding: 5px;
+    color: #7e7d7d;
+    background-color: transparent;
+outline: none;
+border: 1px solid #7e7d7d;
+border-radius: 4px;
+    &:hover {
+        transition: all .3s;
+        cursor: pointer;
+        color: black;
+    }
+}
+
+.btn:disabled {
+    color: #fcfbfb;
+    cursor: not-allowed;
+    background-color: #cccccc;
+}
+
+.body__input {
+   padding-top: 2px;
+   padding-bottom: 2px;
+   padding-left: 5px;
+   padding-right: 3px;
+    width: 250px;
+    font-style: italic;
+    outline: 1px solid #929292c0;
+   border: none;
+   border-radius: 2px;
+   transition: outline .3s;
+    &:focus {
+        transition: outline .3s;
+        outline: 1px solid #1f7bb1;
+    }
+}
+.btn__input {
+    margin-top: 10px;
+    width: 150px;
+}
+
+.delete__btn {
+    cursor: pointer;
+
+    &:hover {
+        color: rgb(116, 115, 115);
+    }
+}
+
+
+
+
+// модальное окно
+
+.dropdown {
+    margin: auto 0;
+    position: relative;
+    display: inline-block;
+
+}
+
+.dropdown_content {
+    opacity: 0;
+    transition: all .2s;
+    position: absolute;
+    left: 30px;
+    background-color: #f1f1f1;
+    min-width: 150px;
+    padding: 10px;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    visibility: hidden;
+}
+
+
+.dropdown_content a {
+    opacity: 1;
+    transition: background-color 0.5s;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.dropdown_content a:hover {
+    background-color: #ddd;
+}
+
+
+.dropbtn:hover svg {
+    fill: #b11f1f;
+}
+
+.hide {
+    padding-left: 10px;
+    transition: all .2s;
+    opacity: 0;
+    visibility: hidden;
+   
+}
+.active svg {
+    fill: #b11f1f;
+}
+.activeToolbar svg {
+    fill: #b11f1f;
+}
+
+.highlighter svg {
+    fill: transparent;
+}
+.dropbtn {
+    background-color: #FFF;
+    color:  black;
+    border: none;
+    cursor: pointer;
+}
+
+
+.show {
+    transition: all .2s;
+    opacity: 1;
+    visibility: visible;
+    fill: #1f7bb1;
+    
+
+}
+
+.activeBook {
+    background-color:#1f7bb13a;
+    transition: all .2s;
+
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+
+.currentActiveBook {
+    background-color:#1f7bb13a;
+    transition: all .2s;
+
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+.text {
+    transition: all .2s;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    padding-left: 15px;
+
+   
+}
+
+.title_books {
+    font-size: 16px;
+    color: #838181;
+    padding-bottom: 5px;
+}
+.block {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    display: flex;
+    width: 100%;
+}
+.content_link {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}

@@ -10,6 +10,7 @@ import { RECYCLE } from "../../../../pages/api/paths";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
+  BLUR,
   HIGHLIGHTER_BLUE,
   HIGHLIGHTER_BROWN,
   HIGHLIGHTER_GREEN,
@@ -70,6 +71,21 @@ const ToolbarButtons = ({
   const isHighlighterBrown = () =>
     hasInlineStyleOf(editorState, HIGHLIGHTER_BROWN);
 
+    const toggleBlur = () =>
+    toggleInlineStyle(editorState, setEditorState, BLUR);
+  const isBlur = () =>
+    hasInlineStyleOf(editorState, BLUR);
+
+    const blur =  {
+      name: "BLUR",
+      handler: toggleBlur,
+      detector: isBlur,
+      children: <Icons.Blur/>,
+      title: "Скрыть строку",
+    }
+
+
+  const allBasicButtons = [...basicButtons, blur];
   useEffect(() => {
     const buttons_heading = document.querySelectorAll(
       `.${s.btn_active_heading}`
@@ -147,6 +163,8 @@ const ToolbarButtons = ({
     },
   ];
 
+ 
+
   return (
     <div
       className={cn(s.toolbarHeader, {
@@ -159,7 +177,7 @@ const ToolbarButtons = ({
         })}
       >
         {router.asPath.split("/")[1] === `${RECYCLE}` ? (
-          <span>Тут будет дата удаления заметки </span>
+          <span >Тут будет дата удаления заметки </span>
         ) : (
           <span
             title={
@@ -182,8 +200,9 @@ const ToolbarButtons = ({
           [s.show]: showToolbar === true,
         })}
       >
+        <div className={s.all__btns}>
         <div className={s.basic_btns}>
-          {basicButtons.map((btn) => (
+          {allBasicButtons.map((btn) => (
             <button
               title={btn.title}
               className={cn(s.btn, {
@@ -199,6 +218,9 @@ const ToolbarButtons = ({
               {btn.children}
             </button>
           ))}
+          {
+            
+          }
           <DropdownMenu
             icon={<Icons.Highlighter />}
             style={dropdownStyle}
@@ -272,7 +294,7 @@ const ToolbarButtons = ({
             </button>
           ))}
         </div>
-
+              <div className={s.btn__code}>
         <button
           title="Режим для просмотра кода"
           className={cn(s.btn, {
@@ -285,6 +307,8 @@ const ToolbarButtons = ({
         >
           <Icons.Code />
         </button>
+        </div>
+      </div>
       </div>
     </div>
   );

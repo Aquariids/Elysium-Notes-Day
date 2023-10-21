@@ -35,12 +35,14 @@ import Toolbar from "./Toolbar/Toolbar";
 import { DateTime } from "luxon";
 import { updateDateProps } from "./CustomEditor.props";
 import DropdownMenuEditor from "../UI/DropdownMenu/DropdownMenu";
+import ModalAddNotesInBook from "./ModalAddNotesInBook/ModalAddNotesInBook";
 const CustomEditor = ({
   setCheckTitle,
   data,
   setDeleteElement,
   setLoadingDelete,
   selectedItem,
+  updateBooks
   
 }: any) => {
   const router = useRouter();
@@ -57,12 +59,11 @@ const CustomEditor = ({
   const { data: session } = useSession();
   const [showToolbar, setShowToolbar] = useState<boolean>(false);
   const [routerReclycle, setRouterReclycle] = useState<boolean>(false);
+  const [activeModal, setActiveModal] = useState(false);
   useEffect(() => {
     hljs.highlightAll();
   }, [code]);
 
-
- 
 
   const btn_hide = selectedItem.block ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;
 
@@ -244,7 +245,6 @@ const CustomEditor = ({
       } catch (error) {
         alert("Failed to update note")
         console.error(error);
-        
       }
     },
     []
@@ -286,8 +286,7 @@ const CustomEditor = ({
             editorState={editorState}
             setEditorState={setEditorState}
           />
-
-          <DropdownMenuEditor  icon={<DotsMenu />}  >
+          <DropdownMenuEditor activeModal={activeModal}  icon={<DotsMenu />}  >
           <div
                 className={s.hide_btn}
                 onClick={() => {
@@ -297,12 +296,16 @@ const CustomEditor = ({
                 {" "}
                 {!routerReclycle && btn_hide}{" "}
               </div>
+              
               <ButtonDeleteNotes
                 setDeleteElement={setDeleteElement}
                 setLoadingDelete={setLoadingDelete}
                 body={data}
               />
+             {!routerReclycle && <p className={cn(s.text, s.hide_btn)} onClick={() => {setActiveModal(true)}}> Переместить.. </p>} 
           </DropdownMenuEditor>
+          <ModalAddNotesInBook updateBooks={updateBooks} session={session} currentNote={selectedItem} active={activeModal} setActive={setActiveModal}/>
+
         </div>
       </div>
       <WrapperEditorRecycle routerReclycle={routerReclycle}>

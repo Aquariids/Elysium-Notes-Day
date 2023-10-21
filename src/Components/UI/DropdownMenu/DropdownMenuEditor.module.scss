@@ -3,10 +3,11 @@
     margin: auto 0;
     position: relative;
     display: inline-block;
-
+    
 }
 
 .dropdown_content {
+    font-size: 14px;
     opacity: 0;
     transition: all .2s;
     position: absolute;
@@ -70,3 +71,10 @@
 .hello svg {
  fill: #1fb13f;
 }
+
+
+@media only screen and (max-width: 1300px) {
+    .dropdown_content {
+        right: 95px;
+    }
+  }

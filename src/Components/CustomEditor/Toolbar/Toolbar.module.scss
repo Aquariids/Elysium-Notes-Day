@@ -1,32 +1,38 @@
 .toolbarHeader {
-    z-index: 2;
-    border-left: 1px solid rgba(122, 122, 122, 0.452);
     height: 32px;
     margin-bottom: 5px;
     overflow: hidden;
-
+    z-index: 1;
+    display: grid;
+    align-items: center;
+    border-left: 1px solid rgba(122, 122, 122, 0.452);
 }
 
 .visibleShow {
     overflow: visible;
 }
 
+.btn__code {
+    padding-left: 10px;
+    display: flex;
+}
 .basic_btns {
-    display: inline-block;
+    display: flex;
     padding-left: 10px;
     padding-right: 10px;
 }
+
+
 .last_date_update {
-    display: none;
+    display: none;  
 }
-
-
 .showDate {
     color: #525151;
     padding-left: 18px;
-    height: 100%;
+    height: 32px;
     display: flex;
     align-items: center;
+    text-align: center;
 }
 
 .btn_active_code {
@@ -36,32 +42,23 @@
 }
 
 .hideBtns {
-
     transition: all 1.2s;
     opacity: 0;
     visibility: hidden;
     transform: translateX(-50%);
-
 }
-
-
-
-
 
 
 .btn_active svg {
     fill: #b11f1f;
 }
 
-
 .btn {
     background-color: #FFF;
     min-width: 32px;
-    border-radius: 8px;
     border: none;
     cursor: pointer;
     text-transform: "capitalize";
-
     &:hover {
         svg {
             fill: #b11f1f;
@@ -78,23 +75,18 @@
     border-radius: 8px;
     border: none;
     cursor: pointer;
-   
- 
 }
 
-
 .btn svg {
-    
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .btn_highlighter svg {
     &:hover {
         transition: all .3s;
-        transform: scale(1.4);
+        transform: scale(1.5);
     }
 
     transition: all .3s;
@@ -111,7 +103,9 @@
     padding-right: 10px;
     border-left: 1px solid rgba(122, 122, 122, 0.452);
     border-right: 1px solid rgba(122, 122, 122, 0.452);
-    display: inline-block;
+    display: flex;
+    
+    
 }
 
 .show {
@@ -127,11 +121,9 @@
     fill: #b11f1f;
 }
 
-
 .btn_active_highlighter svg {
     box-shadow: 0 0 2px 1.5px  rgba(167, 166, 166, 0.671);
     transform: scale(1.4);
-   
 }
 
 .hideNote {
@@ -159,4 +151,10 @@ fill: #cbcaff;
 }
 .highlighter_brown {
 fill: #ffd1b0;
+}
+
+.all__btns {
+    display: flex;
+    align-items: center;
+    
 }

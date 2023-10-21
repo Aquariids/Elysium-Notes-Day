@@ -17,10 +17,12 @@
     margin: auto 0;
     position: relative;
     display: inline-block;
+    z-index: 2;
     
 }
 
 .dropdown_content {
+    font-size: 14px;
     display: flex;
     flex-direction: column;
     width: 195px;
