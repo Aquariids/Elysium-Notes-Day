@@ -156,6 +156,29 @@ function Home({ data_editor, data_note_main_menu }: any) {
     []
   );
 
+  const updateBookForNotes = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `/api/updateData?action=${update_action.update_id_book_for_all_notes}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId:session.data?.user.userId,
+            email:session.data?.user.email,
+            book: 'all',
+          }),
+        }
+      );
+
+      
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       updateData(value, userId, email);
@@ -188,7 +211,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
         <AnimationContainer>
           <div className={s.wrapp2}>
             <div className={s.link_container}>
-              <Link className={s.link_notes} href={`${NOTES}`}>
+              <Link onClick={updateBookForNotes} className={s.link_notes} href={`${NOTES}`}>
                 <span>ЗАМЕТКИ</span> <Arrow />
               </Link>
             </div>

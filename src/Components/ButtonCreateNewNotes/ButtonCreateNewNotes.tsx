@@ -2,11 +2,11 @@ import { emptyRawContentState } from "contenido";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import LoaderCreate from "./LoaderCreate";
-import { create_data } from "../../../pages/api/actios";
+import { create_data, get_action, update_action } from "../../../pages/api/actios";
 import { DateTime } from 'luxon';
 import { Settings } from 'luxon';
 import Plus from './plus.svg';
@@ -21,9 +21,49 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   const [load, setLoad] = useState(true);
   const router = useRouter();
   const bookpage = router.asPath === '/book';
-  const idPageForBook = router.asPath
-  const create = async () => {
+  const idPageForBook = router.asPath;
+ const [idPage, setIdPage] = useState();
 
+
+  async function getId () {
+    const idPageForBooks = await fetch(
+      `/api/getData?action=${get_action.id_for_books}&userId=${session?.user.userId}&email=${session?.user.email}`
+    );
+    const [idpage] = await idPageForBooks.json();
+
+    setIdPage(idpage)
+  }
+  const updateBookForNotes = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `/api/updateData?action=${update_action.update_id_book_for_all_notes}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId:session?.user.userId,
+            email:session?.user.email,
+            book: 'all',
+          }),
+        }
+      );
+
+      
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    getId();
+  },[router])
+
+
+
+  const create = async () => {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const userDate = DateTime.now().setZone(userTimeZone);
     const content = JSON.stringify(emptyRawContentState);
@@ -37,9 +77,12 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
       date:userDate.toJSDate(),
       dateFull:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"),
       dateShort:userDate.toFormat("d MMMM").length === 11 ? userDate.toFormat("d MMMM").slice(0,6) : userDate.toFormat("d MMMM").slice(0,5) + '.',
-      idPage: '0'
+      idPage: router.asPath === '/' ? 'all': String(idPage && idPage)
     };
 
+
+ 
+  
     try {
       setLoad(false);
       const response = await fetch(`/api/createData?action=${create_data.create_data}`, {
@@ -50,7 +93,14 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
         body: JSON.stringify(data),
       });
       const responseData = await response.json();
-      router.push(`/${NOTES}/${responseData._id}`);
+
+      if(router.asPath === '/') {
+        updateBookForNotes()
+        router.push(`/${NOTES}/${responseData._id}`);
+      } else {
+        router.push(`/${NOTES}/${responseData._id}`);
+      }
+     
     } catch (error) {
       console.error("Failed to create note");
       console.error(error);
