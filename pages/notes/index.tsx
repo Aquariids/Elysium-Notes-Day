@@ -6,17 +6,26 @@ import { NOTES } from "../api/paths";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 import { get_action } from "../api/actios";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
-const index = ({databook,idpage,namebook}:any) => {
-  const [updateBooks, setUpdateBooks] = useState();
+const index = ({userid, email, idpage, databook}:any) => {
+ 
   const session = useSession();
-  const userId = session.data?.user.userId;
-  const email = session.data?.user.email;
   const [activeModal, setActiveModal] = useState(false);
-
-  console.log(databook);
   
+  const name = useMemo(() => {
+    if (databook) {
+      const matchingItem = databook.find((item) => {
+        return item.idPage == idpage
+      })
+      if (matchingItem) {
+        return matchingItem.name;
+      }
+    }
+    return 'all'; // или другое значение по умолчанию, если совпадений нет
+  }, [idpage, databook]);
+
+
   return (
     // ну и паередаем его в наш редактор.
     <div className={s.wrapper}>
@@ -33,8 +42,10 @@ const index = ({databook,idpage,namebook}:any) => {
       </div>
       
       <div className={s.editor}> 
-      <p onClick={() => setActiveModal(true)}>{idpage === 'all' ? 'Все': namebook}</p>
+      <p onClick={() => setActiveModal(true)}>{idpage === 'all' ? 'Все': name}</p>
       <ModalBooks
+      userId= {userid}
+      email ={email}
             session={session}
             active={activeModal}
             setActive={setActiveModal}
@@ -46,30 +57,27 @@ const index = ({databook,idpage,namebook}:any) => {
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const userId = session?.user.userId; // айди авторизованного человека
+  const userid = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   try {
 
     const idPageForBooks = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${userid}&email=${email}`
     );
-    const [idpage, namebook] = await idPageForBooks.json();
+    const [idpage] = await idPageForBooks.json();
     const res = idpage === 'all' ? await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userid}&email=${email}`
     ): await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idpage}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userid}&email=${email}&idPage=${idpage}`
     );
     const actionSorting = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userId}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userid}&email=${email}`
     ); 
  
     const resBook = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userid}&email=${email}`
     );
     const databook = await resBook.json();
-    // const datainbooks = await fetch(
-    //   `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${answ}`
-    // );
   
   const sort = await actionSorting.json();
   const data = await res.json();
@@ -110,7 +118,7 @@ export async function getServerSideProps(context: any) {
   }  
   
   return {
-    props:{ data,databook,idpage,namebook}
+    props:{ data,databook,idpage, userid,email}
   }
   }
 

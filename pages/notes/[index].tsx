@@ -1,4 +1,4 @@
-import React, { use, useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { withLayout } from "../../layout/Layout";
 import CustomEditor from "@/Components/CustomEditor/CustomEditor";
 import { useRouter } from "next/router";
@@ -13,20 +13,27 @@ import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
-const notes = ({ data, databook, namebook, idpage }: any) => {
+const notes = ({ data, idpage, userid, email, databook}: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [deleteElement, setDeleteElement] = useState<string>();
-  const [updateBooks, setUpdateBooks] = useState();
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
   const session = useSession();
-  const userId = session.data?.user.userId;
-  const email = session.data?.user.email;
   const [activeModal, setActiveModal] = useState(false);
+  const name = useMemo(() => {
+    if (databook) {
+      const matchingItem = databook.find((item:any) => item.idPage == idpage);
+      if (matchingItem) {
+        return matchingItem.name;
+      }
+    }
+    return 'all'; 
+  }, [idpage, databook]);
+
   // это наш path по сути текущий url = _id человека
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
@@ -42,19 +49,18 @@ const notes = ({ data, databook, namebook, idpage }: any) => {
     try {
       if (session.status === "authenticated") {
         const idPageForBooks = await fetch(
-          `/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
+          `/api/getData?action=${get_action.id_for_books}&userId=${userid}&email=${email}`
         );
-        const [idPage, nameBook] = await idPageForBooks.json();
-
+        const [idPage] = await idPageForBooks.json();
         if (idPage === "all") {
           const res = await fetch(
-            `/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+            `/api/getData?action=${get_action.data_editor}&userId=${userid}&email=${email}`
           );
           const data = await res.json();
           setLinks(data);
         } else {
           const res2 = await fetch(
-            `/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idPage}`
+            `/api/getData?action=${get_action.data_editorBook}&userId=${userid}&email=${email}&idPage=${idPage}`
           );
           const data2 = await res2.json();
           setLinks(data2);
@@ -104,7 +110,7 @@ const notes = ({ data, databook, namebook, idpage }: any) => {
   useEffect(() => {
     const sort = localStorage.getItem("sorting") || "no-sorting";
     setSort(sort);
-    updateActiveSortingAction(sort, userId, email);
+    updateActiveSortingAction(sort, userid, email);
   }, [sort]);
 
   useEffect(() => {
@@ -127,7 +133,7 @@ const notes = ({ data, databook, namebook, idpage }: any) => {
                   checkTitle={checkTitle}
                   data={links ? sorting(links, sort) : ""}
                   body={data ? sorting(data, sort) : ""}
-                  userId={userId}
+                  userId={userid}
                 />
               )}
             </div>
@@ -136,11 +142,12 @@ const notes = ({ data, databook, namebook, idpage }: any) => {
 
         <div className={s.editor}>
           <p onClick={() => setActiveModal(true)}>
-            {idpage === 'all' ? "Всe": namebook}
+            {idpage === 'all' ? "Всe": name && name}
           </p>
           <ModalBooks
+            userId = {userid}
+            email={email}
             session={session}
-            setUpdateBooks={setUpdateBooks}
             active={activeModal}
             setActive={setActiveModal}
           />
@@ -153,7 +160,6 @@ const notes = ({ data, databook, namebook, idpage }: any) => {
               setCheckTitle={setCheckTitle}
               key={selectedItem._id}
               selectedItem={selectedItem}
-              updateBooks={updateBooks}
             />
           )}
         </div>
@@ -175,29 +181,29 @@ export async function getServerSideProps(context: any) {
       };
     }
 
-    const userId = session?.user.userId; // айди авторизованного человека
+    const userid = session?.user.userId; // айди авторизованного человека
     const email = session?.user.email;
 
     const idPageForBooks = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${userid}&email=${email}`
     );
-    const [idpage, namebook] = await idPageForBooks.json();
+    const [idpage] = await idPageForBooks.json();
     const res =
     idpage === "all"
         ? await fetch(
-            `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+            `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userid}&email=${email}`
           )
         : await fetch(
-            `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idpage}`
+            `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userid}&email=${email}&idPage=${idpage}`
           );
     const data = await res.json();
     const resBook = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userid}&email=${email}`
     );
     const databook = await resBook.json();
 
     return {
-      props: { data, databook, namebook, idpage},
+      props: { data, idpage,userid,email,databook},
     };
   } catch (err) {
     console.error(err);

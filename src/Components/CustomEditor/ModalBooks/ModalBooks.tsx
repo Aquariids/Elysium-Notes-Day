@@ -12,16 +12,10 @@ import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
 import DotsMenu from "./dots.svg";
 import { useRouter } from "next/router";
 import Done from "./done.svg";
-const ModalBooks = ({ active, setActive, setUpdateBooks, session }: any) => {
+const ModalBooks = ({ active, setActive, userId, email }: any) => {
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
-  console.log(
-    "🚀 ~ file: ModalBooks.tsx:16 ~ ModalBooks ~ currentIdPage:",
-    currentIdPage
-  );
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
-  const email = session.data?.user.email;
-  const userId = session.data?.user.userId;
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);

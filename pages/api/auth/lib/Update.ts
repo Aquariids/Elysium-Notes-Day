@@ -19,6 +19,7 @@ async function getCollection({ db, collectionName }: dbPros) {
 
 // В общем ту я отправляю данные на базу монго.
 export async function updateDataInDatabase(data: any) {
+
   try {
     const id = new ObjectId(data._id);
     const collection = await getCollection({
@@ -45,6 +46,7 @@ export async function updateDataInDatabase(data: any) {
 }
 
 export async function updateIdPageForNote(data: any) {
+
   const dataConfirm = data[0] && data[0]
   try {
     const collection = await getCollection({
@@ -71,6 +73,7 @@ export async function updateIdPageForNote(data: any) {
 
 
 export async function updateIdPageForOneNote(data: any) {
+
   try {
     const id = new ObjectId(data._id);
     const collection = await getCollection({
@@ -95,6 +98,7 @@ export async function updateIdPageForOneNote(data: any) {
 export async function deleteIdPageForNote(data: any) {
   try {
     const id = new ObjectId(data._id);
+
     const collection = await getCollection({
       collectionName: `user_${data.userId}`,
       db: "notes",
@@ -115,6 +119,8 @@ export async function deleteIdPageForNote(data: any) {
 
 
 export async function updateDataTitle(data: any) {
+
+
   try {
     const id = new ObjectId(data._id);
     const collection = await getCollection({
@@ -138,7 +144,6 @@ export async function updateDataTitle(data: any) {
 
 export async function updateBlockLink(data: any) {
   try {
-    
     const id = new ObjectId(data._id);
     const collection = await getCollection({
       collectionName: `user_${data.userId}`,
@@ -160,7 +165,6 @@ export async function updateBlockLink(data: any) {
 
 export async function updateModeCode(data: any) {  
   try {
-    
     const id = new ObjectId(data._id);
     const collection = await getCollection({
       collectionName: `user_${data.userId}`,
@@ -248,7 +252,8 @@ export async function updateActionSorting(data: any) {
 
 
 export async function updateBookForNotes(data: any) {
- 
+console.log("🚀 ~ file: Update.ts:255 ~ updateBookForNotes ~ data:", data)
+
   try {
     const collection = await getCollection({
       collectionName: `main_book_${data.userId}`,
@@ -261,8 +266,6 @@ export async function updateBookForNotes(data: any) {
         {
           $set: {
           book: data.book,
-           
-          
           },
         } 
       );
