@@ -32,15 +32,16 @@ width: 100%;
 }
 
 .body {
-    
     margin-top: 25px;
     padding: 0 5px;
     line-height: 1.8;
+    resize: both; 
+    display: flex;
+    flex-direction: column;
+    outline-style: none;
+    overflow-x: hidden;
+    overflow-y: scroll;
     height: 86vh;
-    overflow: auto;
-    &:focus {
-        background-color: red;
-    }
 }
 
 .test {

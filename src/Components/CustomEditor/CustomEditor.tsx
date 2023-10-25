@@ -310,7 +310,9 @@ const CustomEditor = ({
       </div>
       <WrapperEditorRecycle routerReclycle={routerReclycle}>
         <div>
-          <div
+          <div 
+          contentEditable="true"
+           tabindex="0"
             className={cn(s.body, {
               [s.hideNote]:
               selectedItem.block || (selectedItem.block === true && routerReclycle),
