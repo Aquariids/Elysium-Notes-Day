@@ -107,10 +107,11 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
         `/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idPage}`
       );
       const data = await resIdPageNotes.json();
+      console.log("🚀 ~ file: ModalBooks.tsx:110 ~ deleteBook ~ data:", data)
       const dataIdPage = {
         userId: userId,
         email: email,
-        idPage: data[0] ? data[0].idPage : "",
+        idPage: data && data,
       };
       const deleteIdPage = await fetch(
         `/api/updateData?action=${update_action.delete_id_page}`,
