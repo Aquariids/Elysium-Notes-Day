@@ -20,8 +20,6 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   // emptyRawContentState - пустой объект содержимого draft js. Превращаем его в JSON и отправляем в базу
   const [load, setLoad] = useState(true);
   const router = useRouter();
-  const bookpage = router.asPath === '/book';
-  const idPageForBook = router.asPath;
  const [idPage, setIdPage] = useState();
 
 

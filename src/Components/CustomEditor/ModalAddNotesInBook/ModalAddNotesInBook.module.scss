@@ -13,35 +13,51 @@
     opacity: 0;
     pointer-events: none;
     z-index: 2;
-
-
 } 
 
+
+
+.body__content { 
+    padding-top: 10px;
+height: 400px;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+justify-content: space-between;
 
 .books {
     display: flex;
     flex-direction: column;
-    padding:20px;
-
+    width: 560px;
+    
     span {
         cursor: pointer;
 
         &:hover {
-            background-color: aqua;
+            color: #7e7d7d;
         }
 
        
     }
 }
 
+}
 
 
+.text {
+    transition: all .2s;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    padding-left: 15px;
+
+   
+}
 
 .footer__buttons {
     display: flex;
-    width: 100%;
     justify-content: flex-end;
-
+    align-self: flex-end;
     button {
       
 
@@ -63,7 +79,10 @@
     width: 600px;
     transform: scale(0.5);
     transition: 0.5s all;
+    
+    
 }
+
 
 .modal__content.modal__active {
 transform: scale(1);
@@ -79,9 +98,13 @@ transform: scale(1);
 
     h1 {
         font-weight: 500;
-        font-size: 18px;
+        font-size: 20px;
     }
 
+    p {
+        font-size: 14px;
+        color: #7e7d7d;
+    }
     svg {
         transition: all .2s;
         fill: rgb(116, 115, 115);
@@ -94,19 +117,70 @@ transform: scale(1);
 }
 
 
+.activeBook {
+    background-color:#1f7bb13a;
+    transition: all .2s;
 
-.test {
-    background-color: red;
+    &:hover {
+        background-color: transparent;
+    }
 }
 
 
-.test2 {
-  
-    background-color: red;
+.currentActiveBook {
+    background-color:#1f7bb13a;
+    transition: all .2s;
+
+    &:hover {
+        background-color: transparent;
+    }
 }
-
-
 
 .btn__confirm:disabled {
     cursor: not-allowed;
+}
+
+.content_link {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+
+.hide {
+    padding-left: 10px;
+    transition: all .2s;
+    opacity: 0;
+    visibility: hidden;
+   
+}
+.show {
+    transition: all .2s;
+    opacity: 1;
+    visibility: visible;
+    fill: #1f7bb1;
+    
+
+}
+
+
+.btn {
+    transition: all .3s;
+    padding: 5px;
+    color: #7e7d7d;
+    background-color: transparent;
+outline: none;
+border: 1px solid #7e7d7d;
+border-radius: 4px;
+    &:hover {
+        transition: all .3s;
+        cursor: pointer;
+        color: black;
+    }
+}
+
+.btn:disabled {
+    color: #fcfbfb;
+    cursor: not-allowed;
+    background-color: #a3a3a36c;
 }

@@ -4,13 +4,12 @@ import s from "./ModalAddNotesInBook.module.scss";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import Xmark from "./xmark.svg";
-
+import Done from './done.svg';
 const ModalAddNotesInBook = ({
   active,
   setActive,
   currentNote,
   session,
-  updateBooks,
   
 }: any) => {
 
@@ -32,10 +31,6 @@ const ModalAddNotesInBook = ({
   useEffect(() => {
     getBook();
   }, [router])
-
-  // useEffect(() => {
-  //   getBook();
-  // }, [updateBooks])
   
   function close () {
     setActive(false)
@@ -89,8 +84,8 @@ const ModalAddNotesInBook = ({
             return (
                 <span
                 className={cn({
-                  [s.test]: activeLink._id === item._id,
-                  [s.test2]: currentNote.idPage === String(item.idPage) && !activeLink,
+                  [s.currentActiveBook]: activeLink._id === item._id,
+                  [s.activeBook]: currentNote.idPage === String(item.idPage) && !activeLink,
                 })}
                   onClick={(e) => {
                     setCurrentIdPage(String(item.idPage));
@@ -98,14 +93,24 @@ const ModalAddNotesInBook = ({
                   }}
                   key={item._id}
                 >
-                  {item.name}
+                  <div className={s.content_link}>
+                            <Done
+                              className={cn(s.hide, {
+                                [s.show]:
+                                  (activeLink._id  == item.idPage &&
+                                    !currentIdPage) ||
+                                  currentIdPage === String(item.idPage),
+                              })}
+                            />{" "}
+                            <span className={s.text}>{item.name}</span>
+                          </div>
                 </span>
               );
             })}
           </div>
           <div className={s.footer__buttons}>
-            <button onClick={close}>Отмена</button>
-            <button className={s.btn__confirm} disabled={activeLink._id && String(activeLink.idPage) !== currentNote.idPage ? false : true} onClick={()=> {
+            <button className={s.btn} onClick={close}>Отмена</button>
+            <button className={s.btn} disabled={activeLink._id && String(activeLink.idPage) !== currentNote.idPage ? false : true} onClick={()=> {
               addIdPageForNote()
               setActive(false)
             }}>Готово</button>

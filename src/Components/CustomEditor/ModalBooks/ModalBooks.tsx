@@ -300,8 +300,8 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
               Отмена
             </button>
             <button
+             className={s.btn}
               disabled={!activeLink && true || String(idForBook) === currentIdPage}
-              className={s.btn}
               onClick={() => {
                 updateBookForNotes(currentIdPage && currentIdPage);
                 currentIdPage === "all" && setIdForBook("all");

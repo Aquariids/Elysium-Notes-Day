@@ -114,26 +114,7 @@ transform: scale(1);
     justify-content: space-between;
   }
 
-.btn {
-    transition: all .3s;
-    padding: 5px;
-    color: #7e7d7d;
-    background-color: transparent;
-outline: none;
-border: 1px solid #7e7d7d;
-border-radius: 4px;
-    &:hover {
-        transition: all .3s;
-        cursor: pointer;
-        color: black;
-    }
-}
 
-.btn:disabled {
-    color: #fcfbfb;
-    cursor: not-allowed;
-    background-color: #cccccc;
-}
 
 .body__input {
    padding-top: 2px;
@@ -292,4 +273,26 @@ border-radius: 4px;
     display: flex;
     width: 100%;
     align-items: center;
+}
+
+
+.btn {
+    transition: all .3s;
+    padding: 5px;
+    color: #7e7d7d;
+    background-color: transparent;
+outline: none;
+border: 1px solid #7e7d7d;
+border-radius: 4px;
+    &:hover {
+        transition: all .3s;
+        cursor: pointer;
+        color: black;
+    }
+}
+
+.btn:disabled {
+    color: #fcfbfb;
+    cursor: not-allowed;
+    background-color: #a3a3a36c;
 }
