@@ -107,7 +107,6 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
         `/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idPage}`
       );
       const data = await resIdPageNotes.json();
-      console.log("🚀 ~ file: ModalBooks.tsx:110 ~ deleteBook ~ data:", data)
       const dataIdPage = {
         userId: userId,
         email: email,
@@ -128,6 +127,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
       if (res.ok) {
         getDatabook();
         setActiveModal(false);
+        setCurrentIdPage('')
       }
     } catch (err) {
       console.error(err);
@@ -308,7 +308,8 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
             </button>
             <button
              className={s.btn}
-              disabled={!activeLink && true || String(idForBook) === currentIdPage}
+              disabled={!activeLink && true || String(idForBook) === currentIdPage || !currentIdPage}
+              
               onClick={() => {
                 updateBookForNotes(currentIdPage && currentIdPage);
                 currentIdPage === "all" && setIdForBook("all");
