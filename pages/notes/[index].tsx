@@ -13,6 +13,8 @@ import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
+import Book from './book.svg';
+import cn from 'classnames';
 const notes = ({ data, idpage, userid, email, databook}: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -141,9 +143,10 @@ const notes = ({ data, idpage, userid, email, databook}: any) => {
         </div>
 
         <div className={s.editor}>
-          <p onClick={() => setActiveModal(true)}>
-            {idpage === 'all' ? "Всe": name && name}
+          <p className={cn(s.nameBook)} onClick={() => setActiveModal(true)}>
+            <span className={s.tooltip}><Book/> <span>{idpage === 'all' ? "Всe": name && name}</span></span>
           </p>
+          
           <ModalBooks
             userId = {userid}
             email={email}

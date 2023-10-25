@@ -12,13 +12,20 @@
     transition: all .2s;
     overflow: hidden;
     word-wrap: break-word;
-    height: 110px   ;
+    height: 110px ;
+    transition: all .2s;
     &:first-child {
         border-top: 1px solid rgba(20, 20, 20, 0.151);
         margin-top: 3px;
     }
     &:last-child {
         margin-bottom: 0px;
+    }
+
+
+    &:hover {
+        transition: all .2s;
+        box-shadow: 0 0 0 3px  rgba(97, 97, 97, 0.281);
     }
 }
 
@@ -58,7 +65,6 @@
     overflow: hidden;
     margin: 0;
 
-  
 }
 
 .active {
@@ -105,8 +111,6 @@
 
 }
 
-
-
 .hide_content_link {
     position: absolute;
     z-index: 1;
@@ -128,6 +132,10 @@
     transition: opacity 0.4s;
     filter: blur(3px);
     text-decoration: line-through;
+    &:hover {
+        transition: all .2s;
+        box-shadow: 0 0 0 3px  rgb(2, 2, 2);
+    }
 }
 
 .lock {

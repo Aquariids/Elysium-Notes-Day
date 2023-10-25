@@ -20,7 +20,8 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);
   const router = useRouter();
-  let idPageCounter = dataBook && dataBook.length;
+ 
+
 
   function close () {
     setActive(false);
@@ -148,6 +149,10 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   }, [userId]);
 
   async function buttonCreateNewBook(nameBook: string) {
+    let maxIdPage = 0;
+    if (dataBook && dataBook.length > 0) {
+      maxIdPage = Math.max(...dataBook.map((book: { idPage: any; }) => book.idPage));
+    }
     try {
       const res = await fetch(
         `/api/createData?action=${create_data.create_book}`,
@@ -158,11 +163,12 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
           },
           body: JSON.stringify({
             name: nameBook,
-            idPage: idPageCounter,
+            idPage: maxIdPage + 1,
             email: email,
             userId: userId,
           }),
         }
+       
       );
 
       getDatabook();

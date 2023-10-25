@@ -8,6 +8,8 @@ import { get_action } from "../api/actios";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
+import Book from './book.svg';
+import cn from 'classnames';
 const index = ({userid, email, idpage, databook}:any) => {
  
   const session = useSession();
@@ -42,7 +44,9 @@ const index = ({userid, email, idpage, databook}:any) => {
       </div>
       
       <div className={s.editor}> 
-      <p onClick={() => setActiveModal(true)}>{idpage === 'all' ? 'Все': name}</p>
+      <p className={cn(s.nameBook)} onClick={() => setActiveModal(true)}>
+            <span className={s.tooltip}><Book/> <span>{idpage === 'all' ? "Всe": name && name}</span></span>
+          </p>
       <ModalBooks
       userId= {userid}
       email ={email}

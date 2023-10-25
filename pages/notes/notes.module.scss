@@ -68,8 +68,57 @@ width: 308px;
 }
 
 
+.nameBook {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgb(104, 104, 103);
+    display: flex;
+    align-items: center;
+    padding-left: 17px;
+    border-left: 1px solid rgba(122, 122, 122, 0.452);
+    fill:rgb(104, 104, 103);
+    svg {
+        margin-right: 10px;
+        }
 
-@media only screen and (max-width: 1365px) {
+}
+
+  .tooltip {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+    transition: all .5s;
+    &:hover {
+        color: rgb(136, 137, 138);
+        fill:rgb(136, 137, 138);
+    }
+
+  }
+
+  .tooltip::before {
+    content: "Перейти в блокнот";
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 5px 15px;
+    height: 32px;
+    border-radius: 5px;
+    top: 27px;
+    left: 0;
+    z-index: 3;
+    white-space: nowrap;
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s;
+  }
+
+  .tooltip:hover::before {
+    opacity: 1;
+  }
+
+
+  @media only screen and (max-width: 1365px) {
     .wrapper {
         grid-template-columns: 260px 850px;
     }
@@ -90,3 +139,5 @@ width: 308px;
 
    
   }
+
+
