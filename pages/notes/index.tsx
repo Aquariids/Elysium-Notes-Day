@@ -35,7 +35,7 @@ const index = ({userid, email, idpage, databook}:any) => {
         <div className={s.container}>
           <div className={s.alert}>
             <h2>Создание первой заметки</h2>
-            <div>
+            <div className={s.textBtn}>
               Нажмите на кнопку {<ButtonCreateNewNotes alert="alert" />} в
               боковой панели "Заметки" или здесь, чтобы начать.
             </div>
@@ -63,6 +63,9 @@ export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const userid = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
+
+  
+  
   try {
 
     const idPageForBooks = await fetch(

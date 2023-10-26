@@ -1,5 +1,4 @@
 .btn {
-  
 border-radius: 50%;
 width: 16px;
 height: 16px;
@@ -24,10 +23,28 @@ cursor: pointer;
     color: rgba(45, 8, 253, 0.822);
     text-decoration: none;
     margin: 0;
+    border: none;
+    background-color: transparent;
+
     padding: 0;
-    
     &:hover {
         text-decoration: underline;
+        cursor: pointer;
+    }
+
+
+    svg {
+      padding: 0 5px;
+      display: inline;
+    fill:rgb(24, 24, 24);
+
+
+    }
+
+    &:hover {
+    svg {
+      fill: #6b6b6b;
+    }
     }
 }
 

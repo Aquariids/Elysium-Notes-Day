@@ -58,7 +58,11 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
         }
       );
 
-      if (response.ok) router.push(router.asPath);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        router.push(router.asPath);
+      }
     } catch (err) {
       console.error(err);
     }

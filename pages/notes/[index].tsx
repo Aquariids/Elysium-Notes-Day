@@ -184,6 +184,8 @@ export async function getServerSideProps(context: any) {
       };
     }
 
+
+    
     const userid = session?.user.userId; // айди авторизованного человека
     const email = session?.user.email;
 

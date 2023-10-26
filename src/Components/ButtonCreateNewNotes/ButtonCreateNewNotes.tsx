@@ -111,9 +111,9 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
 
   if (alert === "alert") {
     return (
-      <Link className={s.alert} onClick={create} href={""}>
+      <button className={s.alert} onClick={create} >
          <Plus/>
-      </Link>
+      </button>
     );
   }
    else {

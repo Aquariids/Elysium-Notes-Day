@@ -14,7 +14,6 @@ import {
   blockStyleFn,
 
 } from "contenido";
-
 import { useSession } from "next-auth/react";
 import s from "./CustomEditor.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
