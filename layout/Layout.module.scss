@@ -4,7 +4,7 @@
         "header header header"
         "sidebar body body";
         // "footer footer footer";
-        grid-template-columns:  minmax(200px 1180px);
+        grid-template-columns: 1fr 7.5fr;
         // gap: 0px 10px;
 }
 
@@ -15,6 +15,8 @@
 }
 
 .sidebar {
+    max-width: 225px; 
+    display: grid;
     grid-area: sidebar;
 }
 
@@ -28,8 +30,8 @@
     grid-area: body;
 }
 
-// @media only screen and (max-width: 1300px) {
-//     .wrapper {
-//         grid-template-columns:  200px 1180px;
-//     }
-//   }
+@media only screen and (max-width: 1100px) {
+    .wrapper {
+       font-size: 14px;
+    }
+  }
