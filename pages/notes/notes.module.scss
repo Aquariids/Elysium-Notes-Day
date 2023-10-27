@@ -34,7 +34,7 @@
 max-height: calc(100vh - 110px);
 overflow-y: scroll;
 overflow-x: hidden;
-width: 308px; 
+width: 100%; 
 
 }
 
@@ -121,7 +121,7 @@ width: 308px;
 
   @media only screen and (max-width: 1365px) {
     .wrapper {
-        grid-template-columns: 260px 850px;
+        grid-template-columns: 260px 840px;
     }
 
     .container {
@@ -133,7 +133,7 @@ width: 308px;
     }
   }
 
-  @media only screen and (max-width: 1280px) {
+  @media only screen and (max-width: 1315px) {
     .wrapper {
         grid-template-columns: 260px 780px;
     }
@@ -142,3 +142,22 @@ width: 308px;
   }
 
 
+  @media only screen and (max-width: 1245px) {
+    .wrapper {
+        grid-template-columns: 240px 750px;
+    }
+    .container {
+        width: 238px;
+    }
+   
+  }
+
+  @media only screen and (max-width: 1165px) {
+    .wrapper {
+        grid-template-columns: 210px 700px;
+    }
+    .container {
+        width: 208px;
+    }
+   
+  }

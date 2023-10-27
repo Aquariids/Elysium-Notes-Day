@@ -6,6 +6,7 @@
     display: grid;
     align-items: center;
     border-left: 1px solid rgba(122, 122, 122, 0.452);
+
 }
 
 .visibleShow {
@@ -156,5 +157,9 @@ fill: #ffd1b0;
 .all__btns {
     display: flex;
     align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    
     
 }

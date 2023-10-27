@@ -285,6 +285,7 @@ const CustomEditor = ({
             editorState={editorState}
             setEditorState={setEditorState}
           />
+          <div className={s.dost__menu}>
           <DropdownMenuEditor activeModal={activeModal}  icon={<DotsMenu />}  >
           <div
                 className={s.hide_btn}
@@ -304,7 +305,7 @@ const CustomEditor = ({
              {!routerReclycle && <p className={cn(s.text, s.hide_btn)} onClick={() => {setActiveModal(true)}}> Переместить.. </p>} 
           </DropdownMenuEditor>
           <ModalAddNotesInBook updateBooks={updateBooks} session={session} currentNote={selectedItem} active={activeModal} setActive={setActiveModal}/>
-
+          </div>
         </div>
       </div>
       <WrapperEditorRecycle routerReclycle={routerReclycle}>

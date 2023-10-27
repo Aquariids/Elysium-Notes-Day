@@ -4,16 +4,14 @@
         "header header header"
         "sidebar body body";
         // "footer footer footer";
-        grid-template-columns:  225px 1180px;
+        grid-template-columns:  minmax(200px 1180px);
         // gap: 0px 10px;
 }
-
 
 .header {
     height: 10px;
     background-color: rgb(255, 255, 255);
     grid-area: header;
-
 }
 
 .sidebar {
@@ -21,7 +19,6 @@
 }
 
 .footer {
-    
     background-color: blue;
     grid-area: footer;
 }
@@ -31,8 +28,8 @@
     grid-area: body;
 }
 
-@media only screen and (max-width: 1300px) {
-    .wrapper {
-        grid-template-columns:  200px 1180px;
-    }
-  }
+// @media only screen and (max-width: 1300px) {
+//     .wrapper {
+//         grid-template-columns:  200px 1180px;
+//     }
+//   }
