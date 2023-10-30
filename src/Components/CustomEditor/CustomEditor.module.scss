@@ -3,12 +3,12 @@
     margin-top: 5px;
     height: 32px;
     width: 100%;
+    display:grid;
+    grid-template-columns: 7.5fr 0.5fr;
+
     h1 {
         margin: 0;
     }
-
-    display:grid;
-    grid-template-columns: 1fr auto;
 
 }
 

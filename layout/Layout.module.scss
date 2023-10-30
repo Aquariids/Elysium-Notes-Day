@@ -4,7 +4,7 @@
         "header header header"
         "sidebar body body";
         // "footer footer footer";
-        grid-template-columns: 1fr 7.5fr;
+        grid-template-columns: 225px 7.5fr;
         // gap: 0px 10px;
 }
 
@@ -15,7 +15,6 @@
 }
 
 .sidebar {
-    max-width: 225px; 
     display: grid;
     grid-area: sidebar;
 }
@@ -35,3 +34,4 @@
        font-size: 14px;
     }
   }
+

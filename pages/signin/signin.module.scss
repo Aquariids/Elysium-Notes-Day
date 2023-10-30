@@ -30,10 +30,16 @@
 
 }
 
+
+
 .user {
   display: flex;
 justify-content: center;
 align-items: center;
+
+
+
+
 img {
   margin-left: 18px;
   width: 40px;
@@ -204,7 +210,7 @@ img {
   }
 
   
-  .user_name {
+  .user__name {
     color: #FFF;
     padding-left: 4px;
 
