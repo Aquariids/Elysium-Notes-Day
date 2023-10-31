@@ -1,3 +1,5 @@
+@import '../styles/variable@media.scss';
+
 .wrapper {
     display: grid;
     grid-template-areas:
@@ -29,9 +31,12 @@
     grid-area: body;
 }
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: #{$screen1125px}) {
     .wrapper {
        font-size: 14px;
+       grid-template-columns: 200px 7.5fr;
     }
+
+
   }
 

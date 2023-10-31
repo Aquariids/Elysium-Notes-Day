@@ -1,6 +1,5 @@
-.main {
-    
-}
+@import '../../styles//variable@media.scss';
+
 
 .login {
     pointer-events: none;
@@ -235,7 +234,7 @@ img {
     align-items: center;
 
     img {
-      margin-left: 18px;
+      margin-left: var(--padding_sidebar_link);
       width: 30px;
       border-radius: 50px;
     }
@@ -244,3 +243,16 @@ img {
   .container_arr svg {
     margin-left: 5px;
   }
+
+
+  
+
+@media only screen and (max-width: #{$screen1125px}) {
+  .container_arr {
+  
+    img {
+      margin-left:  var(--padding_sidebar_link_screen1125px);
+     
+    }
+  }
+   }
