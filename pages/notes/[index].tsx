@@ -161,7 +161,6 @@ const notes = ({ data, idpage, userid, email, databook,all_id}: any) => {
             <CustomEditor
               setDeleteElement={setDeleteElement}
               setLoadingDelete={setLoadingDelete}
-              data={data}
               checkTitle={checkTitle}
               setCheckTitle={setCheckTitle}
               key={selectedItem._id}

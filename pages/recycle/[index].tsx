@@ -12,7 +12,7 @@ import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
-const notes = ({ data }: any) => {
+const notes = ({ data, all_id}: any) => {
   const [sort, setSort] = useState<any>("no-sort");
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -93,7 +93,7 @@ const notes = ({ data }: any) => {
       <div className={s.editor}>
         {selectedItem && (
           <CustomEditor
-          data={data}
+          all_id={all_id}
           checkTitle={checkTitle}
           setCheckTitle={setCheckTitle}
           key={selectedItem._id}
@@ -126,9 +126,10 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
+  let all_id = data && data.map((obj: { _id: string }) => obj._id);
 
   return {
-    props: { data },
+    props: { data,all_id },
   };
 
 } catch(err) {

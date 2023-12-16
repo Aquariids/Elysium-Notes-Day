@@ -40,7 +40,6 @@ const CustomEditor = ({
   setLoadingDelete,
   selectedItem,
   updateBooks,
-  data,
   all_id
   
 }: any) => {
