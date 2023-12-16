@@ -6,7 +6,7 @@ import cn from "classnames";
 import { NOTES, RECYCLE } from "../../../pages/api/paths";
 import { delete_restore_action } from "../../../pages/api/actios";
 const ButtonDeleteNotes = ({
-  body,
+  all_id,
   setDeleteElement,
   setLoadingDelete,
   ...props
@@ -40,7 +40,6 @@ const ButtonDeleteNotes = ({
       }&_id=${linkId}&userId=${userId}`
     );
 
-    let all_id = body && body.map((obj: { _id: string }) => obj._id);
     await all_id.filter((link: string) => link !== linkId);
     const currentIndex = all_id.findIndex((i: string) => i == selectedId);
     !recycleRouter && setLoadingDelete(true);

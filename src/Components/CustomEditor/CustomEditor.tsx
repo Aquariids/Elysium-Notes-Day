@@ -3,7 +3,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
@@ -37,11 +36,12 @@ import DropdownMenuEditor from "../UI/DropdownMenu/DropdownMenu";
 import ModalAddNotesInBook from "./ModalAddNotesInBook/ModalAddNotesInBook";
 const CustomEditor = ({
   setCheckTitle,
-  data,
   setDeleteElement,
   setLoadingDelete,
   selectedItem,
-  updateBooks
+  updateBooks,
+  data,
+  all_id
   
 }: any) => {
   const router = useRouter();
@@ -300,7 +300,8 @@ const CustomEditor = ({
               <ButtonDeleteNotes
                 setDeleteElement={setDeleteElement}
                 setLoadingDelete={setLoadingDelete}
-                body={data}
+                all_id={all_id}
+                
               />
              {!routerReclycle && <p className={cn(s.text, s.hide_btn)} onClick={() => {setActiveModal(true)}}> Переместить.. </p>} 
           </DropdownMenuEditor>

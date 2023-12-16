@@ -15,7 +15,8 @@ import { sorting } from "../../utils/sorting";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import Book from './book.svg';
 import cn from 'classnames';
-const notes = ({ data, idpage, userid, email, databook}: any) => {
+const notes = ({ data, idpage, userid, email, databook,all_id}: any) => {
+  console.log("🚀 ~ file: [index].tsx:19 ~ notes ~ all_id:", all_id)
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -35,6 +36,8 @@ const notes = ({ data, idpage, userid, email, databook}: any) => {
     }
     return 'all'; 
   }, [idpage, databook]);
+
+
 
   // это наш path по сути текущий url = _id человека
   const selectedItem = useMemo(
@@ -163,6 +166,7 @@ const notes = ({ data, idpage, userid, email, databook}: any) => {
               setCheckTitle={setCheckTitle}
               key={selectedItem._id}
               selectedItem={selectedItem}
+              all_id={all_id}
             />
           )}
         </div>
@@ -204,9 +208,10 @@ export async function getServerSideProps(context: any) {
       `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userid}&email=${email}`
     );
     const databook = await resBook.json();
+    let all_id = data && data.map((obj: { _id: string }) => obj._id);
 
     return {
-      props: { data, idpage,userid,email,databook},
+      props: { data, idpage,userid,email,databook,all_id},
     };
   } catch (err) {
     console.error(err);
