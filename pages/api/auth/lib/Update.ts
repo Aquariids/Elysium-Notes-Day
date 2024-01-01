@@ -251,7 +251,6 @@ export async function updateActionSorting(data: any) {
 
 
 export async function updateBookForNotes(data: any) {
-console.log("🚀 ~ file: Update.ts:255 ~ updateBookForNotes ~ data:", data)
 
   try {
     const collection = await getCollection({
