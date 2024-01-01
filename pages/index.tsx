@@ -19,14 +19,13 @@ import { DateTime } from "luxon";
 import { Settings } from "luxon";
 Settings.defaultLocale = "ru";
 DateTime.local().setLocale("ru");
-function Home({ data_editor, data_note_main_menu }: any) {
+function Home({ data_editor, data_note_main_menu,email,userId}: any) {
   const [value, setValue] = useState<string>(
     data_note_main_menu[0] === undefined ? "" : data_note_main_menu[0].body
   );
   const [currentDate, setCurrentDate] = useState<string>();
   const session = useSession();
-  const userId = session.data?.user.userId;
-  const email = session.data?.user.email;
+
   const [sort, setSort] = useState<any>("");
   useEffect(() => {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -39,33 +38,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
     setCurrentDate(formattedDate + " г.");
   }, []);
 
-  const monika = `Цвета, они не
-Яркие, пре ра ные цв т
-М рцают, вз ыва тся, пр нз ют
-Красный, зеленый, синий
-Бес онечная
-
-КАКОФОНИЯ
-Бессмысленного
-шума
-
-Шум, он не ПРЕКРАЩАЕТСЯ.
-
-Безу ные, грох чу ие во ны
-Пи ат, в зжат, пр нза ют
-
-СИНУС, КОСИНУС, ТАНГЕНС
-
-Как игр ть с пл сти кой на д дже ве туш е.
-
-Как играть с НОЖОМ на ДЫЩАЩЕЙ ГРУДИ.
-
-ес он чн й
-с и
-
-Б с мы ли ы
-Удали её
-  `;
+  const monika = ``;
   const createNotesBook = async () => {
     const dataNoteBook = {
       userId,
@@ -220,7 +193,7 @@ function Home({ data_editor, data_note_main_menu }: any) {
                 className={s.link}
                 body={data_editor ? sorting(data_editor, sort) : ""}
               />
-              <NewNotesMainMenu />
+              <NewNotesMainMenu userId={userId} email={email}/>
             </div>
           </div>
         </AnimationContainer>
@@ -269,6 +242,8 @@ export async function getServerSideProps(context: any) {
     props: {
       data_editor,
       data_note_main_menu,
+      email,
+      userId
     },
   };
 }

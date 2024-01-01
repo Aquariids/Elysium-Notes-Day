@@ -12,11 +12,6 @@ interface IsidebarLink {
 const SidebarLink = ({children,href,btn}:IsidebarLink) => {
     const router = useRouter();
   
-   
-
-
-
-    
     return(
         <li className={cn(s.container, {
             [s.active]: href === '/',

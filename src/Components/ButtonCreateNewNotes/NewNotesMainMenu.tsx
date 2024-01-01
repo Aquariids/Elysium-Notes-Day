@@ -4,19 +4,48 @@ import { useRouter } from "next/router";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import AddNotes from "./add_notes.svg";
-import { create_data } from "../../../pages/api/actios";
+import { create_data, update_action } from "../../../pages/api/actios";
 import { DateTime } from 'luxon';
 import { Settings } from 'luxon';
+import { useCallback } from "react";
 Settings.defaultLocale = 'ru';
 DateTime.local().setLocale('ru');
-const ButtonCreateNewNotes = () => {
+const ButtonCreateNewNotes = ({email, userId}:any) => {
   const { data: session } = useSession();
   // emptyRawContentState - пустой объект содержимого draft js. Превращаем его в JSON и отправляем в базу
   const router = useRouter();
+
+  const updateBookForNotes = useCallback(async (idForBook: any) => {
+    try {
+      const response = await fetch(
+        `/api/updateData?action=${update_action.update_id_book_for_all_notes}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            email,
+            book: idForBook,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        router.push(router.asPath);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
   const create = async () => {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const userDate = DateTime.now().setZone(userTimeZone);
     const content = JSON.stringify(emptyRawContentState);
+    updateBookForNotes("all");
     const data = {
       userId: session?.user.userId,
       email: session?.user.email,
