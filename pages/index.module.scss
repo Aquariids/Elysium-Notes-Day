@@ -174,18 +174,16 @@ span {
 
 
 
-// @media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1500px) {
    
-//    .container {
-//     height: 225px;
-//    }
-//     .wrapper {
-//         gap: 25px;
-//         margin-left: 25px;
-//     }
+   .container {
+    height: 240px;
+   }
+    .wrapper {
+        gap: 25px;
+        margin-left: 25px;
+    }
 
 
-//     .notes {
-//         height: 265px;
-//     }
-//   }
+    
+  }
