@@ -5,5 +5,14 @@ export interface EditorStateProps {
     setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
 }
 
+export interface CustomEditorProps { 
+    setCheckTitle:any
+    setDeleteElement: any
+    setLoadingDelete:any
+    selectedItem:string[]
+    updateBooks:any
+    all_id:string[]
+}
+
 
 export type updateDateProps = {updateDate:string, dateFull:string}

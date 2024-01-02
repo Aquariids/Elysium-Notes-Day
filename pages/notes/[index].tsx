@@ -16,8 +16,7 @@ import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import Book from './book.svg';
 import cn from 'classnames';
 const notes = ({ data, idpage, userid, email, databook,all_id}: any) => {
-  console.log("🚀 ~ file: [index].tsx:19 ~ notes ~ all_id:", all_id)
-  const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
+  const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
   const [loadingDelete, setLoadingDelete] = useState(false);
@@ -161,7 +160,6 @@ const notes = ({ data, idpage, userid, email, databook,all_id}: any) => {
             <CustomEditor
               setDeleteElement={setDeleteElement}
               setLoadingDelete={setLoadingDelete}
-              checkTitle={checkTitle}
               setCheckTitle={setCheckTitle}
               key={selectedItem._id}
               selectedItem={selectedItem}

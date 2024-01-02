@@ -7,15 +7,11 @@
 }
 
 
+
 .alert {
     padding: 15px;
 
-    
-
 }
-
-
-
 
 .recycle_alert {
     height: 100vh;
@@ -32,6 +28,7 @@
     display: inline-block;
 }
 .container {
+    max-height: calc(100vh - 110px);
 overflow-y: scroll;
 overflow-x: hidden;
 width: 100%; 
