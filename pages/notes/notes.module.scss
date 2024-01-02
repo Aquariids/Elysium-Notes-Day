@@ -3,6 +3,7 @@
     grid-template-columns: 310px 1fr;
     grid-template-rows: auto;
     height: 100vh;
+
     
 }
 
@@ -20,6 +21,7 @@
 .list {
     margin-right: 5px;
     margin-left: 3px;
+    
 }
 
 
@@ -28,10 +30,11 @@
     display: inline-block;
 }
 .container {
-    max-height: calc(100vh - 110px);
+max-height: calc(100vh - 110px);
 overflow-y: scroll;
 overflow-x: hidden;
 width: 100%; 
+
 
 }
 
@@ -131,6 +134,29 @@ width: 100%;
 
    
 //   }
+
+
+
+@media only screen and (max-width: 1500px) {
+    .container {
+        max-height: calc(100vh - 116px);
+        
+    }
+    
+  }
+@media only screen and (max-width: 1300px) {
+    .container {
+        max-height: calc(100vh - 102px);
+        
+    }
+    .wrapper {
+    
+        grid-template-columns: 270px 1fr;
+        
+    }
+   
+  }
+
 
 
   @media only screen and (max-width: 1245px) {

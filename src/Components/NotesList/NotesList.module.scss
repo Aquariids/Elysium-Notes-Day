@@ -90,7 +90,10 @@
     font-weight: bold;
 }
 .mainMenuLink {
-   
+    font-size: 14px;
+    text-decoration: none;
+    position: relative;
+    color:rgb(87, 87, 87);
     line-height: 1.4;
     width: 100%;
     height: 100%;
@@ -98,7 +101,7 @@
     border-radius: 0;
     box-shadow: none;
     padding: 0;
-    box-shadow: 0 0 0 1px  rgba(128, 128, 128, 0.329);
+    box-shadow: 0 0 0 0.5px  rgba(128, 128, 128, 0.329);
 
     &:first-child {
         border-radius: 0;
@@ -131,10 +134,10 @@
     transition: opacity 0.4s;
     filter: blur(3px);
     text-decoration: line-through;
-    &:hover {
-        transition: all .2s;
-        box-shadow: 0 0 0 3px  rgb(2, 2, 2);
-    }
+    // &:hover {
+    //     transition: all .2s;
+    //     box-shadow: 0 0 0 3px  rgb(2, 2, 2);
+    // }
 }
 
 .lock {
@@ -158,7 +161,6 @@
     background-color:rgba(219, 208, 157, 0.575);
     border-radius: 2px;
     transition: all .3s;
-    box-shadow: 0 0 0 3px  rgba(128, 128, 128, 0.671);
 }
 
 .lockMainMenu {
@@ -186,3 +188,28 @@
 }
 
 
+
+@media only screen and (max-width: 1500px) {
+    .wrapper_link {
+        box-shadow: none;
+        height: 116px;
+        padding-bottom: 8px;
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    }
+  }
+
+@media only screen and (max-width: 1300px) {
+    
+    .wrapper_link {
+        height: 102px;
+        padding-bottom: 8px;
+        &:last-child {
+            margin-bottom: 12px;
+        }
+    }
+
+
+   
+  }

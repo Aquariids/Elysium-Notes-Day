@@ -106,9 +106,10 @@ const session = useSession()
             return (
               <div
                 key={item._id}
-                className={cn(s.wrapper_link, {
+                className={cn({
                   [s.active]: selectedId === item._id,
                   [s.mainMenuLink]: router.asPath === "/",
+                  [s.wrapper_link]: router.asPath !== "/",
                   [s.lock]: item.block === true,
                   [s.showBlock]: item.block === true,
                   [s.lockMainMenu]:

@@ -9,7 +9,7 @@ export interface CustomEditorProps {
     setCheckTitle:any
     setDeleteElement: any
     setLoadingDelete:any
-    selectedItem:string[]
+    selectedItem:any
     updateBooks:any
     all_id:string[]
 }
