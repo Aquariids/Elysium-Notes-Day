@@ -176,3 +176,24 @@ width: 100%;
     }
    
   }
+  @media only screen and (max-width: 500px) {
+   .notes_list {
+    display: none;
+   }
+
+   .editor {
+    width: 100svw;
+    height: 100svh;
+    padding: 0;
+    margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+  }

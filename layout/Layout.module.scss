@@ -40,3 +40,18 @@
 
   }
 
+
+  @media only screen and (max-width: 500px) {
+    .sidebar {
+        display: none;
+    }
+
+    .wrapper {
+        
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;    
+    }
+
+  }

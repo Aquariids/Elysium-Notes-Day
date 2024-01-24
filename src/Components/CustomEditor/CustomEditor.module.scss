@@ -132,11 +132,13 @@
 }
 
 
-// @media only screen and (max-width: 1230px) {
+@media only screen and (max-width: 500px) {
     
-//     .toolbar {
-     
-//         grid-template-columns: 1fr  ;
-//     }
-//   }
+  .body {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+  }
+  }
 
