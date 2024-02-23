@@ -96,22 +96,25 @@ export async function updateIdPageForOneNote(data: any) {
 
 
 export async function deleteIdPageForNote(data: any) {
-  console.log("🚀 ~ deleteIdPageForNote ~ data:", data.idPage)
-  
+
   try {
 
     const collection = await getCollection({
       collectionName: `user_${data.userId}`,
       db: "notes",
     });
-    await collection.updateMany(
-      { $and: [{ userId: data.userId }, { email: data.email }, {idPage: data.idPage}] }, 
-      {
-        $set: {
-          idPage: ''
-        },
-      } 
-    );
+    
+     
+        await collection.updateMany(
+          { $and: [{ userId: data.userId }, { email: data.email }, {idPage: data.idPage}] }, 
+          {
+            $set: {
+              idPage: ''
+            },
+          } 
+        );
+      
+  
   } catch (error) {
     const client = await getClient();
     client.close();

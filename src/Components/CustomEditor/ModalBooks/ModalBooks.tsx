@@ -109,7 +109,6 @@ const [activeIdBook, setActiveBook] = useState<any>()
     }
   }
   async function deleteBook(_id: any, idPage: any) {
-    console.log("🚀 ~ deleteBook ~ idPage:", idPage)
     
     try {
       const resIdPageNotes = await fetch(
@@ -121,7 +120,7 @@ const [activeIdBook, setActiveBook] = useState<any>()
       const dataIdPage = {
         userId: userId,
         email: email,
-        idPage: idPage,
+        idPage: String(idPage),
       };
     
       const deleteIdPage = await fetch(
