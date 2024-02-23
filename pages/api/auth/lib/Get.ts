@@ -42,6 +42,7 @@ async function getCollection({ db, collectionName }: dbPros) {
         db: "notes",
       }) 
       const data = await collection.find(query).sort({date:1}).toArray();
+      
       return data 
     } catch (error) {
       const client = await getClient();

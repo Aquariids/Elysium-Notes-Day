@@ -19,6 +19,8 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   const [bookName, setBookName] = useState<string>("");
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
+const [activeIdBook, setActiveBook] = useState<any>()
+  console.log("🚀 ~ ModalBooks ~ activeIdBook:", activeIdBook)
   const [activeModal, setActiveModal] = useState(false);
   const router = useRouter();
  
@@ -107,16 +109,21 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
     }
   }
   async function deleteBook(_id: any, idPage: any) {
+    console.log("🚀 ~ deleteBook ~ idPage:", idPage)
+    
     try {
       const resIdPageNotes = await fetch(
         `/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idPage}`
       );
       const data = await resIdPageNotes.json();
+      
+    
       const dataIdPage = {
         userId: userId,
         email: email,
-        idPage: data && data,
+        idPage: idPage,
       };
+    
       const deleteIdPage = await fetch(
         `/api/updateData?action=${update_action.delete_id_page}`,
         {
@@ -290,6 +297,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
                             className={s.delete__btn}
                             onClick={() => {
                               setActiveModal(true);
+                              
                               deleteBook(item._id, item.idPage);
                               idForBook === String(item.idPage) &&
                                 returnPageAll();

@@ -96,6 +96,8 @@ export async function updateIdPageForOneNote(data: any) {
 
 
 export async function deleteIdPageForNote(data: any) {
+  console.log("🚀 ~ deleteIdPageForNote ~ data:", data.idPage)
+  
   try {
 
     const collection = await getCollection({
@@ -103,10 +105,10 @@ export async function deleteIdPageForNote(data: any) {
       db: "notes",
     });
     await collection.updateMany(
-      { $and: [{ userId: data.userId }, { email: data.email }] }, 
+      { $and: [{ userId: data.userId }, { email: data.email }, {idPage: data.idPage}] }, 
       {
         $set: {
-          idPage: '',
+          idPage: ''
         },
       } 
     );
