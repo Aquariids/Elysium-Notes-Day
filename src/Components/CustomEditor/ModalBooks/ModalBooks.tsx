@@ -228,7 +228,7 @@ const [activeIdBook, setActiveBook] = useState<any>()
                 buttonCreateNewBook(bookName);
                 updateNameBookForNotes(bookName);
                 setBookName("");
-                router.push(router.asPath);
+                
               }}
             >
               Создать блокнот
@@ -296,7 +296,6 @@ const [activeIdBook, setActiveBook] = useState<any>()
                             className={s.delete__btn}
                             onClick={() => {
                               setActiveModal(true);
-                              
                               deleteBook(item._id, item.idPage);
                               idForBook === String(item.idPage) &&
                                 returnPageAll();
