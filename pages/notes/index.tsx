@@ -10,7 +10,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import Book from './book.svg';
 import cn from 'classnames';
-const index = ({userid, email, idpage, databook}:any) => {
+const index = ({user_id, email, idpage, databook}:any) => {
  
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
@@ -48,7 +48,7 @@ const index = ({userid, email, idpage, databook}:any) => {
             <span className={s.tooltip}><Book/> <span>{idpage === 'all' ? "Всe": name && name}</span></span>
           </p>
       <ModalBooks
-      userId= {userid}
+      userId= {user_id}
       email ={email}
             session={session}
             active={activeModal}
@@ -61,7 +61,7 @@ const index = ({userid, email, idpage, databook}:any) => {
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const userid = session?.user.userId; // айди авторизованного человека
+  const user_id = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
 
   
@@ -69,20 +69,20 @@ export async function getServerSideProps(context: any) {
   try {
 
     const idPageForBooks = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${userid}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${user_id}&email=${email}`
     );
     const [idpage] = await idPageForBooks.json();
     const res = idpage === 'all' ? await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userid}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${user_id}&email=${email}`
     ): await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${userid}&email=${email}&idPage=${idpage}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${user_id}&email=${email}&idPage=${idpage}`
     );
     const actionSorting = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userid}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${user_id}&email=${email}`
     ); 
  
     const resBook = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${userid}&email=${email}`
+      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${user_id}&email=${email}`
     );
     const databook = await resBook.json();
   
@@ -125,7 +125,7 @@ export async function getServerSideProps(context: any) {
   }  
   
   return {
-    props:{ data,databook,idpage, userid,email}
+    props:{ data,databook,idpage, user_id,email}
   }
   }
 

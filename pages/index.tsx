@@ -19,7 +19,7 @@ import { DateTime } from "luxon";
 import { Settings } from "luxon";
 Settings.defaultLocale = "ru";
 DateTime.local().setLocale("ru");
-function Home({ data_editor, data_note_main_menu,email,userId}: any) {
+function Home({ data_editor, data_note_main_menu,email,user_id}: any) {
   const [value, setValue] = useState<string>(
     data_note_main_menu[0] === undefined ? "" : data_note_main_menu[0].body
   );
@@ -41,7 +41,7 @@ function Home({ data_editor, data_note_main_menu,email,userId}: any) {
   const monika = ``;
   const createNotesBook = async () => {
     const dataNoteBook = {
-      userId,
+      user_id,
       email,
       body: monika,
     };
@@ -59,7 +59,7 @@ function Home({ data_editor, data_note_main_menu,email,userId}: any) {
 
   const createBookForNotes = async () => {
     const dataNoteBook = {
-      userId,
+      user_id,
       email,
       book: 'all',
     };
@@ -78,7 +78,7 @@ function Home({ data_editor, data_note_main_menu,email,userId}: any) {
 
   const createActionSorting = async () => {
     const sortData = {
-      userId,
+      user_id,
       email,
       sorting: "",
     };
@@ -95,12 +95,12 @@ function Home({ data_editor, data_note_main_menu,email,userId}: any) {
   };
 
   useEffect(() => {
-    if (userId && email) {
+    if (user_id && email) {
       createNotesBook();
       createBookForNotes();
       createActionSorting();
     }
-  }, [userId, email]);
+  }, [user_id, email]);
 
   const updateData = useCallback(
     async (value: any, userId: any, email: any) => {
@@ -154,7 +154,7 @@ function Home({ data_editor, data_note_main_menu,email,userId}: any) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateData(value, userId, email);
+      updateData(value, user_id, email);
     }, 500);
 
     return () => clearTimeout(timer);
@@ -193,7 +193,7 @@ function Home({ data_editor, data_note_main_menu,email,userId}: any) {
                 className={s.link}
                 body={data_editor ? sorting(data_editor, sort) : ""}
               />
-              <NewNotesMainMenu userId={userId} email={email}/>
+              <NewNotesMainMenu userId={user_id} email={email}/>
             </div>
           </div>
         </AnimationContainer>
@@ -219,13 +219,13 @@ export default withLayout(Home);
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const userId = session?.user.userId; // айди авторизованного человека
+  const user_id = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const responseEditorData = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${userId}&email=${email}`
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${user_id}&email=${email}`
   );
   const responseNoteMainMenuData = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_note_main_menu}&userId=${userId}&email=${email}`
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_note_main_menu}&userId=${user_id}&email=${email}`
   );
   const data_editor = await responseEditorData.json();
   const data_note_main_menu = await responseNoteMainMenuData.json();
@@ -243,7 +243,7 @@ export async function getServerSideProps(context: any) {
       data_editor,
       data_note_main_menu,
       email,
-      userId
+      user_id
     },
   };
 }

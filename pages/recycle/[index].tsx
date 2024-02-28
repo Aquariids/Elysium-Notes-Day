@@ -111,10 +111,10 @@ export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
   try {
-  const userId = session?.user.userId; // айди авторизованного человека
+  const user_id = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
   const res = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_recycle}&userId=${userId}&email=${email}`
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_recycle}&userId=${user_id}&email=${email}`
   );
   const data = await res.json();
 

@@ -49,16 +49,16 @@ const MainPage = ({ data }: any) => {
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const userId = session?.user.userId; // айди авторизованного человека
+  const user_id = session?.user.userId; // айди авторизованного человека
   const email = session?.user.email;
 
 
   try {
   const res = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_recycle}&userId=${userId}&email=${email}`
+    `${process.env.DOMAIN}/api/getData?action=${get_action.data_recycle}&userId=${user_id}&email=${email}`
   );
   const actionSorting = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${userId}&email=${email}`
+    `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${user_id}&email=${email}`
   );
 
   const sort = await actionSorting.json();
