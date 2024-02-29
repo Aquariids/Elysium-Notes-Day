@@ -17,9 +17,13 @@ import AnimationContainer from "@/Components/AnimationContainer/AnimationContain
 import { sorting } from "../utils/sorting";
 import { DateTime } from "luxon";
 import { Settings } from "luxon";
+import {
+  getAllNotesFromDatabase,
+  getNoteBookMainMenu,
+} from "./api/auth/lib/Get";
 Settings.defaultLocale = "ru";
 DateTime.local().setLocale("ru");
-function Home({ data_editor, data_note_main_menu,email,user_id}: any) {
+function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
   const [value, setValue] = useState<string>(
     data_note_main_menu[0] === undefined ? "" : data_note_main_menu[0].body
   );
@@ -61,7 +65,7 @@ function Home({ data_editor, data_note_main_menu,email,user_id}: any) {
     const dataNoteBook = {
       user_id,
       email,
-      book: 'all',
+      book: "all",
     };
     const response = await fetch(
       `/api/createData?action=${create_data.create_book_for_notes}`,
@@ -74,7 +78,6 @@ function Home({ data_editor, data_note_main_menu,email,user_id}: any) {
       }
     );
   };
-
 
   const createActionSorting = async () => {
     const sortData = {
@@ -139,14 +142,12 @@ function Home({ data_editor, data_note_main_menu,email,user_id}: any) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userId:session.data?.user.userId,
-            email:session.data?.user.email,
-            book: 'all',
+            userId: session.data?.user.userId,
+            email: session.data?.user.email,
+            book: "all",
           }),
         }
       );
-
-      
     } catch (err) {
       console.error(err);
     }
@@ -184,7 +185,11 @@ function Home({ data_editor, data_note_main_menu,email,user_id}: any) {
         <AnimationContainer>
           <div className={s.wrapp2}>
             <div className={s.link_container}>
-              <Link onClick={updateBookForNotes} className={s.link_notes} href={`${NOTES}`}>
+              <Link
+                onClick={updateBookForNotes}
+                className={s.link_notes}
+                href={`${NOTES}`}
+              >
                 <span>ЗАМЕТКИ</span> <Arrow />
               </Link>
             </div>
@@ -193,7 +198,7 @@ function Home({ data_editor, data_note_main_menu,email,user_id}: any) {
                 className={s.link}
                 body={data_editor ? sorting(data_editor, sort) : ""}
               />
-              <NewNotesMainMenu userId={user_id} email={email}/>
+              <NewNotesMainMenu userId={user_id} email={email} />
             </div>
           </div>
         </AnimationContainer>
@@ -218,32 +223,48 @@ function Home({ data_editor, data_note_main_menu,email,user_id}: any) {
 export default withLayout(Home);
 
 export async function getServerSideProps(context: any) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  const user_id = session?.user.userId; // айди авторизованного человека
-  const email = session?.user.email;
-  const responseEditorData = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${user_id}&email=${email}`
-  );
-  const responseNoteMainMenuData = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_note_main_menu}&userId=${user_id}&email=${email}`
-  );
-  const data_editor = await responseEditorData.json();
-  const data_note_main_menu = await responseNoteMainMenuData.json();
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/${SIGNIN}`,
-        permanent: false,
-      },
-    };
-  }
 
-  return {
-    props: {
-      data_editor,
-      data_note_main_menu,
-      email,
-      user_id
-    },
-  };
+  try {
+    const session = await getServerSession(context.req, context.res, authOptions);
+    
+    if (!session) {
+      return {
+        redirect: {
+          destination: `/${SIGNIN}`,
+          permanent: false,
+        },
+      };
+    }
+    
+    const user_id: string = session?.user.userId; // айди авторизованного человека
+    const email: string = session?.user.email;
+    if (user_id && email) {
+      const responseEditorData = await getAllNotesFromDatabase(user_id, email); // responseEditorData - Заметки все, то есть все что для редактора
+      const responseNoteMainMenuData = await getNoteBookMainMenu(
+        user_id,
+        email
+      );
+      const serializedData = responseEditorData?.map((item) => ({
+        // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
+        ...item,
+        _id: item._id.toString(),
+      }));
+      const serializedDataMainMenu = responseNoteMainMenuData?.map((item) => ({
+        // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
+        ...item,
+        _id: item._id.toString(),
+      }));
+
+      return {
+        props: {
+          data_editor: serializedData,
+          data_note_main_menu: serializedDataMainMenu,
+          email,
+          user_id,
+        },
+      };
+    }
+  } catch {
+    return { props: {} };
+  }
 }

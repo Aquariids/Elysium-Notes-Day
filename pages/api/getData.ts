@@ -9,14 +9,19 @@ import {
   getNoteBookMainMenu,
   getNotesFromBook,
 } from "./auth/lib/Get";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
 
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getServerSession(req, res, authOptions)
   const userId = req.query.userId;
   const email = req.query.email;
   const idPage = req.query.idPage;
+
+  
   const action: GetAction = req.query.action as GetAction;
   try {
-    if (userId && email) {
+    if (userId && email && session) {
       switch (action) {
         case get_action.data_editor:
           res.status(200).json(await getAllNotesFromDatabase(userId, email));

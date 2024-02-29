@@ -12,6 +12,7 @@ import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { get_action, update_action } from "../api/actios";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
+import { getAllNotesFromDatabaseRecycle } from "../api/auth/lib/Get";
 const notes = ({ data, all_id}: any) => {
   const [sort, setSort] = useState<any>("no-sort");
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
@@ -111,29 +112,32 @@ export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
   try {
-  const user_id = session?.user.userId; // айди авторизованного человека
-  const email = session?.user.email;
-  const res = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_recycle}&userId=${user_id}&email=${email}`
-  );
-  const data = await res.json();
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+  const user_id:string = session?.user.userId; // айди авторизованного человека
+  const email:string = session?.user.email;
+  const responseRecyclerData = await getAllNotesFromDatabaseRecycle(user_id, email)
+  const serializedData:any = responseRecyclerData?.map((item) => ({ // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
+    ...item,
+    _id: item._id.toString(), 
+    deletionDate: item.deletionDate.toISOString()
+  }));
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-  let all_id = data && data.map((obj: { _id: string }) => obj._id);
+ 
+  let all_id = serializedData && serializedData.map((obj: { _id: string }) => obj._id);
 
   return {
-    props: { data,all_id },
+    props: { data:serializedData, all_id },
   };
 
 } catch(err) {
-  console.error(err);
+  return {porps:{}}
   
 }
 }

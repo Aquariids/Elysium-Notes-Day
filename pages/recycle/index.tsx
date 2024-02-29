@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { RECYCLE } from "../api/paths";
 import { get_action } from "../api/actios";
+import { getActionSorting, getAllNotesFromDatabaseRecycle } from "../api/auth/lib/Get";
 
 const MainPage = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
@@ -49,58 +50,62 @@ const MainPage = ({ data }: any) => {
 
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const user_id = session?.user.userId; // айди авторизованного человека
-  const email = session?.user.email;
-
+ 
 
   try {
-  const res = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.data_recycle}&userId=${user_id}&email=${email}`
-  );
-  const actionSorting = await fetch(
-    `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${user_id}&email=${email}`
-  );
 
-  const sort = await actionSorting.json();
-  const data = await res.json();
-  if (!session) {
+    if (!session) {
+      return {
+        redirect: {
+          destination: `/`,
+          permanent: false,
+        },
+      };
+    }
+    const user_id:string = session?.user.userId; // айди авторизованного человека
+    const email:string = session?.user.email;
+    const responseRecyclerData = await getAllNotesFromDatabaseRecycle(user_id, email)
+    const serializedData:any = responseRecyclerData?.map((item) => ({ // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
+      ...item,
+      _id: item._id.toString(), 
+    }));
+
+
+  const sort:any = await getActionSorting(user_id, email);
+
+  
+  if (session && serializedData[0] != undefined && sort[0].sorting === 'dateDown') {
     return {
       redirect: {
-        destination: `/`,
+        destination: `/${RECYCLE}/${serializedData[0]._id}`,
         permanent: false,
       },
     };
-  }
-  if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
+  } if (session && serializedData[0] != undefined && sort[0].sorting === 'dateUp') {
     return {
       redirect: {
-        destination: `/${RECYCLE}/${data[0]._id}`,
-        permanent: false,
-      },
-    };
-  } if (session && data[0] != undefined && sort[0].sorting === 'dateUp') {
-    return {
-      redirect: {
-        destination: `/${RECYCLE}/${data[data.length - 1]._id}`,
+        destination: `/${RECYCLE}/${serializedData[serializedData.length - 1]._id}`,
         permanent: false,
       },
     };
   }  
-  else if(session && data[0] != undefined) {
+  else if(session && serializedData[0] != undefined) {
     return {
       redirect: {
-        destination: `/${RECYCLE}/${data[0]._id}`,
+        destination: `/${RECYCLE}/${serializedData[0]._id}`,
         permanent: false,
       },
-       props:{ data}
+       props:{ serializedData}
     };
   }  
   
   return {
-    props:{ data}
+    props:{ data:serializedData}
   }
   } catch(err) {
-    console.error(err);
+    return {
+      porps:{}
+    }
     
   }
 }

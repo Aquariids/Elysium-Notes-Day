@@ -15,7 +15,11 @@ import { sorting } from "../../utils/sorting";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import Book from './book.svg';
 import cn from 'classnames';
-const notes = ({ data, idpage, user_id, email, databook,all_id}: any) => {
+import { getAllNotesFromDatabase, getIdForAllBooks, getIdPageBook, getNotesFromBook } from "../api/auth/lib/Get";
+const notes = ({ dataEditor, idpage, user_id, email, databook,all_id}: any) => {
+
+
+
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -42,11 +46,11 @@ const notes = ({ data, idpage, user_id, email, databook,all_id}: any) => {
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
     () =>
-      data &&
-      data.find((item: { _id: string }) => {
+    dataEditor &&
+    dataEditor.find((item: { _id: string }) => {
         return item._id === selectedId;
       }),
-    [data, selectedId]
+    [dataEditor, selectedId]
   );
 
   const getData = useCallback(async () => {
@@ -73,7 +77,7 @@ const notes = ({ data, idpage, user_id, email, databook,all_id}: any) => {
     } catch (err) {
       console.error(err);
     }
-  }, [checkTitle, data]);
+  }, [checkTitle, dataEditor]);
 
   const updateActiveSortingAction = useCallback(
     async (sorting: any, userId: any, email: any) => {
@@ -109,7 +113,7 @@ const notes = ({ data, idpage, user_id, email, databook,all_id}: any) => {
 
       return () => clearTimeout(timer);
     }
-  }, [checkTitle, data, loadingDelete]);
+  }, [checkTitle, dataEditor, loadingDelete]);
 
   useEffect(() => {
     const sort = localStorage.getItem("sorting") || "no-sorting";
@@ -127,16 +131,16 @@ const notes = ({ data, idpage, user_id, email, databook,all_id}: any) => {
     <AnimationContainer>
       <div className={s.wrapper}>
         <div className={s.notes_list}>
-          <HeaderNotes setSort={setSort} sort={sort} data={data} />
+          <HeaderNotes setSort={setSort} sort={sort} data={dataEditor} />
           <div className={s.container}>
             <div className={s.list}>
-              {data[0] && (
+              {dataEditor[0] && (
                 <NotesList
                   deleteElement={deleteElement}
                   loadingDelete={loadingDelete}
                   checkTitle={checkTitle}
                   data={links ? sorting(links, sort) : ""}
-                  body={data ? sorting(data, sort) : ""}
+                  body={dataEditor ? sorting(dataEditor, sort) : ""}
                   userId={user_id}
                 />
               )}
@@ -185,33 +189,29 @@ export async function getServerSideProps(context: any) {
       };
     }
 
-    const user_id = session?.user.userId; // айди авторизованного человека
-    const email = session?.user.email;
+  
+    const user_id:string = session?.user.userId; // айди авторизованного человека
+    const email:string = session?.user.email;
+    const [idpage]:any = await getIdForAllBooks(user_id, email);
+   
+    const responseEditorData =  idpage === 'all' ? await getAllNotesFromDatabase(user_id, email): await getNotesFromBook(user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
+    const datares = await getIdPageBook(user_id, email)
 
-    const idPageForBooks = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${user_id}&email=${email}`
-    );
-    const [idpage] = await idPageForBooks.json();
-    const res =
-    idpage === "all"
-        ? await fetch(
-            `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${user_id}&email=${email}`
-          )
-        : await fetch(
-            `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${user_id}&email=${email}&idPage=${idpage}`
-          );
-    const data = await res.json();
-    const resBook = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${user_id}&email=${email}`
-    );
-    const databook = await resBook.json();
-    let all_id = data && data.map((obj: { _id: string }) => obj._id);
+    const databook = datares?.map((item) => ({
+      ...item,
+      _id: item._id.toString(),
+    }));
+    const serializedData = responseEditorData?.map((item) => ({ // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
+      ...item,
+      _id: item._id.toString(), 
+    }));
+    let all_id = serializedData && serializedData.map((obj: { _id: any }) => obj._id);// получаем все _id заметок в одном месте.
 
     return {
-      props: { data, idpage,user_id,email,databook,all_id},
+      props: { dataEditor: serializedData, idpage, user_id,email,databook,all_id }, // тут данные для редактора уже просто dataEditor!
     };
   } catch (err) {
-    console.error(err);
+    return {props: {}}
   }
 }
 

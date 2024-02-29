@@ -8,25 +8,30 @@ import { get_action } from "../api/actios";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
-import Book from './book.svg';
-import cn from 'classnames';
-const index = ({user_id, email, idpage, databook}:any) => {
- 
+import Book from "./book.svg";
+import cn from "classnames";
+import {
+  getActionSorting,
+  getAllNotesFromDatabase,
+  getIdForAllBooks,
+  getIdPageBook,
+  getNotesFromBook,
+} from "../api/auth/lib/Get";
+const index = ({ user_id, email, idpage, databook }: any) => {
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
-  
+
   const name = useMemo(() => {
     if (databook) {
-      const matchingItem = databook.find((item:any) => {
-        return item.idPage == idpage
-      })
+      const matchingItem = databook.find((item: any) => {
+        return item.idPage == idpage;
+      });
       if (matchingItem) {
         return matchingItem.name;
       }
     }
-    return 'all'; // или другое значение по умолчанию, если совпадений нет
+    return "all"; // или другое значение по умолчанию, если совпадений нет
   }, [idpage, databook]);
-
 
   return (
     // ну и паередаем его в наш редактор.
@@ -42,98 +47,100 @@ const index = ({user_id, email, idpage, databook}:any) => {
           </div>
         </div>
       </div>
-      
-      <div className={s.editor}> 
-      <p className={cn(s.nameBook)} onClick={() => setActiveModal(true)}>
-            <span className={s.tooltip}><Book/> <span>{idpage === 'all' ? "Всe": name && name}</span></span>
-          </p>
-      <ModalBooks
-      userId= {user_id}
-      email ={email}
-            session={session}
-            active={activeModal}
-            setActive={setActiveModal}
-          />
+
+      <div className={s.editor}>
+        <p className={cn(s.nameBook)} onClick={() => setActiveModal(true)}>
+          <span className={s.tooltip}>
+            <Book /> <span>{idpage === "all" ? "Всe" : name && name}</span>
+          </span>
+        </p>
+        <ModalBooks
+          userId={user_id}
+          email={email}
+          session={session}
+          active={activeModal}
+          setActive={setActiveModal}
+        />
       </div>
     </div>
   );
 };
 
 export async function getServerSideProps(context: any) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  const user_id = session?.user.userId; // айди авторизованного человека
-  const email = session?.user.email;
-
-  
-  
   try {
-
-    const idPageForBooks = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_for_books}&userId=${user_id}&email=${email}`
+    const session = await getServerSession(
+      context.req,
+      context.res,
+      authOptions
     );
-    const [idpage] = await idPageForBooks.json();
-    const res = idpage === 'all' ? await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editor}&userId=${user_id}&email=${email}`
-    ): await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.data_editorBook}&userId=${user_id}&email=${email}&idPage=${idpage}`
-    );
-    const actionSorting = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.action_sorting}&userId=${user_id}&email=${email}`
-    ); 
- 
-    const resBook = await fetch(
-      `${process.env.DOMAIN}/api/getData?action=${get_action.id_page_book}&userId=${user_id}&email=${email}`
-    );
-    const databook = await resBook.json();
-  
-  const sort = await actionSorting.json();
-  const data = await res.json();
 
-  
-  if(!session){
-    return {
-      redirect: {
-        destination: `/`,
-        permanent: false,
-      },
-    };
-  }
-  if (session && data[0] != undefined && sort[0].sorting === 'dateDown') {
-    return {
-      redirect: {
-        destination: `/${NOTES}/${data[0]._id}`,
-        permanent: false,
-      },
-    };
-  } if (session && data[0] != undefined && sort[0].sorting === 'dateUp') {
-    return {
-      redirect: {
-        destination: `/${NOTES}/${data[data.length - 1]._id}`,
-        permanent: false,
-      },
-    };
-  }  
+    if (!session) {
+      return {
+        redirect: {
+          destination: `/`,
+          permanent: false,
+        },
+      };
+    }
+    const user_id: string = session?.user.userId;
+    const email: string = session?.user.email;
+    const [idpage]: any = await getIdForAllBooks(user_id, email);
 
-  else if(session && data[0] != undefined) {
-    return {
-      redirect: {
-        destination: `/${NOTES}/${data[0]._id}`,
-        permanent: false,
-      },
-       props:{ data}
-    };
-  }  
-  
-  return {
-    props:{ data,databook,idpage, user_id,email}
-  }
-  }
+    if (user_id != undefined && email != undefined) {
+      const responseEditorData =
+        idpage === "all"
+          ? await getAllNotesFromDatabase(user_id, email)
+          : await getNotesFromBook(user_id, email, idpage);
+      const serializedData: any = responseEditorData?.map((item) => ({
+        ...item,
+        _id: item._id.toString(),
+      }));
 
-  catch(err) {
-    console.error(err);
-    
+      const databook = await getIdPageBook(user_id, email);
+      const sort: any = await getActionSorting(user_id, email);
+
+      if (
+        session &&
+        serializedData[0] != undefined &&
+        sort[0].sorting === "dateDown"
+      ) {
+        return {
+          redirect: {
+            destination: `/${NOTES}/${serializedData[0]._id}`,
+            permanent: false,
+          },
+        };
+      }
+      if (
+        session &&
+        serializedData[0] != undefined &&
+        sort[0].sorting === "dateUp"
+      ) {
+        return {
+          redirect: {
+            destination: `/${NOTES}/${
+              serializedData[serializedData.length - 1]._id
+            }`,
+            permanent: false,
+          },
+        };
+      } else if (session && serializedData[0] != undefined) {
+        return {
+          redirect: {
+            destination: `/${NOTES}/${serializedData[0]._id}`,
+            permanent: false,
+          },
+          props: { data: serializedData },
+        };
+      }
+
+      return {
+        props: { data: serializedData, databook, idpage, user_id, email },
+      };
+    }
+  } catch (err) {
+    return { props: {} };
   }
-  
 }
 
 export default withLayout(index);
