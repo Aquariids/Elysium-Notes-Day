@@ -4,13 +4,17 @@ import { ButtonDeleteProps } from "./ButtonDeleteNotes.props";
 import s from "./ButtonDeleteNotes.module.scss";
 import cn from "classnames";
 import { NOTES, RECYCLE } from "../../../pages/api/paths";
-import { delete_restore_action } from "../../../pages/api/actios";
+import { delete_restore_action, update_action } from "../../../pages/api/actios";
+import { DateTime } from "luxon";
 const ButtonDeleteNotes = ({
   all_id,
   setDeleteElement,
   setLoadingDelete,
   ...props
 }: ButtonDeleteProps) => {
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const userDate = DateTime.now().setZone(userTimeZone);
+  
   const router = useRouter();
   const session = useSession();
   const recycleRouter = router.asPath.split("/")[1] === `${RECYCLE}`;
@@ -39,6 +43,25 @@ const ButtonDeleteNotes = ({
           : delete_one_notes_recycle
       }&_id=${linkId}&userId=${userId}`
     );
+
+    // const data = {
+    //   deleteDate:
+    // }
+    // await fetch(
+    //   `/api/updateData?action=${update_action.editor}`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    //   }
+   
+
+      
+    // );
+
+
 
     await all_id.filter((link: string) => link !== linkId);
     const currentIndex = all_id.findIndex((i: string) => i == selectedId);

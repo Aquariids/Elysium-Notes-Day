@@ -1,10 +1,13 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "./mongodb";
-import { DateTime } from "luxon";
+import { DateTime, Settings } from "luxon";
 interface dbPros {
   collectionName: string;
   db: string;
 }
+
+Settings.defaultLocale = 'ru';
+DateTime.local().setLocale('ru');
 
 async function getClient() {
   return await clientPromise;
