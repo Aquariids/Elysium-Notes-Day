@@ -68,7 +68,11 @@ export async function getServerSideProps(context: any) {
     const serializedData:any = responseRecyclerData?.map((item) => ({ // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
       ...item,
       _id: item._id.toString(), 
+   
     }));
+
+    // console.log(serializedData);
+    
 
 
   const sort:any = await getActionSorting(user_id, email);

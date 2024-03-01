@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "./mongodb";
+import { DateTime } from "luxon";
 interface dbPros {
   collectionName: string;
   db: string;
@@ -21,6 +22,10 @@ async function getCollection({ db, collectionName }: dbPros) {
 
 
 export async function deleteDataRecycle(_id: string, userId: string) {
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const userDate = DateTime.now().setZone(userTimeZone);
+  
+   
     try {
       const id = new ObjectId(_id);
       const collection = await getCollection({
@@ -32,7 +37,7 @@ export async function deleteDataRecycle(_id: string, userId: string) {
         db: "deleted_notes",
       });
       const data = await collection.find(id).toArray();
-      collectionDel.insertOne({ ...data[0], deletionDate: new Date() });
+      collectionDel.insertOne({ ...data[0],deleteDate:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"), });
       const result = await collection.deleteOne({ _id: id });
       return result;
     } catch (error) {

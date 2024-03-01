@@ -51,9 +51,11 @@ const CustomEditor = ({
   const [code, setCode] = useState<boolean>(selectedItem.code || false);
   const [updateDate, setUpdateDate] = useState<updateDateProps>( {
     updateDate: selectedItem.updateDate,
-    dateFull:selectedItem.dateFull
+    dateFull:selectedItem.dateFull,
+    deleteDate: selectedItem.deleteDate
     }
   );
+
   const { data: session } = useSession();
   const [showToolbar, setShowToolbar] = useState<boolean>(false);
   const [routerReclycle, setRouterReclycle] = useState<boolean>(false);

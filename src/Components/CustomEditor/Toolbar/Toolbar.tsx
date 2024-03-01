@@ -177,7 +177,14 @@ const ToolbarButtons = ({
         })}
       >
         {router.asPath.split("/")[1] === `${RECYCLE}` ? (
-          <span >Тут будет дата удаления заметки </span>
+        <span className={cn({
+          [s.hideNote]: hideNotes === true,
+        })} > {
+          
+          !updateDate.deleteDate
+                ? ``
+                : `Дата удаления: ${updateDate.deleteDate}`
+          } </span>
         ) : (
           <span
             title={

@@ -31,7 +31,9 @@ export interface codeProps {
     modeCode: () => {};
     updateDate: {
         updateDate:string,
-        dateFull:string
+        dateFull:string,
+        deleteDate?:string,
     }
+    
     hideNotes: boolean
   }

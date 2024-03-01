@@ -15,4 +15,4 @@ export interface CustomEditorProps {
 }
 
 
-export type updateDateProps = {updateDate:string, dateFull:string}
+export type updateDateProps = {updateDate:string, dateFull:string, deleteDate?:string}

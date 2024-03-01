@@ -94,6 +94,7 @@ export async function getServerSideProps(context: any) {
       const serializedData: any = responseEditorData?.map((item) => ({
         ...item,
         _id: item._id.toString(),
+      
       }));
 
       const databook = await getIdPageBook(user_id, email);
