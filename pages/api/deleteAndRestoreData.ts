@@ -8,23 +8,30 @@ import {
   deleteIdPageBook,
   restoreDataRecycle,
 } from "./auth/lib/Delete_Restore";
-interface IRequest {
-  req: NextApiRequest;
-  query: {
-    action: DeleteRestoreAction;
-    _id: string;
-    userId: string;
-  };
-}
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
+// interface IRequest {
+//   req: NextApiRequest;
+//   query: {
+//     action: DeleteRestoreAction;
+//     _id: string;
+//     userId: string;
+//   };
+// }
 
-export default async function handler(req: IRequest, res: NextApiResponse) {
+export default async function handler(req: any, res: NextApiResponse) {
   const _id = req.query._id;
+  const session = await getServerSession(req, res, authOptions);
   const userId = req.query.userId;
   const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(_id); // проверка на то, что _id mongodb в корректном формате
   const action: DeleteRestoreAction = req.query.action as DeleteRestoreAction;
-  if (!userId) res.status(500).send("Non-existent userId. Please log in.");
+
+  if (!session && !userId) res.status(500).send("Non-existent userId. Please log in.");
+  
   else {
     try {
+      console.log('четко');
+      
       switch (action) {
         case "delete_one_notes_recycle":
           isValidObjectId && (await deleteDataRecycle(_id, userId));

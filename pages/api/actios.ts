@@ -14,6 +14,7 @@ export type UpdateAction =
   | "update_id_book_for_all_notes";
 
 // update action
+
 export const update_action = {
   editor: "editor",
   editor_title: "editor_title",

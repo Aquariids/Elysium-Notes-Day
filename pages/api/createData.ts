@@ -1,11 +1,15 @@
 import { CreateAction } from './actios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createBook, createBookForAllNotes, createDatabase, createNoteBookMainMenu, createSortingDocument } from './auth/lib/Create';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './auth/[...nextauth]';
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const action:CreateAction = req.query.action as CreateAction;
+    const session = await getServerSession(req, res, authOptions);
+
     const data = req.body;
     try {
-        if(data) {
+        if(data && session) {
             switch(action) {
                 case 'create_data':
                     await createDatabase(data);
