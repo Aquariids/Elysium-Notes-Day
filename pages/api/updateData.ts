@@ -7,6 +7,7 @@ import {
   updateBookForNotes,
   updateDataInDatabase,
   updateDataTitle,
+  updateDeleteDate,
   updateIdPageForNote,
   updateIdPageForOneNote,
   updateLastDate,
@@ -18,6 +19,7 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
   const action: UpdateAction = req.query.action as UpdateAction;
   try {
     const data = req.body;
+    console.log("🚀 ~ POST ~ data:", data)
     switch (action) {
       case update_action.editor:
         await updateDataInDatabase(data);
@@ -61,6 +63,10 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
         break;
       case update_action.update_id_book_for_all_notes:
         await updateBookForNotes(data);
+        res.status(200).send("Data editor updated successfully");
+        break;
+        case update_action.update_dalete_date:
+        await updateDeleteDate(data);
         res.status(200).send("Data editor updated successfully");
         break;
       default:

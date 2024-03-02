@@ -27,6 +27,7 @@ export const update_action = {
   update_id_page_one_note: "update_id_page_one_note",
   update_id_page_all_note: "update_id_page_all_note",
   update_id_book_for_all_notes: "update_id_book_for_all_notes",
+  update_dalete_date:'update_dalete_date',
 };
 
 // get actions

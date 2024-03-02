@@ -6,8 +6,6 @@ interface dbPros {
   db: string;
 }
 
-Settings.defaultLocale = 'ru';
-DateTime.local().setLocale('ru');
 
 async function getClient() {
   return await clientPromise;
@@ -25,8 +23,7 @@ async function getCollection({ db, collectionName }: dbPros) {
 
 
 export async function deleteDataRecycle(_id: string, userId: string) {
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const userDate = DateTime.now().setZone(userTimeZone);
+ 
   
    
     try {
@@ -40,7 +37,7 @@ export async function deleteDataRecycle(_id: string, userId: string) {
         db: "deleted_notes",
       });
       const data = await collection.find(id).toArray();
-      collectionDel.insertOne({ ...data[0],deleteDate:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"), });
+      collectionDel.insertOne({ ...data[0] });
       const result = await collection.deleteOne({ _id: id });
       return result;
     } catch (error) {

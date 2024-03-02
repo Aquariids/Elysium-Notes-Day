@@ -19,6 +19,7 @@ async function getCollection({ db, collectionName }: dbPros) {
 
 // В общем ту я отправляю данные на базу монго.
 export async function updateDataInDatabase(data: any) {
+console.log("🚀 ~ updateDataInDatabase ~ data:", data.deleteDate)
 
   try {
     const id = new ObjectId(data._id);
@@ -35,7 +36,7 @@ export async function updateDataInDatabase(data: any) {
       { $and: [{ userId: data.userId }, { email: data.email }, { _id: id }] }, // фильтрация - проверяем если email равен data.email и userId равен data.userId
       {
         $set: {
-          body: data.body,
+          body: data.body
         },
       } // то обновляем тело. $set оператор обновления поля или может добавить его.
     );
@@ -44,6 +45,31 @@ export async function updateDataInDatabase(data: any) {
     client.close();
   }
 }
+
+export async function updateDeleteDate(data: any) {
+  
+    try {
+      const id = new ObjectId(data._id);
+      const collection = await getCollection({
+        collectionName: `user_${data.userId}`,
+        db: "notes",
+      });
+      
+      await collection.findOneAndUpdate(
+      
+        { $and: [{ userId: data.userId }, { email: data.email }, { _id: id }] }, 
+        {
+          $set: {
+            deleteDate: data.deleteDate
+          },
+        } // то обновляем тело. $set оператор обновления поля или может добавить его.
+      );
+    } catch (error) {
+      const client = await getClient();
+      client.close();
+    }
+  }
+  
 
 export async function updateIdPageForNote(data: any) {
 
