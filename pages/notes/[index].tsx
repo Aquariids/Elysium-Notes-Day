@@ -83,7 +83,7 @@ const notes = ({ data_editor, idpage, user_id, email, databook,all_id}: any) => 
     async (sorting: any, userId: any, email: any) => {
       try {
         const response = await fetch(
-          `/api/updateData?action=${update_action.action_sorting}`,
+          `/api/updateData?action=${update_action.update_sorting_preferences}`,
           {
             method: "POST",
             headers: {
@@ -195,9 +195,9 @@ export async function getServerSideProps(context: any) {
     const [idpage]:any = await getIdForAllBooks(user_id, email);
    
     const responseEditorData =  idpage === 'all' ? await getAllNotesFromDatabase(user_id, email): await getNotesFromBook(user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
-    const datares = await getIdPageBook(user_id, email)
+    const dataRes = await getIdPageBook(user_id, email)
 
-    const databook = datares?.map((item) => ({
+    const databook = dataRes?.map((item) => ({
       ...item,
       _id: item._id.toString(),
     }));

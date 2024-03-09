@@ -1,18 +1,16 @@
 import { UpdateAction, update_action } from "./actions";
 import { NextApiRequest, NextApiResponse } from "next";
 import {
-  deleteIdPageForNote,
-  updateActionSorting,
-  updateBlockLink,
+  updateSortingPreferences,
+  updateNoteVisibility,
   updateBookForNotes,
-  updateDataInDatabase,
-  updateDataTitle,
-  updateDeleteDate,
-  updateIdPageForNote,
-  updateIdPageForOneNote,
-  updateLastDate,
-  updateModeCode,
+  updateNoteContent,
+  updateNoteTitle,
+  updateNotebookIdForNote,
+  updateNoteLastModifiedDate,
+  updateCodeHighlighting ,
   updateNoteBookMainMenu,
+  updateNoteDeletionDate,
 } from "./auth/lib/Update";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
@@ -22,59 +20,50 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
   const action: UpdateAction = req.query.action as UpdateAction;
   try {
 
-    if(session) {
-      console.log('четко');
-      
+    if(session) {      
       const data = req.body;
       switch (action) {
-        case update_action.editor:
-          await updateDataInDatabase(data);
+        case update_action.update_note_content:
+          await updateNoteContent(data);
           res.status(200).send("Data editor updated successfully");
           break;
-        case update_action.editor_title:
-          await updateDataTitle(data);
+        case update_action.update_note_title:
+          await updateNoteTitle(data);
           res.status(200).send("Data title updated successfully");
           break;
-        case update_action.book_main_menu:
+        case update_action.update_main_menu_note:
           await updateNoteBookMainMenu(data);
           res.status(200).send("Data bookMainMenu updated successfully");
           break;
-        case update_action.block_link:
-          await updateBlockLink(data);
+        case update_action.update_note_visibility:
+          await updateNoteVisibility(data);
           res.status(200).send("note hide");
           break;
-        case update_action.mode_code:
-          await updateModeCode(data);
+        case update_action.update_code_highlighting :
+          await updateCodeHighlighting (data);
           res.status(200).send("mode code");
           break;
-        case update_action.action_sorting:
-          await updateActionSorting(data);
+        case update_action.update_sorting_preferences:
+          await updateSortingPreferences(data);
           res.status(200).send("update sorting action");
           break;
-        case update_action.update_date_last_changes:
-          await updateLastDate(data);
+        case update_action.update_note_last_modified_date:
+          await updateNoteLastModifiedDate(data);
           res.status(200).send("update date last changes");
           break;
-        case update_action.update_id_page:
-          await updateIdPageForNote(data);
-          res.status(200).send("Data editor updated successfully");
-          break;
-        case update_action.update_id_page_one_note:
-          await updateIdPageForOneNote(data);
-          res.status(200).send("Data editor updated successfully");
-          break;
-        case update_action.delete_id_page:
-          await deleteIdPageForNote(data);
+        case update_action.update_notebook_id_for_note:
+          await updateNotebookIdForNote(data);
           res.status(200).send("Data editor updated successfully");
           break;
         case update_action.update_id_book_for_all_notes:
           await updateBookForNotes(data);
           res.status(200).send("Data editor updated successfully");
           break;
-          case update_action.update_dalete_date:
-          await updateDeleteDate(data);
+          case update_action.update_note_deletion_date:
+          await updateNoteDeletionDate(data);
           res.status(200).send("Data editor updated successfully");
           break;
+          
         default:
           res.status(400).send("Invalid action");
           return;

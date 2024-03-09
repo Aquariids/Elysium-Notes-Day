@@ -97,7 +97,11 @@ export async function getServerSideProps(context: any) {
       
       }));
 
-      const databook = await getIdPageBook(user_id, email);
+      const dataRes = await getIdPageBook(user_id, email)
+      const databook = dataRes?.map((item) => ({
+        ...item,
+        _id: item._id.toString(),
+      }));
       const sort: any = await getActionSorting(user_id, email);
 
       if (

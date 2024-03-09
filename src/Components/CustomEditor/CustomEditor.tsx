@@ -75,7 +75,7 @@ const CustomEditor = ({
       const updatedLink = { ...selectedItem, block: !selectedItem.block };
       try {
         const updateRes = await fetch(
-          `/api/updateData?action=${update_action.block_link}`,
+          `/api/updateData?action=${update_action.update_note_visibility}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -102,7 +102,7 @@ const CustomEditor = ({
       const updatedLink = { ...selectedItem, code: !code };
       try {
         const updateRes = await fetch(
-          `/api/updateData?action=${update_action.mode_code}`,
+          `/api/updateData?action=${update_action.update_code_highlighting}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -159,7 +159,7 @@ const CustomEditor = ({
         if (editorChanged) {
           try {
             const updatedLink = { ...selectedItem, updateDate:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm") };
-            const res = fetch(`/api/updateData?action=${update_action.update_date_last_changes}`, {
+            const res = fetch(`/api/updateData?action=${update_action.update_note_last_modified_date}`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(updatedLink),
@@ -205,7 +205,7 @@ const CustomEditor = ({
 
       try {
         const response = await fetch(
-          `/api/updateData?action=${update_action.editor}`,
+          `/api/updateData?action=${update_action.update_note_content}`,
           {
             method: "POST",
             headers: {
@@ -233,7 +233,7 @@ const CustomEditor = ({
 
       try {
         const response = await fetch(
-          `/api/updateData?action=${update_action.editor_title}`,
+          `/api/updateData?action=${update_action.update_note_title}`,
           {
             method: "POST",
             headers: {

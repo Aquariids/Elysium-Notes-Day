@@ -104,11 +104,11 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
     }
   }, [user_id, email]);
 
-  const updateData = useCallback(
+  const updateMainMenuNote  = useCallback(
     async (value: any, userId: any, email: any) => {
-      try {
+      try {        
         const response = await fetch(
-          `/api/updateData?action=${update_action.book_main_menu}`,
+          `/api/updateData?action=${update_action.update_main_menu_note}`,
           {
             method: "POST",
             headers: {
@@ -154,7 +154,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateData(value, user_id, email);
+      updateMainMenuNote(value, user_id, email);
     }, 500);
 
     return () => clearTimeout(timer);

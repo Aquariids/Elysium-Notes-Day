@@ -1,4 +1,4 @@
-import { DeleteRestoreAction } from "./actions";
+import { DeleteRestoreAction, delete_restore_action } from "./actions";
 
 import { NextApiRequest, NextApiResponse } from "next";
 import {
@@ -6,6 +6,7 @@ import {
   deleteData,
   deleteDataRecycle,
   deleteIdPageBook,
+  removeNotebookIdFromNote,
   restoreDataRecycle,
 } from "./auth/lib/Delete_Restore";
 import { getServerSession } from "next-auth/next";
@@ -26,12 +27,12 @@ export default async function handler(req: any, res: NextApiResponse) {
   const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(_id); // проверка на то, что _id mongodb в корректном формате
   const action: DeleteRestoreAction = req.query.action as DeleteRestoreAction;
 
-  if (!session && !userId) res.status(500).send("Non-existent userId. Please log in.");
-  
+  if (!session && !userId)
+    res.status(500).send("Non-existent userId. Please log in.");
   else {
     try {
-      console.log('четко');
-      
+      const data = req.body && req.body;
+
       switch (action) {
         case "delete_one_notes_recycle":
           isValidObjectId && (await deleteDataRecycle(_id, userId));
@@ -52,6 +53,10 @@ export default async function handler(req: any, res: NextApiResponse) {
           res
             .status(200)
             .send("The note has been deleted from the recycle bin");
+          break;
+        case delete_restore_action.remove_notebook_id_from_note:
+          await removeNotebookIdFromNote(data);
+          res.status(200).send("Data editor updated successfully");
           break;
         case "restore_data":
           await restoreDataRecycle(_id, userId);

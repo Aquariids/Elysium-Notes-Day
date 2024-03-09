@@ -99,6 +99,35 @@ export async function deleteDataRecycle(_id: string, userId: string) {
     }
   }
 
+  export async function removeNotebookIdFromNote(data: any) {
+
+    try {
+  console.log(data);
+  
+      const collection = await getCollection({
+        collectionName: `user_${data.userId}`,
+        db: "notes",
+      });
+      
+       
+          await collection.updateMany(
+            { $and: [{ userId: data.userId }, { email: data.email }, {idPage: data.idPage}] }, 
+            {
+              $set: {
+                idPage: ''
+              },
+            } 
+          );
+        
+    
+    } catch (error) {
+      const client = await getClient();
+      client.close();
+    }
+  }
+  
+  
+
   export async function deleteAllData(userId: string) {
     try {
       const collection = await getCollection({

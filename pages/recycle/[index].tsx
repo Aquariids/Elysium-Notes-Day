@@ -37,7 +37,7 @@ const notes = ({ data, all_id}: any) => {
     async (sorting: any, userId: any, email: any) => {
       try {
         const response = await fetch(
-          `/api/updateData?action=${update_action.action_sorting}`,
+          `/api/updateData?action=${update_action.update_sorting_preferences}`,
           {
             method: "POST",
             headers: {

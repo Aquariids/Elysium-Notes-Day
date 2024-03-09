@@ -122,7 +122,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
       };
     
       const deleteIdPage = await fetch(
-        `/api/updateData?action=${update_action.delete_id_page}`,
+        `/api/deleteAndRestoreData?action=${delete_restore_action.remove_notebook_id_from_note}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -224,8 +224,8 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
               className={cn(s.btn__input,s.btn)}
               onClick={() => {
                 buttonCreateNewBook(bookName);
-                updateNameBookForNotes(bookName);
                 setBookName("");
+                
                 
               }}
             >

@@ -18,8 +18,7 @@ async function getCollection({ db, collectionName }: dbPros) {
   
 
 // В общем ту я отправляю данные на базу монго.
-export async function updateDataInDatabase(data: any) {
-console.log("🚀 ~ updateDataInDatabase ~ data:", data.deleteDate)
+export async function updateNoteContent(data: any) {
 
   try {
     const id = new ObjectId(data._id);
@@ -46,7 +45,7 @@ console.log("🚀 ~ updateDataInDatabase ~ data:", data.deleteDate)
   }
 }
 
-export async function updateDeleteDate(data: any) {
+export async function updateNoteDeletionDate(data: any) {
   
     try {
       const id = new ObjectId(data._id);
@@ -62,7 +61,7 @@ export async function updateDeleteDate(data: any) {
           $set: {
             deleteDate: data.deleteDate
           },
-        } // то обновляем тело. $set оператор обновления поля или может добавить его.
+        } 
       );
     } catch (error) {
       const client = await getClient();
@@ -71,34 +70,9 @@ export async function updateDeleteDate(data: any) {
   }
   
 
-export async function updateIdPageForNote(data: any) {
-
-  const dataConfirm = data[0] && data[0]
-  try {
-    const collection = await getCollection({
-      collectionName: `user_createBook_${dataConfirm.userId}`,
-      db: "notes",
-    });
-    await collection.findOneAndUpdate(
-      { $and: [{ userId: dataConfirm.userId }, { email: dataConfirm.email }] }, 
-      {
-        $set: {
-          idPage: dataConfirm.idPage,
-        },
-      } 
-    );
-  } catch (error) {
-    const client = await getClient();
-    client.close();
-  }
-}
 
 
-
-
-
-
-export async function updateIdPageForOneNote(data: any) {
+export async function updateNotebookIdForNote(data: any) {
 
   try {
     const id = new ObjectId(data._id);
@@ -121,34 +95,9 @@ export async function updateIdPageForOneNote(data: any) {
 }
 
 
-export async function deleteIdPageForNote(data: any) {
-
-  try {
-
-    const collection = await getCollection({
-      collectionName: `user_${data.userId}`,
-      db: "notes",
-    });
-    
-     
-        await collection.updateMany(
-          { $and: [{ userId: data.userId }, { email: data.email }, {idPage: data.idPage}] }, 
-          {
-            $set: {
-              idPage: ''
-            },
-          } 
-        );
-      
-  
-  } catch (error) {
-    const client = await getClient();
-    client.close();
-  }
-}
 
 
-export async function updateDataTitle(data: any) {
+export async function updateNoteTitle(data: any) {
 
 
   try {
@@ -172,7 +121,8 @@ export async function updateDataTitle(data: any) {
 }
 
 
-export async function updateBlockLink(data: any) {
+export async function updateNoteVisibility(data: any) {
+  
   try {
     const id = new ObjectId(data._id);
     const collection = await getCollection({
@@ -193,7 +143,7 @@ export async function updateBlockLink(data: any) {
   }
 }
 
-export async function updateModeCode(data: any) {  
+export async function updateCodeHighlighting (data: any) {  
   try {
     const id = new ObjectId(data._id);
     const collection = await getCollection({
@@ -215,7 +165,7 @@ export async function updateModeCode(data: any) {
 }
 
 
-export async function updateLastDate(data: any) {  
+export async function updateNoteLastModifiedDate(data: any) {  
   try {
     
     const id = new ObjectId(data._id);
@@ -239,6 +189,7 @@ export async function updateLastDate(data: any) {
 
 
 export async function updateNoteBookMainMenu(data: any) {
+  
   try {
     const collection = await getCollection({
       collectionName: `user_nooteBook_${data.userId}`,
@@ -259,7 +210,7 @@ export async function updateNoteBookMainMenu(data: any) {
 }
 
 
-export async function updateActionSorting(data: any) {
+export async function updateSortingPreferences(data: any) {
   try {
     const collection = await getCollection({
       collectionName: `user_actionSorting_${data.userId}`,
@@ -282,6 +233,7 @@ export async function updateActionSorting(data: any) {
 
 
 export async function updateBookForNotes(data: any) {
+  
 
   try {
     const collection = await getCollection({
