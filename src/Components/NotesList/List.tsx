@@ -24,7 +24,7 @@ const session = useSession()
   const updateBookForNotes = useCallback(async () => {
     try {
       const response = await fetch(
-        `/api/updateData?action=${update_action.update_id_book_for_all_notes}`,
+        `/api/updateData?action=${update_action.update_active_notebook}`,
         {
           method: "POST",
           headers: {
