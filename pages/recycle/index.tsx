@@ -6,7 +6,6 @@ import s from "../notes/notes.module.scss";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { RECYCLE } from "../api/paths";
-import { get_action } from "../api/actions";
 import { getActionSorting, getAllNotesFromDatabaseRecycle } from "../api/auth/lib/Get";
 
 const MainPage = ({ data }: any) => {

@@ -1,6 +1,5 @@
 import { emptyRawContentState } from "contenido";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { NOTES } from "../../../pages/api/paths";

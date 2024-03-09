@@ -6,7 +6,6 @@ import { authOptions } from './auth/[...nextauth]';
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const action:CreateAction = req.query.action as CreateAction;
     const session = await getServerSession(req, res, authOptions);
-
     const data = req.body;
     try {
         if(data && session) {
@@ -15,7 +14,6 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                     await createUserNote (data);
                     res.status(200).json(data);
                 break;
-                
                 case create_data_action.initialize_main_menu_note:
                     await initializeMainMenuNote(data);
                     res.status(200).json(data);
@@ -24,7 +22,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                     await initializeSortingPreferences(data);
                     res.status(200).json(data);
                 break;
-                case 'create_notebook':
+                case create_data_action.create_notebook:
                     await createNotebook(data);
                     res.status(200).json(data);
                 break;

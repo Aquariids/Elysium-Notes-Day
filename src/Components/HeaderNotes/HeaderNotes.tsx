@@ -30,8 +30,6 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
   }
 
 
-
- 
   function declOfNum(number: number, titles: string[]) {
     // это не я такой умный, это не моя функция, ну простите..
     const cases = [2, 0, 1, 1, 1, 2];

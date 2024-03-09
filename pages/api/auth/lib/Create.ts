@@ -13,12 +13,9 @@ async function getCollection({ db, collectionName }: dbPros) {
     const client = await getClient();
     const database = client.db(db);
     const collection = database.collection(collectionName);
-    return await collection;
+    return  collection;
   }
   
-
-
-
 export async function createUserNote (data: any) {
 
     const collection = await getCollection({

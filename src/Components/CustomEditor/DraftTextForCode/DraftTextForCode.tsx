@@ -1,6 +1,5 @@
 import { EditorState } from "draft-js";
 import s from "../CustomEditor.module.scss";
-import cn from "classnames";
 
 interface props {
   editorState:EditorState,

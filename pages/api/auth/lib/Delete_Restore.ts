@@ -102,8 +102,6 @@ export async function deleteDataRecycle(_id: string, userId: string) {
   export async function removeNotebookIdFromNote(data: any) {
 
     try {
-  console.log(data);
-  
       const collection = await getCollection({
         collectionName: `user_${data.userId}`,
         db: "notes",

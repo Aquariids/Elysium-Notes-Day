@@ -16,9 +16,9 @@ import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import Book from './book.svg';
 import cn from 'classnames';
 import { getAllNotesFromDatabase, getIdForAllBooks, getIdPageBook, getNotesFromBook } from "../api/auth/lib/Get";
-const notes = ({ data_editor, idpage, user_id, email, databook,all_id}: any) => {
 
 
+const notes = ({ data_editor, idpage, user_id, email, data_book,all_id}: any) => {
 
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -31,14 +31,14 @@ const notes = ({ data_editor, idpage, user_id, email, databook,all_id}: any) => 
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
   const name = useMemo(() => {
-    if (databook) {
-      const matchingItem = databook.find((item:any) => item.idPage == idpage);
+    if (data_book) {
+      const matchingItem = data_book.find((item:any) => item.idPage == idpage);
       if (matchingItem) {
         return matchingItem.name;
       }
     }
     return 'all'; 
-  }, [idpage, databook]);
+  }, [idpage, data_book]);
 
 
 
@@ -197,7 +197,7 @@ export async function getServerSideProps(context: any) {
     const responseEditorData =  idpage === 'all' ? await getAllNotesFromDatabase(user_id, email): await getNotesFromBook(user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
     const dataRes = await getIdPageBook(user_id, email)
 
-    const databook = dataRes?.map((item) => ({
+    const data_book = dataRes?.map((item) => ({
       ...item,
       _id: item._id.toString(),
     }));
@@ -208,7 +208,7 @@ export async function getServerSideProps(context: any) {
     let all_id = serializedData && serializedData.map((obj: { _id: any }) => obj._id);// получаем все _id заметок в одном месте.
 
     return {
-      props: { data_editor: serializedData, idpage, user_id,email,databook,all_id }, // тут данные для редактора уже просто dataEditor!
+      props: { data_editor: serializedData, idpage, user_id,email,data_book,all_id }, // тут данные для редактора уже просто dataEditor!
     };
   } catch (err) {
     return {props: {}}

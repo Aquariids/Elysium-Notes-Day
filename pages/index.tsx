@@ -17,6 +17,7 @@ import AnimationContainer from "@/Components/AnimationContainer/AnimationContain
 import { sorting } from "../utils/sorting";
 import { DateTime } from "luxon";
 import { Settings } from "luxon";
+
 import {
   getAllNotesFromDatabase,
   getNoteBookMainMenu,

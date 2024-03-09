@@ -14,7 +14,7 @@ const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
   
   const router = useRouter();
   const hrefBook = `book/${idPage}`;
-const session = useSession()
+  const session = useSession()
   const routerRecycle = router.asPath.split("/")[1];
   const selectedId = idPage || idPage == 0 ? router.query.book : router.query.index;
   const remove_line_break = (str: string) => {
