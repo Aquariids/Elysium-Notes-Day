@@ -28,7 +28,7 @@ const ModalAddNotesInBook = ({
 
   useEffect(() => {
     getBook();
-  }, [router]);
+  }, [allBooks]);
 
   function close() {
     setActive(false);

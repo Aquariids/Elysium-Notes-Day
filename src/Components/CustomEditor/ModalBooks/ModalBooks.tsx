@@ -13,7 +13,6 @@ import DotsMenu from "./dots.svg";
 import { useRouter } from "next/router";
 import Done from "./done.svg";
 const ModalBooks = ({ active, setActive, userId, email }: any) => {
-
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
@@ -21,10 +20,8 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);
   const router = useRouter();
- 
 
-
-  function close () {
+  function close() {
     setActive(false);
 
     setTimeout(() => {
@@ -32,8 +29,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
       setCurrentIdPage("");
       getIdForBookMain();
       setBookName("");
-    },1000)
-  
+    }, 1000);
   }
 
   function returnPageAll() {
@@ -69,29 +65,6 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
     }
   }, []);
 
-  const updateNameBookForNotes = useCallback(async (name: any) => {
-    try {
-      const response = await fetch(
-        `/api/updateData?action=${update_action.update_id_book_for_all_notes}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId,
-            email,
-            name: name,
-          }),
-        }
-      );
-
-      if (response.ok) router.push(router.asPath);
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
   async function getDatabook() {
     try {
       const res = await fetch(
@@ -107,20 +80,13 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
     }
   }
   async function deleteBook(_id: any, idPage: any) {
-    
     try {
-      const resIdPageNotes = await fetch(
-        `/api/getData?action=${get_action.data_editorBook}&userId=${userId}&email=${email}&idPage=${idPage}`
-      );
-      const data = await resIdPageNotes.json();
-      
-    
       const dataIdPage = {
         userId: userId,
         email: email,
         idPage: String(idPage),
       };
-    
+
       const deleteIdPage = await fetch(
         `/api/deleteAndRestoreData?action=${delete_restore_action.remove_notebook_id_from_note}`,
         {
@@ -136,7 +102,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
       if (res.ok) {
         getDatabook();
         setActiveModal(false);
-        setCurrentIdPage('')
+        setCurrentIdPage("");
       }
     } catch (err) {
       console.error(err);
@@ -162,7 +128,9 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   async function buttonCreateNewBook(nameBook: string) {
     let maxIdPage = 0;
     if (dataBook && dataBook.length > 0) {
-      maxIdPage = Math.max(...dataBook.map((book: { idPage: any; }) => book.idPage));
+      maxIdPage = Math.max(
+        ...dataBook.map((book: { idPage: any }) => book.idPage)
+      );
     }
     try {
       const res = await fetch(
@@ -179,7 +147,6 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
             userId: userId,
           }),
         }
-       
       );
 
       getDatabook();
@@ -201,36 +168,34 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
       >
         <span className={s.header__content}>
           <div>
-          <h1>Блокноты:</h1>
-          <p>В блокнотах удобно группировать заметки с общей темой.</p>
+            <h1>Блокноты:</h1>
+            <p>В блокнотах удобно группировать заметки с общей темой.</p>
           </div>
-         
-          <Xmark
-            onClick={close}
-          />
+
+          <Xmark onClick={close} />
         </span>
         <div className={s.body__content}>
           <div>
-            <div style={{display: 'flex', flexDirection:'column'}}>
-            <input maxLength={30}className={s.body__input}
-              onChange={(e) => {
-                setBookName(e.target.value);
-              }}
-              placeholder="Введите название..."
-              value={bookName}
-            />
-            <button
-              disabled={!bookName && true}
-              className={cn(s.btn__input,s.btn)}
-              onClick={() => {
-                buttonCreateNewBook(bookName);
-                setBookName("");
-                
-                
-              }}
-            >
-              Создать блокнот
-            </button>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <input
+                maxLength={30}
+                className={s.body__input}
+                onChange={(e) => {
+                  setBookName(e.target.value);
+                }}
+                placeholder="Введите название..."
+                value={bookName}
+              />
+              <button
+                disabled={!bookName && true}
+                className={cn(s.btn__input, s.btn)}
+                onClick={() => {
+                  buttonCreateNewBook(bookName);
+                  setBookName("");
+                }}
+              >
+                Создать блокнот
+              </button>
             </div>
             <div className={s.books}>
               <div className={s.books__list}>
@@ -297,7 +262,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
                               deleteBook(item._id, item.idPage);
                               idForBook === String(item.idPage) &&
                                 returnPageAll();
-                              router.push(router.asPath);
+                              
                             }}
                           >
                             Удалить блокнот
@@ -310,20 +275,20 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
             </div>
           </div>
           <div className={s.footer__buttons}>
-            <button
-            className={s.btn}
-              onClick={close}
-            >
+            <button className={s.btn} onClick={close}>
               Отмена
             </button>
             <button
-             className={s.btn}
-              disabled={!activeLink && true || String(idForBook) === currentIdPage || !currentIdPage}
-              
+              className={s.btn}
+              disabled={
+                (!activeLink && true) ||
+                String(idForBook) === currentIdPage ||
+                !currentIdPage
+              }
               onClick={() => {
                 updateBookForNotes(currentIdPage && currentIdPage);
                 currentIdPage === "all" && setIdForBook("all");
-                close()
+                close();
               }}
             >
               Готово
