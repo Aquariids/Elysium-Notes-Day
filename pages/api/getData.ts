@@ -1,4 +1,4 @@
-import { GetAction, get_action } from "./actios";
+import { GetAction, get_action } from "./actions";
 import { NextApiRequest, NextApiResponse } from "next";
 import {
   getActionSorting,

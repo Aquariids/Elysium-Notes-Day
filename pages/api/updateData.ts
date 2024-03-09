@@ -1,4 +1,4 @@
-import { UpdateAction, update_action } from "./actios";
+import { UpdateAction, update_action } from "./actions";
 import { NextApiRequest, NextApiResponse } from "next";
 import {
   deleteIdPageForNote,

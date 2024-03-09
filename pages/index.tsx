@@ -9,7 +9,7 @@ import s from "./index.module.scss";
 import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
 import { useSession } from "next-auth/react";
-import { create_data, get_action, update_action } from "./api/actios";
+import { create_data_action, get_action, update_action } from "./api/actions";
 import Arrow from "./arr.svg";
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from "classnames";
@@ -42,15 +42,14 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
     setCurrentDate(formattedDate + " г.");
   }, []);
 
-  const monika = ``;
   const createNotesBook = async () => {
     const dataNoteBook = {
       user_id,
       email,
-      body: monika,
+      body: "",
     };
     const response = await fetch(
-      `/api/createData?action=${create_data.create_data_main_menu}`,
+      `/api/createData?action=${create_data_action.initialize_main_menu_note}`,
       {
         method: "POST",
         headers: {
@@ -68,7 +67,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
       book: "all",
     };
     const response = await fetch(
-      `/api/createData?action=${create_data.create_book_for_notes}`,
+      `/api/createData?action=${create_data_action.initialize_master_notebook}`,
       {
         method: "POST",
         headers: {
@@ -86,7 +85,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
       sorting: "",
     };
     const response = await fetch(
-      `/api/createData?action=${create_data.create_data_sorting}`,
+      `/api/createData?action=${create_data_action.initialize_sorting_preferences}`,
       {
         method: "POST",
         headers: {

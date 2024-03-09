@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import AddNotes from "./add_notes.svg";
-import { create_data, update_action } from "../../../pages/api/actios";
+import { create_data_action, update_action } from "../../../pages/api/actions";
 import { DateTime } from 'luxon';
 import { Settings } from 'luxon';
 import { useCallback } from "react";
@@ -60,7 +60,7 @@ const ButtonCreateNewNotes = ({email, userId}:any) => {
 
     try {
       const response = await fetch(
-        `/api/createData?action=${create_data.create_data}`,
+        `/api/createData?action=${create_data_action.create_user_note}`,
         {
           method: "POST",
           headers: {

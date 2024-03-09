@@ -7,7 +7,7 @@ import cn from "classnames";
 import { NOTES } from "../../../pages/api/paths";
 import React from "react";
 import { EditorState, convertFromRaw } from "draft-js";
-import { update_action } from "../../../pages/api/actios";
+import { update_action } from "../../../pages/api/actions";
 import { useSession } from "next-auth/react";
 
 const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {

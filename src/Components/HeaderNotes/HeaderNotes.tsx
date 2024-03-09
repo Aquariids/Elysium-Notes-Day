@@ -4,7 +4,7 @@ import Notes from "./notes.svg";
 import Recycle from "./recycle.svg";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { delete_restore_action } from "../../../pages/api/actios";
+import { delete_restore_action } from "../../../pages/api/actions";
 import { RECYCLE } from "../../../pages/api/paths";
 import SortingMenu from "../SortingMenu/SortingMenu";
 

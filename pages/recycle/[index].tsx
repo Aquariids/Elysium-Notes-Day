@@ -9,7 +9,7 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { RECYCLE } from "../api/paths";
 import { useSession } from "next-auth/react";
 import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
-import { get_action, update_action } from "../api/actios";
+import { get_action, update_action } from "../api/actions";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
 import { getAllNotesFromDatabaseRecycle } from "../api/auth/lib/Get";

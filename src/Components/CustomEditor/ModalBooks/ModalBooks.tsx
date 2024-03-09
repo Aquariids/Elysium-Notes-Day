@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import {
-  create_data,
+  create_data_action,
   delete_restore_action,
   get_action,
   update_action,
-} from "../../../../pages/api/actios";
+} from "../../../../pages/api/actions";
 import s from "./ModalBooks.module.scss";
 import cn from "classnames";
 import Xmark from "./xmark.svg";
@@ -166,7 +166,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
     }
     try {
       const res = await fetch(
-        `/api/createData?action=${create_data.create_book}`,
+        `/api/createData?action=${create_data_action.create_notebook}`,
         {
           method: "POST",
           headers: {

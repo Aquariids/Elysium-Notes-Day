@@ -7,7 +7,7 @@ import { NOTES, RECYCLE } from "../../../pages/api/paths";
 import {
   delete_restore_action,
   update_action,
-} from "../../../pages/api/actios";
+} from "../../../pages/api/actions";
 import { DateTime, Settings } from "luxon";
 
 Settings.defaultLocale = "ru";

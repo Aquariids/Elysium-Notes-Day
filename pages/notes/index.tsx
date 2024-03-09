@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { NOTES } from "../api/paths";
 import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
-import { get_action } from "../api/actios";
+import { get_action } from "../api/actions";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";

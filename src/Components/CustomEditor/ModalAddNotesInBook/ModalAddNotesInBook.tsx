@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { get_action, update_action } from "../../../../pages/api/actios";
+import { get_action, update_action } from "../../../../pages/api/actions";
 import s from "./ModalAddNotesInBook.module.scss";
 import cn from "classnames";
 import { useRouter } from "next/router";

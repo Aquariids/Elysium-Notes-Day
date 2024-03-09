@@ -25,7 +25,7 @@ export const withLayout = <T extends Record<string, unknown>>(
 ) => {
   //  оборачиваю страницу и получаю ее пропсы
 
-  return function withLayoutComponent(props: T): JSX.Element {
+  return function WithLayoutComponent(props: T): JSX.Element {
     // пропсы передаю в лейоут и потом получаю где нужно. sidebar, footer, header и так далее.
     return (
      

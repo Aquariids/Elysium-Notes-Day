@@ -1,6 +1,6 @@
-import { CreateAction } from './actios';
+import { CreateAction } from './actions';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createBook, createBookForAllNotes, createDatabase, createNoteBookMainMenu, createSortingDocument } from './auth/lib/Create';
+import { createNotebook, initializeMasterNotebook, createUserNote , initializeMainMenuNote, initializeSortingPreferences } from './auth/lib/Create';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './auth/[...nextauth]';
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
@@ -11,25 +11,25 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     try {
         if(data && session) {
             switch(action) {
-                case 'create_data':
-                    await createDatabase(data);
+                case 'create_user_note':
+                    await createUserNote (data);
                     res.status(200).json(data);
                 break;
                 
-                case 'create_data_main_menu':
-                    await createNoteBookMainMenu(data);
+                case 'initialize_main_menu_note':
+                    await initializeMainMenuNote(data);
                     res.status(200).json(data);
                 break;
-                case 'create_data_sorting':
-                    await createSortingDocument(data);
+                case 'initialize_sorting_preferences':
+                    await initializeSortingPreferences(data);
                     res.status(200).json(data);
                 break;
-                case 'create_book':
-                    await createBook(data);
+                case 'create_notebook':
+                    await createNotebook(data);
                     res.status(200).json(data);
                 break;
-                case 'create_book_for_notes':
-                    await createBookForAllNotes(data);
+                case 'initialize_master_notebook':
+                    await initializeMasterNotebook(data);
                     res.status(200).json(data);
                 break;
                 default:

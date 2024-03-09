@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { NOTES } from "../../../pages/api/paths";
 import s from "./ButtonCreateNewNotes.module.scss";
 import LoaderCreate from "./LoaderCreate";
-import { create_data, get_action, update_action } from "../../../pages/api/actios";
+import { create_data_action, get_action, update_action } from "../../../pages/api/actions";
 import { DateTime } from 'luxon';
 import { Settings } from 'luxon';
 import Plus from './plus.svg';
@@ -84,7 +84,7 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   
     try {
       setLoad(false);
-      const response = await fetch(`/api/createData?action=${create_data.create_data}`, {
+      const response = await fetch(`/api/createData?action=${create_data_action.create_user_note}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

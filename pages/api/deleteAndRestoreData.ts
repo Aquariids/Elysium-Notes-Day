@@ -1,4 +1,4 @@
-import { DeleteRestoreAction } from "./actios";
+import { DeleteRestoreAction } from "./actions";
 
 import { NextApiRequest, NextApiResponse } from "next";
 import {

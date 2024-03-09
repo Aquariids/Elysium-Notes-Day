@@ -9,14 +9,14 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import { NOTES } from "../api/paths";
-import { get_action, update_action } from "../api/actios";
+import { get_action, update_action } from "../api/actions";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import Book from './book.svg';
 import cn from 'classnames';
 import { getAllNotesFromDatabase, getIdForAllBooks, getIdPageBook, getNotesFromBook } from "../api/auth/lib/Get";
-const notes = ({ dataEditor, idpage, user_id, email, databook,all_id}: any) => {
+const notes = ({ data_editor, idpage, user_id, email, databook,all_id}: any) => {
 
 
 
@@ -46,11 +46,11 @@ const notes = ({ dataEditor, idpage, user_id, email, databook,all_id}: any) => {
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
     () =>
-    dataEditor &&
-    dataEditor.find((item: { _id: string }) => {
+    data_editor &&
+    data_editor.find((item: { _id: string }) => {
         return item._id === selectedId;
       }),
-    [dataEditor, selectedId]
+    [data_editor, selectedId]
   );
 
   const getData = useCallback(async () => {
@@ -77,7 +77,7 @@ const notes = ({ dataEditor, idpage, user_id, email, databook,all_id}: any) => {
     } catch (err) {
       console.error(err);
     }
-  }, [checkTitle, dataEditor]);
+  }, [checkTitle, data_editor]);
 
   const updateActiveSortingAction = useCallback(
     async (sorting: any, userId: any, email: any) => {
@@ -113,7 +113,7 @@ const notes = ({ dataEditor, idpage, user_id, email, databook,all_id}: any) => {
 
       return () => clearTimeout(timer);
     }
-  }, [checkTitle, dataEditor, loadingDelete]);
+  }, [checkTitle, data_editor, loadingDelete]);
 
   useEffect(() => {
     const sort = localStorage.getItem("sorting") || "no-sorting";
@@ -131,16 +131,16 @@ const notes = ({ dataEditor, idpage, user_id, email, databook,all_id}: any) => {
     <AnimationContainer>
       <div className={s.wrapper}>
         <div className={s.notes_list}>
-          <HeaderNotes setSort={setSort} sort={sort} data={dataEditor} />
+          <HeaderNotes setSort={setSort} sort={sort} data={data_editor} />
           <div className={s.container}>
             <div className={s.list}>
-              {dataEditor[0] && (
+              {data_editor[0] && (
                 <NotesList
                   deleteElement={deleteElement}
                   loadingDelete={loadingDelete}
                   checkTitle={checkTitle}
                   data={links ? sorting(links, sort) : ""}
-                  body={dataEditor ? sorting(dataEditor, sort) : ""}
+                  body={data_editor ? sorting(data_editor, sort) : ""}
                   userId={user_id}
                 />
               )}
@@ -208,7 +208,7 @@ export async function getServerSideProps(context: any) {
     let all_id = serializedData && serializedData.map((obj: { _id: any }) => obj._id);// получаем все _id заметок в одном месте.
 
     return {
-      props: { dataEditor: serializedData, idpage, user_id,email,databook,all_id }, // тут данные для редактора уже просто dataEditor!
+      props: { data_editor: serializedData, idpage, user_id,email,databook,all_id }, // тут данные для редактора уже просто dataEditor!
     };
   } catch (err) {
     return {props: {}}

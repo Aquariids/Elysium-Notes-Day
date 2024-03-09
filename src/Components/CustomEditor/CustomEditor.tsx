@@ -22,7 +22,7 @@ import DotsMenu from "./dots.svg";
 import ButtonDeleteNotes from "../ButtonDeleteNotes/ButtonDeleteNotes";
 import { styleMap } from "./styleMap";
 import WrapperEditorRecycle from "./WrapperEditorRecycle/WrapperEditorRecycle";
-import { update_action } from "../../../pages/api/actios";
+import { update_action } from "../../../pages/api/actions";
 import { RECYCLE } from "../../../pages/api/paths";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";

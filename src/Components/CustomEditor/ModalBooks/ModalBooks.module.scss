@@ -42,12 +42,17 @@
 }
 
 .body__content { 
-    padding-top: 10px;
+padding-top: 10px;
 height: 400px;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
 justify-content: space-between;
+
+
+svg {
+    
+}
 }
 
 

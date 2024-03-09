@@ -19,7 +19,7 @@ async function getCollection({ db, collectionName }: dbPros) {
 
 
 
-export async function createDatabase(data: any) {
+export async function createUserNote (data: any) {
 
     const collection = await getCollection({
       collectionName: `user_${data.userId}`,
@@ -30,7 +30,7 @@ export async function createDatabase(data: any) {
   }
 
 
-export async function createNoteBookMainMenu(data: any) {
+export async function initializeMainMenuNote(data: any) {
     const collection = await getCollection({
       collectionName: `user_nooteBook_${data.userId}`,
       db: "notes",
@@ -41,11 +41,11 @@ export async function createNoteBookMainMenu(data: any) {
     await collection.insertOne(data);
     }
     else {
-      console.log('Document note for main menu already exists.');
+      console.log('initialize note for main menu already exists.');
     }
   }
 
-  export async function createBookForAllNotes(data: any) {
+  export async function initializeMasterNotebook(data: any) {
     const collection = await getCollection({
       collectionName: `main_book_${data.userId}`,
       db: "notes",
@@ -56,11 +56,11 @@ export async function createNoteBookMainMenu(data: any) {
     await collection.insertOne(data);
     }
     else {
-      console.log('Document Book already exists.');
+      console.log('initialize master notebook already exists.');
     }
   }
 
-  export async function createSortingDocument(data: any) {
+  export async function initializeSortingPreferences(data: any) {
     const collection = await getCollection({
       collectionName: `user_actionSorting_${data.userId}`,
       db: "notes",
@@ -71,10 +71,10 @@ export async function createNoteBookMainMenu(data: any) {
     await collection.insertOne(data);
     }
     else {
-      console.log('Document sorting already exists.');
+      console.log('initialize sorting preferences already exists.');
     }
   }
-  export async function createBook(data: any) {
+  export async function createNotebook(data: any) {
     const collection = await getCollection({
       collectionName: `user_createBook_${data.userId}`,
       db: "notes",
