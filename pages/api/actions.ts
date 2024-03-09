@@ -8,7 +8,7 @@ export type UpdateAction =
   | "update_code_highlighting"
   | "update_note_last_modified_date"
   | "update_notebook_id_for_note"
-  | "update_id_book_for_all_notes"
+  | "update_active_notebook"
   | "update_note_deletion_date"
 
 // update action
@@ -22,7 +22,7 @@ export const update_action = {
   update_code_highlighting: "update_code_highlighting",
   update_note_last_modified_date: "update_note_last_modified_date",
   update_notebook_id_for_note: "update_notebook_id_for_note",
-  update_id_book_for_all_notes: "update_id_book_for_all_notes",
+  update_active_notebook: "update_active_notebook",
   update_note_deletion_date:'update_note_deletion_date',
 };
 

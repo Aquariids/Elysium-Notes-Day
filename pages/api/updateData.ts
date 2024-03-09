@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import {
   updateSortingPreferences,
   updateNoteVisibility,
-  updateBookForNotes,
   updateNoteContent,
   updateNoteTitle,
   updateNotebookIdForNote,
@@ -11,6 +10,7 @@ import {
   updateCodeHighlighting ,
   updateNoteBookMainMenu,
   updateNoteDeletionDate,
+  updateActiveNotebook,
 } from "./auth/lib/Update";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
@@ -55,8 +55,8 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
           await updateNotebookIdForNote(data);
           res.status(200).send("Data editor updated successfully");
           break;
-        case update_action.update_id_book_for_all_notes:
-          await updateBookForNotes(data);
+        case update_action.update_active_notebook:
+          await updateActiveNotebook(data);
           res.status(200).send("Data editor updated successfully");
           break;
           case update_action.update_note_deletion_date:

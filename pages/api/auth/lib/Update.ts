@@ -232,16 +232,13 @@ export async function updateSortingPreferences(data: any) {
 
 
 
-export async function updateBookForNotes(data: any) {
+export async function updateActiveNotebook(data: any) {
   
-
   try {
     const collection = await getCollection({
       collectionName: `main_book_${data.userId}`,
       db: "notes",
     });
-
-    if(data.book) {
       await collection.updateOne(
         { userId: data.userId, email:data.email },
         {
@@ -250,17 +247,6 @@ export async function updateBookForNotes(data: any) {
           },
         } 
       );
-    }
-    if(data.name) {
-        await collection.updateOne(
-          { userId: data.userId, email:data.email },
-          {
-            $set: {
-              name: data.name,
-            },
-          } 
-        );
-    }
     
   } catch (error) {
     const client = await getClient();
