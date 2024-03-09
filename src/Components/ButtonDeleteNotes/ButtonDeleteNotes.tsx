@@ -34,7 +34,7 @@ const ButtonDeleteNotes = ({
   }
 
   const deleteDate = async (data: any) => {
-    await fetch(`/api/updateData?action=${update_action.update_dalete_date}`, {
+    await fetch(`/api/updateData?action=${update_action.update_note_deletion_date}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
