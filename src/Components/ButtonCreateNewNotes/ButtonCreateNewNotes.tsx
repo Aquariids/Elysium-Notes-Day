@@ -64,45 +64,45 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const userDate = DateTime.now().setZone(userTimeZone);
     const content = JSON.stringify(emptyRawContentState);
-   const data = {
+  
+if( session != null) {
+  try {
+    const data:create_user_note = {
       userId: session?.user.userId,
       email: session?.user.email,
       body: content, // данные редактора
       title: "",
       block: false,
-      code:false,
-      date:userDate.toJSDate(),
-      dateFull:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"),
-      dateShort:userDate.toFormat("d MMMM").length === 11 ? userDate.toFormat("d MMMM").slice(0,6) : userDate.toFormat("d MMMM").slice(0,5) + '.',
-      idPage: router.asPath === '/' ? 'all': String(idPage && idPage),
-      deleteDate: ''
+      code: false,
+      date: userDate.toJSDate(),
+      dateFull: userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"),
+      dateShort: userDate.toFormat("d MMMM").length === 11 ? userDate.toFormat("d MMMM").slice(0, 6) : userDate.toFormat("d MMMM").slice(0, 5) + '.',
+      idPage: router.asPath === '/' ? 'all' : String(idPage && idPage),
+      deleteDate: '',
     };
+    setLoad(false);
+    const response = await fetch(`/api/createData?action=${create_data_action.create_user_note}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const responseData = await response.json();
 
-
- 
-  
-    try {
-      setLoad(false);
-      const response = await fetch(`/api/createData?action=${create_data_action.create_user_note}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const responseData = await response.json();
-
-      if(router.asPath === '/') {
-        updateBookForNotes()
-        router.push(`/${NOTES}/${responseData._id}`);
-      } else {
-        router.push(`/${NOTES}/${responseData._id}`);
-      }
-     
-    } catch (error) {
-      console.error("Failed to create note");
-      console.error(error);
+    if(router.asPath === '/') {
+      updateBookForNotes()
+      router.push(`/${NOTES}/${responseData._id}`);
+    } else {
+      router.push(`/${NOTES}/${responseData._id}`);
     }
+   
+  } catch (error) {
+    console.error("Failed to create note");
+    console.error(error);
+  }
+}
+    
   };
 
   useEffect(() => {

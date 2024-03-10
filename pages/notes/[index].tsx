@@ -18,8 +18,8 @@ import cn from 'classnames';
 import { getAllUserNotes, getActiveNotebook, getAllUserNotebook, getUserNotesFromNotebook  } from "../api/auth/lib/Get";
 import { Record } from "immutable";
 
-
 const notes = ({ data_editor, idpage, user_id, email, data_book, all_id}: notes_data & Record<string, unknown>) => {
+console.log("🚀 ~ notes ~ data_editor:", data_editor)
 
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -48,7 +48,7 @@ const notes = ({ data_editor, idpage, user_id, email, data_book, all_id}: notes_
     // с помощью useMemo уменьшаю кол рендеров
     () =>
     data_editor &&
-    data_editor.find((item: { _id: string }) => {
+    data_editor.find((item: { _id:string }) => {
         return item._id === selectedId;
       }),
     [data_editor, selectedId]

@@ -1,18 +1,25 @@
+
 type email = string;
 type userId = string;
 type _id = string;
-interface user_note {
+
+interface create_user_note {
   block: boolean;
   body: string;
   code: boolean;
-  date: string;
-  dateShort: string;
+  date: string | DateTime;
+  dateShort: string | DateTime;
+  deleteDate: string | DateTime;
+  dateFull: string | DateTime;
   email: email;
   idPage: string;
   title: string;
-  updateDae: string;
   userId: userId;
-  _id: _id;
+}
+
+
+interface user_note extends create_user_note {
+_id:_id
 }
 
 interface data_book {
@@ -22,6 +29,7 @@ interface data_book {
   userId: userId;
   _id: _id;
 }
+
 interface notes_data {
   data_editor: user_note[];
   idpage: string;
