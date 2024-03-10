@@ -1,51 +1,48 @@
 import { GetAction, get_action } from "./actions";
 import { NextApiRequest, NextApiResponse } from "next";
 import {
-  getActionSorting,
-  getAllNotesFromDatabase,
-  getAllNotesFromDatabaseRecycle,
-  getIdForAllBooks,
-  getIdPageBook,
-  getNoteBookMainMenu,
-  getNotesFromBook,
+  getSortingPreferences,
+  getAllUserNotes,
+  getAllUserNotesFromRecycle,
+  getActiveNotebook,
+  getAllUserNotebook,
+  getMainMenuNote ,
+  getUserNotesFromNotebook,
 } from "./auth/lib/Get";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
 
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getServerSession(req, res, authOptions)
+  const session = await getServerSession(req, res, authOptions);
   const userId = req.query.userId;
   const email = req.query.email;
   const idPage = req.query.idPage;
 
-  
   const action: GetAction = req.query.action as GetAction;
   try {
     if (userId && email && session) {
       switch (action) {
-        case get_action.data_editor:
-          res.status(200).json(await getAllNotesFromDatabase(userId, email));
+        case get_action.get_all_user_notes:
+          res.status(200).json(await getAllUserNotes(userId, email));
           break;
-        case get_action.data_editorBook:
-          res.status(200).json(await getNotesFromBook(userId, email, idPage));
+        case get_action.get_user_notes_from_notebook:
+          res.status(200).json(await getUserNotesFromNotebook(userId, email, idPage));
           break;
-        case get_action.data_recycle:
-          res
-            .status(200)
-            .json(await getAllNotesFromDatabaseRecycle(userId, email));
+        case get_action.get_all_user_notes_from_recycle:
+          res.status(200).json(await getAllUserNotesFromRecycle(userId, email));
           break;
-        case get_action.data_note_main_menu:
-          res.status(200).json(await getNoteBookMainMenu(userId, email));
+        case get_action.get_main_menu_note:
+          res.status(200).json(await getMainMenuNote (userId, email));
           break;
-        case get_action.action_sorting:
-          res.status(200).json(await getActionSorting(userId, email));
+        case get_action.get_sorting_preferences:
+          res.status(200).json(await getSortingPreferences(userId, email));
           break;
-        case get_action.id_page_book:
-          res.status(200).json(await getIdPageBook(userId, email));
+        case get_action.get_all_user_notebook:
+          res.status(200).json(await getAllUserNotebook(userId, email));
           break;
 
-          case get_action.id_for_books:
-          res.status(200).json(await getIdForAllBooks(userId, email));
+        case get_action.get_active_notebook:
+          res.status(200).json(await getActiveNotebook(userId, email));
           break;
         default:
           res.status(400).send("Invalid action");

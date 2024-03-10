@@ -19,12 +19,14 @@ import { DateTime } from "luxon";
 import { Settings } from "luxon";
 
 import {
-  getAllNotesFromDatabase,
-  getNoteBookMainMenu,
+  getAllUserNotes,
+  getMainMenuNote ,
 } from "./api/auth/lib/Get";
 Settings.defaultLocale = "ru";
 DateTime.local().setLocale("ru");
 function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
+
+  
   const [value, setValue] = useState<string>(
     data_note_main_menu[0] === undefined ? "" : data_note_main_menu[0].body
   );
@@ -239,8 +241,8 @@ export async function getServerSideProps(context: any) {
     const user_id: string = session?.user.userId; // айди авторизованного человека
     const email: string = session?.user.email;
     if (user_id && email) {
-      const responseEditorData = await getAllNotesFromDatabase(user_id, email); // responseEditorData - Заметки все, то есть все что для редактора
-      const responseNoteMainMenuData = await getNoteBookMainMenu(
+      const responseEditorData = await getAllUserNotes(user_id, email); // responseEditorData - Заметки все, то есть все что для редактора
+      const responseNoteMainMenuData = await getMainMenuNote (
         user_id,
         email
       );

@@ -24,7 +24,7 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
 
   async function getId () {
     const idPageForBooks = await fetch(
-      `/api/getData?action=${get_action.id_for_books}&userId=${session?.user.userId}&email=${session?.user.email}`
+      `/api/getData?action=${get_action.get_active_notebook}&userId=${session?.user.userId}&email=${session?.user.email}`
     );
     const [idpage] = await idPageForBooks.json();
 

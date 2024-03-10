@@ -20,7 +20,7 @@ const ModalAddNotesInBook = ({
 
   const getBook = useCallback(async () => {
     const resBook = await fetch(
-      `/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
+      `/api/getData?action=${get_action.get_all_user_notebook}&userId=${userId}&email=${email}`
     );
     const databook = await resBook.json();
     setAllBooks(databook);

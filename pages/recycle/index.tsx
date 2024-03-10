@@ -6,7 +6,7 @@ import s from "../notes/notes.module.scss";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { RECYCLE } from "../api/paths";
-import { getActionSorting, getAllNotesFromDatabaseRecycle } from "../api/auth/lib/Get";
+import { getSortingPreferences, getAllUserNotesFromRecycle } from "../api/auth/lib/Get";
 
 const MainPage = ({ data }: any) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
@@ -63,7 +63,7 @@ export async function getServerSideProps(context: any) {
     }
     const user_id:string = session?.user.userId; // айди авторизованного человека
     const email:string = session?.user.email;
-    const responseRecyclerData = await getAllNotesFromDatabaseRecycle(user_id, email)
+    const responseRecyclerData = await getAllUserNotesFromRecycle(user_id, email)
     const serializedData:any = responseRecyclerData?.map((item) => ({ // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
       ...item,
       _id: item._id.toString(), 
@@ -74,7 +74,7 @@ export async function getServerSideProps(context: any) {
     
 
 
-  const sort:any = await getActionSorting(user_id, email);
+  const sort:any = await getSortingPreferences(user_id, email);
 
   
   if (session && serializedData[0] != undefined && sort[0].sorting === 'dateDown') {

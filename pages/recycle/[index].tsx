@@ -12,7 +12,7 @@ import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
 import {update_action } from "../api/actions";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
-import { getAllNotesFromDatabaseRecycle } from "../api/auth/lib/Get";
+import { getAllUserNotesFromRecycle } from "../api/auth/lib/Get";
 const notes = ({ data, all_id}: any) => {
   const [sort, setSort] = useState<any>("no-sort");
   const [checkTitle, setCheckTitle] = useState(false); // ну тупая хуета, да. короче перекидывю шнягу в редактор и лист где все заметки
@@ -122,7 +122,7 @@ export async function getServerSideProps(context: any) {
     }
   const user_id:string = session?.user.userId; // айди авторизованного человека
   const email:string = session?.user.email;
-  const responseRecyclerData = await getAllNotesFromDatabaseRecycle(user_id, email)
+  const responseRecyclerData = await getAllUserNotesFromRecycle(user_id, email)
   const serializedData:any = responseRecyclerData?.map((item) => ({ // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
     ...item,
     _id: item._id.toString(), 

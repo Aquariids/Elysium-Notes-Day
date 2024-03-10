@@ -10,11 +10,11 @@ import { useSession } from "next-auth/react";
 import Book from "./book.svg";
 import cn from "classnames";
 import {
-  getActionSorting,
-  getAllNotesFromDatabase,
-  getIdForAllBooks,
-  getIdPageBook,
-  getNotesFromBook,
+  getSortingPreferences,
+  getAllUserNotes,
+  getActiveNotebook,
+  getAllUserNotebook,
+  getUserNotesFromNotebook ,
 } from "../api/auth/lib/Get";
 const index = ({ user_id, email, idpage, databook }: any) => {
   const session = useSession();
@@ -83,25 +83,25 @@ export async function getServerSideProps(context: any) {
     }
     const user_id: string = session?.user.userId;
     const email: string = session?.user.email;
-    const [idpage]: any = await getIdForAllBooks(user_id, email);
+    const [idpage]: any = await getActiveNotebook(user_id, email);
 
     if (user_id != undefined && email != undefined) {
       const responseEditorData =
         idpage === "all"
-          ? await getAllNotesFromDatabase(user_id, email)
-          : await getNotesFromBook(user_id, email, idpage);
+          ? await getAllUserNotes(user_id, email)
+          : await getUserNotesFromNotebook (user_id, email, idpage);
       const serializedData: any = responseEditorData?.map((item) => ({
         ...item,
         _id: item._id.toString(),
       
       }));
 
-      const dataRes = await getIdPageBook(user_id, email)
+      const dataRes = await getAllUserNotebook(user_id, email)
       const databook = dataRes?.map((item) => ({
         ...item,
         _id: item._id.toString(),
       }));
-      const sort: any = await getActionSorting(user_id, email);
+      const sort: any = await getSortingPreferences(user_id, email);
 
       if (
         session &&

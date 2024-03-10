@@ -28,22 +28,24 @@ export const update_action = {
 
 // get actions
 export type GetAction =
-  | "editor"
+  | "get_all_user_notes"
   | "editor_title"
-  | "book_main_menu"
-  | "action_sorting"
-  | "id_page_book"
-  | "data_editorBook"
-  | "id_for_books";
+  | "get_sorting_preferences"
+  | "get_all_user_notebook"
+  | "get_user_notes_from_notebook"
+  | "get_active_notebook"
+  | "get_all_user_notes_from_recycle"
+  | "get_main_menu_note"
+  
 
 export const get_action = {
-  data_editor: "data_editor",
-  data_recycle: "data_recycle",
-  data_note_main_menu: "data_note_main_menu",
-  action_sorting: "action_sorting",
-  id_page_book: "id_page_book",
-  data_editorBook: "data_editorBook",
-  id_for_books: "id_for_books",
+  get_all_user_notes: "get_all_user_notes",
+  get_all_user_notes_from_recycle: "get_all_user_notes_from_recycle",
+  get_main_menu_note: "get_main_menu_note",
+  get_user_notes_from_notebook: "get_user_notes_from_notebook",
+  get_sorting_preferences: "get_sorting_preferences",
+  get_all_user_notebook: "get_all_user_notebook",
+  get_active_notebook: "get_active_notebook",
 };
 
 // delete and restore actions

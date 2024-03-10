@@ -18,6 +18,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   const [bookName, setBookName] = useState<string>("");
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
+  console.log("🚀 ~ ModalBooks ~ idForBook:", idForBook)
   const [activeModal, setActiveModal] = useState(false);
   const router = useRouter();
 
@@ -68,7 +69,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   async function getDatabook() {
     try {
       const res = await fetch(
-        `/api/getData?action=${get_action.id_page_book}&userId=${userId}&email=${email}`
+        `/api/getData?action=${get_action.get_all_user_notebook}&userId=${userId}&email=${email}`
       );
       if (!res.ok) {
         throw new Error(`Ошибка при запросе: ${res.status} ${res.statusText}`);
@@ -108,22 +109,24 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
       console.error(err);
     }
   }
-  async function getIdForBookMain() {
+
+  
+  const getIdForBookMain = useCallback(async () => {
     try {
       const idPageForBooks = await fetch(
-        `/api/getData?action=${get_action.id_for_books}&userId=${userId}&email=${email}`
+        `/api/getData?action=${get_action.get_active_notebook}&userId=${userId}&email=${email}`
       );
       const [idPage, nameBook] = await idPageForBooks.json();
       setIdForBook(idPage);
     } catch (err) {
       console.error(err);
     }
-  }
-
+  }, [router]);
+  
   useEffect(() => {
     getDatabook();
     getIdForBookMain();
-  }, [userId]);
+  }, [router]);
 
   async function buttonCreateNewBook(nameBook: string) {
     let maxIdPage = 0;

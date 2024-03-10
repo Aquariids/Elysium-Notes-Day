@@ -19,7 +19,7 @@ async function getCollection({ db, collectionName }: dbPros) {
 
 
 
-  export async function getAllNotesFromDatabase(userId: string | string[], email: string | string[]) {
+  export async function getAllUserNotes(userId: string | string[], email: string | string[]) {
     try {
       const query = userId && email ? { userId, email } : {};
       const collection = await getCollection({
@@ -34,7 +34,7 @@ async function getCollection({ db, collectionName }: dbPros) {
     }
   }
 
-  export async function getNotesFromBook(userId: string | string[], email: string | string[], idPage: any) {
+  export async function getUserNotesFromNotebook (userId: string | string[], email: string | string[], idPage: any) {
     try {
       const query = userId && email ? { userId, email, idPage: idPage } : { idPage: idPage };
       const collection = await getCollection({
@@ -52,7 +52,7 @@ async function getCollection({ db, collectionName }: dbPros) {
 
 
 
-  export async function getAllNotesFromDatabaseRecycle(userId: string[] | string, email: string[] | string) {
+  export async function getAllUserNotesFromRecycle (userId: string[] | string, email: string[] | string) {
     try {
       const query = userId && email ? { userId, email } : {};
       const collection = await getCollection({
@@ -69,7 +69,8 @@ async function getCollection({ db, collectionName }: dbPros) {
   }
   
 
-  export async function getNoteBookMainMenu(userId:string | string[] | undefined, email:string | string[] | undefined) {
+  export async function getMainMenuNote (userId:string | string[] | undefined, email:string | string[] | undefined) {
+    
     try {
       const query = userId && email ? { userId, email } : {};
       const collection = await getCollection({
@@ -82,7 +83,7 @@ async function getCollection({ db, collectionName }: dbPros) {
   }
   
   
-  export async function getActionSorting(userId:string | string[] | undefined, email:string | string[] | undefined) {
+  export async function getSortingPreferences(userId:string | string[] | undefined, email:string | string[] | undefined) {
     try {
       const query = userId && email ? { userId, email } : {};
       const collection = await getCollection({
@@ -94,7 +95,7 @@ async function getCollection({ db, collectionName }: dbPros) {
     } catch (error) {}
   }
 
-  export async function getIdForAllBooks(userId:string | string[] | undefined, email:string | string[] | undefined,) {
+  export async function getActiveNotebook(userId:string | string[] | undefined, email:string | string[] | undefined,) {
     try {
       const query = userId && email ? { userId, email } : {};
       const collection = await getCollection({
@@ -106,7 +107,7 @@ async function getCollection({ db, collectionName }: dbPros) {
     } catch (error) {}
   }
   
-  export async function getIdPageBook(userId:string | string[] | undefined, email:string | string[] | undefined) {
+  export async function getAllUserNotebook(userId:string | string[] | undefined, email:string | string[] | undefined) {
     try {
       const query = userId && email ? { userId, email } : {};
       const collection = await getCollection({

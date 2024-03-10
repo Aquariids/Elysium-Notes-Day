@@ -15,7 +15,7 @@ import { sorting } from "../../utils/sorting";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import Book from './book.svg';
 import cn from 'classnames';
-import { getAllNotesFromDatabase, getIdForAllBooks, getIdPageBook, getNotesFromBook } from "../api/auth/lib/Get";
+import { getAllUserNotes, getActiveNotebook, getAllUserNotebook, getUserNotesFromNotebook  } from "../api/auth/lib/Get";
 
 
 const notes = ({ data_editor, idpage, user_id, email, data_book,all_id}: any) => {
@@ -57,18 +57,18 @@ const notes = ({ data_editor, idpage, user_id, email, data_book,all_id}: any) =>
     try {
       if (session.status === "authenticated") {
         const idPageForBooks = await fetch(
-          `/api/getData?action=${get_action.id_for_books}&userId=${user_id}&email=${email}`
+          `/api/getData?action=${get_action.get_active_notebook}&userId=${user_id}&email=${email}`
         );
         const [idPage] = await idPageForBooks.json();
         if (idPage === "all") {
           const res = await fetch(
-            `/api/getData?action=${get_action.data_editor}&userId=${user_id}&email=${email}`
+            `/api/getData?action=${get_action.get_all_user_notes}&userId=${user_id}&email=${email}`
           );
           const data = await res.json();
           setLinks(data);
         } else {
           const res2 = await fetch(
-            `/api/getData?action=${get_action.data_editorBook}&userId=${user_id}&email=${email}&idPage=${idPage}`
+            `/api/getData?action=${get_action.get_user_notes_from_notebook}&userId=${user_id}&email=${email}&idPage=${idPage}`
           );
           const data2 = await res2.json();
           setLinks(data2);
@@ -80,7 +80,7 @@ const notes = ({ data_editor, idpage, user_id, email, data_book,all_id}: any) =>
   }, [checkTitle, data_editor]);
 
   const updateActiveSortingAction = useCallback(
-    async (sorting: any, userId: any, email: any) => {
+    async (sorting: string, userId: string, email: string) => {
       try {
         const response = await fetch(
           `/api/updateData?action=${update_action.update_sorting_preferences}`,
@@ -192,10 +192,10 @@ export async function getServerSideProps(context: any) {
   
     const user_id:string = session?.user.userId; // айди авторизованного человека
     const email:string = session?.user.email;
-    const [idpage]:any = await getIdForAllBooks(user_id, email);
+    const [idpage]:any = await getActiveNotebook(user_id, email);
    
-    const responseEditorData =  idpage === 'all' ? await getAllNotesFromDatabase(user_id, email): await getNotesFromBook(user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
-    const dataRes = await getIdPageBook(user_id, email)
+    const responseEditorData =  idpage === 'all' ? await getAllUserNotes(user_id, email): await getUserNotesFromNotebook (user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
+    const dataRes = await getAllUserNotebook(user_id, email)
 
     const data_book = dataRes?.map((item) => ({
       ...item,
