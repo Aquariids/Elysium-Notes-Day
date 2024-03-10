@@ -16,9 +16,10 @@ import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
 import Book from './book.svg';
 import cn from 'classnames';
 import { getAllUserNotes, getActiveNotebook, getAllUserNotebook, getUserNotesFromNotebook  } from "../api/auth/lib/Get";
+import { Record } from "immutable";
 
 
-const notes = ({ data_editor, idpage, user_id, email, data_book,all_id}: any) => {
+const notes = ({ data_editor, idpage, user_id, email, data_book, all_id}: notes_data & Record<string, unknown>) => {
 
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.

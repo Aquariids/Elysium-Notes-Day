@@ -18,7 +18,6 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   const [bookName, setBookName] = useState<string>("");
   const [dataBook, setDataBook] = useState<any>();
   const [idForBook, setIdForBook] = useState<any>();
-  console.log("🚀 ~ ModalBooks ~ idForBook:", idForBook)
   const [activeModal, setActiveModal] = useState(false);
   const router = useRouter();
 

@@ -16,13 +16,13 @@ import {
   getAllUserNotebook,
   getUserNotesFromNotebook ,
 } from "../api/auth/lib/Get";
-const index = ({ user_id, email, idpage, databook }: any) => {
+const index = ({ user_id, email, idpage, data_book }: notes_data & Record<string, unknown>) => {
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
 
   const name = useMemo(() => {
-    if (databook) {
-      const matchingItem = databook.find((item: any) => {
+    if (data_book) {
+      const matchingItem = data_book.find((item: any) => {
         return item.idPage == idpage;
       });
       if (matchingItem) {
@@ -30,7 +30,7 @@ const index = ({ user_id, email, idpage, databook }: any) => {
       }
     }
     return "all"; // или другое значение по умолчанию, если совпадений нет
-  }, [idpage, databook]);
+  }, [idpage, data_book]);
 
   return (
     // ну и паередаем его в наш редактор.
@@ -97,7 +97,7 @@ export async function getServerSideProps(context: any) {
       }));
 
       const dataRes = await getAllUserNotebook(user_id, email)
-      const databook = dataRes?.map((item) => ({
+      const data_book = dataRes?.map((item) => ({
         ...item,
         _id: item._id.toString(),
       }));
@@ -139,7 +139,7 @@ export async function getServerSideProps(context: any) {
       }
 
       return {
-        props: { data: serializedData, databook, idpage, user_id, email },
+        props: { data: serializedData, data_book, idpage, user_id, email },
       };
     }
   } catch (err) {
