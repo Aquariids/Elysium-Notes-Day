@@ -22,7 +22,7 @@ interface user_note extends create_user_note {
 _id:_id
 }
 
-interface data_book {
+interface data_nootebook {
   email: email;
   idPage: number;
   name: string;
@@ -35,6 +35,6 @@ interface notes_data {
   idpage: string;
   user_id: userId;
   email: email;
-  data_book: data_book[];
+  data_nootebook: data_nootebook[];
   all_id: string[];
 }
