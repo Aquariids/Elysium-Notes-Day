@@ -156,7 +156,7 @@ const ButtonDeleteNotes = ({
         >
           <p className={s.text}>Удалить</p>
         </div>
-        <div
+        {/* <div
           className={cn(s.delete, {
             [s.hide]: !currentNote.idPage
           })}
@@ -169,7 +169,7 @@ const ButtonDeleteNotes = ({
           {...props}
         >
           <p className={s.text}>Удалить из блокнота</p>
-        </div>
+        </div> */}
         </>
         
       )}
