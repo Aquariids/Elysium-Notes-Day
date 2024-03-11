@@ -14,6 +14,7 @@ const ModalAddNotesInBook = ({
   const router = useRouter();
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
+const [test, setTest] = useState(true)
   const [allBooks, setAllBooks] = useState([]);
   const email = session?.user.email;
   const userId = session?.user.userId;
@@ -88,6 +89,11 @@ const ModalAddNotesInBook = ({
                     onClick={(e) => {
                       setCurrentIdPage(String(item.idPage));
                       setActiveLink(item);
+
+                      if(activeLink._id === item._id) {
+                        
+                        
+                      }
                     }}
                     key={item._id}
                   >
@@ -115,11 +121,13 @@ const ModalAddNotesInBook = ({
             <button
               className={s.btn}
               disabled={
-                activeLink._id &&
+                activeLink._id && 
                 String(activeLink.idPage) !== currentNote.idPage
                   ? false
                   : true
+                  
               }
+             
               onClick={() => {
                 addIdPageForNote();
                 setActive(false);

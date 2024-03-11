@@ -300,6 +300,7 @@ const CustomEditor = ({
               </div>
               
               <ButtonDeleteNotes
+                currentNote={selectedItem}
                 setDeleteElement={setDeleteElement}
                 setLoadingDelete={setLoadingDelete}
                 all_id={all_id}

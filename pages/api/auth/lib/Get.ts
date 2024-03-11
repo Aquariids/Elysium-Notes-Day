@@ -20,14 +20,22 @@ async function getCollection({ db, collectionName }: dbPros) {
 
 
   export async function getAllUserNotes(userId: string | string[], email: string | string[]) {
+    const query = userId && email ? { userId, email } : {};
     try {
-      const query = userId && email ? { userId, email } : {};
+     
       const collection = await getCollection({
         collectionName: `user_${userId}`,
         db: "notes",
       }) 
-      const data = await collection.find(query).sort({date:1}).toArray();
-      return data 
+      const allNotes = await collection.find(query).sort({date:1}).toArray();
+      const notesWithoutIdPage = allNotes.filter((item) => {
+        return !item.idPage
+        
+      })
+
+      
+      
+      return notesWithoutIdPage 
     } catch (error) {
       const client = await getClient();
       client.close();

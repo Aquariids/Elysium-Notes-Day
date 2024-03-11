@@ -15,12 +15,16 @@ import { authOptions } from "./auth/[...nextauth]";
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
   const userId = req.query.userId;
+  console.log("🚀 ~ GET ~ userId:", userId)
   const email = req.query.email;
   const idPage = req.query.idPage;
+  const checked = req.query.checked
 
   const action: GetAction = req.query.action as GetAction;
   try {
+    
     if (userId && email && session) {
+      
       switch (action) {
         case get_action.get_all_user_notes:
           res.status(200).json(await getAllUserNotes(userId, email));

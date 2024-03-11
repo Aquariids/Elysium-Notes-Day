@@ -30,6 +30,11 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
   const [links, setLinks] = useState<any>();
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
+  const [checked, setChecked] = useState(true);
+
+  function handleChange() {
+		setChecked(!checked); // инвертируем стейт
+	}
   const name = useMemo(() => {
     if (data_nootebook) {
       const matchingItem = data_nootebook.find((item:any) => item.idPage == idpage);
@@ -66,13 +71,19 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
           );
           const data = await res.json();
           setLinks(data);
-        } else {
-          const res2 = await fetch(
+        }
+        
+        else {
+          const res = await fetch(
             `/api/getData?action=${get_action.get_user_notes_from_notebook}&userId=${user_id}&email=${email}&idPage=${idPage}`
           );
-          const data2 = await res2.json();
-          setLinks(data2);
+          const data = await res.json();
+          setLinks(data);
         }
+
+      
+
+        
       }
     } catch (err) {
       console.error(err);
@@ -149,8 +160,9 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
         </div>
 
         <div className={s.editor}>
-          <p className={cn(s.nameBook)} onClick={() => setActiveModal(true)}>
-            <span className={s.tooltip}><Book/> <span>{idpage === 'all' ? "Всe": name && name}</span></span>
+          <p className={cn(s.nameBook)} >
+            <span onClick={() => setActiveModal(true)} className={s.tooltip}><Book/> <span>{idpage === 'all' ? "Всe": name && name}</span></span>
+            {idpage === 'all' && <input title="Все заметки без блокнотов" style={{marginLeft:'5px'}} type="checkbox" checked={checked} onClick={() => setChecked(!checked)} />}
           </p>
           
           <ModalBooks
@@ -194,7 +206,7 @@ export async function getServerSideProps(context: any) {
     const email:string = session?.user.email;
     const [idpage]:any = await getActiveNotebook(user_id, email);
    
-    const responseEditorData =  idpage === 'all' ? await getAllUserNotes(user_id, email): await getUserNotesFromNotebook (user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
+    const responseEditorData = idpage === 'all' ? await getAllUserNotes(user_id, email): await getUserNotesFromNotebook (user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
     const dataRes = await getAllUserNotebook(user_id, email)
 
     const data_nootebook = dataRes?.map((item) => ({

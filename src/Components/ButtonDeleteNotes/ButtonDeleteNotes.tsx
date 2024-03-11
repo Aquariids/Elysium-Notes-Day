@@ -17,6 +17,8 @@ const ButtonDeleteNotes = ({
   all_id,
   setDeleteElement,
   setLoadingDelete,
+  currentNote,
+  setActiveModal,
   ...props
 }: ButtonDeleteProps) => {
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -27,11 +29,34 @@ const ButtonDeleteNotes = ({
   const recycleRouter = router.asPath.split("/")[1] === `${RECYCLE}`;
   const selectedId = router.query.index;
   const userId = session.data?.user.userId;
+  const email = session.data?.user.email;
   interface DeleteLinkProps {
     linkId?: string | string[];
     recycle?: boolean;
     restore?: true;
   }
+
+
+  const addIdPageForNote = async () => {
+    const data = {
+      email: email,
+      userId: userId,
+      _id: currentNote._id,
+      idPage: currentNote.idPage && '',
+    };
+    const res = await fetch(
+      `/api/updateData?action=${update_action.update_notebook_id_for_note}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (res.ok) router.push(router.asPath);
+  };
 
   const deleteDate = async (data: any) => {
     await fetch(`/api/updateData?action=${update_action.update_note_deletion_date}`, {
@@ -124,6 +149,7 @@ const ButtonDeleteNotes = ({
           </div>
         </>
       ) : (
+        <>
         <div
           className={cn(s.delete)}
           onClick={() => handleDeleteLink({ linkId: selectedId })}
@@ -131,6 +157,22 @@ const ButtonDeleteNotes = ({
         >
           <p className={s.text}>Удалить</p>
         </div>
+        <div
+          className={cn(s.delete, {
+            [s.hide]: !currentNote.idPage
+          })}
+          onClick={() => {
+            addIdPageForNote()
+            
+          
+          }
+        }
+          {...props}
+        >
+          <p className={s.text}>Удалить из блокнота</p>
+        </div>
+        </>
+        
       )}
     </>
   );

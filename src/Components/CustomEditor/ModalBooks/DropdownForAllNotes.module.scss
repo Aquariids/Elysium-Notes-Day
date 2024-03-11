@@ -1,0 +1,76 @@
+
+
+.dropdown {
+    z-index: 1;
+    margin: auto 0;
+    position: relative;
+    display: inline-block;
+
+}
+
+.dropdown_content {
+    opacity: 0;
+    transition: all .2s;
+    position: absolute;
+    right: 28px;
+    top: -15px;
+    
+    background-color: #f1f1f1;
+    min-width: 150px;
+    padding: 0px 10px 10px 10px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    visibility: hidden;
+}
+
+
+.dropdown_content a {
+    opacity: 1;
+    transition: background-color 0.5s;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+
+}
+
+
+
+
+.dropbtn:hover svg {
+    fill: #b11f1f;
+}
+
+.hide {
+    padding-left: 10px;
+    transition: all .2s;
+    opacity: 0;
+    visibility: hidden;
+   
+}
+.active svg {
+    fill: #b11f1f;
+}
+
+.dropbtn {
+    background-color: #FFF;
+    color:  black;
+    border: none;
+    cursor: pointer;
+}
+
+
+.show {
+    transition: all .2s;
+    opacity: 1;
+    visibility: visible;
+    fill: #1f7bb1;
+    
+
+}
+
+
