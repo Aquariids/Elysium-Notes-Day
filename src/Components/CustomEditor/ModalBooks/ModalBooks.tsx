@@ -12,7 +12,7 @@ import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
 import DotsMenu from "./dots.svg";
 import { useRouter } from "next/router";
 import Done from "./done.svg";
-const ModalBooks = ({ active, setActive, userId, email }: any) => {
+const ModalBooks = ({ active, setActive, userId, email,setUpdateBook, updateBooks }: any) => {
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
@@ -23,7 +23,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
 
   function close() {
     setActive(false);
-
+    setUpdateBook(false)
     setTimeout(() => {
       setActiveLink("");
       setCurrentIdPage("");
@@ -75,6 +75,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
       }
       const data = await res.json();
       setDataBook(data); // Обновляем состояние dataBook
+      
     } catch (err) {
       console.error(err);
     }
@@ -194,6 +195,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
                 onClick={() => {
                   buttonCreateNewBook(bookName);
                   setBookName("");
+                  setUpdateBook(true)
                 }}
               >
                 Создать блокнот

@@ -30,6 +30,8 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
   const [links, setLinks] = useState<any>();
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
+const [updateBooks, setUpdateBook] = useState(false);
+
   // const [checked, setChecked] = useState(true);
 
   // function handleChange() {
@@ -166,6 +168,7 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
           </p>
           
           <ModalBooks
+          setUpdateBook={setUpdateBook}
             userId = {user_id}
             email={email}
             session={session}
@@ -174,6 +177,7 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
           />
           {selectedItem && (
             <CustomEditor
+           updateBooks={updateBooks}
               setDeleteElement={setDeleteElement}
               setLoadingDelete={setLoadingDelete}
               setCheckTitle={setCheckTitle}
