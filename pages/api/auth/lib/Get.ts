@@ -35,7 +35,7 @@ async function getCollection({ db, collectionName }: dbPros) {
 
       
       
-      return notesWithoutIdPage 
+      return allNotes 
     } catch (error) {
       const client = await getClient();
       client.close();

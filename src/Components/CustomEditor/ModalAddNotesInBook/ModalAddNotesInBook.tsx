@@ -25,11 +25,11 @@ const [test, setTest] = useState(true)
     );
     const databook = await resBook.json();
     setAllBooks(databook);
-  }, [allBooks]);
+  }, [email,userId]);
 
   useEffect(() => {
     getBook();
-  }, [allBooks]);
+  }, [userId,email]);
 
   function close() {
     setActive(false);
