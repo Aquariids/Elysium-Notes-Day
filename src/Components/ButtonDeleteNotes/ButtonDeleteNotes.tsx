@@ -18,7 +18,6 @@ const ButtonDeleteNotes = ({
   setDeleteElement,
   setLoadingDelete,
   currentNote,
-  setActiveModal,
   ...props
 }: ButtonDeleteProps) => {
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
