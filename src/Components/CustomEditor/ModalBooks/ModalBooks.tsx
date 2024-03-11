@@ -200,8 +200,8 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
               </button>
             </div>
             <div className={s.books}>
+            <p className={s.title_books}>ПЕРЕЙТИ В БЛОКНОТ:</p>
               <div className={s.books__list}>
-                <p className={s.title_books}>ПЕРЕЙТИ В БЛОКНОТ:</p>
                 <span
                   className={cn(s.block, {
                     [s.currentActiveBook]: idForBook == "all" && !currentIdPage,
