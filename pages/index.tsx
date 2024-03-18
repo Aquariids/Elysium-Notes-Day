@@ -47,7 +47,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
 
   const createNotesBook = async () => {
     const dataNoteBook = {
-      user_id,
+      userId:user_id,
       email,
       body: "",
     };
@@ -65,7 +65,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
 
   const createBookForNotes = async () => {
     const dataNoteBook = {
-      user_id,
+      userId:user_id,
       email,
       book: "all",
     };
@@ -83,7 +83,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
 
   const createActionSorting = async () => {
     const sortData = {
-      user_id,
+      userId:user_id,
       email,
       sorting: "",
     };

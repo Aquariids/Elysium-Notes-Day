@@ -30,13 +30,11 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
   const [links, setLinks] = useState<any>();
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
-// const [updateBooks, setUpdateBook] = useState(false);
+  const [checked, setChecked] = useState(false);
 
-  // const [checked, setChecked] = useState(true);
-
-  // function handleChange() {
-	// 	setChecked(!checked); // инвертируем стейт
-	// }
+  function handleChange() {
+		setChecked(!checked); 
+	}
   const name = useMemo(() => {
     if (data_nootebook) {
       const matchingItem = data_nootebook.find((item:any) => item.idPage == idpage);
@@ -164,7 +162,7 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
         <div className={s.editor}>
           <p className={cn(s.nameBook)} >
             <span onClick={() => setActiveModal(true)} className={s.tooltip}><Book/> <span>{idpage === 'all' ? "Всe": name && name}</span></span>
-            {/* {idpage === 'all' && <input title="Все заметки без блокнотов" style={{marginLeft:'5px'}} type="checkbox" checked={checked} onClick={() => setChecked(!checked)} />} */}
+            {idpage === 'all' && <input title="Все заметки без блокнотов" style={{marginLeft:'5px'}} type="checkbox" checked={checked} onChange={handleChange} />}
           </p>
           
           <ModalBooks
