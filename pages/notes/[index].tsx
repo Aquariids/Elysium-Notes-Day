@@ -34,6 +34,7 @@ const notes = ({
   all_id,
   without_id_props
 }: notes_data & Record<string, unknown>) => {
+ 
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -43,11 +44,12 @@ const notes = ({
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
   console.log("🚀 ~ links:", links)
+
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
-  const [test, setTest] = useState<boolean>();
  
   const [withoutId, setWithoutId] = useState<boolean>(Boolean(without_id_props));
+  console.log("🚀 ~ withoutId:", withoutId)
   
   useEffect(() => {
    getActiveWithoutId()
@@ -223,7 +225,7 @@ const notes = ({
                 title="Показать заметки без блокнотов"
                 style={{ marginLeft: "5px" }}
                 type="checkbox"
-                checked={test? test: withoutId}
+                checked={withoutId}
                 onChange={handleCheckboxChange}
               />
             )}
@@ -301,7 +303,7 @@ export async function getServerSideProps(context: any) {
         email,
         data_nootebook,
         all_id,
-        without_id_props:withoutId + ''
+        without_id_props:withoutId ? 1:0 
       },
     };
   } catch (err) {
