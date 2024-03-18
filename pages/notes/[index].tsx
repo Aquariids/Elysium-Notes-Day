@@ -13,13 +13,25 @@ import { get_action, update_action } from "../api/actions";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
 import ModalBooks from "@/Components/CustomEditor/ModalBooks/ModalBooks";
-import Book from './book.svg';
-import cn from 'classnames';
-import { getAllUserNotes, getActiveNotebook, getAllUserNotebook, getUserNotesFromNotebook  } from "../api/auth/lib/Get";
+import Book from "./book.svg";
+import cn from "classnames";
+import {
+  getAllUserNotes,
+  getActiveNotebook,
+  getAllUserNotebook,
+  getUserNotesFromNotebook,
+  getActiveNotebookWithoutId,
+} from "../api/auth/lib/Get";
 import { Record } from "immutable";
 
-const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: notes_data & Record<string, unknown>) => {
-
+const notes = ({
+  data_editor,
+  idpage,
+  user_id,
+  email,
+  data_nootebook,
+  all_id,
+}: notes_data & Record<string, unknown>) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -30,29 +42,49 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
   const [links, setLinks] = useState<any>();
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
-  const [checked, setChecked] = useState(false);
+  const [test, setTest] = useState<boolean>();
+ 
+  const [withoutId, setWithoutId] = useState<boolean>(false);
+  
+  
+  
+  useEffect(() => {
+   getActiveWithoutId()
+  }, []);
 
-  function handleChange() {
-		setChecked(!checked); 
-	}
+
+  const getActiveWithoutId = async () => {
+     await fetch(
+      `/api/getData?action=${get_action.get_active_notebook_without_id}&userId=${user_id}&email=${email}`
+    )
+    .then(async (response) => {
+      const [withoutId] = await response.json();
+      setWithoutId(withoutId);
+  })
+    
+
+  };
+
+
+
   const name = useMemo(() => {
     if (data_nootebook) {
-      const matchingItem = data_nootebook.find((item:any) => item.idPage == idpage);
+      const matchingItem = data_nootebook.find(
+        (item: any) => item.idPage == idpage
+      );
       if (matchingItem) {
         return matchingItem.name;
       }
     }
-    return 'all'; 
+    return "all";
   }, [idpage, data_nootebook]);
-
-
 
   // это наш path по сути текущий url = _id человека
   const selectedItem = useMemo(
     // с помощью useMemo уменьшаю кол рендеров
     () =>
-    data_editor &&
-    data_editor.find((item: { _id:string }) => {
+      data_editor &&
+      data_editor.find((item: { _id: string }) => {
         return item._id === selectedId;
       }),
     [data_editor, selectedId]
@@ -65,25 +97,28 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
           `/api/getData?action=${get_action.get_active_notebook}&userId=${user_id}&email=${email}`
         );
         const [idPage] = await idPageForBooks.json();
+      
         if (idPage === "all") {
           const res = await fetch(
             `/api/getData?action=${get_action.get_all_user_notes}&userId=${user_id}&email=${email}`
           );
+          const res2 = await fetch(
+            `/api/getData?action=${get_action.get_all_user_notes_2}&userId=${user_id}&email=${email}`
+          );
           const data = await res.json();
-          setLinks(data);
-        }
-        
-        else {
+          const data2 = await res2.json();
+          if(withoutId) {
+            setLinks(data2);
+          } else {
+            setLinks(data);
+          }
+        } else {
           const res = await fetch(
             `/api/getData?action=${get_action.get_user_notes_from_notebook}&userId=${user_id}&email=${email}&idPage=${idPage}`
           );
           const data = await res.json();
           setLinks(data);
         }
-
-      
-
-        
       }
     } catch (err) {
       console.error(err);
@@ -113,6 +148,23 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
     },
     [sort]
   );
+
+  const handleCheckboxChange = () => {
+    const newCheckedState = !withoutId;
+    setWithoutId(newCheckedState);
+
+    fetch( `/api/updateData?action=${update_action.update_active_notebook_without_id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({userId:user_id,email, withoutId: newCheckedState }),
+    });
+
+    router.push(router.asPath)
+  };
+
+  
 
   useEffect(() => {
     if (loadingDelete) {
@@ -160,13 +212,23 @@ const notes = ({ data_editor, idpage, user_id, email, data_nootebook, all_id}: n
         </div>
 
         <div className={s.editor}>
-          <p className={cn(s.nameBook)} >
-            <span onClick={() => setActiveModal(true)} className={s.tooltip}><Book/> <span>{idpage === 'all' ? "Всe": name && name}</span></span>
-            {idpage === 'all' && <input title="Все заметки без блокнотов" style={{marginLeft:'5px'}} type="checkbox" checked={checked} onChange={handleChange} />}
+          <p className={cn(s.nameBook)}>
+            <span onClick={() => setActiveModal(true)} className={s.tooltip}>
+              <Book /> <span>{idpage === "all" ? "Всe" : name && name}</span>
+            </span>
+            {idpage === "all" && (
+              <input
+                title="Показать заметки без блокнотов"
+                style={{ marginLeft: "5px" }}
+                type="checkbox"
+                checked={test? test: withoutId}
+                onChange={handleCheckboxChange}
+              />
+            )}
           </p>
-          
+
           <ModalBooks
-            userId = {user_id}
+            userId={user_id}
             email={email}
             session={session}
             active={activeModal}
@@ -201,29 +263,41 @@ export async function getServerSideProps(context: any) {
       };
     }
 
-  
-    const user_id:string = session?.user.userId; // айди авторизованного человека
-    const email:string = session?.user.email;
-    const [idpage]:any = await getActiveNotebook(user_id, email);
-   
-    const responseEditorData = idpage === 'all' ? await getAllUserNotes(user_id, email): await getUserNotesFromNotebook (user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
-    const dataRes = await getAllUserNotebook(user_id, email)
+    const user_id: string = session?.user.userId; // айди авторизованного человека
+    const email: string = session?.user.email;
+    const [idpage]: any = await getActiveNotebook(user_id, email);
+    const [withoutId]: any = await getActiveNotebookWithoutId(user_id,email)
+    
+    const responseEditorData =
+      idpage === "all"
+        ? await getAllUserNotes(user_id, email, withoutId)
+        : await getUserNotesFromNotebook(user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
+    const dataRes = await getAllUserNotebook(user_id, email);
 
     const data_nootebook = dataRes?.map((item) => ({
       ...item,
       _id: item._id.toString(),
     }));
-    const serializedData = responseEditorData?.map((item) => ({ // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
+    const serializedData = responseEditorData?.map((item) => ({
+      // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
       ...item,
-      _id: item._id.toString(), 
+      _id: item._id.toString(),
     }));
-    let all_id = serializedData && serializedData.map((obj: { _id: any }) => obj._id);// получаем все _id заметок в одном месте.
+    let all_id =
+      serializedData && serializedData.map((obj: { _id: any }) => obj._id); // получаем все _id заметок в одном месте.
 
     return {
-      props: { data_editor: serializedData, idpage, user_id,email,data_nootebook,all_id }, // тут данные для редактора уже просто dataEditor!
+      props: {
+        data_editor: serializedData,
+        idpage,
+        user_id,
+        email,
+        data_nootebook,
+        all_id,
+      }, // тут данные для редактора уже просто dataEditor!
     };
   } catch (err) {
-    return {props: {}}
+    return { props: {} };
   }
 }
 

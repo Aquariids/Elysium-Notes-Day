@@ -254,4 +254,27 @@ export async function updateActiveNotebook(data: any) {
   }
 }
 
+export async function updateActiveNotebookWithoutId(data: any) {
+  
+  try {
+    const collection = await getCollection({
+      collectionName: `main_book_${data.userId}`,
+      db: "notes",
+    });
+      await collection.updateOne(
+        { userId: data.userId, email:data.email },
+        {
+          $set: {
+          withoutId: data?.withoutId
+
+          },
+        } 
+      );
+    
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
+
 

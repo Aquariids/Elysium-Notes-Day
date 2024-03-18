@@ -9,7 +9,7 @@ import s from "./index.module.scss";
 import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
 import { useSession } from "next-auth/react";
-import { create_data_action, get_action, update_action } from "./api/actions";
+import { create_data_action,  update_action } from "./api/actions";
 import Arrow from "./arr.svg";
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from "classnames";
@@ -19,6 +19,7 @@ import { DateTime } from "luxon";
 import { Settings } from "luxon";
 
 import {
+  getActiveNotebookWithoutId,
   getAllUserNotes,
   getMainMenuNote ,
 } from "./api/auth/lib/Get";
@@ -241,7 +242,8 @@ export async function getServerSideProps(context: any) {
     const user_id: string = session?.user.userId; // айди авторизованного человека
     const email: string = session?.user.email;
     if (user_id && email) {
-      const responseEditorData = await getAllUserNotes(user_id, email); // responseEditorData - Заметки все, то есть все что для редактора
+      const [withoutId]: any = await getActiveNotebookWithoutId(user_id,email)
+      const responseEditorData = await getAllUserNotes(user_id, email,withoutId); // responseEditorData - Заметки все, то есть все что для редактора
       const responseNoteMainMenuData = await getMainMenuNote (
         user_id,
         email

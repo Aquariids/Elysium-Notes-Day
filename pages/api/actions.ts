@@ -10,6 +10,7 @@ export type UpdateAction =
   | "update_notebook_id_for_note"
   | "update_active_notebook"
   | "update_note_deletion_date"
+  | "update_active_notebook_without_id"
 
 // update action
 
@@ -24,6 +25,7 @@ export const update_action = {
   update_notebook_id_for_note: "update_notebook_id_for_note",
   update_active_notebook: "update_active_notebook",
   update_note_deletion_date:'update_note_deletion_date',
+  update_active_notebook_without_id: 'update_active_notebook_without_id'
 };
 
 // get actions
@@ -36,6 +38,8 @@ export type GetAction =
   | "get_active_notebook"
   | "get_all_user_notes_from_recycle"
   | "get_main_menu_note"
+| "get_active_notebook_without_id"
+| "get_all_user_notes_2"
   
 
 export const get_action = {
@@ -46,6 +50,8 @@ export const get_action = {
   get_sorting_preferences: "get_sorting_preferences",
   get_all_user_notebook: "get_all_user_notebook",
   get_active_notebook: "get_active_notebook",
+  get_active_notebook_without_id:"get_active_notebook_without_id",
+  get_all_user_notes_2:"get_all_user_notes_2"
 };
 
 // delete and restore actions

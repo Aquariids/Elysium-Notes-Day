@@ -11,6 +11,7 @@ import {
   updateNoteBookMainMenu,
   updateNoteDeletionDate,
   updateActiveNotebook,
+  updateActiveNotebookWithoutId,
 } from "./auth/lib/Update";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
@@ -59,10 +60,15 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
           await updateActiveNotebook(data);
           res.status(200).send("Data editor updated successfully");
           break;
+          case update_action.update_active_notebook_without_id:
+          await updateActiveNotebookWithoutId(data);
+          res.status(200).send("Data editor updated successfully");
+          break;
           case update_action.update_note_deletion_date:
           await updateNoteDeletionDate(data);
           res.status(200).send("Data editor updated successfully");
           break;
+          
           
         default:
           res.status(400).send("Invalid action");

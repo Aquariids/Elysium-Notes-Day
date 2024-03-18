@@ -14,7 +14,8 @@ import {
   getAllUserNotes,
   getActiveNotebook,
   getAllUserNotebook,
-  getUserNotesFromNotebook ,
+  getUserNotesFromNotebook, 
+  getActiveNotebookWithoutId,
 } from "../api/auth/lib/Get";
 const index = ({ user_id, email, idpage, data_nootebook }: notes_data & Record<string, unknown>) => {
   const session = useSession();
@@ -84,11 +85,12 @@ export async function getServerSideProps(context: any) {
     const user_id: string = session?.user.userId;
     const email: string = session?.user.email;
     const [idpage]: any = await getActiveNotebook(user_id, email);
+    const [withoutId]: any = await getActiveNotebookWithoutId(user_id,email)
 
     if (user_id != undefined && email != undefined) {
       const responseEditorData =
         idpage === "all"
-          ? await getAllUserNotes(user_id, email)
+          ? await getAllUserNotes(user_id, email,withoutId)
           : await getUserNotesFromNotebook (user_id, email, idpage);
       const serializedData: any = responseEditorData?.map((item) => ({
         ...item,
