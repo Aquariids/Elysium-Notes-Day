@@ -9,7 +9,6 @@ import {
   getMainMenuNote,
   getUserNotesFromNotebook,
   getActiveNotebookWithoutId,
-  getAllUserNotes2,
   getAllUserNotesWithoutId,
 } from "./auth/lib/Get";
 import { getServerSession } from "next-auth/next";
