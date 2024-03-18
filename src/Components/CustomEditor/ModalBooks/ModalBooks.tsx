@@ -12,7 +12,7 @@ import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
 import DotsMenu from "./dots.svg";
 import { useRouter } from "next/router";
 import Done from "./done.svg";
-const ModalBooks = ({ active, setActive, userId, email,setUpdateBook, updateBooks }: any) => {
+const ModalBooks = ({ active, setActive, userId, email }: any) => {
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
@@ -23,7 +23,6 @@ const ModalBooks = ({ active, setActive, userId, email,setUpdateBook, updateBook
 
   function close() {
     setActive(false);
-    setUpdateBook(false)
     setTimeout(() => {
       setActiveLink("");
       setCurrentIdPage("");
@@ -195,7 +194,7 @@ const ModalBooks = ({ active, setActive, userId, email,setUpdateBook, updateBook
                 onClick={() => {
                   buttonCreateNewBook(bookName);
                   setBookName("");
-                  setUpdateBook(true)
+                  router.push(router.asPath)
                 }}
               >
                 Создать блокнот

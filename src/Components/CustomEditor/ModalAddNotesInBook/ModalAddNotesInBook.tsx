@@ -10,14 +10,11 @@ const ModalAddNotesInBook = ({
   setActive,
   currentNote,
   session,
-  updateBooks
 }: any) => {
-  console.log("🚀 ~ updateBooks:", updateBooks)
 
   const router = useRouter();
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
-const [test, setTest] = useState(true)
   const [allBooks, setAllBooks] = useState([]);
   const email = session?.user.email;
   const userId = session?.user.userId;
@@ -28,11 +25,11 @@ const [test, setTest] = useState(true)
     );
     const databook = await resBook.json();
     setAllBooks(databook);
-  }, [updateBooks]);
+  }, [router, userId, email]);
 
   useEffect(() => {
     getBook();
-  }, [updateBooks]);
+  }, [router, userId, email]);
 
   function close() {
     setActive(false);
