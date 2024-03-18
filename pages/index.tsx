@@ -21,6 +21,7 @@ import { Settings } from "luxon";
 import {
   getActiveNotebookWithoutId,
   getAllUserNotes,
+  getAllUserNotesWithoutId,
   getMainMenuNote ,
 } from "./api/auth/lib/Get";
 Settings.defaultLocale = "ru";
@@ -243,7 +244,15 @@ export async function getServerSideProps(context: any) {
     const email: string = session?.user.email;
     if (user_id && email) {
       const [withoutId]: any = await getActiveNotebookWithoutId(user_id,email)
-      const responseEditorData = await getAllUserNotes(user_id, email,withoutId); // responseEditorData - Заметки все, то есть все что для редактора
+    
+    let responseEditorData;
+    if (!withoutId) {
+      responseEditorData = await getAllUserNotes(user_id, email, withoutId);
+    } else if(withoutId) {
+      responseEditorData = await getAllUserNotesWithoutId(user_id, email);
+    }
+     
+
       const responseNoteMainMenuData = await getMainMenuNote (
         user_id,
         email

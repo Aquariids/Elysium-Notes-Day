@@ -48,7 +48,7 @@ export async function getAllUserNotes(
   }
 }
 
-export async function getAllUserNotes2(
+export async function getAllUserNotesWithoutId(
   userId: string | string[],
   email: string | string[],
 ) {

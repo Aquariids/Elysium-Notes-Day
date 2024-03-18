@@ -39,7 +39,7 @@ export type GetAction =
   | "get_all_user_notes_from_recycle"
   | "get_main_menu_note"
 | "get_active_notebook_without_id"
-| "get_all_user_notes_2"
+| "get_all_user_notes_without_id"
   
 
 export const get_action = {
@@ -51,7 +51,7 @@ export const get_action = {
   get_all_user_notebook: "get_all_user_notebook",
   get_active_notebook: "get_active_notebook",
   get_active_notebook_without_id:"get_active_notebook_without_id",
-  get_all_user_notes_2:"get_all_user_notes_2"
+  get_all_user_notes_without_id:"get_all_user_notes_without_id"
 };
 
 // delete and restore actions

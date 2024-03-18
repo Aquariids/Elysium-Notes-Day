@@ -8,6 +8,7 @@ const NotesList = ({
   deleteElement,
   loadingDelete,
 }: any) => {
+  
 
   if (!data) {
     return <List body={body} userId={userId} email={email} />;

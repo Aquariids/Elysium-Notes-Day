@@ -21,6 +21,7 @@ import {
   getAllUserNotebook,
   getUserNotesFromNotebook,
   getActiveNotebookWithoutId,
+  getAllUserNotesWithoutId,
 } from "../api/auth/lib/Get";
 import { Record } from "immutable";
 
@@ -31,6 +32,7 @@ const notes = ({
   email,
   data_nootebook,
   all_id,
+  without_id_props
 }: notes_data & Record<string, unknown>) => {
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
@@ -40,13 +42,12 @@ const notes = ({
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
+  console.log("🚀 ~ links:", links)
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
   const [test, setTest] = useState<boolean>();
  
-  const [withoutId, setWithoutId] = useState<boolean>(false);
-  
-  
+  const [withoutId, setWithoutId] = useState<boolean>(Boolean(without_id_props));
   
   useEffect(() => {
    getActiveWithoutId()
@@ -98,21 +99,22 @@ const notes = ({
         );
         const [idPage] = await idPageForBooks.json();
       
-        if (idPage === "all") {
+        if (idPage === "all" && !withoutId) {
           const res = await fetch(
             `/api/getData?action=${get_action.get_all_user_notes}&userId=${user_id}&email=${email}`
           );
-          const res2 = await fetch(
-            `/api/getData?action=${get_action.get_all_user_notes_2}&userId=${user_id}&email=${email}`
-          );
+        
           const data = await res.json();
+         
+          setLinks(data);
+        } else if(idPage === "all" && withoutId) {
+          const res2 = await fetch(
+            `/api/getData?action=${get_action.get_all_user_notes_without_id}&userId=${user_id}&email=${email}`
+          );
           const data2 = await res2.json();
-          if(withoutId) {
-            setLinks(data2);
-          } else {
-            setLinks(data);
-          }
-        } else {
+          setLinks(data2);
+        } 
+        if(idPage !== "all") {
           const res = await fetch(
             `/api/getData?action=${get_action.get_user_notes_from_notebook}&userId=${user_id}&email=${email}&idPage=${idPage}`
           );
@@ -263,28 +265,33 @@ export async function getServerSideProps(context: any) {
       };
     }
 
-    const user_id: string = session?.user.userId; // айди авторизованного человека
+    const user_id: string = session?.user.userId;
     const email: string = session?.user.email;
     const [idpage]: any = await getActiveNotebook(user_id, email);
-    const [withoutId]: any = await getActiveNotebookWithoutId(user_id,email)
-    
-    const responseEditorData =
-      idpage === "all"
-        ? await getAllUserNotes(user_id, email, withoutId)
-        : await getUserNotesFromNotebook(user_id, email, idpage); // responseEditorData - Заметки все, то есть все что для редактора
-    const dataRes = await getAllUserNotebook(user_id, email);
+    const [withoutId]: any = await getActiveNotebookWithoutId(user_id, email);
 
+    let responseEditorData;
+    if (idpage === "all" && !withoutId) {
+      responseEditorData = await getAllUserNotes(user_id, email, withoutId);
+    } else if(withoutId) {
+      responseEditorData = await getAllUserNotesWithoutId(user_id, email);
+    }
+     if(idpage !== "all") {
+      responseEditorData = await getUserNotesFromNotebook(user_id, email, idpage);
+    }
+
+    const dataRes = await getAllUserNotebook(user_id, email);
     const data_nootebook = dataRes?.map((item) => ({
       ...item,
       _id: item._id.toString(),
     }));
+
     const serializedData = responseEditorData?.map((item) => ({
-      // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
       ...item,
       _id: item._id.toString(),
     }));
-    let all_id =
-      serializedData && serializedData.map((obj: { _id: any }) => obj._id); // получаем все _id заметок в одном месте.
+
+    let all_id = serializedData?.map((obj: { _id: any }) => obj._id);
 
     return {
       props: {
@@ -294,7 +301,8 @@ export async function getServerSideProps(context: any) {
         email,
         data_nootebook,
         all_id,
-      }, // тут данные для редактора уже просто dataEditor!
+        without_id_props:withoutId + ''
+      },
     };
   } catch (err) {
     return { props: {} };

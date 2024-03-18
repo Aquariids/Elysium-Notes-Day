@@ -10,6 +10,7 @@ import {
   getUserNotesFromNotebook,
   getActiveNotebookWithoutId,
   getAllUserNotes2,
+  getAllUserNotesWithoutId,
 } from "./auth/lib/Get";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
@@ -52,8 +53,8 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
         case get_action.get_active_notebook:
           res.status(200).json(await getActiveNotebook(userId, email));
           break;
-          case get_action.get_all_user_notes_2:
-          res.status(200).json(await getAllUserNotes2(userId, email));
+          case get_action.get_all_user_notes_without_id:
+          res.status(200).json(await getAllUserNotesWithoutId(userId, email));
           break;
         default:
           res.status(400).send("Invalid action");
