@@ -59,6 +59,19 @@ const CustomEditor = ({
   const [showToolbar, setShowToolbar] = useState<boolean>(false);
   const [routerReclycle, setRouterReclycle] = useState<boolean>(false);
   const [activeModal, setActiveModal] = useState(false);
+
+
+
+
+  useEffect(() => {
+    const test = document.querySelector(`.notranslate`) as HTMLElement;
+    if(test && !!test.getAttribute("spellcheck"))  {
+      test && test.setAttribute("spellcheck","true");
+      test && test.setAttribute("contenteditable","true");
+    }
+   
+
+  },[])
   useEffect(() => {
     hljs.highlightAll();
   }, [code]);
@@ -342,6 +355,7 @@ const CustomEditor = ({
             ) : (
               <div className={cn({ [s.block]: routerReclycle })}>
                 <Editor
+                
                   placeholder='...Введите текст'
                   editorKey="editor"
                   editorState={editorState}
