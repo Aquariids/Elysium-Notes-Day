@@ -76,6 +76,14 @@ const ModalAddNotesInBook = ({
         </span>
         <div className={s.body__content}>
           <div className={s.books}>
+            <div
+            className={cn({
+              [s.currentActiveBook]: activeLink._id === 'all',
+              [s.activeBook]:
+                currentNote.idPage === String('all') &&
+                !activeLink,
+            })}
+            >Все заметки</div>
             {allBooks && allBooks.length > 0 ? (
               allBooks.map((item: any, i: number) => {
                 return (

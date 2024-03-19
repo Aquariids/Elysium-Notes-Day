@@ -38,4 +38,5 @@ interface notes_data {
   data_nootebook: data_nootebook[];
   all_id: string[];
   without_id_props:boolean
+  data:any
 }

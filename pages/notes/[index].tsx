@@ -43,13 +43,13 @@ const notes = ({
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
-  console.log("🚀 ~ links:", links)
+ 
+
 
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
  
   const [withoutId, setWithoutId] = useState<boolean>(Boolean(without_id_props));
-  console.log("🚀 ~ withoutId:", withoutId)
   
   useEffect(() => {
    getActiveWithoutId()

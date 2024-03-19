@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import clientPromise from "./mongodb";
 interface dbPros {
   collectionName: string;
@@ -63,8 +62,9 @@ export async function getAllUserNotesWithoutId(
     });
     const allNotes = await collection.find(query).sort({ date: 1 }).toArray();
     const notesWithoutIdPage = allNotes.filter((item) => {
-      return !item.idPage;
+      return !item.idPage || item.idPage == 'all';
     });
+      
       return notesWithoutIdPage;
   
   } catch (error) {
