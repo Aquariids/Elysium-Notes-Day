@@ -61,13 +61,11 @@ const CustomEditor = ({
   const [activeModal, setActiveModal] = useState(false);
 
 
-
-
   useEffect(() => {
-    const test = document.querySelector(`.notranslate`) as HTMLElement;
-    if(test && !!test.getAttribute("spellcheck"))  {
-      test && test.setAttribute("spellcheck","true");
-      test && test.setAttribute("contenteditable","true");
+    const bodyEditor = document.querySelector(`.notranslate`) as HTMLElement;
+    if(bodyEditor && !!bodyEditor.getAttribute("spellcheck"))  {
+      bodyEditor && bodyEditor.setAttribute("spellcheck","true");
+      bodyEditor && bodyEditor.setAttribute("contenteditable","true");
     }
    
 
@@ -77,7 +75,7 @@ const CustomEditor = ({
   }, [code]);
 
 
-  const btn_hide = selectedItem.block ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;
+  const btnHide = selectedItem.block ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;
 
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const userDate = DateTime.now().setZone(userTimeZone);
@@ -308,7 +306,7 @@ const CustomEditor = ({
                 }}
               >
                 {" "}
-                {!routerReclycle && btn_hide}{" "}
+                {!routerReclycle && btnHide}{" "}
               </div>
               
               <ButtonDeleteNotes
