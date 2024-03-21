@@ -128,19 +128,19 @@ const ModalAddNotesInBook = ({
                     <div className={cn(s.content_link, {
                        [s.minus_red]: activeLink.idPage === 'all'
                     })}>
-                      {activeLink.idPage == 'all' ?  <MinusNotebook className={cn(s.hide, {
+                      {activeLink.idPage === 'all' ?  <MinusNotebook className={cn(s.hide, {
                          [s.show]:
                          (activeLink._id === item._id && !currentIdPage) ||
                          currentNote.idPage === String(item.idPage),
                       })} /> :  <Done
                         className={cn(s.hide, {
                           [s.show]:
-                            (activeLink._id === item._id && !currentIdPage) ||
+                            (activeLink._id === item._id && currentNote.idPage === 'all') ||
                             currentNote.idPage === String(item.idPage),
                            
                         })}
                       /> }
-                   
+
                      {" "}
                       <span className={s.text}>{item.name}</span>
                     </div>
