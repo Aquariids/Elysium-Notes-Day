@@ -95,7 +95,9 @@ const ModalAddNotesInBook = ({
             }}
             >
             <div
-            className={s.content_link}
+            className={cn(s.content_link, {
+              [s.hideDisplayBlock]: currentNote.idPage === 'all' 
+            })}
             >
                <Done
                         className={cn(s.hide, {
@@ -103,7 +105,8 @@ const ModalAddNotesInBook = ({
                             (activeLink.idPage === 'all')
                         })}
                       />
-              {currentNote.idPage === 'all' ? <></>:<span className={s.text}>Удалить из блокнота</span>}
+              <span className={s.deleteNotebook}>Удалить из блокнота</span>
+             
             </div>
             </span>
             {allBooks && allBooks.length > 0 ? (
@@ -123,7 +126,7 @@ const ModalAddNotesInBook = ({
                     key={item._id}
                   >
                     <div className={cn(s.content_link, {
-                       [s.hide2]: activeLink.idPage === 'all'
+                       [s.minus_red]: activeLink.idPage === 'all'
                     })}>
                       {activeLink.idPage == 'all' ?  <MinusNotebook className={cn(s.hide, {
                          [s.show]:

@@ -157,7 +157,7 @@ transform: scale(1);
    
 }
 
-.hide2 {
+.minus_red {
     
     transition: all .2s;
    
@@ -198,4 +198,19 @@ border-radius: 4px;
     color: #fcfbfb;
     cursor: not-allowed;
     background-color: #a3a3a36c;
+}
+
+.hideDisplayBlock {
+    display: none;
+}
+
+.deleteNotebook {
+    transition: all .2s;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    padding-left: 15px;
+    color: rgb(212, 9, 9);
+
+    
 }
