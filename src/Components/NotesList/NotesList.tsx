@@ -8,7 +8,7 @@ const NotesList = ({
   deleteElement,
   loadingDelete,
 }: any) => {
-  
+
 
   if (!dataClient) {
     return <List body={dataServer} userId={userId} email={email} />;

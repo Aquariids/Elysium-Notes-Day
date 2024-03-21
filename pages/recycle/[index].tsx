@@ -84,7 +84,8 @@ const notes = ({ data, all_id}: any) => {
               <NotesList
                 recycle={true}
                 checkTitle={checkTitle}
-                body={data ? sorting(data, sort): ''}
+                dataClient={data ? sorting(data, sort): ''}
+                
                 userId={userId}
               />
             )}
