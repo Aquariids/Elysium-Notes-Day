@@ -308,7 +308,7 @@ const CustomEditor = ({
                 {" "}
                 {!routerReclycle && btnHide}{" "}
               </div>
-              
+              {!routerReclycle && <p className={cn(s.text, s.hide_btn)} onClick={() => {setActiveModal(true)}}> Переместить.. </p>} 
               <ButtonDeleteNotes
                 currentNote={selectedItem}
                 setDeleteElement={setDeleteElement}
@@ -316,7 +316,7 @@ const CustomEditor = ({
                 all_id={all_id}
                 
               />
-             {!routerReclycle && <p className={cn(s.text, s.hide_btn)} onClick={() => {setActiveModal(true)}}> Переместить.. </p>} 
+         
           </DropdownMenuEditor>
           <ModalAddNotesInBook  session={session} currentNote={selectedItem} active={activeModal} setActive={setActiveModal}/>
        
