@@ -96,7 +96,7 @@ const ModalAddNotesInBook = ({
             >
             <div
             className={cn(s.content_link, {
-              [s.hideDisplayBlock]: currentNote.idPage === 'all' 
+              [s.hideDisplayBlock]: currentNote.idPage === 'all' ||  !currentNote.idPage 
             })}
             >
                <Done
