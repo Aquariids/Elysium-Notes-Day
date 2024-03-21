@@ -206,8 +206,8 @@ const notes = ({
                   deleteElement={deleteElement}
                   loadingDelete={loadingDelete}
                   checkTitle={checkTitle}
-                  data={links ? sorting(links, sort) : ""}
-                  body={data_editor ? sorting(data_editor, sort) : ""}
+                  dataClient={links ? sorting(links, sort) : ""}
+                  dataServer={data_editor ? sorting(data_editor, sort) : ""}
                   userId={user_id}
                 />
               )}

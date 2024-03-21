@@ -108,6 +108,7 @@ transform: scale(1);
     svg {
         transition: all .2s;
         fill: rgb(116, 115, 115);
+        
 
         &:hover {
             cursor: pointer;
@@ -152,9 +153,24 @@ transform: scale(1);
     transition: all .2s;
     opacity: 0;
     visibility: hidden;
+    
+   
+}
+
+.hide2 {
+    
+    transition: all .2s;
+   
+    
+    svg {
+        padding-left: 10px;
+      
+        fill: #e40a0a;
+    }
    
 }
 .show {
+    padding-left: 10px;
     transition: all .2s;
     opacity: 1;
     visibility: visible;

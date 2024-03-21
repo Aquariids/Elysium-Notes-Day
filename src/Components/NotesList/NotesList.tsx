@@ -1,8 +1,8 @@
 import React from "react";
 import List from "./List";
 const NotesList = ({
-  data,
-  body,
+  dataClient,
+  dataServer,
   userId,
   email,
   deleteElement,
@@ -10,14 +10,14 @@ const NotesList = ({
 }: any) => {
   
 
-  if (!data) {
-    return <List body={body} userId={userId} email={email} />;
+  if (!dataClient) {
+    return <List body={dataServer} userId={userId} email={email} />;
   } else {
     return (
       <List
         loadingDelete={loadingDelete}
         deleteElement={deleteElement}
-        body={data}
+        body={dataClient}
         userId={userId}
         email={email}
       />

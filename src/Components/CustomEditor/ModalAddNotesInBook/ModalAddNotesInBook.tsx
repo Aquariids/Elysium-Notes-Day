@@ -5,6 +5,7 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 import Xmark from "./xmark.svg";
 import Done from "./done.svg";
+import MinusNotebook from "./xnotebook.svg";
 const ModalAddNotesInBook = ({
   active,
   setActive,
@@ -15,6 +16,7 @@ const ModalAddNotesInBook = ({
   const router = useRouter();
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
+
   const [allBooks, setAllBooks] = useState([]);
   const email = session?.user.email;
   const userId = session?.user.userId;
@@ -76,14 +78,34 @@ const ModalAddNotesInBook = ({
         </span>
         <div className={s.body__content}>
           <div className={s.books}>
-            <div
-            className={cn({
-              [s.currentActiveBook]: activeLink._id === 'all',
-              [s.activeBook]:
-                currentNote.idPage === String('all') &&
-                !activeLink,
+            <span className={cn({
+                [s.currentActiveBook]: activeLink._id === 'all',
+                [s.activeBook]:
+                activeLink.idPage === 'all'
+                          
             })}
-            >Все заметки</div>
+            onClick={(e) => {
+              setCurrentIdPage('all');
+              setActiveLink({
+                _id: currentNote._id,
+                idPage:'all'
+              });
+
+              
+            }}
+            >
+            <div
+            className={s.content_link}
+            >
+               <Done
+                        className={cn(s.hide, {
+                          [s.show]:
+                            (activeLink.idPage === 'all')
+                        })}
+                      />
+              {currentNote.idPage === 'all' ? <></>:<span className={s.text}>Удалить из блокнота</span>}
+            </div>
+            </span>
             {allBooks && allBooks.length > 0 ? (
               allBooks.map((item: any, i: number) => {
                 return (
@@ -96,23 +118,27 @@ const ModalAddNotesInBook = ({
                     })}
                     onClick={(e) => {
                       setCurrentIdPage(String(item.idPage));
-                      setActiveLink(item);
-
-                      if(activeLink._id === item._id) {
-                        
-                        
-                      }
+                      setActiveLink(item)
                     }}
                     key={item._id}
                   >
-                    <div className={s.content_link}>
-                      <Done
+                    <div className={cn(s.content_link, {
+                       [s.hide2]: activeLink.idPage === 'all'
+                    })}>
+                      {activeLink.idPage == 'all' ?  <MinusNotebook className={cn(s.hide, {
+                         [s.show]:
+                         (activeLink._id === item._id && !currentIdPage) ||
+                         currentNote.idPage === String(item.idPage),
+                      })} /> :  <Done
                         className={cn(s.hide, {
                           [s.show]:
                             (activeLink._id === item._id && !currentIdPage) ||
                             currentNote.idPage === String(item.idPage),
+                           
                         })}
-                      />{" "}
+                      /> }
+                   
+                     {" "}
                       <span className={s.text}>{item.name}</span>
                     </div>
                   </span>
