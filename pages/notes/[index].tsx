@@ -43,6 +43,7 @@ const notes = ({
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
+  
  
 
 
@@ -52,7 +53,7 @@ const notes = ({
   const [withoutId, setWithoutId] = useState<boolean>(Boolean(without_id_props));
   
   useEffect(() => {
-   getActiveWithoutId()
+   getActiveWithoutId();   
   }, []);
 
 
@@ -110,11 +111,12 @@ const notes = ({
          
           setLinks(data);
         } else if(idPage === "all" && withoutId) {
-          const res2 = await fetch(
+          const res = await fetch(
             `/api/getData?action=${get_action.get_all_user_notes_without_id}&userId=${user_id}&email=${email}`
           );
-          const data2 = await res2.json();
-          setLinks(data2);
+          const data = await res.json();
+            
+          setLinks(data);
         } 
         if(idPage !== "all") {
           const res = await fetch(
