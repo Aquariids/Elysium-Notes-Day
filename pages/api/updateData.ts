@@ -8,10 +8,10 @@ import {
   updateNotebookIdForNote,
   updateNoteLastModifiedDate,
   updateCodeHighlighting ,
-  updateNoteBookMainMenu,
   updateNoteDeletionDate,
   updateActiveNotebook,
   updateActiveNotebookWithoutId,
+  updateMainMenuNote,
 } from "./auth/lib/Update";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
@@ -33,7 +33,7 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
           res.status(200).send("Data title updated successfully");
           break;
         case update_action.update_main_menu_note:
-          await updateNoteBookMainMenu(data);
+          await updateMainMenuNote(data);
           res.status(200).send("Data bookMainMenu updated successfully");
           break;
         case update_action.update_note_visibility:

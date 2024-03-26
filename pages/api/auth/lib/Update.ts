@@ -188,7 +188,7 @@ export async function updateNoteLastModifiedDate(data: any) {
 }
 
 
-export async function updateNoteBookMainMenu(data: any) {
+export async function updateMainMenuNote(data: any) {
   
   try {
     const collection = await getCollection({

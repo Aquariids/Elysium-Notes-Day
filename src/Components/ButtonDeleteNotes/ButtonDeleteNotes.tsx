@@ -9,7 +9,7 @@ import {
   update_action,
 } from "../../../pages/api/actions";
 import { DateTime, Settings } from "luxon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 Settings.defaultLocale = "ru";
 DateTime.local().setLocale("ru");
@@ -30,8 +30,11 @@ const ButtonDeleteNotes = ({
   const selectedId = router.query.index;
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
-  const [test, setTest] = useState(false);
-  console.log("🚀 ~ test:", test)
+  const [test, setTest] = useState<boolean>();
+  useEffect(() => {
+    setTest(false)
+  },[])
+
   interface DeleteLinkProps {
     linkId?: string | string[];
     recycle?: boolean;

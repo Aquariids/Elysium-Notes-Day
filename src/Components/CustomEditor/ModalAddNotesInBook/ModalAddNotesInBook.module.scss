@@ -18,7 +18,7 @@
 
 
 .body__content { 
-    padding-top: 10px;
+padding-top: 15px;
 height: 400px;
 display: flex;
 flex-direction: column;
@@ -26,6 +26,7 @@ align-items: flex-start;
 justify-content: space-between;
 
 .books {
+    overflow: auto;
     display: flex;
     flex-direction: column;
     width: 560px;
