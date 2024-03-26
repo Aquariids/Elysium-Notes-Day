@@ -9,6 +9,7 @@ import {
   update_action,
 } from "../../../pages/api/actions";
 import { DateTime, Settings } from "luxon";
+import { useState } from "react";
 
 Settings.defaultLocale = "ru";
 DateTime.local().setLocale("ru");
@@ -29,6 +30,8 @@ const ButtonDeleteNotes = ({
   const selectedId = router.query.index;
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
+  const [test, setTest] = useState(false);
+  console.log("🚀 ~ test:", test)
   interface DeleteLinkProps {
     linkId?: string | string[];
     recycle?: boolean;
@@ -36,28 +39,29 @@ const ButtonDeleteNotes = ({
   }
 
 
-  const addIdPageForNote = async () => {
-    const data = {
-      email: email,
-      userId: userId,
-      _id: currentNote._id,
-      idPage: currentNote.idPage && '',
-    };
-    const res = await fetch(
-      `/api/updateData?action=${update_action.update_notebook_id_for_note}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+  // const addIdPageForNote = async () => {
+  //   const data = {
+  //     email: email,
+  //     userId: userId,
+  //     _id: currentNote._id,
+  //     idPage: currentNote.idPage && '',
+  //   };
+  //   const res = await fetch(
+  //     `/api/updateData?action=${update_action.update_notebook_id_for_note}`,
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data),
+  //     }
+  //   );
 
-    if (res.ok) router.push(router.asPath);
-  };
+  //   if (res.ok) router.push(router.asPath);
+  // };
 
   const deleteDate = async (data: any) => {
+    setTest(true)
     await fetch(`/api/updateData?action=${update_action.update_note_deletion_date}`, {
       method: "POST",
       headers: {
@@ -93,6 +97,7 @@ const ButtonDeleteNotes = ({
       }&_id=${linkId}&userId=${userId}`
     );
 
+    
     await all_id.filter((link: string) => link !== linkId);
     const currentIndex = all_id.findIndex((i: string) => i == selectedId);
     !recycleRouter && setLoadingDelete(true);
@@ -154,7 +159,7 @@ const ButtonDeleteNotes = ({
           onClick={() => handleDeleteLink({ linkId: selectedId })}
           {...props}
         >
-          <p className={s.text}>Удалить</p>
+         {test ?  <p className={s.text}>Удалить....</p> : <p className={s.text}>Удалить </p>}
         </div>
         {/* <div
           className={cn(s.delete, {

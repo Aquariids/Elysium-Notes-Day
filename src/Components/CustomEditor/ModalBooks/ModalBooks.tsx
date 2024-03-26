@@ -103,6 +103,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
         getDatabook();
         setActiveModal(false);
         setCurrentIdPage("");
+       
       }
     } catch (err) {
       console.error(err);
