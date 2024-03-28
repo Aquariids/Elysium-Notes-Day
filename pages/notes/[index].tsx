@@ -94,42 +94,42 @@ const notes = ({
     [data_editor, selectedId]
   );
 
-  const getData = useCallback(async () => {
-    try {
-      if (session.status === "authenticated") {
-        const idPageForBooks = await fetch(
-          `/api/getData?action=${get_action.get_active_notebook}&userId=${user_id}&email=${email}`
-        );
-        const [idPage] = await idPageForBooks.json();
+  // const getData = useCallback(async () => {
+  //   try {
+  //     if (session.status === "authenticated") {
+  //       const idPageForBooks = await fetch(
+  //         `/api/getData?action=${get_action.get_active_notebook}&userId=${user_id}&email=${email}`
+  //       );
+  //       const [idPage] = await idPageForBooks.json();
       
-        if (idPage === "all" && !withoutId) {
-          const res = await fetch(
-            `/api/getData?action=${get_action.get_all_user_notes}&userId=${user_id}&email=${email}`
-          );
+  //       if (idPage === "all" && !withoutId) {
+  //         const res = await fetch(
+  //           `/api/getData?action=${get_action.get_all_user_notes}&userId=${user_id}&email=${email}`
+  //         );
         
-          const data = await res.json();
+  //         const data = await res.json();
          
-          setLinks(data);
-        } else if(idPage === "all" && withoutId) {
-          const res = await fetch(
-            `/api/getData?action=${get_action.get_all_user_notes_without_id}&userId=${user_id}&email=${email}`
-          );
-          const data = await res.json();
+  //         setLinks(data);
+  //       } else if(idPage === "all" && withoutId) {
+  //         const res = await fetch(
+  //           `/api/getData?action=${get_action.get_all_user_notes_without_id}&userId=${user_id}&email=${email}`
+  //         );
+  //         const data = await res.json();
             
-          setLinks(data);
-        } 
-        if(idPage !== "all") {
-          const res = await fetch(
-            `/api/getData?action=${get_action.get_user_notes_from_notebook}&userId=${user_id}&email=${email}&idPage=${idPage}`
-          );
-          const data = await res.json();
-          setLinks(data);
-        }
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [checkTitle, data_editor]);
+  //         setLinks(data);
+  //       } 
+  //       if(idPage !== "all") {
+  //         const res = await fetch(
+  //           `/api/getData?action=${get_action.get_user_notes_from_notebook}&userId=${user_id}&email=${email}&idPage=${idPage}`
+  //         );
+  //         const data = await res.json();
+  //         setLinks(data);
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, [checkTitle, data_editor]);
 
   const updateActiveSortingAction = useCallback(
     async (sorting: string, userId: string, email: string) => {
@@ -172,17 +172,17 @@ const notes = ({
 
   
 
-  useEffect(() => {
-    if (loadingDelete) {
-      getData();
-    } else {
-      const timer = setTimeout(() => {
-        getData();
-      }, 300);
+  // useEffect(() => {
+  //   if (loadingDelete) {
+  //     getData();
+  //   } else {
+  //     const timer = setTimeout(() => {
+  //       getData();
+  //     }, 300);
 
-      return () => clearTimeout(timer);
-    }
-  }, [checkTitle, data_editor, loadingDelete]);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [checkTitle, data_editor, loadingDelete]);
 
   useEffect(() => {
     const sort = localStorage.getItem("sorting") || "no-sorting";

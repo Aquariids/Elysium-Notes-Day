@@ -17,7 +17,7 @@ const NotesList = ({
       <List
         loadingDelete={loadingDelete}
         deleteElement={deleteElement}
-        body={dataClient}
+        body={dataServer}
         userId={userId}
         email={email}
       />
