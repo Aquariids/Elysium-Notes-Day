@@ -24,6 +24,7 @@ import {
   getAllUserNotesWithoutId,
 } from "../api/auth/lib/Get";
 import { Record } from "immutable";
+import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 
 const notes = ({
   data_editor,
@@ -46,6 +47,10 @@ const notes = ({
   
   const [showMobileSidebar, setShowMobileSidebar ] = useState(false);
 
+
+  useEffect(() => {
+    setShowMobileSidebar(false)
+  },[router])
 
 
 
@@ -202,10 +207,15 @@ const notes = ({
     <AnimationContainer>
       <div className={s.wrapper}>
         <div className={showMobileSidebar ? s.notes_list_monbile: s.notes_list}>
-          <HeaderNotes setSort={setSort} sort={sort} data={data_editor} />
+         {showMobileSidebar ? <></>:<HeaderNotes setSort={setSort} sort={sort} data={data_editor} />}
           <div className={s.container}>
             <div className={s.list}>
               {data_editor[0] && (
+                showMobileSidebar ?
+                <>
+                <HeaderNotes showMobileSidebar={showMobileSidebar} setSort={setSort} sort={sort} data={data_editor} />
+            
+                
                 <NotesList
                 showMobileSidebar = {showMobileSidebar}
                   deleteElement={deleteElement}
@@ -215,6 +225,19 @@ const notes = ({
                   dataServer={data_editor ? sorting(data_editor, sort) : ""}
                   userId={user_id}
                 />
+                </>
+                : <>
+                 <NotesList
+                showMobileSidebar = {showMobileSidebar}
+                  deleteElement={deleteElement}
+                  loadingDelete={loadingDelete}
+                  checkTitle={checkTitle}
+                  dataClient={links ? sorting(links, sort) : ""}
+                  dataServer={data_editor ? sorting(data_editor, sort) : ""}
+                  userId={user_id}
+                />
+                </>
+                
               )}
             </div>
           </div>

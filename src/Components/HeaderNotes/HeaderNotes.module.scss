@@ -57,4 +57,28 @@
 
 }
 
+.test {
+    display: flex;
+    flex-direction: row-reverse;
+    
+}
 
+
+
+.newNoteMobile {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+
+}
+
+@media only screen and (max-width: 500px) {
+.header__foter {
+ align-items: center;
+}
+
+
+.allNotesCounter {
+    padding: 0;
+}
+}

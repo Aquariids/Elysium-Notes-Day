@@ -4,7 +4,7 @@
     grid-template-rows: auto;
     height: 100vh;
 
-    
+
 }
 
 
@@ -18,22 +18,24 @@
     height: 100vh;
     border-right: 1px solid black;
 }
+
 .list {
     margin-right: 5px;
     margin-left: 3px;
-    
+
 }
 
 
 .btn_new {
-    
+
     display: inline-block;
 }
+
 .container {
-max-height: calc(100vh - 110px);
-overflow-y: scroll;
-overflow-x: hidden;
-width: 100%; 
+    max-height: calc(100vh - 110px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
 
 
 }
@@ -49,7 +51,7 @@ width: 100%;
 
 .container::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 10px rgba(255, 255, 255, 0);
-    
+
 }
 
 
@@ -62,7 +64,7 @@ width: 100%;
 }
 
 .editor {
-    border-left:  1px solid rgba(128, 128, 128, 0.151);
+    border-left: 1px solid rgba(128, 128, 128, 0.151);
     padding: 35px 45px;
     min-width: 300px;
     height: 100vh;
@@ -77,26 +79,28 @@ width: 100%;
     align-items: center;
     padding-left: 17px;
     border-left: 1px solid rgba(122, 122, 122, 0.452);
-    fill:rgb(104, 104, 103);
+    fill: rgb(104, 104, 103);
+
     svg {
         margin-right: 5px;
-        }
+    }
 
 }
 
-  .tooltip {
+.tooltip {
     position: relative;
     display: inline-flex;
     cursor: pointer;
     transition: all .5s;
+
     &:hover {
         color: rgb(136, 137, 138);
-        fill:rgb(136, 137, 138);
+        fill: rgb(136, 137, 138);
     }
 
-  }
+}
 
-  .tooltip::before {
+.tooltip::before {
     content: "Перейти в блокнот";
     position: absolute;
     background: #333;
@@ -112,37 +116,37 @@ width: 100%;
     opacity: 0;
     pointer-events: none;
     transition: opacity .5s;
-  }
+}
 
-  .tooltip:hover::before {
+.tooltip:hover::before {
     opacity: 1;
-  }
+}
 
 
-  .test {
+.test {
     display: none;
     bottom: 0;
     position: absolute;
     right: 0;
     margin-right: 15px;
     margin-bottom: 15px;
-  }
+}
 
 
-  @media only screen and (max-width: 1365px) {
-    
+@media only screen and (max-width: 1365px) {
+
 
     .editor {
         padding: 35px 10px;
     }
-  }
+}
 
 //   @media only screen and (max-width: 1315px) {
 //     .wrapper {
 //         grid-template-columns: 260px 780px;
 //     }
 
-   
+
 //   }
 
 
@@ -150,75 +154,86 @@ width: 100%;
 @media only screen and (max-width: 1500px) {
     .container {
         max-height: calc(100vh - 116px);
-        
+
     }
-    
-  }
+
+}
+
 @media only screen and (max-width: 1300px) {
     .container {
         max-height: calc(100vh - 102px);
-        
+
     }
+
     .wrapper {
-    
+
         grid-template-columns: 270px 1fr;
-        
+
     }
-   
-  }
+
+}
 
 
 
-  @media only screen and (max-width: 1245px) {
-   
+@media only screen and (max-width: 1245px) {
+
     .wrapper {
         grid-template-columns: 238px 1fr;
-        
-    }
-   
-  }
 
-  @media only screen and (max-width: 1200px) {
-   
+    }
+
+}
+
+@media only screen and (max-width: 1200px) {
+
     .wrapper {
         grid-template-columns: 208px 1fr;
-        
+
     }
-   
-  }
-  @media only screen and (max-width: 500px) {
+
+}
+
+@media only screen and (max-width: 500px) {
+
+
 
     .test {
         display: block;
         z-index: 101;
     }
-   .notes_list_monbile {
-    z-index: 100;
-    background-color: rgb(51, 51, 51);
-    width: 100svw;
-    height: 100svh;
-    position: absolute;
-    
-   }
 
-   .notes_list {
-    display: none;
-   }
+    .notes_list_monbile {
+        z-index: 100;
+        background-color: rgb(255, 255, 255);
+        width: 100svw;
+        height: 100svh;
+        position: absolute;
+
+    }
+
+    .notes_list {
+        display: none;
+    }
 
 
-   .editor {
-    min-width: 100%;
-    min-height: 100%;
-    padding: 0;
-    margin: 0;
+    .editor {
+        min-width: 100%;
+        min-height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        padding: 0;
+        
+    }
+
+
 }
-
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-
-  }

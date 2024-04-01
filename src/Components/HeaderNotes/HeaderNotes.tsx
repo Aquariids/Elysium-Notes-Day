@@ -7,8 +7,9 @@ import { useSession } from "next-auth/react";
 import { delete_restore_action } from "../../../pages/api/actions";
 import { RECYCLE } from "../../../pages/api/paths";
 import SortingMenu from "../SortingMenu/SortingMenu";
+import ButtonCreateNewNotes from "../ButtonCreateNewNotes/ButtonCreateNewNotes";
 
-const HeaderNotes = ({ data, setSort, sort }: any) => {
+const HeaderNotes = ({ data, setSort, sort,showMobileSidebar }: any) => {
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1] === RECYCLE;
   const session = useSession();
@@ -70,9 +71,16 @@ const HeaderNotes = ({ data, setSort, sort }: any) => {
           </>
         )}
       </div>
+     
       <div className={s.header__foter}>
+        
         <div className={s.allNotesCounter}>{result}</div>
+        <div className={s.test}>
         <SortingMenu sort={sort} setSort={setSort}/>
+        {showMobileSidebar && <div className={s.newNoteMobile}> <ButtonCreateNewNotes/> </div>}
+        </div>
+       
+     
       </div>
     </div>
   );
