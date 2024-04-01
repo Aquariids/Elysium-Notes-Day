@@ -10,7 +10,8 @@ import { EditorState, convertFromRaw } from "draft-js";
 import { update_action } from "../../../pages/api/actions";
 import { useSession } from "next-auth/react";
 
-const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
+const List = ({ body, loadingDelete, deleteElement, idPage = null, showMobileSidebar}: any) => {
+console.log(showMobileSidebar);
 
   const router = useRouter();
 
@@ -108,6 +109,7 @@ const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
               <div
                 key={item._id}
                 className={cn({
+                 
                   [s.active]: selectedId === item._id,
                   [s.mainMenuLink]: router.asPath === "/",
                   [s.wrapper_link]: router.asPath !== "/",

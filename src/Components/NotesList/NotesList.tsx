@@ -7,7 +7,9 @@ const NotesList = ({
   email,
   deleteElement,
   loadingDelete,
+  showMobileSidebar
 }: any) => {
+ 
 
 
   if (!dataClient) {
@@ -15,6 +17,7 @@ const NotesList = ({
   } else {
     return (
       <List
+      showMobileSidebar = {showMobileSidebar}
         loadingDelete={loadingDelete}
         deleteElement={deleteElement}
         body={dataClient}

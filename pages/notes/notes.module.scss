@@ -119,6 +119,16 @@ width: 100%;
   }
 
 
+  .test {
+    display: none;
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    margin-right: 15px;
+    margin-bottom: 15px;
+  }
+
+
   @media only screen and (max-width: 1365px) {
     
 
@@ -177,13 +187,28 @@ width: 100%;
    
   }
   @media only screen and (max-width: 500px) {
+
+    .test {
+        display: block;
+        z-index: 101;
+    }
+   .notes_list_monbile {
+    z-index: 100;
+    background-color: rgb(51, 51, 51);
+    width: 100svw;
+    height: 100svh;
+    position: absolute;
+    
+   }
+
    .notes_list {
     display: none;
    }
 
+
    .editor {
-    width: 100svw;
-    height: 100svh;
+    min-width: 100%;
+    min-height: 100%;
     padding: 0;
     margin: 0;
 }

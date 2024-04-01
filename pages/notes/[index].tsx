@@ -44,7 +44,9 @@ const notes = ({
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
   
- 
+  const [showMobileSidebar, setShowMobileSidebar ] = useState(false);
+
+
 
 
   const session = useSession();
@@ -199,12 +201,13 @@ const notes = ({
   return (
     <AnimationContainer>
       <div className={s.wrapper}>
-        <div className={s.notes_list}>
+        <div className={showMobileSidebar ? s.notes_list_monbile: s.notes_list}>
           <HeaderNotes setSort={setSort} sort={sort} data={data_editor} />
           <div className={s.container}>
             <div className={s.list}>
               {data_editor[0] && (
                 <NotesList
+                showMobileSidebar = {showMobileSidebar}
                   deleteElement={deleteElement}
                   loadingDelete={loadingDelete}
                   checkTitle={checkTitle}
@@ -251,6 +254,8 @@ const notes = ({
             />
           )}
         </div>
+        <button onClick={()=> setShowMobileSidebar(!showMobileSidebar)} className={s.test}> Нажми </button>
+
       </div>
     </AnimationContainer>
   );
