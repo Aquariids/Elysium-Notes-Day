@@ -203,7 +203,7 @@ const ToolbarButtons = ({
         )}
       </div>
       <div
-        className={cn(s.hideBtns, {
+        className={cn(s.hideBtns, s.mobile, {
           [s.show]: showToolbar === true,
         })}
       >

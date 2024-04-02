@@ -11,13 +11,14 @@
 
 .visibleShow {
     overflow: visible;
-   
+
 }
 
 .btn__code {
     padding-left: 10px;
     display: flex;
 }
+
 .basic_btns {
     display: flex;
 
@@ -27,8 +28,10 @@
 
 
 .last_date_update {
-    display: none;  
+    display: none;
+
 }
+
 .showDate {
     color: #525151;
     padding-left: 18px;
@@ -40,7 +43,7 @@
 
 .btn_active_code {
     svg {
-        fill:#1613e0;
+        fill: #1613e0;
     }
 }
 
@@ -49,8 +52,12 @@
     opacity: 0;
     visibility: hidden;
     transform: translateX(-50%);
+    
 }
 
+.mobile {
+    display: block;
+}
 
 .btn_active svg {
     fill: #b11f1f;
@@ -62,6 +69,7 @@
     border: none;
     cursor: pointer;
     text-transform: "capitalize";
+
     &:hover {
         svg {
             fill: #b11f1f;
@@ -107,8 +115,8 @@
     border-left: 1px solid rgba(122, 122, 122, 0.452);
     border-right: 1px solid rgba(122, 122, 122, 0.452);
     display: flex;
-    
-    
+
+
 }
 
 .show {
@@ -125,7 +133,7 @@
 }
 
 .btn_active_highlighter svg {
-    box-shadow: 0 0 2px 1.5px  rgba(167, 166, 166, 0.671);
+    box-shadow: 0 0 2px 1.5px rgba(167, 166, 166, 0.671);
     transform: scale(1.4);
 }
 
@@ -137,23 +145,28 @@
     color: #525151;
 }
 
-.highlighter_yellow  {
-fill: #ffef9e;
+.highlighter_yellow {
+    fill: #ffef9e;
 }
+
 .highlighter_pink {
-fill: #fec1d0;
+    fill: #fec1d0;
 }
+
 .highlighter_green {
-fill: #b7f7d1;
+    fill: #b7f7d1;
 }
+
 .highlighter_blue {
-fill: #adecf4;
+    fill: #adecf4;
 }
+
 .highlighter_violet {
-fill: #cbcaff;
+    fill: #cbcaff;
 }
+
 .highlighter_brown {
-fill: #ffd1b0;
+    fill: #ffd1b0;
 }
 
 .all__btns {
@@ -162,32 +175,52 @@ fill: #ffd1b0;
     flex-direction: row;
     justify-content: flex-start;
 
-    
-    
+
+
 }
 
 
 @media only screen and (max-width: 500px) {
-   .toolbarHeader {
-    width: 100%;
-    height: 100%;
-    border: none;
-   }
+    .toolbarHeader {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+.mobile {
+    display: none;
+}
 
- 
-   .all__btns {
-    flex-direction: column;
-   }
+    .all__btns {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
 
+
+
+    .alignmentBtns {
+        border: none;
+        padding-top: 10px;
+    }
+
+    .show {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .hideBtns {
+        
+        transform: translateX(0);
+    }
+
+   .last_date_update {
+    flex-direction: row;
+        flex-wrap: wrap;
+        height: 100%;
    
-
-   .alignmentBtns {
-    border: none;
-    padding-top: 10px;
    }
-
-   .hideBtns {
-    transform: translateX(0px);
-   }
-   }
- 
+}
