@@ -10,11 +10,12 @@ import SortingMenu from "../SortingMenu/SortingMenu";
 import ButtonCreateNewNotes from "../ButtonCreateNewNotes/ButtonCreateNewNotes";
 
 const HeaderNotes = ({ data, setSort, sort,showMobileNotesList }: any) => {
+  
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1] === RECYCLE;
   const session = useSession();
   const userId = session.data?.user.userId;
-  const [counterNotes, setCounterNotes] = useState(data.length);
+  const [counterNotes, setCounterNotes] = useState(data && data.length);
 
   async function deleteAllDataRecycle() {
     let result = confirm(
@@ -42,8 +43,8 @@ const HeaderNotes = ({ data, setSort, sort,showMobileNotesList }: any) => {
   }
   
   useEffect(() => {
-    setCounterNotes(data.length);
-  }, [router]);
+    setCounterNotes(data && data.length);
+  }, [data]);
 
 
   

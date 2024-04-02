@@ -298,6 +298,7 @@ const CustomEditor = ({
             setEditorState={setEditorState}
           />
         
+        <div className={s.mobileWrapperMenu}>
           <DropdownMenuEditor activeModal={activeModal}  icon={<DotsMenu />}  >
           <div
                 className={s.hide_btn}
@@ -319,7 +320,7 @@ const CustomEditor = ({
          
           </DropdownMenuEditor>
           <ModalAddNotesInBook  session={session} currentNote={selectedItem} active={activeModal} setActive={setActiveModal}/>
-       
+          </div>
         </div>
       </div>
       <WrapperEditorRecycle routerReclycle={routerReclycle}>

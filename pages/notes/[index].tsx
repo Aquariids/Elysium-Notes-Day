@@ -43,7 +43,6 @@ const notes = ({
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
-  
   const [showMobileNotesList, setShowMobileNotesList ] = useState(false);
   
 
@@ -206,13 +205,13 @@ const notes = ({
     <AnimationContainer>
       <div className={s.wrapper}>
         <div className={showMobileNotesList ? s.notes_list_monbile: s.notes_list}>
-         {showMobileNotesList ? <></>:<HeaderNotes setSort={setSort} sort={sort} data={data_editor} />}
+         {showMobileNotesList ? <></>:<HeaderNotes setSort={setSort} sort={sort} data={links ? links : data_editor} />}
           <div className={s.container}>
             <div className={s.list}>
               {data_editor[0] && (
                 showMobileNotesList ?
                 <>
-                <HeaderNotes showMobileNotesList={showMobileNotesList} setSort={setSort} sort={sort} data={data_editor} />
+                <HeaderNotes showMobileNotesList={showMobileNotesList} setSort={setSort} sort={sort} data={links ? links: data_editor} />
                 <p className={cn(s.nameBookMobile)}>
             <span onClick={() => setActiveModal(true)} className={s.tooltip}>
               <Book /> <span>{idpage === "all" ? "Всe" : name && name}</span>

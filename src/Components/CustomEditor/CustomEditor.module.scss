@@ -131,15 +131,36 @@
     padding-bottom: 5px;
 }
 
-
+.mobileWrapperMenu {
+    display: inline-flex;
+}
 @media only screen and (max-width: 500px) {
     
+    .mobileWrapperMenu {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
   .body {
     width: 100%;
     margin: 0;
     padding-left: 5px;
     padding-right: 5px;
-    margin-top: 25px;
+    padding-top: 20px;
+    
+  }
+
+  .title {
+    
+  }
+
+  .toolbar {
+    
+    margin-top: 35px;
+    margin-bottom: 25px;
+    height: 100%;
   }
   }
 
