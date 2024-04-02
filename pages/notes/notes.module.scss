@@ -195,7 +195,20 @@
 
 @media only screen and (max-width: 500px) {
 
+.nameBookMobile {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgb(104, 104, 103);
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    fill: rgb(104, 104, 103);
 
+    svg {
+        margin-right: 5px;
+    }
+}
 
     .test {
         display: block;
@@ -233,6 +246,11 @@
     .container {
         padding: 0;
         
+    }
+
+    .nameBook {
+      
+        display: none;
     }
 
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import List from "./List";
 const NotesList = ({
   dataClient,
@@ -7,17 +7,18 @@ const NotesList = ({
   email,
   deleteElement,
   loadingDelete,
-  showMobileSidebar
 }: any) => {
  
+
+
 
 
   if (!dataClient) {
     return <List body={dataServer} userId={userId} email={email} />;
   } else {
+    
     return (
       <List
-      showMobileSidebar = {showMobileSidebar}
         loadingDelete={loadingDelete}
         deleteElement={deleteElement}
         body={dataClient}

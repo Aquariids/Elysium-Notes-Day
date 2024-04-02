@@ -169,12 +169,14 @@ fill: #ffd1b0;
 @media only screen and (max-width: 500px) {
    .toolbarHeader {
     width: 100%;
+    border: none;
    }
 
    .all__btns {
     flex-direction: column;
    }
    .alignmentBtns {
+    border: none;
     padding-top: 10px;
    }
    }

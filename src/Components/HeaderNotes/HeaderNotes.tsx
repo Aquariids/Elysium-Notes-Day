@@ -9,7 +9,7 @@ import { RECYCLE } from "../../../pages/api/paths";
 import SortingMenu from "../SortingMenu/SortingMenu";
 import ButtonCreateNewNotes from "../ButtonCreateNewNotes/ButtonCreateNewNotes";
 
-const HeaderNotes = ({ data, setSort, sort,showMobileSidebar }: any) => {
+const HeaderNotes = ({ data, setSort, sort,showMobileNotesList }: any) => {
   const router = useRouter();
   const routerRecycle = router.asPath.split("/")[1] === RECYCLE;
   const session = useSession();
@@ -77,7 +77,7 @@ const HeaderNotes = ({ data, setSort, sort,showMobileSidebar }: any) => {
         <div className={s.allNotesCounter}>{result}</div>
         <div className={s.test}>
         <SortingMenu sort={sort} setSort={setSort}/>
-        {showMobileSidebar && <div className={s.newNoteMobile}> <ButtonCreateNewNotes/> </div>}
+        {showMobileNotesList && <div className={s.newNoteMobile}> <ButtonCreateNewNotes/> </div>}
         </div>
        
      

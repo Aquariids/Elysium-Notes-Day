@@ -10,10 +10,10 @@ import { EditorState, convertFromRaw } from "draft-js";
 import { update_action } from "../../../pages/api/actions";
 import { useSession } from "next-auth/react";
 
-const List = ({ body, loadingDelete, deleteElement, idPage = null, showMobileSidebar}: any) => {
-console.log(showMobileSidebar);
+const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
 
   const router = useRouter();
+  
 
   const hrefBook = `book/${idPage}`;
   const session = useSession()

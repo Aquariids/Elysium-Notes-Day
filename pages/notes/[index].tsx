@@ -24,7 +24,6 @@ import {
   getAllUserNotesWithoutId,
 } from "../api/auth/lib/Get";
 import { Record } from "immutable";
-import ButtonCreateNewNotes from "@/Components/ButtonCreateNewNotes/ButtonCreateNewNotes";
 
 const notes = ({
   data_editor,
@@ -45,11 +44,11 @@ const notes = ({
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
   
-  const [showMobileSidebar, setShowMobileSidebar ] = useState(false);
-
+  const [showMobileNotesList, setShowMobileNotesList ] = useState(false);
+  
 
   useEffect(() => {
-    setShowMobileSidebar(false)
+    setShowMobileNotesList(false)
   },[router])
 
 
@@ -73,6 +72,7 @@ const notes = ({
       setWithoutId(withoutId);
   })
     
+
 
   };
 
@@ -104,6 +104,7 @@ const notes = ({
   const getData = useCallback(async () => {
     try {
       if (session.status === "authenticated") {
+        
         const idPageForBooks = await fetch(
           `/api/getData?action=${get_action.get_active_notebook}&userId=${user_id}&email=${email}`
         );
@@ -116,7 +117,7 @@ const notes = ({
         
           const data = await res.json();
          
-          setLinks(data);
+           setLinks(data);
         } else if(idPage === "all" && withoutId) {
           const res = await fetch(
             `/api/getData?action=${get_action.get_all_user_notes_without_id}&userId=${user_id}&email=${email}`
@@ -136,7 +137,7 @@ const notes = ({
     } catch (err) {
       console.error(err);
     }
-  }, [checkTitle, data_editor]);
+  }, [checkTitle, data_editor, withoutId]);
 
   const updateActiveSortingAction = useCallback(
     async (sorting: string, userId: string, email: string) => {
@@ -173,8 +174,6 @@ const notes = ({
       },
       body: JSON.stringify({userId:user_id,email, withoutId: newCheckedState }),
     });
-
-    router.push(router.asPath)
   };
 
   
@@ -189,7 +188,7 @@ const notes = ({
 
       return () => clearTimeout(timer);
     }
-  }, [checkTitle, data_editor, loadingDelete]);
+  }, [checkTitle, data_editor, loadingDelete, withoutId]);
 
   useEffect(() => {
     const sort = localStorage.getItem("sorting") || "no-sorting";
@@ -206,18 +205,31 @@ const notes = ({
   return (
     <AnimationContainer>
       <div className={s.wrapper}>
-        <div className={showMobileSidebar ? s.notes_list_monbile: s.notes_list}>
-         {showMobileSidebar ? <></>:<HeaderNotes setSort={setSort} sort={sort} data={data_editor} />}
+        <div className={showMobileNotesList ? s.notes_list_monbile: s.notes_list}>
+         {showMobileNotesList ? <></>:<HeaderNotes setSort={setSort} sort={sort} data={data_editor} />}
           <div className={s.container}>
             <div className={s.list}>
               {data_editor[0] && (
-                showMobileSidebar ?
+                showMobileNotesList ?
                 <>
-                <HeaderNotes showMobileSidebar={showMobileSidebar} setSort={setSort} sort={sort} data={data_editor} />
-            
+                <HeaderNotes showMobileNotesList={showMobileNotesList} setSort={setSort} sort={sort} data={data_editor} />
+                <p className={cn(s.nameBookMobile)}>
+            <span onClick={() => setActiveModal(true)} className={s.tooltip}>
+              <Book /> <span>{idpage === "all" ? "Всe" : name && name}</span>
+            </span>
+            {idpage === "all" && (
+              <input
+                title="Показать заметки без блокнотов"
+                style={{ marginLeft: "5px" }}
+                type="checkbox"
+                checked={withoutId}
+                onChange={handleCheckboxChange}
+              />
+            )}
+          </p>
                 
                 <NotesList
-                showMobileSidebar = {showMobileSidebar}
+              
                   deleteElement={deleteElement}
                   loadingDelete={loadingDelete}
                   checkTitle={checkTitle}
@@ -228,7 +240,7 @@ const notes = ({
                 </>
                 : <>
                  <NotesList
-                showMobileSidebar = {showMobileSidebar}
+                  showMobileNotesList = {showMobileNotesList}
                   deleteElement={deleteElement}
                   loadingDelete={loadingDelete}
                   checkTitle={checkTitle}
@@ -244,7 +256,7 @@ const notes = ({
         </div>
 
         <div className={s.editor}>
-          <p className={cn(s.nameBook)}>
+           <p className={cn(s.nameBook)}>
             <span onClick={() => setActiveModal(true)} className={s.tooltip}>
               <Book /> <span>{idpage === "all" ? "Всe" : name && name}</span>
             </span>
@@ -277,7 +289,7 @@ const notes = ({
             />
           )}
         </div>
-        <button onClick={()=> setShowMobileSidebar(!showMobileSidebar)} className={s.test}> Нажми </button>
+        <button onClick={()=> setShowMobileNotesList(!showMobileNotesList)} className={s.test}> Нажми </button>
 
       </div>
     </AnimationContainer>
