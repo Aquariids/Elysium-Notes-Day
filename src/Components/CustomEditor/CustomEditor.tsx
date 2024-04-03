@@ -166,25 +166,7 @@ const CustomEditor = ({
         setShowToolbar(true);
         
 
-        if (editorChanged) {
-          try {
-            const updatedLink = { ...selectedItem, updateDate:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm") };
-            const res = fetch(`/api/updateData?action=${update_action.update_note_last_modified_date}`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(updatedLink),
-            });
-          }
-           catch(err) {
-            console.log(err);
-            
-           }
-         
-
-        } else {
-          // Редактор был изменен после инициализации
-          setEditorChanged(true);
-        }
+       
       }
 
       //  текущее состояние в предыдущее состояние
@@ -194,6 +176,29 @@ const CustomEditor = ({
     },
     [previousEditorState, editorChanged]
   );
+
+
+  const updateLastModifiedDate = useCallback(() => {
+    if (editorChanged) {
+      try {
+        const updatedLink = { ...selectedItem, updateDate:userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm") };
+        const res = fetch(`/api/updateData?action=${update_action.update_note_last_modified_date}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedLink),
+        });
+      }
+       catch(err) {
+        console.log(err);
+        
+       }
+     
+
+    } else {
+      // Редактор был изменен после инициализации
+      setEditorChanged(true);
+    }
+  },[editorChanged])
  
 
 
@@ -266,6 +271,7 @@ const CustomEditor = ({
       if (routerReclycle === false) {
         updateData(editorState, session, selectedItem._id);
         setCheckTitle((prevCheckTitle: boolean) => !prevCheckTitle);
+        updateLastModifiedDate()
       }
     }, 300);
 
