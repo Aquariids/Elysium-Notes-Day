@@ -13,14 +13,14 @@
     opacity: 0;
     pointer-events: none;
     z-index: 10;
-} 
+}
 
 
 .books {
     display: flex;
     flex-direction: column;
     width: 560px;
-    
+
     span {
         cursor: pointer;
 
@@ -28,30 +28,28 @@
             color: #7e7d7d;
         }
 
-       
+
     }
 }
 
 .books__list {
-   
+
     width: 100%;
     height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.body__content { 
-padding-top: 10px;
-height: 400px;
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-justify-content: space-between;
+.body__content {
+    padding-top: 10px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
 
 
-svg {
     
-}
 }
 
 
@@ -59,19 +57,22 @@ svg {
     display: flex;
     justify-content: flex-end;
     align-self: flex-end;
+
     button {
-      
+
 
         &:first-child {
             margin-right: 10px;
         }
     }
 }
+
 .modal__active {
     opacity: 1;
     pointer-events: all;
 }
-.modal__content { 
+
+.modal__content {
     position: absolute;
     padding: 20px;
     border-radius: 12px;
@@ -80,12 +81,12 @@ svg {
     width: 600px;
     transform: scale(0.5);
     transition: 0.5s all;
-    
-    
+
+
 }
 
 .modal__content.modal__active {
-transform: scale(1);
+    transform: scale(1);
 }
 
 .header__content {
@@ -94,7 +95,7 @@ transform: scale(1);
     align-items: center;
     padding-bottom: 20px;
     width: 100%;
-    border-bottom:  1px solid rgba(20, 20, 20, 0.151);
+    border-bottom: 1px solid rgba(20, 20, 20, 0.151);
 
     h1 {
         font-weight: 500;
@@ -105,6 +106,7 @@ transform: scale(1);
         font-size: 14px;
         color: #7e7d7d;
     }
+
     svg {
         transition: all .2s;
         fill: rgb(116, 115, 115);
@@ -119,26 +121,28 @@ transform: scale(1);
 .bookLink {
     display: flex;
     justify-content: space-between;
-  }
+}
 
 
 
 .body__input {
-   padding-top: 2px;
-   padding-bottom: 2px;
-   padding-left: 5px;
-   padding-right: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 3px;
     width: 250px;
     font-style: italic;
     outline: 1px solid #929292c0;
-   border: none;
-   border-radius: 2px;
-   transition: outline .3s;
+    border: none;
+    border-radius: 2px;
+    transition: outline .3s;
+
     &:focus {
         transition: outline .3s;
         outline: 1px solid #1f7bb1;
     }
 }
+
 .btn__input {
     margin-top: 10px;
     width: 150px;
@@ -209,11 +213,13 @@ transform: scale(1);
     transition: all .2s;
     opacity: 0;
     visibility: hidden;
-   
+
 }
+
 .active svg {
     fill: #b11f1f;
 }
+
 .activeToolbar svg {
     fill: #b11f1f;
 }
@@ -221,9 +227,10 @@ transform: scale(1);
 .highlighter svg {
     fill: transparent;
 }
+
 .dropbtn {
     background-color: #FFF;
-    color:  black;
+    color: black;
     border: none;
     cursor: pointer;
 }
@@ -234,12 +241,12 @@ transform: scale(1);
     opacity: 1;
     visibility: visible;
     fill: #1f7bb1;
-    
+
 
 }
 
 .activeBook {
-    background-color:#1f7bb13a;
+    background-color: #1f7bb13a;
     transition: all .2s;
 
     &:hover {
@@ -249,7 +256,7 @@ transform: scale(1);
 
 
 .currentActiveBook {
-    background-color:#1f7bb13a;
+    background-color: #1f7bb13a;
     transition: all .2s;
 
     &:hover {
@@ -267,7 +274,7 @@ transform: scale(1);
     padding-bottom: 5px;
     height: 100%;
 
-   
+
 }
 
 .title_books {
@@ -276,6 +283,7 @@ transform: scale(1);
     color: #838181;
     padding-bottom: 5px;
 }
+
 .block {
     font-size: 16px;
     font-weight: 400;
@@ -283,6 +291,7 @@ transform: scale(1);
     display: flex;
     width: 100%;
 }
+
 .content_link {
     display: flex;
     width: 100%;
@@ -295,9 +304,10 @@ transform: scale(1);
     padding: 5px;
     color: #7e7d7d;
     background-color: transparent;
-outline: none;
-border: 1px solid #7e7d7d;
-border-radius: 4px;
+    outline: none;
+    border: 1px solid #7e7d7d;
+    border-radius: 4px;
+
     &:hover {
         transition: all .3s;
         cursor: pointer;
@@ -310,33 +320,32 @@ border-radius: 4px;
     cursor: not-allowed;
     background-color: #a3a3a36c;
 }
+
 .body_wrapper {
     width: 100%;
-   }
+}
 
 
 
 @media only screen and (max-width:500px) {
-   .modal__content {
-    width: 100%;
-    height: 525px;
-   }
-
-   .books {
-    width: 100%;
-   }
-
-   .header__content {
-    svg {
-    width: 25px;
-    height: 25px;
-    margin-bottom: 45px;
- 
+    .modal__content {
+        width: 100%;
+        height: 525px;
     }
-   }
+
+    .books {
+        width: 100%;
+    }
+
+    .header__content {
+        svg {
+            width: 25px;
+            height: 25px;
+            margin-bottom: 45px;
+
+        }
+    }
 
 
-  
+
 }
-
-

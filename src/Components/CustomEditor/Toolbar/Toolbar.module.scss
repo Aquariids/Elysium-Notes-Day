@@ -52,7 +52,7 @@
     opacity: 0;
     visibility: hidden;
     transform: translateX(-50%);
-    
+
 }
 
 .mobile {
@@ -186,13 +186,15 @@
         height: 100%;
         border: none;
     }
-.mobile {
-    display: none;
-}
+
+    .mobile {
+        display: none;
+    }
 
     .all__btns {
         flex-direction: row;
         flex-wrap: wrap;
+
         svg {
             width: 25px;
             height: 18px;
@@ -217,14 +219,14 @@
     }
 
     .hideBtns {
-        
+
         transform: translateX(0);
     }
 
-   .last_date_update {
-    flex-direction: row;
+    .last_date_update {
+        flex-direction: row;
         flex-wrap: wrap;
         height: 100%;
-   
-   }
+
+    }
 }
