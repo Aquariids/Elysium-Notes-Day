@@ -123,7 +123,7 @@
 }
 
 
-.test {
+.mobile_btn {
     display: none;
     bottom: 0;
     position: absolute;
@@ -210,13 +210,13 @@
     }
 }
 
-    .test {
+    .mobile_btn {
         display: block;
-        z-index: 101;
+        z-index: 10;
     }
 
     .notes_list_monbile {
-        z-index: 100;
+        z-index: 9;
         background-color: rgb(255, 255, 255);
         width: 100svw;
         height: 100svh;
@@ -245,6 +245,7 @@
 
     .container {
         padding: 0;
+        min-height: 100svh;
         
     }
 

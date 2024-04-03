@@ -288,7 +288,7 @@ const notes = ({
             />
           )}
         </div>
-        <button onClick={()=> setShowMobileNotesList(!showMobileNotesList)} className={s.test}> Нажми </button>
+        <button  onClick={()=> setShowMobileNotesList(!showMobileNotesList)} className={s.mobile_btn}> Заметки </button>
 
       </div>
     </AnimationContainer>

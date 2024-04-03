@@ -12,7 +12,7 @@
     transition: all .4s;
     opacity: 0;
     pointer-events: none;
-    z-index: 2;
+    z-index: 10;
 } 
 
 
@@ -265,6 +265,7 @@ transform: scale(1);
     padding-right: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
+    height: 100%;
 
    
 }
@@ -309,7 +310,33 @@ border-radius: 4px;
     cursor: not-allowed;
     background-color: #a3a3a36c;
 }
+.body_wrapper {
+    width: 100%;
+   }
 
 
+
+@media only screen and (max-width:500px) {
+   .modal__content {
+    width: 100%;
+    height: 525px;
+   }
+
+   .books {
+    width: 100%;
+   }
+
+   .header__content {
+    svg {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 45px;
+ 
+    }
+   }
+
+
+  
+}
 
 

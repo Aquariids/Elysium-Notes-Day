@@ -193,6 +193,10 @@
     .all__btns {
         flex-direction: row;
         flex-wrap: wrap;
+        svg {
+            width: 25px;
+            height: 18px;
+        }
     }
 
 

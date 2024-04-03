@@ -178,7 +178,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
           <Xmark onClick={close} />
         </span>
         <div className={s.body__content}>
-          <div>
+          <div className={s.body_wrapper}>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <input
                 maxLength={30}
