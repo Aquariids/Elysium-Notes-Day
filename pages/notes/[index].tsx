@@ -279,6 +279,7 @@ const notes = ({
           />
           {selectedItem && (
             <CustomEditor
+            showMobileNotesList ={showMobileNotesList}
               setDeleteElement={setDeleteElement}
               setLoadingDelete={setLoadingDelete}
               setCheckTitle={setCheckTitle}

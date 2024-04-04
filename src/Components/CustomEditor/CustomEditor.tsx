@@ -39,7 +39,8 @@ const CustomEditor = ({
   setDeleteElement,
   setLoadingDelete,
   selectedItem,
-  all_id
+  all_id,
+  showMobileNotesList
   
 }: any) => {
   const router = useRouter();
@@ -305,7 +306,7 @@ const CustomEditor = ({
           />
         
         <div className={s.mobileWrapperMenu}>
-          <DropdownMenuEditor activeModal={activeModal}  icon={<DotsMenu />}  >
+          { showMobileNotesList ? <></> : <DropdownMenuEditor activeModal={activeModal}  icon={<DotsMenu />}  >
           <div
                 className={s.hide_btn}
                 onClick={() => {
@@ -324,7 +325,7 @@ const CustomEditor = ({
                 
               />
          
-          </DropdownMenuEditor>
+          </DropdownMenuEditor>}
           <ModalAddNotesInBook  session={session} currentNote={selectedItem} active={activeModal} setActive={setActiveModal}/>
           </div>
         </div>
