@@ -182,7 +182,9 @@ span {
     }
    
    .container {
-    height: 240px;
+    width: 100svw;
+    overflow-x: hidden;
+    overflow-y: scroll;
    }
     .wrapper {
         gap: 25px;
@@ -191,4 +193,40 @@ span {
 
 
     
+  }
+
+
+  @media only screen and (max-width:500px) {
+    .wrapper {
+        flex-direction: column-reverse;
+        height: 100svh;
+        width: 100%;
+        margin-left: 0px;
+    }
+
+   .container {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+   
+   }
+
+   .wrapp2 {
+    min-width: 225px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+   
+   }
+
+   .link_container {
+    width: 110px;
+   }
+
+   .notes {
+    margin: 0;
+   }
+
+   .video {display: none;}
   }

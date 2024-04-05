@@ -12,7 +12,7 @@ const Layout = ({ children, ...props }: LayoutProps) => {
   
   return (
     <div className={s.wrapper}>
-      {/* <Header className={s.header} /> */}
+      <Header className={s.header} />
       <Sidebar {...props} className={s.sidebar} />
       <main className={s.body}>{children}</main>
       {/* <Footer className={s.footer} /> */}
