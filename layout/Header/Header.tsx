@@ -9,7 +9,7 @@ const Header = ({ className, ...props }:HeaderProps) => {
 
         <header className={cn(className, )} {...props}>
 
-            <Link href={'/recycle'}> КОрзина </Link>
+            <Link href={'/recycle'}> Корзина </Link>
         </header>
 
     )

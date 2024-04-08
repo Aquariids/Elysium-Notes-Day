@@ -16,7 +16,9 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
+ 
   const [dataBook, setDataBook] = useState<any>();
+ 
   const [idForBook, setIdForBook] = useState<any>();
   const [activeModal, setActiveModal] = useState(false);
   const router = useRouter();
@@ -129,33 +131,47 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   }, [router]);
 
   async function buttonCreateNewBook(nameBook: string) {
+    function removeSpaces (string:string) {
+      return string.replace(/\s+/g, '');
+    }
+   const name = dataBook.some((item: { name: string; }) => removeSpaces(item.name) === removeSpaces(nameBook) );
+   
+
+   
     let maxIdPage = 0;
     if (dataBook && dataBook.length > 0) {
       maxIdPage = Math.max(
         ...dataBook.map((book: { idPage: any }) => book.idPage)
       );
     }
-    try {
-      const res = await fetch(
-        `/api/createData?action=${create_data_action.create_notebook}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: nameBook,
-            idPage: maxIdPage + 1,
-            email: email,
-            userId: userId,
-          }),
-        }
-      );
 
-      getDatabook();
-    } catch (err) {
-      console.error(err);
+    if(!name) {
+      try {
+        const res = await fetch(
+          `/api/createData?action=${create_data_action.create_notebook}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: removeSpaces(nameBook),
+              idPage: maxIdPage + 1,
+              email: email,
+              userId: userId,
+            }),
+          }
+        );
+  
+        getDatabook();
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      alert('Это имя уже занято. Назовите блокнот по другому')
+      
     }
+    
   }
 
   return (
