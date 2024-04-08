@@ -22,7 +22,7 @@
 .list {
     margin-right: 5px;
     margin-left: 3px;
-    height: 94svh;
+    
 
 }
 
@@ -37,7 +37,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100%;
-
+   
 
 }
 
@@ -196,6 +196,9 @@
 
 @media only screen and (max-width: 500px) {
 
+    .list {
+        height: 94svh;
+    }
 .nameBookMobile {
     font-size: 13px;
     line-height: 1.6;
