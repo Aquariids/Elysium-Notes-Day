@@ -131,7 +131,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   }, [router]);
 
   async function buttonCreateNewBook(nameBook: string) {
-    function removeSpaces (string:string) {
+    function removeStartSpacesAndEnd (string:string) {
       return string.trim();
     }
 
@@ -139,8 +139,9 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
     
    
     
-   const name = dataBook.some((item: { name: string; }) => removeSpaces(item.name) === removeSpaces(nameBook) );
+   const isName = dataBook.some((item: { name: string; }) => removeStartSpacesAndEnd(item.name) === removeStartSpacesAndEnd(nameBook) );
    
+
 
    
     let maxIdPage = 0;
@@ -150,7 +151,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
       );
     }
 
-    if(!name) {
+    if(!isName) {
       try {
         const res = await fetch(
           `/api/createData?action=${create_data_action.create_notebook}`,
@@ -160,7 +161,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              name: nameBook,
+              name: removeStartSpacesAndEnd(nameBook),
               idPage: maxIdPage + 1,
               email: email,
               userId: userId,
