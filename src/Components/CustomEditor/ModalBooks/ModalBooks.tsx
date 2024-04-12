@@ -132,8 +132,13 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
 
   async function buttonCreateNewBook(nameBook: string) {
     function removeSpaces (string:string) {
-      return string.replace(/\s+/g, '');
+      return string.trim();
     }
+
+
+    
+   
+    
    const name = dataBook.some((item: { name: string; }) => removeSpaces(item.name) === removeSpaces(nameBook) );
    
 
@@ -155,7 +160,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              name: removeSpaces(nameBook),
+              name: nameBook,
               idPage: maxIdPage + 1,
               email: email,
               userId: userId,
