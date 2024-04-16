@@ -32,7 +32,7 @@ callbacks: {
      
   
   },
-  async redirect({ url, baseUrl }) { return baseUrl }, 
+  redirect: async ({ url, baseUrl }) => { return baseUrl }, 
   
  
 },
