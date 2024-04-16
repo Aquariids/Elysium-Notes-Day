@@ -15,7 +15,7 @@ interface ExtendedSession extends Session {
 
 export const  authOptions:NextAuthOptions = {
 
-  
+debug: process.env.NODE_ENV !== "production", 
 adapter: MongoDBAdapter(clientPromise),
 
 callbacks: {
@@ -31,7 +31,9 @@ callbacks: {
       }
      
   
-  }
+  },
+  async redirect({ url, baseUrl }) { return baseUrl }, 
+  
  
 },
 pages: {
@@ -47,7 +49,7 @@ pages: {
       clientId: GOOGLE_ID,
       clientSecret: GOOGLE_SECRET,
       allowDangerousEmailAccountLinking: true,
-      checks: ['none'],
+      
     })
   ]
 
