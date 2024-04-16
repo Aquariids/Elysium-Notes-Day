@@ -47,6 +47,7 @@ pages: {
       clientId: GOOGLE_ID,
       clientSecret: GOOGLE_SECRET,
       allowDangerousEmailAccountLinking: true,
+      checks: ['none'],
     })
   ]
 
