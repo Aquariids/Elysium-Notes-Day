@@ -44,11 +44,13 @@ pages: {
       clientId: GITHUB_ID,
       clientSecret: GITHUB_SECRET,
       allowDangerousEmailAccountLinking: true,
+      checks: ['none'],
     }),
     Google({
       clientId: GOOGLE_ID,
       clientSecret: GOOGLE_SECRET,
       allowDangerousEmailAccountLinking: true,
+      checks: ['none'],
       
     })
   ]
