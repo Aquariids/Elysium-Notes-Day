@@ -60,3 +60,15 @@
 .active svg {
     fill: #b11f1f;
 }
+
+
+@media only screen and (max-width:500px) {
+    .dropdown_content {
+        left: -125px;
+        width: 165px;
+        min-height: 100px;
+    }
+
+    
+    
+}

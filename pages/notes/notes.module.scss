@@ -134,6 +134,24 @@
 }
 
 
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes hide {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
 @media only screen and (max-width: 1365px) {
 
 
@@ -217,19 +235,26 @@
     .mobile_btn {
         display: block;
         z-index: 10;
+        background-color: #9494941f;
+        border: 1px solid rgb(128, 128, 123);
+        color: #333;
+        // сделай потом красивую кнопочку
     }
 
-    .notes_list_monbile {
+    .notes_list_mobile {
+        animation: show .3s ease;
         z-index: 9;
         background-color: rgb(255, 255, 255);
         width: 100svw;
         height: 100svh;
         position: absolute;
+        
 
     }
 
     .notes_list {
         display: none;
+      
     }
 
 

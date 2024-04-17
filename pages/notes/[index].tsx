@@ -46,6 +46,7 @@ const notes = ({
   const [showMobileNotesList, setShowMobileNotesList ] = useState(false);
   
 
+  
   useEffect(() => {
     setShowMobileNotesList(false)
   },[router])
@@ -204,7 +205,11 @@ const notes = ({
   return (
     <AnimationContainer>
       <div className={s.wrapper}>
-        <div className={showMobileNotesList ? s.notes_list_monbile: s.notes_list}>
+        
+        <div className={cn({
+          [ s.notes_list_mobile]: showMobileNotesList,
+          [s.notes_list]: !showMobileNotesList
+        })}>
          {showMobileNotesList ? <></>:<HeaderNotes setSort={setSort} sort={sort} data={links ? links : data_editor} />}
           <div className={s.container}>
             <div className={s.list}>
@@ -289,7 +294,7 @@ const notes = ({
             />
           )}
         </div>
-        <button  onClick={()=> setShowMobileNotesList(!showMobileNotesList)} className={s.mobile_btn}> Заметки </button>
+        <button  onClick={()=> setShowMobileNotesList(!showMobileNotesList)} className={s.mobile_btn}> Меню </button>
 
       </div>
     </AnimationContainer>

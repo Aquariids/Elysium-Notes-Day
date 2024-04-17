@@ -43,6 +43,13 @@ html {
     
   }
 
+  .notes_list {
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Плавное изменение прозрачности */
+  }
+  .notes_list_mobile {
+    opacity: 1;
+  }
 
   
   /*
