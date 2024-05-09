@@ -1,22 +1,3 @@
-.container {
-    display: grid;
-    grid-auto-columns: 150px;
-    grid-auto-flow: column;
-    height: 250px;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    z-index: 1;
-}
-
-.wrapp2 {
-    box-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
-    background-color: #FFF;
-    display: grid;
-    grid-template-columns: minmax(450px, 750px);
-    padding: 10px;
-    border-radius: 10px;
-
-}
 .wrapper {
     gap: 20px;
     background-image:url(./girl2.png);
@@ -28,19 +9,106 @@
     height: 100%;
     align-items: center;
     justify-content: space-around;
+
+    .bg {
+        overflow: hidden;
+        z-index: -1;
+        top: 0;
+        position: absolute;
+        height: 45%;
+        width: 100%;
+        background-color: #3a3939;
+        box-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
+
+        &_date {
+                font-size:small;
+                text-shadow: 1px 2px 6px rgba(59, 59, 59, 0.651);
+                color: #fff;
+                right: 10%;
+                margin-left: 100px;
+                display: flex;
+                top: 10%;
+                position: absolute;
+                z-index: 2;
+            
+              
+            
+        }
+    }
+
+    .notes {
+        box-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
+        background-color: #FFF;
+        display: grid;
+        grid-template-columns: minmax(450px, 750px);
+        padding: 10px;
+        border-radius: 10px;
+
+        &_title {
+            display: flex;
+            justify-content:flex-start;
+            align-items: center;
+
+            &_link{
+                height: 25px;
+                align-items: center;
+                display: flex;
+                padding-left: 10px;
+                padding-top: 10px;
+                text-decoration: none;
+                color: rgb(43, 44, 44);
+                padding-bottom: 15px;
+            
+                &:hover svg {
+                    fill: rgb(117, 117, 117);
+                }
+            
+                &:hover {
+                 
+                        color: rgb(117, 117, 117);;
+                   
+                }
+            
+               
+            
+                svg {
+                    margin-bottom: 2px;
+                }
+            span {
+                
+                padding-right: 5px;
+            }
+            
+            
+            
+            
+            
+            
+            }
+            
+        }
+    
+    }
+
+   
+    
+
     
 }
 
-.bg {
-    overflow: hidden;
-    z-index: -1;
-    top: 0;
-    position: absolute;
-    height: 45%;
-    width: 100%;
-    background-color: #3a3939;
-    box-shadow: 1px 2px 6px rgba(82, 81, 81, 0.507);
+.container {
+    display: grid;
+    grid-auto-columns: 150px;
+    grid-auto-flow: column;
+    height: 250px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    z-index: 1;
 }
+
+
+
+
 
 
 
@@ -72,7 +140,7 @@
         filter: blur(0px);
     }
 }
-.notes {
+.main_menu_note {
   margin-right: 20px;
     overflow: hidden;
     overflow-y: auto;
@@ -94,47 +162,7 @@
     
 }
 
-.link_container {
-    display: flex;
-    justify-content:flex-start;
-    align-items: center;
-}
-.link_notes {
-    height: 25px;
-    align-items: center;
-    display: flex;
-    padding-left: 10px;
-    padding-top: 10px;
-    text-decoration: none;
-    color: rgb(43, 44, 44);
-    padding-bottom: 15px;
 
-    &:hover svg {
-        fill: rgb(117, 117, 117);
-    }
-
-    &:hover {
-     
-            color: rgb(117, 117, 117);;
-       
-    }
-
-   
-
-    svg {
-        margin-bottom: 2px;
-    }
-span {
-    
-    padding-right: 5px;
-}
-
-
-
-
-
-
-}
 
 
 .textArea {
@@ -158,38 +186,31 @@ span {
 }
 
 
-.date_bg {
-    font-size:small;
-    text-shadow: 1px 2px 6px rgba(59, 59, 59, 0.651);
-    color: #fff;
-    right: 10%;
-    margin-left: 100px;
-    display: flex;
-    top: 10%;
-    position: absolute;
-    z-index: 2;
-
-  
-}
 
 
 
-@media only screen and (max-width: 1500px) {
+
+@media only screen and (max-width: 1545px) {
 
     .date_bg {
         margin-right: 20px;
 
     }
    
-   .container {
-    width: 100svw;
-    overflow-x: hidden;
-    overflow-y: scroll;
-   }
+  
     .wrapper {
         gap: 25px;
         margin-left: 25px;
     }
+
+    .notes {
+        max-width: 620px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+       
+       }
 
 
     
@@ -202,6 +223,15 @@ span {
         height: 100svh;
         width: 100%;
         margin-left: 0px;
+
+        .notes {
+            min-width: 225px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+           
+           }
     }
 
    .container {
@@ -211,20 +241,13 @@ span {
    
    }
 
-   .wrapp2 {
-    min-width: 225px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    
    
-   }
 
-   .link_container {
+   .notes_title {
     width: 110px;
    }
 
-   .notes {
+   .main_menu_note {
     margin: 0;
    }
 

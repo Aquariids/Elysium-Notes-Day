@@ -9,7 +9,7 @@ import s from "./index.module.scss";
 import List from "@/Components/NotesList/List";
 import TextareaAutosize from "react-textarea-autosize";
 import { useSession } from "next-auth/react";
-import { create_data_action,  update_action } from "./api/actions";
+import { create_data_action, update_action } from "./api/actions";
 import Arrow from "./arr.svg";
 import NewNotesMainMenu from "@/Components/ButtonCreateNewNotes/NewNotesMainMenu";
 import cn from "classnames";
@@ -19,16 +19,16 @@ import { DateTime } from "luxon";
 import { Settings } from "luxon";
 
 import {
+  getActiveNotebook,
   getActiveNotebookWithoutId,
   getAllUserNotes,
   getAllUserNotesWithoutId,
-  getMainMenuNote ,
+  getMainMenuNote,
+  getUserNotesFromNotebook,
 } from "./api/auth/lib/Get";
 Settings.defaultLocale = "ru";
 DateTime.local().setLocale("ru");
 function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
-
-  
   const [value, setValue] = useState<string>(
     data_note_main_menu[0] === undefined ? "" : data_note_main_menu[0].body
   );
@@ -49,7 +49,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
 
   const createNotesBook = async () => {
     const dataNoteBook = {
-      userId:user_id,
+      userId: user_id,
       email,
       body: "",
     };
@@ -67,7 +67,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
 
   const createBookForNotes = async () => {
     const dataNoteBook = {
-      userId:user_id,
+      userId: user_id,
       email,
       book: "all",
     };
@@ -85,7 +85,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
 
   const createActionSorting = async () => {
     const sortData = {
-      userId:user_id,
+      userId: user_id,
       email,
       sorting: "",
     };
@@ -109,9 +109,9 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
     }
   }, [user_id, email]);
 
-  const updateMainMenuNote  = useCallback(
+  const updateMainMenuNote = useCallback(
     async (value: any, userId: any, email: any) => {
-      try {        
+      try {
         const response = await fetch(
           `/api/updateData?action=${update_action.update_main_menu_note}`,
           {
@@ -136,26 +136,26 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
     []
   );
 
-  const updateBookForNotes = useCallback(async () => {
-    try {
-      const response = await fetch(
-        `/api/updateData?action=${update_action.update_active_notebook}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: session.data?.user.userId,
-            email: session.data?.user.email,
-            book: "all",
-          }),
-        }
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
+  // const updateBookForNotes = useCallback(async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `/api/updateData?action=${update_action.update_active_notebook}`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           userId: session.data?.user.userId,
+  //           email: session.data?.user.email,
+  //           book: "all",
+  //         }),
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -176,7 +176,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
 
       <div className={s.wrapper}>
         <div className={s.bg}>
-          <div className={s.date_bg}>{currentDate}</div>
+          <div className={s.bg_date}>{currentDate}</div>
           <video
             className={cn(s.video, s.anim)}
             autoPlay
@@ -187,11 +187,11 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
         </div>
 
         <AnimationContainer>
-          <div className={s.wrapp2}>
-            <div className={s.link_container}>
+          <div className={s.notes}>
+            <div className={s.notes_title}>
               <Link
-                onClick={updateBookForNotes}
-                className={s.link_notes}
+                // onClick={updateBookForNotes}
+                className={s.notes_title_link}
                 href={`${NOTES}`}
               >
                 <span>ЗАМЕТКИ</span> <Arrow />
@@ -207,7 +207,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
           </div>
         </AnimationContainer>
         <AnimationContainer>
-          <div className={s.notes}>
+          <div className={s.main_menu_note}>
             <p>ЗАПИСНАЯ КНИЖКА</p>
             <TextareaAutosize
               placeholder="Запишите что-нибудь..."
@@ -227,10 +227,13 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
 export default withLayout(Home);
 
 export async function getServerSideProps(context: any) {
-
   try {
-    const session = await getServerSession(context.req, context.res, authOptions);
-    
+    const session = await getServerSession(
+      context.req,
+      context.res,
+      authOptions
+    );
+
     if (!session) {
       return {
         redirect: {
@@ -239,24 +242,27 @@ export async function getServerSideProps(context: any) {
         },
       };
     }
-    
+
     const user_id: string = session?.user.userId; // айди авторизованного человека
     const email: string = session?.user.email;
-    if (user_id && email) {
-      const [withoutId]: any = await getActiveNotebookWithoutId(user_id,email)
+    const [idpage,name]: any = await getActiveNotebook(user_id, email);
+  
     
-    let responseEditorData;
-    if (!withoutId) {
+    if (user_id && email) {
+      const [withoutId]: any = await getActiveNotebookWithoutId(user_id, email);
+
+      let responseEditorData;
+    if (idpage === "all" && !withoutId) {
       responseEditorData = await getAllUserNotes(user_id, email, withoutId);
     } else if(withoutId) {
       responseEditorData = await getAllUserNotesWithoutId(user_id, email);
     }
-     
+     if(idpage !== "all") {
+      responseEditorData = await getUserNotesFromNotebook(user_id, email, idpage);
+    }
 
-      const responseNoteMainMenuData = await getMainMenuNote (
-        user_id,
-        email
-      );
+
+      const responseNoteMainMenuData = await getMainMenuNote(user_id, email);
       const serializedData = responseEditorData?.map((item) => ({
         // "сериализуем" данные, и делаем из objectId у mongodb обычную строку, смотрим, что названиме тоже изменилось
         ...item,
