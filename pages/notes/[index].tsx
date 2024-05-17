@@ -25,6 +25,13 @@ import {
 } from "../api/auth/lib/Get";
 import { Record } from "immutable";
 import NoteContainer from "@/Components/NoteContainer/NoteContainer";
+import NoteMobileContainer from "@/Components/NoteMobileContainer/NoteMobileContainer";
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
 
 const notes = ({
   data_editor,
@@ -33,9 +40,8 @@ const notes = ({
   email,
   data_nootebook,
   all_id,
-  without_id_props
+  without_id_props,
 }: notes_data & Record<string, unknown>) => {
- 
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -44,40 +50,31 @@ const notes = ({
   const router = useRouter();
   const selectedId = router.query.index;
   const [links, setLinks] = useState<any>();
-  const [showMobileNotesList, setShowMobileNotesList ] = useState(false);
-  
+  const [showMobileNotesList, setShowMobileNotesList] = useState(false);
 
-  
   useEffect(() => {
-    setShowMobileNotesList(false)
-  },[router])
-
-
+    setShowMobileNotesList(false);
+  }, [router]);
 
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
- 
-  const [withoutId, setWithoutId] = useState<boolean>(Boolean(without_id_props));
-  
+
+  const [withoutId, setWithoutId] = useState<boolean>(
+    Boolean(without_id_props)
+  );
+
   useEffect(() => {
-   getActiveWithoutId();   
+    getActiveWithoutId();
   }, []);
 
-
   const getActiveWithoutId = async () => {
-     await fetch(
+    await fetch(
       `/api/getData?action=${get_action.get_active_notebook_without_id}&userId=${user_id}&email=${email}`
-    )
-    .then(async (response) => {
+    ).then(async (response) => {
       const [withoutId] = await response.json();
       setWithoutId(withoutId);
-  })
-    
-
-
+    });
   };
-
-
 
   const name = useMemo(() => {
     if (data_nootebook) {
@@ -105,29 +102,28 @@ const notes = ({
   const getData = useCallback(async () => {
     try {
       if (session.status === "authenticated") {
-        
         const idPageForBooks = await fetch(
           `/api/getData?action=${get_action.get_active_notebook}&userId=${user_id}&email=${email}`
         );
         const [idPage] = await idPageForBooks.json();
-      
+
         if (idPage === "all" && !withoutId) {
           const res = await fetch(
             `/api/getData?action=${get_action.get_all_user_notes}&userId=${user_id}&email=${email}`
           );
-        
+
           const data = await res.json();
-         
-           setLinks(data);
-        } else if(idPage === "all" && withoutId) {
+
+          setLinks(data);
+        } else if (idPage === "all" && withoutId) {
           const res = await fetch(
             `/api/getData?action=${get_action.get_all_user_notes_without_id}&userId=${user_id}&email=${email}`
           );
           const data = await res.json();
-            
+
           setLinks(data);
-        } 
-        if(idPage !== "all") {
+        }
+        if (idPage !== "all") {
           const res = await fetch(
             `/api/getData?action=${get_action.get_user_notes_from_notebook}&userId=${user_id}&email=${email}&idPage=${idPage}`
           );
@@ -168,16 +164,21 @@ const notes = ({
     const newCheckedState = !withoutId;
     setWithoutId(newCheckedState);
 
-    fetch( `/api/updateData?action=${update_action.update_active_notebook_without_id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({userId:user_id,email, withoutId: newCheckedState }),
-    });
+    fetch(
+      `/api/updateData?action=${update_action.update_active_notebook_without_id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user_id,
+          email,
+          withoutId: newCheckedState,
+        }),
+      }
+    );
   };
-
-  
 
   useEffect(() => {
     if (loadingDelete) {
@@ -206,24 +207,40 @@ const notes = ({
   return (
     <AnimationContainer>
       <div className={s.wrapper}>
-        
-        <NoteContainer 
-          NotesList={NotesList}
-          data_editor={data_editor}
-          loadingDelete={loadingDelete}
-          deleteElement={deleteElement}
-          checkTitle={checkTitle}
-          links={links}
-          sort={sort}
-          sorting={sorting}
-          user_id={user_id}
-          setSort={setSort}
-          HeaderNotes={HeaderNotes}
-          
+        <BrowserView>
+          <NoteContainer
+            NotesList={NotesList}
+            data_editor={data_editor}
+            loadingDelete={loadingDelete}
+            deleteElement={deleteElement}
+            checkTitle={checkTitle}
+            links={links}
+            sort={sort}
+            sorting={sorting}
+            user_id={user_id}
+            setSort={setSort}
+            HeaderNotes={HeaderNotes}
           />
+        </BrowserView>
+        <MobileView>
+          <NoteMobileContainer
+            showMobileNotesList={showMobileNotesList}
+            NotesList={NotesList}
+            data_editor={data_editor}
+            loadingDelete={loadingDelete}
+            deleteElement={deleteElement}
+            checkTitle={checkTitle}
+            links={links}
+            sort={sort}
+            sorting={sorting}
+            user_id={user_id}
+            setSort={setSort}
+            HeaderNotes={HeaderNotes}
+          />
+        </MobileView>
 
         <div className={s.editor}>
-           <p className={cn(s.nameBook)}>
+          <p className={cn(s.nameBook)}>
             <span onClick={() => setActiveModal(true)} className={s.tooltip}>
               <Book /> <span>{idpage === "all" ? "Всe" : name && name}</span>
             </span>
@@ -247,7 +264,7 @@ const notes = ({
           />
           {selectedItem && (
             <CustomEditor
-            showMobileNotesList ={showMobileNotesList}
+              showMobileNotesList={showMobileNotesList}
               setDeleteElement={setDeleteElement}
               setLoadingDelete={setLoadingDelete}
               setCheckTitle={setCheckTitle}
@@ -257,8 +274,13 @@ const notes = ({
             />
           )}
         </div>
-        <button  onClick={()=> setShowMobileNotesList(!showMobileNotesList)} className={s.mobile_btn}> Меню </button>
-
+        <button
+          onClick={() => setShowMobileNotesList(!showMobileNotesList)}
+          className={s.mobile_btn}
+        >
+          {" "}
+          Меню{" "}
+        </button>
       </div>
     </AnimationContainer>
   );
@@ -285,11 +307,15 @@ export async function getServerSideProps(context: any) {
     let responseEditorData;
     if (idpage === "all" && !withoutId) {
       responseEditorData = await getAllUserNotes(user_id, email, withoutId);
-    } else if(withoutId) {
+    } else if (withoutId) {
       responseEditorData = await getAllUserNotesWithoutId(user_id, email);
     }
-     if(idpage !== "all") {
-      responseEditorData = await getUserNotesFromNotebook(user_id, email, idpage);
+    if (idpage !== "all") {
+      responseEditorData = await getUserNotesFromNotebook(
+        user_id,
+        email,
+        idpage
+      );
     }
 
     const dataRes = await getAllUserNotebook(user_id, email);
@@ -313,7 +339,7 @@ export async function getServerSideProps(context: any) {
         email,
         data_nootebook,
         all_id,
-        without_id_props:withoutId ? 1:0 
+        without_id_props: withoutId ? 1 : 0,
       },
     };
   } catch (err) {

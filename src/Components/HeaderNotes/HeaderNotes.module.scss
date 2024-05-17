@@ -64,15 +64,18 @@
 }
 
 
-
 .newNoteMobile {
-    display: flex;
-    align-items: center;
-    margin-right: 15px;
-
+    display: none;
 }
 
+
 @media only screen and (max-width: 500px) {
+    .newNoteMobile {
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+    
+    }
 .header__foter {
  align-items: center;
 }
