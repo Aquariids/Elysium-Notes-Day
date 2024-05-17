@@ -32,6 +32,7 @@ import {
   isBrowser,
   isMobile,
 } from "react-device-detect";
+  console.log("🚀 ~ isMobile:", isMobile)
 
 const notes = ({
   data_editor,
