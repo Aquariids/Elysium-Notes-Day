@@ -70,9 +70,6 @@ const CustomEditor = ({
    
 
   },[])
-  useEffect(() => {
-    hljs.highlightAll();
-  }, [code]);
 
 
   const btnHide = selectedItem.block ? <p className={s.text}>Показать заметку</p> : <p className={s.text}>Скрыть заметку</p>;

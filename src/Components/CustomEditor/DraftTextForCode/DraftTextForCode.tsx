@@ -5,17 +5,21 @@ import {
   SandpackCodeViewer,
 } from "@codesandbox/sandpack-react";
 import { aquaBlue } from "@codesandbox/sandpack-themes";
+import DOMPurify from 'dompurify';
 interface props {
   editorState: EditorState;
   setShowToolbar: (value: boolean) => void;
   routerReclycle: boolean;
 }
+
 const DraftTextForCode = ({
   editorState,
   setShowToolbar,
   routerReclycle,
 }: props) => {
   const plainText = editorState.getCurrentContent().getPlainText();
+  
+  
 
   return (
     <SandpackProvider theme={aquaBlue}>

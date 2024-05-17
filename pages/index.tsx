@@ -65,6 +65,7 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
     );
   };
 
+  
   const createBookForNotes = async () => {
     const dataNoteBook = {
       userId: user_id,
