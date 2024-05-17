@@ -1,8 +1,9 @@
 @import "./variableRoot.scss";
 @import "./error404.scss";
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
-body { 
-  margin:0;
+
+body {
+  margin: 0;
   background-color: #FFF;
 }
 
@@ -13,58 +14,95 @@ html {
   font-size: 16px;
   // background-image:url('./モニカ.jpg');
   background-repeat: no-repeat;
-  background-position-x: center ;
+  background-position-x: center;
   // background-color: black;
   font-family: 'Ubuntu', sans-serif;
-  
+
+  .sp-cm-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .sp-wrapper {
+
+    .sp-layout {
+
+
+      .sp-editor-viewer {
+        height: 100%;
+      }
+
+      .cm-content {
+        padding: 0px;
+        width: 100%;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+
+
+       
+
+        .cm-line {
+          word-break: break-word;
+        }
+
+      }
+    }
+  }
+
 }
 
 
 .text-editor {
-    width: 500px;
-    height: 500px;
+  width: 500px;
+  height: 500px;
 }
 
 .DraftEditor-root {
-    position: relative;
-    padding-top: 10px;
- 
-   
-  }
-  
-  .public-DraftEditorPlaceholder-root {
-    padding-top: 10px;
-    color:rgba(150, 150, 150, 0.589);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    
-  }
+  position: relative;
+  padding-top: 10px;
 
-  .notes_list {
-    opacity: 0;
-    transition: opacity 0.3s ease; /* Плавное изменение прозрачности */
-  }
-  .notes_list_mobile {
-    opacity: 1;
-  }
 
-  
-  /*
+}
+
+.public-DraftEditorPlaceholder-root {
+  padding-top: 10px;
+  color: rgba(150, 150, 150, 0.589);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+
+}
+
+.notes_list {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  /* Плавное изменение прозрачности */
+}
+
+.notes_list_mobile {
+  opacity: 1;
+}
+
+
+/*
   1. Use a more-intuitive box-sizing model.
 */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
+
 /*
   2. Remove default margin
 */
 * {
   margin: 0;
 }
+
 /*
   Typographic tweaks!
   3. Add accessible line-height
@@ -74,29 +112,47 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
+
 /*
   5. Improve media defaults
 */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
+
 /*
   6. Remove built-in form typography styles
 */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
+
 /*
   7. Avoid text overflows
 */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
+
 /*
   8. Create a root stacking context
 */
-#root, #__next {
+#root,
+#__next {
   isolation: isolate;
 }
 
@@ -109,18 +165,7 @@ p, h1, h2, h3, h4, h5, h6 {
   }
 
 
-  html {
-    .sp-wrapper {
-      height: 100%;
-  
-      .sp-layout {
-        height: 100%;
-  .sp-editor-viewer {
-    height: 100%;
-  }
-      }
-    }
-  }
 
-  
+
+
 }
