@@ -24,6 +24,7 @@ import {
   getAllUserNotesWithoutId,
 } from "../api/auth/lib/Get";
 import { Record } from "immutable";
+import NoteContainer from "@/Components/NoteContainer/NoteContainer";
 
 const notes = ({
   data_editor,
@@ -206,58 +207,20 @@ const notes = ({
     <AnimationContainer>
       <div className={s.wrapper}>
         
-        <div className={cn({
-          [ s.notes_list_mobile]: showMobileNotesList,
-          [s.notes_list]: !showMobileNotesList
-        })}>
-         {showMobileNotesList ? <></>:<HeaderNotes setSort={setSort} sort={sort} data={links ? links : data_editor} />}
-          <div className={s.container}>
-            <div className={s.list}>
-              {data_editor[0] && (
-                showMobileNotesList ?
-                <>
-                <HeaderNotes showMobileNotesList={showMobileNotesList} setSort={setSort} sort={sort} data={links ? links: data_editor} />
-                <p className={cn(s.nameBookMobile)}>
-            <span onClick={() => setActiveModal(true)} className={s.tooltip}>
-              <Book /> <span>{idpage === "all" ? "Всe" : name && name}</span>
-            </span>
-            {idpage === "all" && (
-              <input
-                title="Показать заметки без блокнотов"
-                style={{ marginLeft: "5px" }}
-                type="checkbox"
-                checked={withoutId}
-                onChange={handleCheckboxChange}
-              />
-            )}
-          </p>
-                
-                <NotesList
-              
-                  deleteElement={deleteElement}
-                  loadingDelete={loadingDelete}
-                  checkTitle={checkTitle}
-                  dataClient={links ? sorting(links, sort) : ""}
-                  dataServer={data_editor ? sorting(data_editor, sort) : ""}
-                  userId={user_id}
-                />
-                </>
-                : <>
-                 <NotesList
-                  showMobileNotesList = {showMobileNotesList}
-                  deleteElement={deleteElement}
-                  loadingDelete={loadingDelete}
-                  checkTitle={checkTitle}
-                  dataClient={links ? sorting(links, sort) : ""}
-                  dataServer={data_editor ? sorting(data_editor, sort) : ""}
-                  userId={user_id}
-                />
-                </>
-                
-              )}
-            </div>
-          </div>
-        </div>
+        <NoteContainer 
+          NotesList={NotesList}
+          data_editor={data_editor}
+          loadingDelete={loadingDelete}
+          deleteElement={deleteElement}
+          checkTitle={checkTitle}
+          links={links}
+          sort={sort}
+          sorting={sorting}
+          user_id={user_id}
+          setSort={setSort}
+          HeaderNotes={HeaderNotes}
+          
+          />
 
         <div className={s.editor}>
            <p className={cn(s.nameBook)}>
