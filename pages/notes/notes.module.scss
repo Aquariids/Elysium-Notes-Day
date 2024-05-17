@@ -8,6 +8,11 @@
 }
 
 
+.mobile {
+    display: none;
+    width: 100svw;
+    height: 100svh;
+}
 
 .alert {
     padding: 15px;
@@ -214,6 +219,10 @@
 
 @media only screen and (max-width: 500px) {
 
+   
+.mobile {
+    display: block;
+}
     .list {
         height: 94svh;
     }

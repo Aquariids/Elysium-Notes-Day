@@ -32,7 +32,7 @@ import {
   isBrowser,
   isMobile,
 } from "react-device-detect";
-  console.log("🚀 ~ isMobile:", isMobile)
+  
 
 const notes = ({
   data_editor,
@@ -223,7 +223,8 @@ const notes = ({
             HeaderNotes={HeaderNotes}
           />
         </BrowserView>
-        <MobileView>
+      
+        <MobileView className={s.mobile}>
           <NoteMobileContainer
             showMobileNotesList={showMobileNotesList}
             NotesList={NotesList}
@@ -239,7 +240,7 @@ const notes = ({
             HeaderNotes={HeaderNotes}
           />
         </MobileView>
-
+        
         <div className={s.editor}>
           <p className={cn(s.nameBook)}>
             <span onClick={() => setActiveModal(true)} className={s.tooltip}>
