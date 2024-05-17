@@ -16,6 +16,7 @@ html {
   background-position-x: center ;
   // background-color: black;
   font-family: 'Ubuntu', sans-serif;
+  
 }
 
 
@@ -106,5 +107,20 @@ p, h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: 100%;
   }
+
+
+  html {
+    .sp-wrapper {
+      height: 100%;
+  
+      .sp-layout {
+        height: 100%;
+  .sp-editor-viewer {
+    height: 100%;
+  }
+      }
+    }
+  }
+
   
 }

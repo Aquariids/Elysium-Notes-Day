@@ -1,6 +1,7 @@
 import { EditorState } from "draft-js";
 import {SandpackProvider, SandpackLayout, SandpackCodeViewer} from "@codesandbox/sandpack-react";
 import { aquaBlue } from "@codesandbox/sandpack-themes";
+import s from './DraftTextForCode.module.scss';
 interface props {
   editorState:EditorState,
   setShowToolbar: (value: boolean) => void
@@ -15,7 +16,7 @@ const DraftTextForCode = ({
   const plainText = editorState.getCurrentContent().getPlainText();
 
   return (
-    <div onClick={()=> {
+    <div className={s.container} onClick={()=> {
       routerReclycle === false && setShowToolbar(true);
     }} >
       <SandpackProvider theme={aquaBlue} >
