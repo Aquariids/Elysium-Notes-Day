@@ -27,12 +27,12 @@ import { RECYCLE } from "../../../pages/api/paths";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 hljs.registerLanguage("javascript", javascript);
-import DraftTextForCode from "./DraftTextForCode/DraftTextForCode";
 import Toolbar from "./Toolbar/Toolbar";
 import { DateTime } from "luxon";
 import { updateDateProps } from "./CustomEditor.props";
 import DropdownMenuEditor from "../UI/DropdownMenu/DropdownMenu";
 import ModalAddNotesInBook from "./ModalAddNotesInBook/ModalAddNotesInBook";
+import Sandpack from "./Sandpack/Sandpack";
 const CustomEditor = ({
   setCheckTitle,
   setDeleteElement,
@@ -348,7 +348,7 @@ const CustomEditor = ({
             />
             {code ? (
               
-                  <DraftTextForCode
+                  <Sandpack
                     editorState={editorState}
                     setShowToolbar={setShowToolbar}
                     routerReclycle={routerReclycle}

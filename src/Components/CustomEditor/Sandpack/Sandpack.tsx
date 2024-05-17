@@ -5,14 +5,17 @@ import {
   SandpackCodeViewer,
 } from "@codesandbox/sandpack-react";
 import { aquaBlue } from "@codesandbox/sandpack-themes";
-import DOMPurify from 'dompurify';
 interface props {
   editorState: EditorState;
   setShowToolbar: (value: boolean) => void;
   routerReclycle: boolean;
 }
 
-const DraftTextForCode = ({
+// это компонент для мод кода на сайте.
+// тут я получаю тело документа обычным текстом и оборачиваю его sandbox, но без песочницы, просто для отображения красивого синтаксиса
+// таким образом на сайте можно делать заметки с кодом и будет все понятно и красиво. Конечно пока что вся заметка будет оборачиваться, а не выделенная часть
+// это нужно будет решить как то в будущем.
+const Sandpack = ({
   editorState,
   setShowToolbar,
   routerReclycle,
@@ -34,4 +37,4 @@ const DraftTextForCode = ({
   );
 };
 
-export default DraftTextForCode;
+export default Sandpack;
