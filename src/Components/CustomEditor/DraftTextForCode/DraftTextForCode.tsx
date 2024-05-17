@@ -1,6 +1,6 @@
 import { EditorState } from "draft-js";
-import s from "../CustomEditor.module.scss";
-
+import {SandpackProvider, SandpackLayout, SandpackCodeViewer} from "@codesandbox/sandpack-react";
+import { aquaBlue } from "@codesandbox/sandpack-themes";
 interface props {
   editorState:EditorState,
   setShowToolbar: (value: boolean) => void
@@ -12,16 +12,21 @@ const DraftTextForCode = ({
   routerReclycle,
 }: props) => {
 
-
   const plainText = editorState.getCurrentContent().getPlainText();
+
   return (
-    <pre onClick={()=> {
+    <div onClick={()=> {
       routerReclycle === false && setShowToolbar(true);
-    }} className="js">
-      <code className={s.code}>
-        {plainText}
-      </code>
-    </pre>
+    }} >
+      <SandpackProvider theme={aquaBlue} >
+        <SandpackLayout>
+          <SandpackCodeViewer code={ plainText}/>
+        </SandpackLayout>
+      </SandpackProvider>
+
+
+    </div>
+    
   );
 };
 

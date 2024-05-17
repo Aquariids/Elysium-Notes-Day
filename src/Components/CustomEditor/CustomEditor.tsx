@@ -27,7 +27,6 @@ import { RECYCLE } from "../../../pages/api/paths";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 hljs.registerLanguage("javascript", javascript);
-import "highlight.js/styles/school-book.css";
 import DraftTextForCode from "./DraftTextForCode/DraftTextForCode";
 import Toolbar from "./Toolbar/Toolbar";
 import { DateTime } from "luxon";
