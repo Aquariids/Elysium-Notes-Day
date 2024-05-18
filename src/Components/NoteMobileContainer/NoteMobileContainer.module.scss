@@ -2,8 +2,8 @@
 .list {
     margin-right: 5px;
     margin-left: 3px;
-    
-    height: 94svh;
+    overflow-y: scroll;
+    height: 75svh;
 }
 
 
@@ -36,6 +36,15 @@
 .container:hover::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.349);
 }
+
+
+.tooltip {
+  
+    display: inline-flex;
+
+  
+}
+
 
 
 

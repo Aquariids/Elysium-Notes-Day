@@ -53,9 +53,7 @@ const notes = ({
   const [links, setLinks] = useState<any>();
   const [showMobileNotesList, setShowMobileNotesList] = useState(false);
 
-  useEffect(() => {
-    setShowMobileNotesList(false);
-  }, [router]);
+ 
 
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
@@ -64,6 +62,9 @@ const notes = ({
     Boolean(without_id_props)
   );
 
+  useEffect(() => {
+setShowMobileNotesList(false)
+  },[router])
   useEffect(() => {
     getActiveWithoutId();
   }, []);
@@ -208,7 +209,8 @@ const notes = ({
   return (
     <AnimationContainer>
       <div className={s.wrapper}>
-        <BrowserView>
+        
+        <div className={s.desktop}>
           <NoteContainer
             NotesList={NotesList}
             data_editor={data_editor}
@@ -222,9 +224,10 @@ const notes = ({
             setSort={setSort}
             HeaderNotes={HeaderNotes}
           />
-        </BrowserView>
-      
-        <MobileView className={s.mobile}>
+        </div>
+       
+       <div className={s.mobile}>
+        
           <NoteMobileContainer
             showMobileNotesList={showMobileNotesList}
             NotesList={NotesList}
@@ -238,11 +241,23 @@ const notes = ({
             user_id={user_id}
             setSort={setSort}
             HeaderNotes={HeaderNotes}
+            idpage={idpage}
+            BookSvg={Book}
+            withoutId={withoutId}
+            name={name}
+            handleCheckboxChange={handleCheckboxChange}
+            setActiveModal={setActiveModal}
+           
+           
           />
-        </MobileView>
+
+          
+          </div>
+      
         
         <div className={s.editor}>
-          <p className={cn(s.nameBook)}>
+         
+        <p className={cn(s.nameBook)}>
             <span onClick={() => setActiveModal(true)} className={s.tooltip}>
               <Book /> <span>{idpage === "all" ? "Всe" : name && name}</span>
             </span>
@@ -256,7 +271,6 @@ const notes = ({
               />
             )}
           </p>
-
           <ModalBooks
             userId={user_id}
             email={email}

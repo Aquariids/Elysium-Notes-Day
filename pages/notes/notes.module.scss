@@ -135,7 +135,7 @@
     position: absolute;
     right: 0;
     margin-right: 15px;
-    margin-bottom: 15px;
+    margin-bottom:10px;
 }
 
 
@@ -219,10 +219,15 @@
 
 @media only screen and (max-width: 500px) {
 
-   
+   .desktop {
+    display: none;
+   }
 .mobile {
     display: block;
 }
+
+
+
     .list {
         height: 94svh;
     }
