@@ -5,11 +5,13 @@ import {
   SandpackCodeViewer,
 } from "@codesandbox/sandpack-react";
 import { aquaBlue } from "@codesandbox/sandpack-themes";
+import { gruvboxDark } from "@codesandbox/sandpack-themes";
 interface props {
   editorState: EditorState;
   setShowToolbar: (value: boolean) => void;
   routerReclycle: boolean;
 }
+
 
 // это компонент для мод кода на сайте.
 // тут я получаю тело документа обычным текстом и оборачиваю его sandbox, но без песочницы, просто для отображения красивого синтаксиса
@@ -23,7 +25,7 @@ const Sandpack = ({
   const plainText = editorState.getCurrentContent().getPlainText();
   
   
-
+  
   return (
     <SandpackProvider theme={aquaBlue}>
       <SandpackLayout

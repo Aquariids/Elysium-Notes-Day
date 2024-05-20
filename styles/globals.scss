@@ -8,6 +8,7 @@ body {
 }
 
 html {
+  
   line-height: 1.5;
   scrollbar-width: thin;
   overflow: hidden;
@@ -23,6 +24,8 @@ html {
     word-wrap: break-word;
   }
 
+ 
+
   .sp-wrapper {
 
     .sp-layout {
@@ -30,6 +33,7 @@ html {
 
       .sp-editor-viewer {
         height: 100%;
+
       }
 
       .cm-content {
@@ -41,7 +45,11 @@ html {
         word-wrap: break-word;
 
 
-       
+       .sp-syntax-comment {
+    color: rgb(3, 66, 95);
+    font-size: 16px;
+    
+  }
 
         .cm-line {
           word-break: break-word;
@@ -51,6 +59,7 @@ html {
     }
   }
 
+  
 }
 
 
@@ -171,3 +180,4 @@ h6 {
 
 
 }
+
