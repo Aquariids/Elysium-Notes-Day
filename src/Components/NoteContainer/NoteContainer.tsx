@@ -12,6 +12,7 @@ return  (
             <div className={s.list}>
               {data_editor[0] && (
                  <>
+                 
                  <NotesList
   
                   deleteElement={deleteElement}

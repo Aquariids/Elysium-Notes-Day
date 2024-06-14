@@ -28,6 +28,7 @@
     "draftjs-to-html": "^0.9.1",
     "eslint-config-next": "^14.2.1",
     "framer-motion": "^10.16.4",
+    "fuse.js": "^7.0.0",
     "highlight.js": "^11.8.0",
     "luxon": "^3.4.3",
     "mongodb": "^4.15.0",
