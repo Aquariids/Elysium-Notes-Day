@@ -34,7 +34,7 @@ const NoteContainer = ({
 
   // Преобразуем заметки с Draft.js в текст для поиска
   const notesWithTextBody = useMemo(() => {
-    return (links || data_editor).map((note) => ({
+    return (links || data_editor).map((note: { body: string; }) => ({
       ...note,
       textBody: convertDraftToText(note.body), // Добавляем текстовое представление body
     }));
