@@ -11,7 +11,7 @@
         margin-left: 10px;
         padding-left: 30px;
         margin-bottom: 10px;
-        width: 35%;
+       
         padding-top: 5px;
         padding-bottom: 5px;
         outline: none;
@@ -69,8 +69,12 @@
 .container:hover::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.349);
 }
-
-
+.input {
+    width: 35%;
+}
+.fullInput {
+    width: 95%;
+}
 
 
 @media only screen and (max-width: 1500px) {

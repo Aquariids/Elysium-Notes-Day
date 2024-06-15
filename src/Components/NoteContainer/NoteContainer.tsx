@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import s from './NoteContainer.module.scss';
 import Fuse from 'fuse.js';
 import { EditorState, convertFromRaw } from 'draft-js';
+import cn from 'classnames';
 
 const NoteContainer = ({
   NotesList,
@@ -77,7 +78,9 @@ const NoteContainer = ({
     <div className={s.notes_list}>
       <HeaderNotes setSort={setSort} sort={sort} data={data()} />
       <input
-        className={s.input}
+        className={cn(s.input, {
+        [s.fullInput]: query
+        })}
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
