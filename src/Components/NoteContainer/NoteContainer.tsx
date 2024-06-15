@@ -4,16 +4,29 @@ import Fuse from 'fuse.js';
 
 
 const NoteContainer = ({NotesList,data_editor,loadingDelete,deleteElement,checkTitle,links,sort,sorting,user_id,setSort, HeaderNotes }:any):JSX.Element => {
+  console.log("🚀 ~ NoteContainer ~ sort:", sort)
   const [filteredNotes, setFilteredNotes] = useState<object>([]);
   const [query, setQuery] = useState("");
 
   const fuse = useMemo(() => {
-    return new Fuse(links, {
+    return new Fuse(links ? links: data_editor, {
       keys: ["title"], // Поиск по заголовку и содержимому body в текст надо будет преварить
       includeScore: true, // Включение рейтинга совпадений
       threshold: 0.3, // Чувствительность поиска (0.0 - точное совпадение, 1.0 - очень нечеткое)
     });
   }, [links]);
+
+  const data = () => {
+    if(filteredNotes) {
+      return filteredNotes;
+    }
+     else if (links) {
+      return links;
+     }
+     else {
+      return data_editor
+     }
+  }
 
   useEffect(() => {
     if (query) {
@@ -27,7 +40,7 @@ const NoteContainer = ({NotesList,data_editor,loadingDelete,deleteElement,checkT
 return  (
 
 <div className={s.notes_list}>
-         <HeaderNotes setSort={setSort} sort={sort} data={links ? links : data_editor} />
+         <HeaderNotes setSort={setSort} sort={sort} data={data()} />
          <input
           className={s.input}
           type="text"
