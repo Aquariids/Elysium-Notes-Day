@@ -74,7 +74,7 @@ const NoteContainer = ({
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Поиск заметок..."
+        placeholder="Поиск..."
       />
       <div className={s.container}>
         <div className={s.list}>
