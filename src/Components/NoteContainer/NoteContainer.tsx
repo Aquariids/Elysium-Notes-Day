@@ -60,7 +60,7 @@ const NoteContainer = ({
   }, [query, fuse]);
 
   const data = () => {
-    if (filteredNotes.length > 0) {
+    if (filteredNotes) {
       return filteredNotes;
     }
     return links || data_editor;
@@ -68,7 +68,7 @@ const NoteContainer = ({
 
   return (
     <div className={s.notes_list}>
-      <HeaderNotes setSort={setSort} sort={sort} data={filteredNotes} />
+      <HeaderNotes setSort={setSort} sort={sort} data={data()} />
       <input
         className={s.input}
         type="text"
