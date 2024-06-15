@@ -16,7 +16,6 @@ const NoteContainer = ({
   setSort,
   HeaderNotes
 }: any): JSX.Element => {
-  console.log("🚀 ~ links:", links)
   const [filteredNotes, setFilteredNotes] = useState<object[]>([]);
   const [query, setQuery] = useState("");
 
@@ -24,8 +23,13 @@ const NoteContainer = ({
   const convertDraftToText = (body: string) => {
     try {
       const contentState = convertFromRaw(JSON.parse(body));
-      const editorState = EditorState.createWithContent(contentState);
-      return editorState.getCurrentContent().getPlainText();
+      let plainText = contentState.getPlainText('\n');
+      
+      // Удаляем избыточные пробелы и специальные символы
+      plainText = plainText.replace(/\s+/g, ' ').trim();
+      
+      console.log("Преобразованный текст:", plainText); // Логирование преобразованного текста
+      return plainText;
     } catch (error) {
       console.error("Ошибка преобразования Draft.js:", error);
       return '';
@@ -34,21 +38,24 @@ const NoteContainer = ({
 
   // Преобразуем заметки с Draft.js в текст для поиска
   const notesWithTextBody = useMemo(() => {
+    
     return (links || data_editor).map((note: { body: string; }) => ({
       ...note,
       textBody: convertDraftToText(note.body), // Добавляем текстовое представление body
     }));
   }, [links, data_editor]);
-
   // Настраиваем Fuse.js для поиска по title и textBody
   const fuse = useMemo(() => {
     return new Fuse(notesWithTextBody, {
       keys: ["title", "textBody"], // Поиск по заголовку и преобразованному body
       includeScore: true,
-      threshold: 0.2,
+      threshold: 0.4,
+      distance: 1000000,
     });
   }, [notesWithTextBody]);
 
+  console.log(notesWithTextBody);
+  
   // Фильтрация заметок с использованием Fuse.js
   useEffect(() => {
     if (query) {
