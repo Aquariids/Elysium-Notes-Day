@@ -50,7 +50,7 @@ const NoteContainer = ({
     return new Fuse(notesWithTextBody, {
       keys: ["title", "textBody"], // Поиск по заголовку и преобразованному body
       includeScore: true,
-      threshold: 0.4,
+      threshold: 0.2,
       distance: 1000000,
     });
   }, [notesWithTextBody]);
