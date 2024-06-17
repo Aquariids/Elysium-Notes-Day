@@ -26,13 +26,7 @@ import {
 import { Record } from "immutable";
 import NoteContainer from "@/Components/NoteContainer/NoteContainer";
 import NoteMobileContainer from "@/Components/NoteMobileContainer/NoteMobileContainer";
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from "react-device-detect";
-  
+
 
 const notes = ({
   data_editor,
@@ -138,29 +132,7 @@ setShowMobileNotesList(false)
     }
   }, [checkTitle, data_editor, withoutId]);
 
-  const updateActiveSortingAction = useCallback(
-    async (sorting: string, userId: string, email: string) => {
-      try {
-        const response = await fetch(
-          `/api/updateData?action=${update_action.update_sorting_preferences}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userId,
-              email,
-              sorting: sorting,
-            }),
-          }
-        );
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    [sort]
-  );
+
 
   const handleCheckboxChange = () => {
     const newCheckedState = !withoutId;
@@ -197,7 +169,6 @@ setShowMobileNotesList(false)
   useEffect(() => {
     const sort = localStorage.getItem("sorting") || "no-sorting";
     setSort(sort);
-    updateActiveSortingAction(sort, user_id, email);
   }, [sort]);
 
   useEffect(() => {

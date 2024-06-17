@@ -84,29 +84,12 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
     );
   };
 
-  const createActionSorting = async () => {
-    const sortData = {
-      userId: user_id,
-      email,
-      sorting: "",
-    };
-    const response = await fetch(
-      `/api/createData?action=${create_data_action.initialize_sorting_preferences}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sortData),
-      }
-    );
-  };
+ 
 
   useEffect(() => {
     if (user_id && email) {
       createNotesBook();
       createBookForNotes();
-      createActionSorting();
     }
   }, [user_id, email]);
 
@@ -137,26 +120,6 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
     []
   );
 
-  // const updateBookForNotes = useCallback(async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `/api/updateData?action=${update_action.update_active_notebook}`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           userId: session.data?.user.userId,
-  //           email: session.data?.user.email,
-  //           book: "all",
-  //         }),
-  //       }
-  //     );
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -191,7 +154,6 @@ function Home({ data_editor, data_note_main_menu, email, user_id }: any) {
           <div className={s.notes}>
             <div className={s.notes_title}>
               <Link
-                // onClick={updateBookForNotes}
                 className={s.notes_title_link}
                 href={`${NOTES}`}
               >

@@ -4,7 +4,6 @@ export type UpdateAction =
   | "update_note_title"
   | "update_main_menu_note"
   | "update_note_visibility"
-  | "update_sorting_preferences"
   | "update_code_highlighting"
   | "update_note_last_modified_date"
   | "update_notebook_id_for_note"
@@ -19,7 +18,6 @@ export const update_action = {
   update_note_title: "update_note_title",
   update_main_menu_note: "update_main_menu_note",
   update_note_visibility: "update_note_visibility",
-  update_sorting_preferences: "update_sorting_preferences",
   update_code_highlighting: "update_code_highlighting",
   update_note_last_modified_date: "update_note_last_modified_date",
   update_notebook_id_for_note: "update_notebook_id_for_note",
@@ -32,7 +30,6 @@ export const update_action = {
 export type GetAction =
   | "get_all_user_notes"
   | "editor_title"
-  | "get_sorting_preferences"
   | "get_all_user_notebook"
   | "get_user_notes_from_notebook"
   | "get_active_notebook"
@@ -47,7 +44,6 @@ export const get_action = {
   get_all_user_notes_from_recycle: "get_all_user_notes_from_recycle",
   get_main_menu_note: "get_main_menu_note",
   get_user_notes_from_notebook: "get_user_notes_from_notebook",
-  get_sorting_preferences: "get_sorting_preferences",
   get_all_user_notebook: "get_all_user_notebook",
   get_active_notebook: "get_active_notebook",
   get_active_notebook_without_id:"get_active_notebook_without_id",

@@ -44,10 +44,6 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
           await updateCodeHighlighting (data);
           res.status(200).send("mode code");
           break;
-        case update_action.update_sorting_preferences:
-          await updateSortingPreferences(data);
-          res.status(200).send("update sorting action");
-          break;
         case update_action.update_note_last_modified_date:
           await updateNoteLastModifiedDate(data);
           res.status(200).send("update date last changes");

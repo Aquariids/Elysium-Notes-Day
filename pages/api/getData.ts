@@ -39,9 +39,6 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
         case get_action.get_main_menu_note:
           res.status(200).json(await getMainMenuNote(userId, email));
           break;
-        case get_action.get_sorting_preferences:
-          res.status(200).json(await getSortingPreferences(userId, email));
-          break;
         case get_action.get_all_user_notebook:
           res.status(200).json(await getAllUserNotebook(userId, email));
           break;
