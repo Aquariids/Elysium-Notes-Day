@@ -9,7 +9,6 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { RECYCLE } from "../api/paths";
 import { useSession } from "next-auth/react";
 import HeaderNotes from "@/Components/HeaderNotes/HeaderNotes";
-import {update_action } from "../api/actions";
 import AnimationContainer from "@/Components/AnimationContainer/AnimationContainer";
 import { sorting } from "../../utils/sorting";
 import { getAllUserNotesFromRecycle } from "../api/auth/lib/Get";
@@ -33,36 +32,11 @@ const notes = ({ data, all_id}: any) => {
   );
 
 
-  const updateActiveSortingAction = useCallback(
-    async (sorting: any, userId: any, email: any) => {
-      try {
-        const response = await fetch(
-          `/api/updateData?action=${update_action.update_sorting_preferences}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userId,
-              email,
-              sorting: sorting,
-            }),
-          }
-        );
-      } catch (error) {
-        console.log(
-          "🚀 ~ file: CustomEditor.tsx:66 ~ updateData ~ error:",
-          error
-        );
-      }
-    },
-    []
-  );
+ 
   useEffect(() => {
     const sort = localStorage.getItem("sorting");
     setSort(sort);
-    updateActiveSortingAction(sort,userId,email);
+  
     
   }, [sort]);
   useEffect(() => {
