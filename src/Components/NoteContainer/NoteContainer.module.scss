@@ -8,20 +8,21 @@
 
 .notes_list {
     input {
-        margin-left: 10px;
-        padding-left: 30px;
+        margin-left: 4px;
+        padding-left: 40px;
         margin-bottom: 10px;
        
         padding-top: 5px;
         padding-bottom: 5px;
         outline: none;
         border: none;
-        border-bottom: 1px solid gray;
+        border-bottom: 1px solid rgb(180, 179, 179);
       }
       
     
       input[type=text]:focus {
-        width: 95%;
+        width: 94.4%;
+        
         border-bottom: 1px solid rgb(54, 54, 54);
         outline: none;
       }
@@ -30,7 +31,7 @@
         background-color: transparent;
         background-image: url(./search.png);
         background-repeat: no-repeat;
-        background-position: 5px;
+        background-position: 10px;
         background-size: 20px;
       }
       
@@ -39,7 +40,7 @@
 
 
 .container {
-    max-height: calc(100svh - 165px);
+    max-height: calc(100svh - 155px);
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100%;

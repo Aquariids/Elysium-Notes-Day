@@ -10,7 +10,6 @@ const NotesList = ({
   deleteElement,
   loadingDelete,
 }: any) => {
-  // const [notes, setNotes] = useState<{ title: string; body: string }[]>([...dataClient]);
   
 
   if (!dataClient) {
@@ -18,7 +17,7 @@ const NotesList = ({
       <>
         <List body={dataServer} userId={userId} email={email} />;
       </>
-    );
+    )
   } else {
     return (
       <>
