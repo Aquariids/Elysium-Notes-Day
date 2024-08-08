@@ -55,13 +55,7 @@ const notes = ({ data, all_id}: any) => {
         <div className={s.container}>
           <div className={s.list}>
             {data[0] && (
-              <NotesList
-                recycle={true}
-                checkTitle={checkTitle}
-                dataClient={data ? sorting(data, sort): ''}
-                
-                userId={userId}
-              />
+             <></>
             )}
           </div>
         </div>

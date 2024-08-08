@@ -47,6 +47,39 @@ export async function getAllUserNotes(
   }
 }
 
+export async function getNote(
+  userId: string | string[],
+  email: string | string[],
+  withoutId: boolean
+) {
+ 
+  
+  const query = userId && email ? { userId, email } : {};
+
+  try {
+    const collection = await getCollection({
+      collectionName: `user_${userId}`,
+      db: "notes",
+    });
+    const allNotes = await collection.find(query).sort({ date: 1 }).limit(1).toArray();
+    const notesWithoutIdPage = allNotes.filter((item) => {
+      return !item.idPage;
+    });
+
+    if(withoutId) {
+      return notesWithoutIdPage
+    } else {
+      return allNotes;
+    }
+    
+  
+  } catch (error) {
+    const client = await getClient();
+    client.close();
+  }
+}
+
+
 export async function getAllUserNotesWithoutId(
   userId: string | string[],
   email: string | string[],

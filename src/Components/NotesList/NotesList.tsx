@@ -11,27 +11,25 @@ const NotesList = ({
   loadingDelete,
 }: any) => {
   
-
-  if (!dataClient) {
-    return (
-      <>
-        <List body={dataServer} userId={userId} email={email} />;
-      </>
-    )
-  } else {
-    return (
-      <>
-        <List
-          loadingDelete={loadingDelete}
-          deleteElement={deleteElement}
-          body={dataClient}
-          userId={userId}
-          email={email}
-        />
-      
-      </>
-    );
+  if (!dataClient || dataClient.length === 0) {
+    return <></>; // Возвращаем null, если нет данных
   }
+  
+  if (dataClient) {
+   
+    return (
+     
+      <List
+        loadingDelete={loadingDelete}
+        deleteElement={deleteElement}
+        body={dataClient}
+        userId={userId}
+        email={email}
+      />
+    
+    
+    )
+  } 
 };
 
 export default NotesList;

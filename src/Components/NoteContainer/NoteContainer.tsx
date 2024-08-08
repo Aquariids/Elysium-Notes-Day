@@ -3,25 +3,34 @@ import s from './NoteContainer.module.scss';
 import Fuse from 'fuse.js';
 import { EditorState, convertFromRaw } from 'draft-js';
 import cn from 'classnames';
+import { useAllNotes } from '../../../hooks/useAllNotes';
 
 const NoteContainer = ({
   NotesList,
-  data_editor,
+  // data_editor,
   loadingDelete,
   deleteElement,
   checkTitle,
-  links,
+  // links,
   sort,
   sorting,
   user_id,
   setSort,
+  email,
+  without_id,
   HeaderNotes
 }: any): JSX.Element => {
   const [filteredNotes, setFilteredNotes] = useState<object[]>([]);
   const [query, setQuery] = useState("");
+  const { notes, isLoading, isError } = useAllNotes(user_id, email, without_id);
+  
+
 
   // Преобразуем body заметки в текст с помощью Draft.js
   const convertDraftToText = (body: string) => {
+
+    if(!body) return '';
+
     try {
       const contentState = convertFromRaw(JSON.parse(body));
       let plainText = contentState.getPlainText('\n');
@@ -29,7 +38,6 @@ const NoteContainer = ({
       // Удаляем избыточные пробелы и специальные символы
       plainText = plainText.replace(/\s+/g, ' ').trim();
       
-      console.log("Преобразованный текст:", plainText); // Логирование преобразованного текста
       return plainText;
     } catch (error) {
       console.error("Ошибка преобразования Draft.js:", error);
@@ -39,12 +47,14 @@ const NoteContainer = ({
 
   // Преобразуем заметки с Draft.js в текст для поиска
   const notesWithTextBody = useMemo(() => {
-    
-    return (links || data_editor).map((note: { body: string; }) => ({
+    if (!notes || notes.length === 0) {
+      return [];
+    }
+    return (notes).map((note: { body: string; }) => ({
       ...note,
       textBody: convertDraftToText(note.body), // Добавляем текстовое представление body
     }));
-  }, [links, data_editor]);
+  }, [notes]);
   // Настраиваем Fuse.js для поиска по title и textBody
   const fuse = useMemo(() => {
     return new Fuse(notesWithTextBody, {
@@ -55,7 +65,6 @@ const NoteContainer = ({
     });
   }, [notesWithTextBody]);
 
-  console.log(notesWithTextBody);
   
   // Фильтрация заметок с использованием Fuse.js
   useEffect(() => {
@@ -63,7 +72,7 @@ const NoteContainer = ({
       const results = fuse.search(query);
       setFilteredNotes(results.map((result):any => result.item));
     } else {
-      setFilteredNotes(links || data_editor);
+      setFilteredNotes(notes || []);
     }
   }, [query, fuse]);
 
@@ -71,7 +80,7 @@ const NoteContainer = ({
     if (filteredNotes) {
       return filteredNotes;
     }
-    return links || data_editor;
+    return notes;
   };
 
   return (
@@ -88,14 +97,14 @@ const NoteContainer = ({
       />
       <div className={s.container}>
         <div className={s.list}>
-          {data_editor[0] && (
+          {notes && (
             <>
               <NotesList
                 deleteElement={deleteElement}
                 loadingDelete={loadingDelete}
                 checkTitle={checkTitle}
                 dataClient={sorting(filteredNotes, sort)}
-                dataServer={sorting(data_editor, sort)}
+                // dataServer={sorting(data_editor, sort)}
                 userId={user_id}
               />
             </>

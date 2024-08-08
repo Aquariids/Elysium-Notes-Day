@@ -44,7 +44,7 @@ const notes = ({
   const [deleteElement, setDeleteElement] = useState<string>();
   const router = useRouter();
   const selectedId = router.query.index;
-  const [links, setLinks] = useState<any>();
+  const [links, setLinks] = useState<any>(['']);
   const [showMobileNotesList, setShowMobileNotesList] = useState(false);
 
  
@@ -104,20 +104,20 @@ setShowMobileNotesList(false)
         const [idPage] = await idPageForBooks.json();
 
         if (idPage === "all" && !withoutId) {
-          const res = await fetch(
-            `/api/getData?action=${get_action.get_all_user_notes}&userId=${user_id}&email=${email}`
-          );
+          // const res = await fetch(
+          //   `/api/getData?action=${get_action.get_all_user_notes}&userId=${user_id}&email=${email}`
+          // );
 
-          const data = await res.json();
+          // const data = await res.json();
 
-          setLinks(data);
+          // setLinks(data);
         } else if (idPage === "all" && withoutId) {
-          const res = await fetch(
-            `/api/getData?action=${get_action.get_all_user_notes_without_id}&userId=${user_id}&email=${email}`
-          );
-          const data = await res.json();
+          // const res = await fetch(
+          //   `/api/getData?action=${get_action.get_all_user_notes_without_id}&userId=${user_id}&email=${email}`
+          // );
+          // const data = await res.json();
 
-          setLinks(data);
+          // setLinks(data);
         }
         if (idPage !== "all") {
           const res = await fetch(
@@ -184,7 +184,9 @@ setShowMobileNotesList(false)
         <div className={s.desktop}>
           <NoteContainer
             NotesList={NotesList}
-            data_editor={data_editor}
+            email={email}
+            without_id={withoutId}
+            // data_editor={data_editor}
             loadingDelete={loadingDelete}
             deleteElement={deleteElement}
             checkTitle={checkTitle}
@@ -202,7 +204,7 @@ setShowMobileNotesList(false)
           <NoteMobileContainer
             showMobileNotesList={showMobileNotesList}
             NotesList={NotesList}
-            data_editor={data_editor}
+            // data_editor={data_editor}
             loadingDelete={loadingDelete}
             deleteElement={deleteElement}
             checkTitle={checkTitle}

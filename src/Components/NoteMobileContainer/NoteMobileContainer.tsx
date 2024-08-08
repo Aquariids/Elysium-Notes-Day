@@ -4,7 +4,7 @@ import cn from "classnames";
 import Book from './book.svg';
 const NoteMobileContainer = ({
   NotesList,
-  data_editor,
+  // data_editor,
   loadingDelete,
   deleteElement,
   checkTitle,
@@ -33,7 +33,7 @@ const NoteMobileContainer = ({
       <HeaderNotes
         setSort={setSort}
         sort={sort}
-        data={links ? links : data_editor}
+        data={links ? links : ''}
       />
 
    
@@ -56,7 +56,7 @@ const NoteMobileContainer = ({
         
         <div className={s.list}>
           
-          {data_editor[0] && (
+          {links[0] && (
             <>
             
               <NotesList
@@ -64,7 +64,7 @@ const NoteMobileContainer = ({
                 loadingDelete={loadingDelete}
                 checkTitle={checkTitle}
                 dataClient={links ? sorting(links, sort) : ""}
-                dataServer={data_editor ? sorting(data_editor, sort) : ""}
+                // dataServer={data_editor ? sorting(data_editor, sort) : ""}
                 userId={user_id}
               />
               
