@@ -53,7 +53,10 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
   }, []);
 
 
-
+useEffect(() => {
+  mutateId();
+  mutate();
+},[router])
 
 
   const create = async () => {
@@ -77,9 +80,9 @@ if( session != null) {
     };
     
     
-    mutate()
+  
     setLoad(false);
-    mutateId()
+ 
     
     const response = await fetch(`/api/createData?action=${create_data_action.create_user_note}`, {
       method: "POST",
