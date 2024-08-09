@@ -26,7 +26,6 @@ import {
 import { Record } from "immutable";
 import NoteContainer from "@/Components/NoteContainer/NoteContainer";
 import NoteMobileContainer from "@/Components/NoteMobileContainer/NoteMobileContainer";
-import { useCurrentIdPage } from "../../hooks/useCurrentIdPage";
 
 const notes = ({
   data_editor,
