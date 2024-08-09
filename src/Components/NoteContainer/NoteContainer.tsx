@@ -4,7 +4,6 @@ import Fuse from 'fuse.js';
 import { EditorState, convertFromRaw } from 'draft-js';
 import cn from 'classnames';
 import { useAllNotes } from '../../../hooks/useAllNotes';
-import { useCurrentIdPage } from '../../../hooks/useCurrentIdPage';
 
 const NoteContainer = ({
   NotesList,
