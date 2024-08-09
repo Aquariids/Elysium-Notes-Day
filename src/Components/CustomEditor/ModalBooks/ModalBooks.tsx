@@ -17,7 +17,6 @@ import dynamic from "next/dynamic";
 const ModalBooks = ({ active, setActive, userId, email }: any) => {
   const DropdownMenuEditor = dynamic(( import('@/Components/UI/DropdownMenu/DropdownMenu')))
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
-  console.log("🚀 ~ ModalBooks ~ currentIdPage:", currentIdPage)
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
  

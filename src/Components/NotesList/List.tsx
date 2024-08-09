@@ -10,16 +10,14 @@ import { EditorState, convertFromRaw } from "draft-js";
 import { update_action } from "../../../pages/api/actions";
 import { useSession } from "next-auth/react";
 
-const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
-console.log("🚀 ~ List ~ idPage:", idPage)
+const List = ({ body, loadingDelete, deleteElement}: any) => {
 
   const router = useRouter();
-  
 
-  const hrefBook = `book/${idPage}`;
+  
   const session = useSession()
   const routerRecycle = router.asPath.split("/")[1];
-  const selectedId = idPage || idPage == 0 ? router.query.book : router.query.index;
+  const selectedId =  router.query.index;
   // const remove_line_break = (str: string) => {
   //   return str.replace(/\n/g, "");
   // };
@@ -89,7 +87,7 @@ console.log("🚀 ~ List ~ idPage:", idPage)
                     [s.mainMenuLink]: router.asPath === "/",
                     [s.block_item]: item.block === true,
                   })}
-                  href={`/${(idPage || idPage == 0) && hrefBook || routerRecycle && routerRecycle || NOTES }/${item._id}`}
+                  href={`/${ routerRecycle && routerRecycle || NOTES }/${item._id}`}
                 >
                   <p
                     className={cn(s.title_link, {

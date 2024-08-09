@@ -1,6 +1,5 @@
 import useSWR from "swr";
 import { get_action } from "../pages/api/actions";
-import { useCurrentIdPage } from "./useCurrentIdPage";
 
 export function useAllNotes(userId: string, email: string, withoutId: boolean,idPage:string) {
 
