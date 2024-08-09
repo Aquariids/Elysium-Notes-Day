@@ -132,22 +132,21 @@ export async function getServerSideProps(context: any) {
     const [withoutId]: any = await getActiveNotebookWithoutId(user_id, email);
 
     if (user_id != undefined && email != undefined) {
-      // let responseEditorData;
-      // if (idpage === "all" && !withoutId) {
-      //   responseEditorData = await getAllUserNotes(user_id, email, withoutId);
-      // } else if (withoutId) {
-      //   responseEditorData = await getAllUserNotesWithoutId(user_id, email);
-      // }
-      // if (idpage !== "all") {
-      //   responseEditorData = await getUserNotesFromNotebook(
-      //     user_id,
-      //     email,
-      //     idpage
-      //   );
-      // }
+      let responseEditorData;
+      if (idpage === "all" && !withoutId) {
+        responseEditorData = await getAllUserNotes(user_id, email, withoutId);
+      } else if (withoutId) {
+        responseEditorData = await getAllUserNotesWithoutId(user_id, email);
+      }
+      if (idpage !== "all") {
+        responseEditorData = await getUserNotesFromNotebook(
+          user_id,
+          email,
+          idpage
+        );
+      }
 
       
-      let responseEditorData = await getAllUserNotes(user_id, email, withoutId);
       const serializedData: any = responseEditorData?.map((item) => ({
         ...item,
         _id: item._id.toString(),

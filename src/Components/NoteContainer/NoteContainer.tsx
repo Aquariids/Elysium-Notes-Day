@@ -4,25 +4,27 @@ import Fuse from 'fuse.js';
 import { EditorState, convertFromRaw } from 'draft-js';
 import cn from 'classnames';
 import { useAllNotes } from '../../../hooks/useAllNotes';
+import { useCurrentIdPage } from '../../../hooks/useCurrentIdPage';
 
 const NoteContainer = ({
   NotesList,
-  // data_editor,
   loadingDelete,
   deleteElement,
   checkTitle,
-  // links,
   sort,
   sorting,
   user_id,
   setSort,
   email,
   without_id,
+  idPage,
   HeaderNotes
 }: any): JSX.Element => {
+  console.log("🚀 ~ idPage:", idPage)
   const [filteredNotes, setFilteredNotes] = useState<object[]>([]);
   const [query, setQuery] = useState("");
-  const { notes, isLoading, isError } = useAllNotes(user_id, email, without_id);
+
+  const { notes, isLoading, isError,mutate} = useAllNotes(user_id, email, without_id,idPage);
   
 
 
@@ -65,7 +67,7 @@ const NoteContainer = ({
     });
   }, [notesWithTextBody]);
 
-  
+
   // Фильтрация заметок с использованием Fuse.js
   useEffect(() => {
     if (query) {
@@ -82,6 +84,10 @@ const NoteContainer = ({
     }
     return notes;
   };
+
+  useEffect(() => {
+    mutate(); 
+  }, [notes]);
 
   return (
     <div className={s.notes_list}>
@@ -104,7 +110,6 @@ const NoteContainer = ({
                 loadingDelete={loadingDelete}
                 checkTitle={checkTitle}
                 dataClient={sorting(filteredNotes, sort)}
-                // dataServer={sorting(data_editor, sort)}
                 userId={user_id}
               />
             </>

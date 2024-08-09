@@ -8,12 +8,16 @@ import {
 import s from "./ModalBooks.module.scss";
 import cn from "classnames";
 import Xmark from "./xmark.svg";
-import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
 import DotsMenu from "./dots.svg";
 import { useRouter } from "next/router";
 import Done from "./done.svg";
+import dynamic from "next/dynamic";
+
+
 const ModalBooks = ({ active, setActive, userId, email }: any) => {
+  const DropdownMenuEditor = dynamic(( import('@/Components/UI/DropdownMenu/DropdownMenu')))
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
+  console.log("🚀 ~ ModalBooks ~ currentIdPage:", currentIdPage)
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
  

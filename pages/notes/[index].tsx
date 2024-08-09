@@ -26,7 +26,7 @@ import {
 import { Record } from "immutable";
 import NoteContainer from "@/Components/NoteContainer/NoteContainer";
 import NoteMobileContainer from "@/Components/NoteMobileContainer/NoteMobileContainer";
-
+import { useCurrentIdPage } from "../../hooks/useCurrentIdPage";
 
 const notes = ({
   data_editor,
@@ -37,6 +37,7 @@ const notes = ({
   all_id,
   without_id_props,
 }: notes_data & Record<string, unknown>) => {
+
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -44,9 +45,11 @@ const notes = ({
   const [deleteElement, setDeleteElement] = useState<string>();
   const router = useRouter();
   const selectedId = router.query.index;
-  const [links, setLinks] = useState<any>(['']);
+  const [idPage, setIdPage] = useState<string>('');
   const [showMobileNotesList, setShowMobileNotesList] = useState(false);
-
+  // const { idPage } = useCurrentIdPage(user_id, email);
+ 
+ 
  
 
   const session = useSession();
@@ -95,37 +98,16 @@ setShowMobileNotesList(false)
     [data_editor, selectedId]
   );
 
-  const getData = useCallback(async () => {
+  const getId = useCallback(async () => {
     try {
       if (session.status === "authenticated") {
         const idPageForBooks = await fetch(
           `/api/getData?action=${get_action.get_active_notebook}&userId=${user_id}&email=${email}`
         );
         const [idPage] = await idPageForBooks.json();
-
-        if (idPage === "all" && !withoutId) {
-          // const res = await fetch(
-          //   `/api/getData?action=${get_action.get_all_user_notes}&userId=${user_id}&email=${email}`
-          // );
-
-          // const data = await res.json();
-
-          // setLinks(data);
-        } else if (idPage === "all" && withoutId) {
-          // const res = await fetch(
-          //   `/api/getData?action=${get_action.get_all_user_notes_without_id}&userId=${user_id}&email=${email}`
-          // );
-          // const data = await res.json();
-
-          // setLinks(data);
-        }
-        if (idPage !== "all") {
-          const res = await fetch(
-            `/api/getData?action=${get_action.get_user_notes_from_notebook}&userId=${user_id}&email=${email}&idPage=${idPage}`
-          );
-          const data = await res.json();
-          setLinks(data);
-        }
+        
+        setIdPage(idPage)
+        
       }
     } catch (err) {
       console.error(err);
@@ -154,16 +136,10 @@ setShowMobileNotesList(false)
     );
   };
 
-  useEffect(() => {
-    if (loadingDelete) {
-      getData();
-    } else {
-      const timer = setTimeout(() => {
-        getData();
-      }, 300);
+  // getData()
 
-      return () => clearTimeout(timer);
-    }
+  useEffect(() => {
+    getId()
   }, [checkTitle, data_editor, loadingDelete, withoutId]);
 
   useEffect(() => {
@@ -186,11 +162,10 @@ setShowMobileNotesList(false)
             NotesList={NotesList}
             email={email}
             without_id={withoutId}
-            // data_editor={data_editor}
+            idPage={idPage}
             loadingDelete={loadingDelete}
             deleteElement={deleteElement}
             checkTitle={checkTitle}
-            links={links}
             sort={sort}
             sorting={sorting}
             user_id={user_id}
@@ -204,11 +179,11 @@ setShowMobileNotesList(false)
           <NoteMobileContainer
             showMobileNotesList={showMobileNotesList}
             NotesList={NotesList}
-            // data_editor={data_editor}
+            // idPage={idPage}
             loadingDelete={loadingDelete}
             deleteElement={deleteElement}
             checkTitle={checkTitle}
-            links={links}
+            links={[]}
             sort={sort}
             sorting={sorting}
             user_id={user_id}

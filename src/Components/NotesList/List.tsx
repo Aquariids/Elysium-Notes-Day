@@ -11,6 +11,7 @@ import { update_action } from "../../../pages/api/actions";
 import { useSession } from "next-auth/react";
 
 const List = ({ body, loadingDelete, deleteElement, idPage = null}: any) => {
+console.log("🚀 ~ List ~ idPage:", idPage)
 
   const router = useRouter();
   

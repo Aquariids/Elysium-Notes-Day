@@ -186,7 +186,7 @@ export async function getActiveNotebook(
     });
     const data = await collection.find(query).toArray();
 
-    return [data[0]?.book || "", data[0]?.name || ""];
+    return [data[0]?.book];
   } catch (error) {}
 }
 
