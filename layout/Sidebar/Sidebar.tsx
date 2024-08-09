@@ -3,7 +3,7 @@ import { SidebarProps } from "./Sidebar.props";
 import cn from "classnames";
 import React from "react";
 import SideBarMenu from "@/Components/SidebarMenu/SidebarMenu";
-const Sidebar = ({ className,  ...props }: SidebarProps) => {
+const Sidebar = ({ className, ...props }: SidebarProps) => {
   
 
   return (

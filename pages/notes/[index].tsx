@@ -26,17 +26,17 @@ import {
 import { Record } from "immutable";
 import NoteContainer from "@/Components/NoteContainer/NoteContainer";
 import NoteMobileContainer from "@/Components/NoteMobileContainer/NoteMobileContainer";
+import { useActiveNotebook } from "../../hooks/useActiveNotebook";
+import { useWithoutId } from "../../hooks/useWithoutId";
 
 const notes = ({
   data_editor,
-  idpage,
   user_id,
   email,
   data_nootebook,
   all_id,
   without_id_props,
 }: notes_data & Record<string, unknown>) => {
-
   const [checkTitle, setCheckTitle] = useState(false); // ну тупа, да. короче перекидывю шнягу в редактор и лист где все заметки
   // суть такая, что заголовок я меняю в редакторе, это передаю на сервер, потом проверяю checkTitle, если он менялся, значит меняю заголовок и в  NotesList. Вот и все.
   const [sort, setSort] = useState<any>();
@@ -44,12 +44,9 @@ const notes = ({
   const [deleteElement, setDeleteElement] = useState<string>();
   const router = useRouter();
   const selectedId = router.query.index;
-  const [idPage, setIdPage] = useState<string>('');
   const [showMobileNotesList, setShowMobileNotesList] = useState(false);
-  // const { idPage } = useCurrentIdPage(user_id, email);
- 
- 
- 
+  const { idPage, setIdPage } = useActiveNotebook(user_id, email);
+  const { mutateWithoutId } = useWithoutId(user_id, email);
 
   const session = useSession();
   const [activeModal, setActiveModal] = useState(false);
@@ -59,8 +56,8 @@ const notes = ({
   );
 
   useEffect(() => {
-setShowMobileNotesList(false)
-  },[router])
+    setShowMobileNotesList(false);
+  }, [router]);
   useEffect(() => {
     getActiveWithoutId();
   }, []);
@@ -77,14 +74,14 @@ setShowMobileNotesList(false)
   const name = useMemo(() => {
     if (data_nootebook) {
       const matchingItem = data_nootebook.find(
-        (item: any) => item.idPage == idpage
+        (item: any) => item.idPage == idPage
       );
       if (matchingItem) {
         return matchingItem.name;
       }
     }
     return "all";
-  }, [idpage, data_nootebook]);
+  }, [idPage, data_nootebook]);
 
   // это наш path по сути текущий url = _id человека
   const selectedItem = useMemo(
@@ -97,27 +94,10 @@ setShowMobileNotesList(false)
     [data_editor, selectedId]
   );
 
-  const getId = useCallback(async () => {
-    try {
-      if (session.status === "authenticated") {
-        const idPageForBooks = await fetch(
-          `/api/getData?action=${get_action.get_active_notebook}&userId=${user_id}&email=${email}`
-        );
-        const [idPage] = await idPageForBooks.json();
-        
-        setIdPage(idPage)
-        
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [checkTitle, data_editor, withoutId]);
-
-
-
   const handleCheckboxChange = () => {
     const newCheckedState = !withoutId;
     setWithoutId(newCheckedState);
+    mutateWithoutId();
 
     fetch(
       `/api/updateData?action=${update_action.update_active_notebook_without_id}`,
@@ -135,12 +115,6 @@ setShowMobileNotesList(false)
     );
   };
 
-  // getData()
-
-  useEffect(() => {
-    getId()
-  }, [checkTitle, data_editor, loadingDelete, withoutId]);
-
   useEffect(() => {
     const sort = localStorage.getItem("sorting") || "no-sorting";
     setSort(sort);
@@ -155,7 +129,6 @@ setShowMobileNotesList(false)
   return (
     <AnimationContainer>
       <div className={s.wrapper}>
-        
         <div className={s.desktop}>
           <NoteContainer
             NotesList={NotesList}
@@ -172,9 +145,8 @@ setShowMobileNotesList(false)
             HeaderNotes={HeaderNotes}
           />
         </div>
-       
-       <div className={s.mobile}>
-        
+
+        <div className={s.mobile}>
           <NoteMobileContainer
             showMobileNotesList={showMobileNotesList}
             NotesList={NotesList}
@@ -188,27 +160,21 @@ setShowMobileNotesList(false)
             user_id={user_id}
             setSort={setSort}
             HeaderNotes={HeaderNotes}
-            idpage={idpage}
+            // idpage={idpage}
             BookSvg={Book}
             withoutId={withoutId}
             name={name}
             handleCheckboxChange={handleCheckboxChange}
             setActiveModal={setActiveModal}
-           
-           
           />
+        </div>
 
-          
-          </div>
-      
-        
         <div className={s.editor}>
-         
-        <p className={cn(s.nameBook)}>
+          <p className={cn(s.nameBook)}>
             <span onClick={() => setActiveModal(true)} className={s.tooltip}>
-              <Book /> <span>{idpage === "all" ? "Всe" : name && name}</span>
+              <Book /> <span>{idPage === "all" ? "Всe" : name && name}</span>
             </span>
-            {idpage === "all" && (
+            {idPage === "all" && (
               <input
                 title="Показать заметки без блокнотов"
                 style={{ marginLeft: "5px" }}
@@ -219,6 +185,8 @@ setShowMobileNotesList(false)
             )}
           </p>
           <ModalBooks
+            setIdPage={setIdPage}
+            idPage={idPage}
             userId={user_id}
             email={email}
             session={session}

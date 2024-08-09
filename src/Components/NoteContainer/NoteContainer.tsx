@@ -19,11 +19,10 @@ const NoteContainer = ({
   idPage,
   HeaderNotes
 }: any): JSX.Element => {
-  console.log("🚀 ~ idPage:", idPage)
   const [filteredNotes, setFilteredNotes] = useState<object[]>([]);
   const [query, setQuery] = useState("");
 
-  const { notes, isLoading, isError,mutate} = useAllNotes(user_id, email, without_id,idPage);
+  const { notes, isLoading, isError,mutate} = useAllNotes(user_id, email, without_id, idPage);
   
 
 
@@ -86,7 +85,7 @@ const NoteContainer = ({
 
   useEffect(() => {
     mutate(); 
-  }, [notes]);
+  }, [idPage]);
 
   return (
     <div className={s.notes_list}>

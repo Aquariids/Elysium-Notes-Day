@@ -9,28 +9,29 @@ import { create_data_action, get_action, update_action } from "../../../pages/ap
 import { DateTime } from 'luxon';
 import { Settings } from 'luxon';
 import Plus from './plus.svg';
+import { useActiveNotebook } from "../../../hooks/useActiveNotebook";
+import { useAllNotes } from "../../../hooks/useAllNotes";
+import { useWithoutId } from "../../../hooks/useWithoutId";
 Settings.defaultLocale = 'ru';
 DateTime.local().setLocale('ru');
 interface IButton {
   alert?: "alert";
 }
 const ButtonCreateNewNotes = ({ alert }: IButton) => {
+  
   const { data: session } = useSession();
   // emptyRawContentState - пустой объект содержимого draft js. Превращаем его в JSON и отправляем в базу
   const [load, setLoad] = useState(true);
   const router = useRouter();
- const [idPage, setIdPage] = useState();
+  const {idPage,mutateId} = useActiveNotebook(session?.user.userId,session?.user.email,);
+  const {withoutId} = useWithoutId(session?.user.userId,session?.user.email)
+  const {mutate} = useAllNotes(session?.user.userId,session?.user.email, withoutId, idPage);
 
 
-  async function getId () {
-    const idPageForBooks = await fetch(
-      `/api/getData?action=${get_action.get_active_notebook}&userId=${session?.user.userId}&email=${session?.user.email}`
-    );
-    const [idpage] = await idPageForBooks.json();
 
-    setIdPage(idpage)
-  }
+  
   const updateBookForNotes = useCallback(async () => {
+    
     try {
       const response = await fetch(
         `/api/updateData?action=${update_action.update_active_notebook}`,
@@ -46,17 +47,12 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
           }),
         }
       );
-
-      
     } catch (err) {
       console.error(err);
     }
   }, []);
 
 
-  useEffect(() => {
-    getId();
-  },[router])
 
 
 
@@ -64,7 +60,6 @@ const ButtonCreateNewNotes = ({ alert }: IButton) => {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const userDate = DateTime.now().setZone(userTimeZone);
     const content = JSON.stringify(emptyRawContentState);
-  
 if( session != null) {
   try {
     const data:create_user_note = {
@@ -80,7 +75,12 @@ if( session != null) {
       idPage: router.asPath === '/' ? 'all' : String(idPage && idPage),
       deleteDate: '',
     };
+    
+    
+    mutate()
     setLoad(false);
+    mutateId()
+    
     const response = await fetch(`/api/createData?action=${create_data_action.create_user_note}`, {
       method: "POST",
       headers: {
@@ -88,14 +88,12 @@ if( session != null) {
       },
       body: JSON.stringify(data),
     });
+    
+    
     const responseData = await response.json();
-
-    if(router.asPath === '/') {
       updateBookForNotes()
       router.push(`/${NOTES}/${responseData._id}`);
-    } else {
-      router.push(`/${NOTES}/${responseData._id}`);
-    }
+   
    
   } catch (error) {
     console.error("Failed to create note");
@@ -107,6 +105,7 @@ if( session != null) {
 
   useEffect(() => {
     setLoad(true);
+    
   }, [router]);
 
   if (alert === "alert") {

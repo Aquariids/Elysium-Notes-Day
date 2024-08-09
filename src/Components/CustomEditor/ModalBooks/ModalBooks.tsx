@@ -8,21 +8,21 @@ import {
 import s from "./ModalBooks.module.scss";
 import cn from "classnames";
 import Xmark from "./xmark.svg";
+import DropdownMenuEditor from "@/Components/UI/DropdownMenu/DropdownMenu";
 import DotsMenu from "./dots.svg";
 import { useRouter } from "next/router";
 import Done from "./done.svg";
-import dynamic from "next/dynamic";
+import { useAllNotebook } from "../../../../hooks/useAllNotebook";
+const ModalBooks = ({ active, setActive, userId, email,idPage, setIdPage }: any) => {
+  
 
-
-const ModalBooks = ({ active, setActive, userId, email }: any) => {
-  const DropdownMenuEditor = dynamic(( import('@/Components/UI/DropdownMenu/DropdownMenu')))
   const [currentIdPage, setCurrentIdPage] = useState<string>("");
   const [activeLink, setActiveLink] = useState<any>(false);
   const [bookName, setBookName] = useState<string>("");
- 
-  const [dataBook, setDataBook] = useState<any>();
- 
-  const [idForBook, setIdForBook] = useState<any>();
+  const {dataBooks, isLoading, isError,mutate} = useAllNotebook(userId,email);
+
+
+
   const [activeModal, setActiveModal] = useState(false);
   const router = useRouter();
 
@@ -31,7 +31,6 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
     setTimeout(() => {
       setActiveLink("");
       setCurrentIdPage("");
-      getIdForBookMain();
       setBookName("");
     }, 1000);
   }
@@ -69,21 +68,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
     }
   }, []);
 
-  async function getDatabook() {
-    try {
-      const res = await fetch(
-        `/api/getData?action=${get_action.get_all_user_notebook}&userId=${userId}&email=${email}`
-      );
-      if (!res.ok) {
-        throw new Error(`Ошибка при запросе: ${res.status} ${res.statusText}`);
-      }
-      const data = await res.json();
-      setDataBook(data); // Обновляем состояние dataBook
-      
-    } catch (err) {
-      console.error(err);
-    }
-  }
+ 
   async function deleteBook(_id: any, idPage: any) {
     try {
       const dataIdPage = {
@@ -105,7 +90,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
       );
 
       if (res.ok) {
-        getDatabook();
+        mutate()
         setActiveModal(false);
         setCurrentIdPage("");
        
@@ -116,22 +101,22 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
   }
 
   
-  const getIdForBookMain = useCallback(async () => {
-    try {
-      const idPageForBooks = await fetch(
-        `/api/getData?action=${get_action.get_active_notebook}&userId=${userId}&email=${email}`
-      );
-      const [idPage, nameBook] = await idPageForBooks.json();
-      setIdForBook(idPage);
-    } catch (err) {
-      console.error(err);
-    }
-  }, [router]);
+  // const getIdForBookMain = useCallback(async () => {
+  //   try {
+  //     const idPageForBooks = await fetch(
+  //       `/api/getData?action=${get_action.get_active_notebook}&userId=${userId}&email=${email}`
+  //     );
+  //     const [idPage, nameBook] = await idPageForBooks.json();
+  //     setIdForBook(idPage);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, [router]);
   
-  useEffect(() => {
-    getDatabook();
-    getIdForBookMain();
-  }, [router]);
+  // useEffect(() => {
+  
+  //   getIdForBookMain();
+  // }, [router]);
 
   async function buttonCreateNewBook(nameBook: string) {
     function removeStartSpacesAndEnd (string:string) {
@@ -142,15 +127,15 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
     
    
     
-   const isName = dataBook.some((item: { name: string; }) => removeStartSpacesAndEnd(item.name) === removeStartSpacesAndEnd(nameBook) );
+   const isName = dataBooks.some((item: { name: string; }) => removeStartSpacesAndEnd(item.name) === removeStartSpacesAndEnd(nameBook) );
    
 
 
    
     let maxIdPage = 0;
-    if (dataBook && dataBook.length > 0) {
+    if (dataBooks && dataBooks.length > 0) {
       maxIdPage = Math.max(
-        ...dataBook.map((book: { idPage: any }) => book.idPage)
+        ...dataBooks.map((book: { idPage: any }) => book.idPage)
       );
     }
 
@@ -172,7 +157,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
           }
         );
   
-        getDatabook();
+        mutate();
       } catch (err) {
         console.error(err);
       }
@@ -231,7 +216,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
               <div className={s.books__list}>
                 <span
                   className={cn(s.block, {
-                    [s.currentActiveBook]: idForBook == "all" && !currentIdPage,
+                    [s.currentActiveBook]: idPage == "all" && !currentIdPage,
                     [s.activeBook]: currentIdPage == "all",
                   })}
                   onClick={(e) => {
@@ -243,21 +228,21 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
                     <Done
                       className={cn(s.hide, {
                         [s.show]:
-                          (idForBook == "all" && !currentIdPage) ||
+                          (idPage == "all" && !currentIdPage) ||
                           currentIdPage == "all",
                       })}
                     />{" "}
                     <span className={s.text}>Все заметки</span>
                   </div>
                 </span>
-                {dataBook &&
-                  dataBook.map((item: any, i: number) => {
+                {dataBooks &&
+                  dataBooks.map((item: any, i: number) => {
                     return (
                       <div key={i} className={s.bookLink}>
                         <span
                           className={cn(s.block, {
                             [s.currentActiveBook]:
-                              idForBook == item.idPage && !currentIdPage,
+                            idPage == item.idPage && !currentIdPage,
                             [s.activeBook]:
                               currentIdPage === String(item.idPage),
                           })}
@@ -270,7 +255,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
                             <Done
                               className={cn(s.hide, {
                                 [s.show]:
-                                  (idForBook == item.idPage &&
+                                  (idPage == item.idPage &&
                                     !currentIdPage) ||
                                   currentIdPage === String(item.idPage),
                               })}
@@ -278,7 +263,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
                             <span className={s.text}>{item.name}</span>
                           </div>
                         </span>
-                        {/* <span>{`(${dataBook.length})`}</span> */}
+                        {/* <span>{`(${dataBooks.length})`}</span> */}
                         <DropdownMenuEditor
                           style={s}
                           activeModal={activeModal}
@@ -289,7 +274,7 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
                             onClick={() => {
                               setActiveModal(true);
                               deleteBook(item._id, item.idPage);
-                              idForBook === String(item.idPage) &&
+                              idPage === String(item.idPage) &&
                                 returnPageAll();
                               
                             }}
@@ -311,12 +296,12 @@ const ModalBooks = ({ active, setActive, userId, email }: any) => {
               className={s.btn}
               disabled={
                 (!activeLink && true) ||
-                String(idForBook) === currentIdPage ||
+                String(idPage) === currentIdPage ||
                 !currentIdPage
               }
               onClick={() => {
                 updateBookForNotes(currentIdPage && currentIdPage);
-                currentIdPage === "all" && setIdForBook("all");
+                currentIdPage === "all" && setIdPage("all");
                 close();
               }}
             >

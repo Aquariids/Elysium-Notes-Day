@@ -1,9 +1,9 @@
 import useSWR from "swr";
 import { get_action } from "../pages/api/actions";
+import { useWithoutId } from "./useWithoutId";
+import { useActiveNotebook } from "./useActiveNotebook";
 
-export function useAllNotes(userId: string, email: string, withoutId: boolean,idPage:string) {
-
-
+export function useAllNotes(userId: any, email: any, withoutId:any, idPage:any) {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
   const key = (() => {

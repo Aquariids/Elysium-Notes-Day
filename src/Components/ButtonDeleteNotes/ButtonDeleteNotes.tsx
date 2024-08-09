@@ -10,6 +10,10 @@ import {
 } from "../../../pages/api/actions";
 import { DateTime, Settings } from "luxon";
 import { useEffect, useState } from "react";
+import { useActiveNotebook } from "../../../hooks/useActiveNotebook";
+import { useWithoutId } from "../../../hooks/useWithoutId";
+import { useAllNotes } from "../../../hooks/useAllNotes";
+
 
 Settings.defaultLocale = "ru";
 DateTime.local().setLocale("ru");
@@ -30,6 +34,11 @@ const ButtonDeleteNotes = ({
   const selectedId = router.query.index;
   const userId = session.data?.user.userId;
   const email = session.data?.user.email;
+
+  const {idPage} = useActiveNotebook(userId,email,);
+  const {withoutId} = useWithoutId(userId,email)
+  const {mutate} = useAllNotes(userId,email, withoutId, idPage);
+ 
   const [test, setTest] = useState<boolean>();
   useEffect(() => {
     setTest(false)
@@ -40,28 +49,6 @@ const ButtonDeleteNotes = ({
     recycle?: boolean;
     restore?: true;
   }
-
-
-  // const addIdPageForNote = async () => {
-  //   const data = {
-  //     email: email,
-  //     userId: userId,
-  //     _id: currentNote._id,
-  //     idPage: currentNote.idPage && '',
-  //   };
-  //   const res = await fetch(
-  //     `/api/updateData?action=${update_action.update_notebook_id_for_note}`,
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(data),
-  //     }
-  //   );
-
-  //   if (res.ok) router.push(router.asPath);
-  // };
 
   const deleteDate = async (data: any) => {
     setTest(true)
@@ -88,7 +75,7 @@ const ButtonDeleteNotes = ({
       email: session.data?.user.email,
       deleteDate: userDate.toFormat("EEEE, d MMMM yyyyг, HH:mm"),
     };
-
+    
     await deleteDate(data);
     await fetch(
       `/api/deleteAndRestoreData?action=${
@@ -98,6 +85,8 @@ const ButtonDeleteNotes = ({
           ? delete_one_notes
           : delete_one_notes_recycle
       }&_id=${linkId}&userId=${userId}`
+
+    
     );
 
     
@@ -105,6 +94,7 @@ const ButtonDeleteNotes = ({
     const currentIndex = all_id.findIndex((i: string) => i == selectedId);
     !recycleRouter && setLoadingDelete(true);
     if (all_id.length >= 2) {
+      mutate();
       if (linkId != selectedId) {
         router.push(all_id[currentIndex]);
       } else if (

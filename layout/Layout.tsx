@@ -5,11 +5,14 @@ import Sidebar from "./Sidebar/Sidebar";
 import s from "./Layout.module.scss";
 import { FunctionComponent } from "react";
 import { useSession } from "next-auth/react";
+import { authOptions } from "../pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+import { getActiveNotebookWithoutId } from "../pages/api/auth/lib/Get";
+import { useWithoutId } from "../hooks/useWithoutId";
 
 const Layout = ({ children, ...props }: LayoutProps) => {
   const session = useSession();
   // props из withLayout
-  
   return (
     <div className={s.wrapper}>
       <Header className={s.header} />
@@ -18,6 +21,12 @@ const Layout = ({ children, ...props }: LayoutProps) => {
       {/* <Footer className={s.footer} /> */}
     </div>
   );
+
+
+
+
+
+  
 };
 
 export const withLayout = <T extends Record<string, unknown>>(
@@ -37,3 +46,4 @@ export const withLayout = <T extends Record<string, unknown>>(
     );
   };
 };
+

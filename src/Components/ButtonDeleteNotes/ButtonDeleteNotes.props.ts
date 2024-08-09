@@ -5,4 +5,5 @@ export interface ButtonDeleteProps extends DetailedHTMLProps<HTMLAttributes<HTML
 setDeleteElement?: any
 setLoadingDelete?:any
 currentNote?:any,
+idPage:string
 }

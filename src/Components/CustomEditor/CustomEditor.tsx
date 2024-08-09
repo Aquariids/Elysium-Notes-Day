@@ -33,13 +33,14 @@ import { updateDateProps } from "./CustomEditor.props";
 import DropdownMenuEditor from "../UI/DropdownMenu/DropdownMenu";
 import ModalAddNotesInBook from "./ModalAddNotesInBook/ModalAddNotesInBook";
 import Sandpack from "./Sandpack/Sandpack";
+import { useWithoutId } from "../../../hooks/useWithoutId";
 const CustomEditor = ({
   setCheckTitle,
   setDeleteElement,
   setLoadingDelete,
   selectedItem,
   all_id,
-  showMobileNotesList
+  showMobileNotesList,
   
 }: any) => {
   const router = useRouter();
@@ -314,6 +315,7 @@ const CustomEditor = ({
               </div>
               {!routerReclycle && <p className={cn(s.text, s.hide_btn)} onClick={() => {setActiveModal(true)}}> Переместить.. </p>} 
               <ButtonDeleteNotes
+                
                 currentNote={selectedItem}
                 setDeleteElement={setDeleteElement}
                 setLoadingDelete={setLoadingDelete}
