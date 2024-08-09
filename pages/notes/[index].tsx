@@ -56,6 +56,7 @@ const notes = ({
   );
 
   useEffect(() => {
+    mutateWithoutId();
     setShowMobileNotesList(false);
   }, [router]);
   useEffect(() => {
@@ -150,7 +151,7 @@ const notes = ({
           <NoteMobileContainer
             showMobileNotesList={showMobileNotesList}
             NotesList={NotesList}
-            // idPage={idPage}
+            idPage={idPage}
             loadingDelete={loadingDelete}
             deleteElement={deleteElement}
             checkTitle={checkTitle}
@@ -160,7 +161,7 @@ const notes = ({
             user_id={user_id}
             setSort={setSort}
             HeaderNotes={HeaderNotes}
-            // idpage={idpage}
+            
             BookSvg={Book}
             withoutId={withoutId}
             name={name}

@@ -1,19 +1,20 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { ButtonDeleteProps } from "./ButtonDeleteNotes.props";
+import { ButtonDeleteProps, DeleteLinkProps } from "./ButtonDeleteNotes.props";
 import s from "./ButtonDeleteNotes.module.scss";
 import cn from "classnames";
 import { NOTES, RECYCLE } from "../../../pages/api/paths";
+
 import {
   delete_restore_action,
   update_action,
 } from "../../../pages/api/actions";
+
 import { DateTime, Settings } from "luxon";
 import { useEffect, useState } from "react";
 import { useActiveNotebook } from "../../../hooks/useActiveNotebook";
 import { useWithoutId } from "../../../hooks/useWithoutId";
 import { useAllNotes } from "../../../hooks/useAllNotes";
-
 
 Settings.defaultLocale = "ru";
 DateTime.local().setLocale("ru");
@@ -44,14 +45,9 @@ const ButtonDeleteNotes = ({
     setTest(false)
   },[])
 
-  interface DeleteLinkProps {
-    linkId?: string | string[];
-    recycle?: boolean;
-    restore?: true;
-  }
 
   const deleteDate = async (data: any) => {
-    setTest(true)
+    setTest(true);
     await fetch(`/api/updateData?action=${update_action.update_note_deletion_date}`, {
       method: "POST",
       headers: {
@@ -60,6 +56,7 @@ const ButtonDeleteNotes = ({
       body: JSON.stringify(data),
     });
   };
+
   const handleDeleteLink = async ({
     linkId,
     recycle,
@@ -115,7 +112,7 @@ const ButtonDeleteNotes = ({
     }
     const timer = setTimeout(() => {
       !recycleRouter && setLoadingDelete(false);
-    }, 600);
+    }, 1500);
 
     return () => clearTimeout(timer);
   };

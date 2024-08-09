@@ -1,32 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
-import s from './NotesList.module.scss';
+import React from "react";
 import List from "./List";
-import Fuse from "fuse.js";
+import { INotesList } from "./NotesList.props";
 const NotesList = ({
   dataClient,
-  dataServer,
   userId,
   email,
   deleteElement,
   loadingDelete,
-}: any) => {
+}: INotesList) => {
+  console.log("🚀 ~ deleteElement:", deleteElement)
+  console.log("🚀 ~ loadingDelete:", loadingDelete)
   
-  if (!dataClient || dataClient.length === 0) {
-    return <></>; // Возвращаем null, если нет данных
-  }
   
-  if (dataClient) {
-
-
-
-    // {dataClient && dataClient.map(()=> {
-
-
-    //   <ListLine />
-    // })}
-   
     return (
-     
       <List
         loadingDelete={loadingDelete}
         deleteElement={deleteElement}
@@ -35,9 +21,8 @@ const NotesList = ({
         email={email}
       />
     
-    
     )
-  } 
+  
 };
 
 export default NotesList;

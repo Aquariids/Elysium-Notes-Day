@@ -58,12 +58,12 @@ const List = ({ body, loadingDelete, deleteElement}: any) => {
               <div
                 key={item._id || Math.random()}
                 className={cn({
-                 
                   [s.active]: selectedId === item._id,
                   [s.mainMenuLink]: router.asPath === "/",
                   [s.wrapper_link]: router.asPath !== "/",
                   [s.lock]: item.block === true,
                   [s.showBlock]: item.block === true,
+                  [s.placeholder_item]: item._id === deleteElement,
                   [s.lockMainMenu]:
                     item.block === true && router.asPath === "/",
                 })}

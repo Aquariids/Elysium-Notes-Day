@@ -17,7 +17,7 @@ const NoteContainer = ({
   email,
   without_id,
   idPage,
-  HeaderNotes
+  HeaderNotes,
 }: any): JSX.Element => {
   const [filteredNotes, setFilteredNotes] = useState<object[]>([]);
   const [query, setQuery] = useState("");
@@ -101,8 +101,9 @@ const NoteContainer = ({
       />
       <div className={s.container}>
         <div className={s.list}>
-          {notes && (
+          {notes && !isLoading ? (
             <>
+            
               <NotesList
                 deleteElement={deleteElement}
                 loadingDelete={loadingDelete}
@@ -111,7 +112,7 @@ const NoteContainer = ({
                 userId={user_id}
               />
             </>
-          )}
+          ): <>Загрузка</>}
         </div>
       </div>
     </div>

@@ -13,7 +13,10 @@ export interface ILinks {
 
 
 export interface INotesList {
-    body: ILinks[]
-    checkTitle:any
+    dataClient:notes_data,
+  userId?:string
+  email?:string
+  deleteElement?:string,
+  loadingDelete?:boolean
 }
 

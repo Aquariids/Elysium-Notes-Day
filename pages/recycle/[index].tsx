@@ -55,7 +55,10 @@ const notes = ({ data, all_id}: any) => {
         <div className={s.container}>
           <div className={s.list}>
             {data[0] && (
-             <></>
+             <NotesList
+              dataClient={sorting(data, sort)}
+             
+           />
             )}
           </div>
         </div>

@@ -64,7 +64,6 @@ const NoteMobileContainer = ({
                 loadingDelete={loadingDelete}
                 checkTitle={checkTitle}
                 dataClient={links ? sorting(links, sort) : ""}
-                // dataServer={data_editor ? sorting(data_editor, sort) : ""}
                 userId={user_id}
               />
               
